@@ -9,5 +9,9 @@
   - npm `v9.8.x`
     - It should be automatically installed alongside Node.js
     - Run `npm --version` to verify
+  - Expo Go app (on your smartphone)
 2. Install project dependencies:
   - Run `npm install`
+3. Run the app
+  - Run `npm run start`
+  - Scan the QR code with the Expo Go app
