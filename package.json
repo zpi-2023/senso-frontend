@@ -5,7 +5,8 @@
   "scripts": {
     "start": "expo start --tunnel",
     "test": "jest --coverage",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "jest": {
     "preset": "jest-expo",
