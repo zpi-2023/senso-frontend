@@ -1,3 +1,6 @@
 {
-  "extends": ["universe", "plugin:react-hooks/recommended"]
+  "extends": ["universe", "plugin:react-hooks/recommended"],
+  "env": {
+    "node": true
+  }
 }
