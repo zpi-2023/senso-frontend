@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+if [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ]; then
+  echo "You can't commit directly to the main branch! 😠"
+  exit 1
+fi
+
+npm run format
+npm run lint
