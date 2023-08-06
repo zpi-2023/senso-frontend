@@ -3,12 +3,14 @@ name: Code Check
 on:
   push:
     branches: [main]
+    paths-ignore: ["**.md"]
   pull_request:
     branches: [main]
+    paths-ignore: ["**.md"]
 
 jobs:
   build-and-test:
-    name: Build & test
+    name: Lint and test
     runs-on: ubuntu-22.04
     timeout-minutes: 15
 
