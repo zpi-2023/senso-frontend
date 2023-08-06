@@ -7,4 +7,5 @@ if [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ]; then
 fi
 
 npm run format
+npm run typecheck
 npm run lint

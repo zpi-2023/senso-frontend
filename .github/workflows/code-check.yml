@@ -9,8 +9,8 @@ on:
     paths-ignore: ["**.md"]
 
 jobs:
-  build-and-test:
-    name: Lint and test
+  check-code:
+    name: Check code
     runs-on: ubuntu-22.04
     timeout-minutes: 15
 
@@ -26,6 +26,9 @@ jobs:
 
       - name: Install
         run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
 
       - name: Lint
         run: npm run lint
