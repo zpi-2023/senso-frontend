@@ -39,7 +39,7 @@ You should now be ready to go 🎉
 5. Develop your feature
     - Move your task to the **"In Progress"** column
     - Make sure to add test coverage whenever possible
-    - Check that you did not violate any conventions with `npm run format` and/or `npm run lint`
+    - Check that you did not violate any conventions with `npm run typecheck`, `npm run lint`, `npm run format`
     - Make sure that all tests are passing with `npm run test`
 6. Commit your changes
     - husky should ensure that your commit does not violate any coding conventions

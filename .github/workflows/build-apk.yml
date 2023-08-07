@@ -1,0 +1,30 @@
+name: Build APK
+
+on: workflow_dispatch
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.5.0
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: "cd android && ./gradlew assembleRelease"
+
+      - name: Upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release

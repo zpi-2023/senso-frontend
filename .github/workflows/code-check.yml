@@ -1,0 +1,33 @@
+name: Code Check
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore: ["**.md"]
+
+jobs:
+  code-check:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.5.0
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
