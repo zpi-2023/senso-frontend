@@ -7,7 +7,7 @@
     "test": "jest --coverage",
     "lint": "eslint . --max-warnings=0",
     "format": "prettier . --write --log-level silent",
-    "typecheck": "tsc -p .",
+    "typecheck": "tsc -p . --noEmit",
     "prepare": "husky install"
   },
   "jest": {
