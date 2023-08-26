@@ -1,5 +1,10 @@
 import useSWR from "swr";
 
-import { get } from "./client";
+import { useAuth } from "./auth";
+import { type GetUrl, get } from "./client";
 
-export const useApi = (url: Parameters<typeof get>[0]) => useSWR([url], get);
+export const useApi = (url: GetUrl) => {
+  const { token } = useAuth();
+  const headers = { Authorization: token ? `Bearer ${token}` : undefined };
+  return useSWR([url, { headers }], get);
+};
