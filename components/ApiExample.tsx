@@ -3,7 +3,7 @@ import { Text, View } from "@/components/Themed";
 import { useApi } from "@/util/api";
 
 export function ApiExample() {
-  const { data } = useApi("/User");
+  const { data } = useApi({ url: "/User" });
 
   return (
     <View>

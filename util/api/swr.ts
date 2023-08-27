@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 import { useAuth } from "./auth";
-import { type GetUrl, get } from "./client";
+import { type GetPath, type GetOptions, get } from "./client";
 
 const TEST_CONFIG = {
   provider: () => new Map(),
@@ -9,12 +9,17 @@ const TEST_CONFIG = {
   dedupingInterval: 0,
 } as const;
 
-export const useApi = (url: GetUrl) => {
+type UseApiArg<P extends GetPath> = { url: P } & Pick<GetOptions<P>, "params">;
+
+export const useApi = <P extends GetPath>({ url, params }: UseApiArg<P>) => {
   const { token } = useAuth();
-  const headers = { Authorization: `Bearer ${token}` };
+  const options = {
+    ...({ params } as GetOptions<P>),
+    headers: { Authorization: `Bearer ${token}` },
+  };
   return useSWR(
-    [url, { headers }],
-    (params) => get(...params),
+    [url, options],
+    (args) => get(...args),
     __DEV__ ? TEST_CONFIG : undefined,
   );
 };

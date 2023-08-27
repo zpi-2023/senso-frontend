@@ -1,20 +1,30 @@
-import createClient from "openapi-fetch";
+import createClient, { type FetchOptions } from "openapi-fetch";
+import type { FilterKeys } from "openapi-typescript-helpers";
 
 import { BASE_URL } from "./consts";
-import { paths } from "./schema";
+import type { paths } from "./schema";
 
-const { GET, POST: post } = createClient<paths>({ baseUrl: BASE_URL });
+const {
+  POST: post,
+  GET,
+  PUT: put,
+  DELETE: del,
+} = createClient<paths>({ baseUrl: BASE_URL });
 
-type GetUrl = Parameters<typeof GET>[0];
-type GetOptions = Parameters<typeof GET>[1];
+type GetPath = keyof {
+  [P in keyof paths as paths[P] extends { get: any } ? P : never]: P;
+};
 
-const get = async (url: GetUrl, options?: GetOptions) => {
-  const { response, data } = await GET(url, options ?? {});
+type GetOptions<P extends GetPath> = FetchOptions<FilterKeys<paths[P], "get">>;
+
+const get = async <P extends GetPath>(url: P, options: GetOptions<P>) => {
+  const { response, data } = await GET(url, options);
   if (!response.ok) {
+    // SWR expects the promise to reject on error and openapi-fetch does not do that by default
     throw new Error("An error occurred while fetching the data.");
   }
   return data;
 };
 
-export type { GetUrl, GetOptions };
-export { get, post };
+export type { GetPath, GetOptions };
+export { post, get, put, del };

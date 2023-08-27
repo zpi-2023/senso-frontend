@@ -1,17 +1,17 @@
 import "@testing-library/jest-native/extend-expect";
 
-import { server } from "./api/mocks";
+import { mockServer } from "./api/mocks";
 
 global.fetch = require("node-fetch");
 
 beforeAll(() => {
-  server.listen({ onUnhandledRequest: "error" });
+  mockServer.listen({ onUnhandledRequest: "error" });
 });
 
 afterEach(() => {
-  server.resetHandlers();
+  mockServer.resetHandlers();
 });
 
 afterAll(() => {
-  server.close();
+  mockServer.close();
 });
