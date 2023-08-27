@@ -15,8 +15,16 @@ const AuthContext = createContext<AuthData>({
   setToken: () => {},
 });
 
+/**
+ * Reads or modifies data from the encompassing authorization context.
+ * @see AuthProvider
+ */
 export const useAuth = () => useContext(AuthContext);
 
+/**
+ * Provides authorization context access to its children.
+ * @see useAuth
+ */
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [token, setToken] = useState<string | null>(null);
   return (
