@@ -9,7 +9,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 
-import { ApiProvider } from "@/util/api";
+import { AuthProvider } from "@/util/api/auth";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -52,13 +52,13 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ApiProvider>
+    <AuthProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
       </ThemeProvider>
-    </ApiProvider>
+    </AuthProvider>
   );
 }

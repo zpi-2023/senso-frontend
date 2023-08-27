@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --tunnel",
-    "test": "jest --coverage",
+    "test": "jest",
     "lint": "eslint . --max-warnings=0",
     "format": "prettier . --write --log-level silent",
     "typecheck": "tsc -p . --noEmit",
