@@ -7,6 +7,7 @@ const TEST_CONFIG = {
   provider: () => new Map(),
   loadingTimeout: 0,
   dedupingInterval: 0,
+  shouldRetryOnError: false,
 } as const;
 
 type UseApiArg<P extends GetPath> =

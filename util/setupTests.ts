@@ -1,4 +1,6 @@
 import "@testing-library/jest-native/extend-expect";
+import { act } from "@testing-library/react-native";
+import { mutate } from "swr";
 
 import { mockServer } from "./api/mocks";
 
@@ -10,6 +12,9 @@ beforeAll(() => {
 
 afterEach(() => {
   mockServer.resetHandlers();
+  act(() => {
+    mutate(() => true, undefined, false);
+  });
 });
 
 afterAll(() => {

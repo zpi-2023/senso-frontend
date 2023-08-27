@@ -11,6 +11,8 @@ const {
   DELETE: del,
 } = createClient<paths>({ baseUrl: BASE_URL });
 
+type ApiPath = keyof paths;
+
 type GetPath = keyof {
   [P in keyof paths as paths[P] extends { get: any } ? P : never]: P;
 };
@@ -26,5 +28,5 @@ const get = async <P extends GetPath>(url: P, options: GetOptions<P>) => {
   return data;
 };
 
-export type { GetPath, GetOptions };
+export type { ApiPath, GetPath, GetOptions };
 export { post, get, put, del };

@@ -6,7 +6,7 @@ import { mockApi } from "@/util/api";
 
 describe(ApiExample, () => {
   it("displays data from the API correctly", async () => {
-    mockApi("get", "/User", (_req, ctx) => ctx.json(["Andrew"]));
+    mockApi("get", "/User", (ctx) => ctx.json(["Andrew"]));
 
     render(<ApiExample />);
 

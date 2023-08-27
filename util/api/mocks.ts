@@ -1,6 +1,7 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 
+import { ApiPath } from "./client";
 import { BASE_URL } from "./consts";
 
 type CrudMethod = "post" | "get" | "put" | "delete";
@@ -13,10 +14,10 @@ export const mockServer = setupServer();
 
 export const mockApi = <M extends CrudMethod>(
   method: M,
-  path: string,
+  path: ApiPath | (string & Record<never, never>), // https://github.com/microsoft/TypeScript/issues/29729
   body: (
-    req: ResolverParams<M>[0],
     ctx: ResolverParams<M>[2],
+    req: ResolverParams<M>[0],
   ) => PromiseOrValue<Parameters<ResolverParams<M>[1]>[0]>,
 ) => {
   if (!__DEV__) {
@@ -25,7 +26,7 @@ export const mockApi = <M extends CrudMethod>(
 
   mockServer.use(
     rest[method](new URL(path, BASE_URL).toString(), async (req, res, ctx) =>
-      res(await body(req, ctx)),
+      res(await body(ctx, req)),
     ),
   );
 };
