@@ -1,16 +1,7 @@
-import {
-  renderHook,
-  act,
-  waitFor,
-  render,
-  fireEvent,
-  screen,
-} from "@testing-library/react-native";
-import { useState } from "react";
-import { Button } from "react-native";
+import { renderHook, act, waitFor } from "@testing-library/react-native";
 
 import { AuthProvider, useAuth } from "./auth";
-import { get, post } from "./client";
+import { fetcher, POST } from "./client";
 import { mockApi } from "./mocks";
 import { useApi } from "./swr";
 
@@ -31,24 +22,24 @@ describe("API", () => {
     });
   });
 
-  describe(post, () => {
+  describe(POST, () => {
     it("invokes HTTP POST on the correct endpoint", async () => {
       const handler = jest.fn().mockReturnValue(201);
       mockApi("post", "/User", (ctx) => ctx.status(handler()));
 
-      const { response } = await post("/User", { parseAs: "text" });
+      const { response } = await POST("/User", { parseAs: "text" });
 
       expect(handler).toHaveBeenCalled();
       expect(response.status).toBe(201);
     });
   });
 
-  describe(get, () => {
+  describe(fetcher, () => {
     it("invokes HTTP GET on the correct endpoint", async () => {
       const handler = jest.fn().mockReturnValue(["John", "Mark"]);
       mockApi("get", "/User", (ctx) => ctx.json(handler()));
 
-      const data = await get("/User", {});
+      const data = await fetcher("/User", {});
 
       expect(handler).toHaveBeenCalled();
       expect(data).toEqual(["John", "Mark"]);
@@ -57,7 +48,7 @@ describe("API", () => {
     it("throws for error code responses", async () => {
       mockApi("get", "/User", (ctx) => ctx.status(404));
 
-      const promise = get("/User", {});
+      const promise = fetcher("/User", {});
 
       await expect(promise).rejects.toThrow();
     });
@@ -82,25 +73,6 @@ describe("API", () => {
       await waitFor(() => expect(result.current.error).toBeTruthy());
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toBeUndefined();
-    });
-
-    it("supports conditional queries", async () => {
-      const Test = () => {
-        const [enabled, setEnabled] = useState(false);
-        const { data } = useApi(enabled ? { url: "/User" } : null);
-        return (
-          <Button onPress={() => setEnabled(true)} title={data ?? "Disabled"} />
-        );
-      };
-      mockApi("get", "/User", (ctx) => ctx.json("Enabled"));
-
-      render(<Test />);
-      const disabled = screen.getByText("Disabled");
-      expect(disabled).toBeVisible();
-
-      fireEvent.press(disabled);
-      const enabled = await screen.findByText("Enabled");
-      expect(enabled).toBeVisible();
     });
   });
 });

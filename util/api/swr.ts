@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 import { useAuth } from "./auth";
-import { type GetPath, type GetOptions, get } from "./client";
+import { type GetPath, type GetOptions, fetcher } from "./client";
 
 const TEST_CONFIG = {
   provider: () => new Map(),
@@ -26,7 +26,7 @@ export const useApi = <P extends GetPath>(arg: UseApiArg<P>) => {
   const { token } = useAuth();
   return useSWR(
     arg ? [arg.url, buildOptions(arg, token)] : null,
-    (args) => get(...args),
+    (args) => fetcher(...args),
     __DEV__ ? TEST_CONFIG : undefined,
   );
 };

@@ -5,9 +5,8 @@
   "scripts": {
     "start": "expo start --tunnel",
     "test": "jest",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "tsc -p . --noEmit && eslint . --max-warnings=0",
     "format": "prettier . --write --log-level silent",
-    "typecheck": "tsc -p . --noEmit",
     "gen-api": "npx openapi-typescript http://localhost:8088/swagger/v1/swagger.json -o util/api/schema.d.ts",
     "prepare": "husky install"
   },

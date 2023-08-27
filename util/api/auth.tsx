@@ -1,4 +1,9 @@
-import { PropsWithChildren, createContext, useContext, useState } from "react";
+import {
+  type PropsWithChildren,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 
 type AuthData = {
   token: string | null;

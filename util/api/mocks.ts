@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 
-import { ApiPath } from "./client";
+import type { ApiPath } from "./client";
 import { BASE_URL } from "./consts";
 
 type CrudMethod = "post" | "get" | "put" | "delete";
