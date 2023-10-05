@@ -5,6 +5,7 @@ import {
 } from "@react-navigation/native";
 import { SplashScreen, Stack } from "expo-router";
 import { useColorScheme } from "react-native";
+import { PaperProvider } from "react-native-paper";
 
 import { useFontLoader } from "@/util";
 import { AuthProvider } from "@/util/api/auth";
@@ -19,9 +20,13 @@ export default function RootLayout() {
 
   return loaded ? (
     <AuthProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack />
-      </ThemeProvider>
+      <PaperProvider>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Stack />
+        </ThemeProvider>
+      </PaperProvider>
     </AuthProvider>
   ) : null;
 }
