@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import { Formik } from "formik";
 import {
   Keyboard,
@@ -5,9 +6,17 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { Button, HelperText, Text, TextInput } from "react-native-paper";
+import {
+  Button,
+  HelperText,
+  Text,
+  TextInput,
+  useTheme,
+} from "react-native-paper";
 
 const Page = () => {
+  const theme = useTheme();
+
   const handleFormSubmit = (values: { email: string; password: string }) => {
     // TODO: Handle form submission, send data to backend API
     console.log(values);
@@ -77,6 +86,12 @@ const Page = () => {
             >
               Continue
             </Button>
+            <Text style={styles.submit}>
+              Don't have an account?{" "}
+              <Link href="/auth/register" replace>
+                <Text style={{ color: theme.colors.primary }}>Sign up</Text>
+              </Link>
+            </Text>
           </View>
         </TouchableWithoutFeedback>
       )}
