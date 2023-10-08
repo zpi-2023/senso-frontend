@@ -1,10 +1,11 @@
-import { Link } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 const Page = () => {
   return (
     <View style={styles.container}>
+      <Stack.Screen options={{ title: "Home" }} />
       <Text variant="displayLarge">Senso</Text>
 
       <Text style={styles.description}>

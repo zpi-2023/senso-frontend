@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { Formik } from "formik";
 import {
   Keyboard,
@@ -33,6 +33,9 @@ const Page = () => {
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
           errors.email = "Invalid email address";
         }
+        if (!values.password) {
+          errors.password = "Required";
+        }
         return errors;
       }}
       validateOnBlur={true}
@@ -48,6 +51,7 @@ const Page = () => {
       }) => (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={styles.container}>
+            <Stack.Screen options={{ title: "Login" }} />
             <Text variant="titleLarge" style={styles.title}>
               Login to your Senso account
             </Text>
@@ -61,13 +65,15 @@ const Page = () => {
               error={!!errors.email}
               autoCapitalize="none"
             />
-            <HelperText
-              type="error"
-              visible={!!errors.email && touched.email}
-              style={styles.errorMessage}
-            >
-              {errors.email}
-            </HelperText>
+            {touched.email && (
+              <HelperText
+                type="error"
+                visible={!!errors.email}
+                style={styles.errorMessage}
+              >
+                {errors.email}
+              </HelperText>
+            )}
             <TextInput
               mode="outlined"
               label="Password"
@@ -79,6 +85,15 @@ const Page = () => {
               secureTextEntry
               autoCapitalize="none"
             />
+            {touched.password && (
+              <HelperText
+                type="error"
+                visible={!!errors.password}
+                style={styles.errorMessage}
+              >
+                {errors.password}
+              </HelperText>
+            )}
             <Button
               mode="contained"
               onPress={() => handleSubmit()}
