@@ -1,18 +1,27 @@
+import { Link, Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 
 const Page = () => {
   return (
     <View style={styles.container}>
-      <Button
-        icon="login-variant"
-        mode="contained"
-        onLongPress={() => {
-          alert("You pressed the button for a long time");
-        }}
-      >
-        Long press to login
-      </Button>
+      <Stack.Screen options={{ title: "Home" }} />
+      <Text variant="displayLarge">Senso</Text>
+
+      <Text style={styles.description}>
+        Your all-in-one senior companion app that assists with everyday tasks.
+      </Text>
+      <Link href="/auth/login" replace>
+        <Button
+          mode="contained"
+          labelStyle={{
+            fontSize: 20,
+            lineHeight: 28,
+          }}
+        >
+          Let's get started
+        </Button>
+      </Link>
     </View>
   );
 };
@@ -22,6 +31,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    gap: 32,
+  },
+  description: {
+    textAlign: "center",
+    fontSize: 20,
+    lineHeight: 28,
+    paddingHorizontal: 32,
   },
 });
 
