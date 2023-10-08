@@ -65,12 +65,8 @@ const Page = () => {
               error={!!errors.email}
               autoCapitalize="none"
             />
-            {touched.email && (
-              <HelperText
-                type="error"
-                visible={!!errors.email}
-                style={styles.errorMessage}
-              >
+            {touched.email && errors.email && (
+              <HelperText type="error" style={styles.errorMessage}>
                 {errors.email}
               </HelperText>
             )}
@@ -85,12 +81,8 @@ const Page = () => {
               secureTextEntry
               autoCapitalize="none"
             />
-            {touched.password && (
-              <HelperText
-                type="error"
-                visible={!!errors.password}
-                style={styles.errorMessage}
-              >
+            {touched.password && errors.password && (
+              <HelperText type="error" style={styles.errorMessage}>
                 {errors.password}
               </HelperText>
             )}
@@ -123,6 +115,7 @@ const styles = StyleSheet.create({
   input: {
     width: "80%",
     marginHorizontal: 132,
+    marginVertical: 4,
   },
   errorMessage: {
     width: "80%",
