@@ -2,6 +2,7 @@ import { Link, Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 
+import { MonoText } from "@/components/StyledText";
 import { BASE_URL, useApi, useAuth } from "@/util/api";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
@@ -27,13 +28,13 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
         </Button>
         {debug ? (
           <>
-            <Text style={styles.debug}>
+            <MonoText style={styles.debug}>
               {new URL("/healthz", BASE_URL).toString()}
               {"\n"}
               {JSON.stringify(data)}
               {"\n"}
               {error?.toString()}
-            </Text>
+            </MonoText>
             {/* Escape hatch to let us test client without server in development */}
             <Link href="/auth/login" replace>
               <Button textColor="red">IGNORE</Button>
@@ -93,7 +94,6 @@ const styles = StyleSheet.create({
   debug: {
     backgroundColor: "#ffffaa",
     color: "#ff0000",
-    fontFamily: "monospace",
     textAlign: "center",
     padding: 8,
   },

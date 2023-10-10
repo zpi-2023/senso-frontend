@@ -20,6 +20,10 @@
       },
       "package": "com.anonymous.sensofrontend"
     },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.sensofrontend"
+    },
     "web": {
       "bundler": "metro",
       "output": "static",
