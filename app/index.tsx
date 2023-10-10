@@ -4,7 +4,7 @@ import { ActivityIndicator, Button, Text } from "react-native-paper";
 
 import { BASE_URL, useApi, useAuth } from "@/util/api";
 
-const Landing = ({ debug = false }: { debug?: boolean }) => {
+export const Landing = ({ debug = false }: { debug?: boolean }) => {
   const { data, isLoading, error, mutate } = useApi({ url: "/healthz" });
   const { token } = useAuth();
 
