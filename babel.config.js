@@ -7,6 +7,8 @@ module.exports = function (api) {
       "expo-router/babel",
       // Optional - rewrites import statements to make sure that we import only the modules that we need
       "react-native-paper/babel",
+      // Replace process.env.X with the value of the environment variable X
+      "transform-inline-environment-variables",
     ],
   };
 };

@@ -5,12 +5,30 @@
 
 
 export interface paths {
-  "/User": {
+  "/healthz": {
     get: {
       responses: {
         /** @description Success */
         200: {
-          content: never;
+          content: {
+            "text/plain": components["schemas"]["HealthcheckDto"];
+            "application/json": components["schemas"]["HealthcheckDto"];
+            "text/json": components["schemas"]["HealthcheckDto"];
+          };
+        };
+      };
+    };
+  };
+  "/user": {
+    get: {
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["UserDto"][];
+            "application/json": components["schemas"]["UserDto"][];
+            "text/json": components["schemas"]["UserDto"][];
+          };
         };
       };
     };
@@ -23,9 +41,17 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Success */
-        200: {
+        /** @description No Content */
+        204: {
           content: never;
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
         };
       };
     };
@@ -37,7 +63,27 @@ export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     CreateUserDto: {
-      name: string;
+      name?: string;
+    };
+    HealthcheckDto: {
+      server?: components["schemas"]["HealthcheckStatus"];
+      database?: components["schemas"]["HealthcheckStatus"];
+    };
+    /** @enum {string} */
+    HealthcheckStatus: "Ok" | "Unhealthy";
+    ProblemDetails: {
+      type?: string | null;
+      title?: string | null;
+      /** Format: int32 */
+      status?: number | null;
+      detail?: string | null;
+      instance?: string | null;
+      [key: string]: unknown;
+    };
+    UserDto: {
+      /** Format: int32 */
+      id?: number;
+      name?: string;
     };
   };
   responses: never;

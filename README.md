@@ -19,7 +19,7 @@
         - You should see a message verifying that husky was set up
             - If that was not the case, run `npx husky install`
 3. Run the app:
-    - Run `npm run start`
+    - Run `npm run start` (optionally with the `IP` environment variable to set the server address)
     - Scan the QR code with the Expo Go app
     - Wait for the app to compile
 
