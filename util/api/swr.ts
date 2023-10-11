@@ -35,6 +35,7 @@ const buildOptions = <P extends GetPath>(
  * @param arg.params object containing `path` and `query` parameters of the request
  * @see https://swr.vercel.app/docs/getting-started
  * @see https://openapi-ts.pages.dev/openapi-fetch
+ *
  * @example
  * // Simple request
  * const { data: user } = useApi({ url: "/user" });

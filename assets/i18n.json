@@ -1,0 +1,117 @@
+{
+  "__MOCK_BASE": {
+    "en": "English mock value",
+    "pl": "Polish mock value"
+  },
+  "__MOCK_SUBSTITUTION": {
+    "en": "English {x} mock {key} value",
+    "pl": "Polish {x} mock {key} value"
+  },
+  "__MOCK_DEFAULT": {
+    "en": "Only English value"
+  },
+  "appName": {
+    "en": "Senso",
+    "pl": "Senso"
+  },
+  "error": {
+    "en": "Error",
+    "pl": "Błąd"
+  },
+  "auth.email": {
+    "en": "Email",
+    "pl": "Email"
+  },
+  "auth.password": {
+    "en": "Password",
+    "pl": "Hasło"
+  },
+  "auth.required": {
+    "en": "Required",
+    "pl": "Wymagane"
+  },
+  "auth.badEmail": {
+    "en": "Invalid email address",
+    "pl": "Błędny adres email"
+  },
+  "login.pageTitle": {
+    "en": "Login",
+    "pl": "Logowanie"
+  },
+  "login.description": {
+    "en": "Login to your Senso account",
+    "pl": "Zaloguj się na konto Senso"
+  },
+  "login.continueButton": {
+    "en": "Continue",
+    "pl": "Kontynuuj"
+  },
+  "login.registerPrompt": {
+    "en": "Don't have an account?",
+    "pl": "Brak konta?"
+  },
+  "login.registerButton": {
+    "en": "Register",
+    "pl": "Zarejestruj się"
+  },
+  "register.pageTitle": {
+    "en": "Register",
+    "pl": "Rejestracja"
+  },
+  "register.description": {
+    "en": "Create your Senso account",
+    "pl": "Utwórz konto Senso"
+  },
+  "register.confirmPassword": {
+    "en": "Confirm password",
+    "pl": "Powtórz hasło"
+  },
+  "register.phoneNumber": {
+    "en": "Phone number (optional)",
+    "pl": "Numer telefonu (opcjonalnie)"
+  },
+  "register.registerButton": {
+    "en": "Register",
+    "pl": "Zarejestruj się"
+  },
+  "register.loginPrompt": {
+    "en": "Already have an account?",
+    "pl": "Masz już konto?"
+  },
+  "register.loginButton": {
+    "en": "Sign in",
+    "pl": "Zaloguj się"
+  },
+  "register.badPasswordLength": {
+    "en": "Password must have at least {length} letters",
+    "pl": "Hasło musi mieć co najmniej {length} znaków"
+  },
+  "register.passwordMismatch": {
+    "en": "Passwords do not match",
+    "pl": "Hasła się nie zgadzają"
+  },
+  "register.badPhoneNumber": {
+    "en": "Invalid phone number",
+    "pl": "Błędny numer telefonu"
+  },
+  "landing.pageTitle": {
+    "en": "Start",
+    "pl": "Start"
+  },
+  "landing.description": {
+    "en": "Your all-in-one senior companion app that assists with everyday tasks.",
+    "pl": "Aplikacja, która pomoże Ci w codziennych czynnościach."
+  },
+  "landing.startButton": {
+    "en": "Let's get started",
+    "pl": "Zaczynajmy"
+  },
+  "landing.noConnection": {
+    "en": "We could not connect.",
+    "pl": "Brak połączenia."
+  },
+  "landing.tryAgain": {
+    "en": "Try again",
+    "pl": "Spróbuj ponownie"
+  }
+}
