@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react-native";
 
-import { Landing } from "./index";
+import { Landing } from "../app/index";
 
 import { mockApi } from "@/util/api/mocks";
 
