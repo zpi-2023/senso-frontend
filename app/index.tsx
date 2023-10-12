@@ -4,16 +4,19 @@ import { ActivityIndicator, Button, Text } from "react-native-paper";
 
 import { BASE_URL, useApi } from "@/common/api";
 import { useI18n } from "@/common/i18n";
-import { useRequireLoggedOut } from "@/common/identity";
+import { useIdentity, RedirectIfNotLoggedOut } from "@/common/identity";
 import { MonoText } from "@/components/StyledText";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
-  useRequireLoggedOut();
-
   const { data, isLoading, error, mutate } = useApi({
     url: "/api/v1/healthz",
   });
   const { t } = useI18n();
+  const identity = useIdentity();
+
+  if (identity.isLoggedIn) {
+    return <RedirectIfNotLoggedOut identity={identity} />;
+  }
 
   if (isLoading) {
     return <ActivityIndicator size="large" />;

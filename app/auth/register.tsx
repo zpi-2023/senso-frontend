@@ -18,7 +18,7 @@ import {
 
 import { POST } from "@/common/api";
 import { useI18n } from "@/common/i18n";
-import { useIdentity, useRequireLoggedOut } from "@/common/identity";
+import { useIdentity, RedirectIfNotLoggedOut } from "@/common/identity";
 
 interface IRegisterForm {
   email: string;
@@ -32,9 +32,8 @@ const Page = () => {
   const theme = useTheme();
   const { t } = useI18n();
 
-  useRequireLoggedOut();
   if (identity.isLoggedIn) {
-    return null;
+    return <RedirectIfNotLoggedOut identity={identity} />;
   }
 
   const onSubmit = (values: IRegisterForm) =>

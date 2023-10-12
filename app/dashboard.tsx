@@ -1,9 +1,13 @@
 import { Text } from "react-native";
 
-import { useRequireHasProfile } from "@/common/identity";
+import { useIdentity, RedirectIfNotHasProfile } from "@/common/identity";
 
 const Page = () => {
-  useRequireHasProfile();
+  const identity = useIdentity();
+
+  if (!identity.hasProfile) {
+    return <RedirectIfNotHasProfile identity={identity} />;
+  }
 
   return <Text>Dashboard</Text>;
 };
