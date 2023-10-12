@@ -1,8 +1,8 @@
 import { renderHook, act, waitFor } from "@testing-library/react-native";
 
-import { AuthProvider, POST, useApi, useAuth } from "@/util/api";
-import { fetcher } from "@/util/api/client";
-import { mockApi } from "@/util/api/mocks";
+import { AuthProvider, POST, useApi, useAuth } from "@/common/api";
+import { fetcher } from "@/common/api/client";
+import { mockApi } from "@/common/api/mocks";
 
 describe("API", () => {
   describe(useAuth, () => {

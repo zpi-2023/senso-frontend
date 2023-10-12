@@ -2,9 +2,9 @@ import { Link, Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 
+import { BASE_URL, useApi, useAuth } from "@/common/api";
+import { useI18n } from "@/common/i18n";
 import { MonoText } from "@/components/StyledText";
-import { BASE_URL, useApi, useAuth } from "@/util/api";
-import { useI18n } from "@/util/i18n";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
   const { data, isLoading, error, mutate } = useApi({ url: "/healthz" });

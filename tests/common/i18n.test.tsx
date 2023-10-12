@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react-native";
 
+import { I18nProvider, MockI18nProvider, useI18n } from "@/common/i18n";
 import { Text } from "@/components/Themed";
-import { I18nProvider, MockI18nProvider, useI18n } from "@/util/i18n";
 
 type TArgs = Parameters<ReturnType<typeof useI18n>["t"]>;
 

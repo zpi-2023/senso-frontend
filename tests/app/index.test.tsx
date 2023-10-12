@@ -1,8 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react-native";
 
-import { Landing } from "../app/index";
-
-import { mockApi } from "@/util/api/mocks";
+import { Landing } from "@/app/index";
+import { mockApi } from "@/common/api/mocks";
 
 describe(Landing, () => {
   it("should show the landing page when the server is working", async () => {

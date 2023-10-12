@@ -1,11 +1,10 @@
 import { SplashScreen, Stack } from "expo-router";
 import { PaperProvider } from "react-native-paper";
 
-import { AuthProvider } from "@/util/api/auth";
-import { I18nProvider } from "@/util/i18n";
-import { ProviderList } from "@/util/provider-list";
-import { ThemeProvider } from "@/util/theme-provider";
-import { useFontLoader } from "@/util/use-font-loader";
+import { AuthProvider } from "@/common/api/auth";
+import { I18nProvider } from "@/common/i18n";
+import { ProviderList, useFontLoader } from "@/common/util";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 export { ErrorBoundary } from "expo-router";
 

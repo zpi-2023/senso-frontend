@@ -16,7 +16,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
-import { useI18n } from "@/util/i18n";
+import { useI18n } from "@/common/i18n";
 
 interface IRegisterForm {
   email: string;
