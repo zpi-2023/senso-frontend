@@ -16,8 +16,9 @@ import {
   useTheme,
 } from "react-native-paper";
 
+import { POST } from "@/common/api";
 import { useI18n } from "@/common/i18n";
-import { useRequireLoggedOut } from "@/common/identity";
+import { useIdentity, useRequireLoggedOut } from "@/common/identity";
 
 interface IRegisterForm {
   email: string;
@@ -27,15 +28,25 @@ interface IRegisterForm {
 }
 
 const Page = () => {
-  useRequireLoggedOut();
-
+  const identity = useIdentity();
   const theme = useTheme();
   const { t } = useI18n();
 
-  const handleFormSubmit = (values: IRegisterForm) => {
-    // TODO: Handle form submission, send data to backend API
-    console.log({ submittingValues: values });
-  };
+  useRequireLoggedOut();
+  if (identity.isLoggedIn) {
+    return null;
+  }
+
+  const onSubmit = (values: IRegisterForm) =>
+    POST("/api/v1/account", { body: values }).then((resp) => {
+      if (!resp.error) {
+        POST("/api/v1/token", { body: values }).then((resp) => {
+          if (!resp.error) {
+            identity.logIn(resp.data.token!); // TODO: Swagger should mark this as non-nullable
+          }
+        });
+      }
+    });
 
   return (
     <Formik
@@ -47,7 +58,7 @@ const Page = () => {
           phoneNumber: "",
         } as IRegisterForm
       }
-      onSubmit={handleFormSubmit}
+      onSubmit={onSubmit}
       validate={(values) => {
         const errors: {
           email?: string;

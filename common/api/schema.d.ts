@@ -5,39 +5,13 @@
 
 
 export interface paths {
-  "/healthz": {
-    get: {
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["HealthcheckDto"];
-            "application/json": components["schemas"]["HealthcheckDto"];
-            "text/json": components["schemas"]["HealthcheckDto"];
-          };
-        };
-      };
-    };
-  };
-  "/user": {
-    get: {
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["UserDto"][];
-            "application/json": components["schemas"]["UserDto"][];
-            "text/json": components["schemas"]["UserDto"][];
-          };
-        };
-      };
-    };
+  "/api/v1/account": {
     post: {
       requestBody?: {
         content: {
-          "application/json": components["schemas"]["CreateUserDto"];
-          "text/json": components["schemas"]["CreateUserDto"];
-          "application/*+json": components["schemas"]["CreateUserDto"];
+          "application/json": components["schemas"]["CreateAccountDto"];
+          "text/json": components["schemas"]["CreateAccountDto"];
+          "application/*+json": components["schemas"]["CreateAccountDto"];
         };
       };
       responses: {
@@ -56,14 +30,63 @@ export interface paths {
       };
     };
   };
+  "/api/v1/healthz": {
+    get: {
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["HealthcheckDto"];
+            "application/json": components["schemas"]["HealthcheckDto"];
+            "text/json": components["schemas"]["HealthcheckDto"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/token": {
+    post: {
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["GetAccountByCredentialsDto"];
+          "text/json": components["schemas"]["GetAccountByCredentialsDto"];
+          "application/*+json": components["schemas"]["GetAccountByCredentialsDto"];
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["TokenDto"];
+            "application/json": components["schemas"]["TokenDto"];
+            "text/json": components["schemas"]["TokenDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
 }
 
 export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    CreateUserDto: {
-      name?: string;
+    CreateAccountDto: {
+      email?: string;
+      password?: string;
+      phoneNumber?: string | null;
+    };
+    GetAccountByCredentialsDto: {
+      email?: string;
+      password?: string;
     };
     HealthcheckDto: {
       server?: components["schemas"]["HealthcheckStatus"];
@@ -80,10 +103,8 @@ export interface components {
       instance?: string | null;
       [key: string]: unknown;
     };
-    UserDto: {
-      /** Format: int32 */
-      id?: number;
-      name?: string;
+    TokenDto: {
+      token?: string;
     };
   };
   responses: never;

@@ -3,5 +3,5 @@ export {
   useRequireLoggedIn,
   useRequireLoggedOut,
   useRequireHasProfile,
-} from "./navigation";
+} from "./redirects";
 export type { Identity, Profile } from "./types";

@@ -2,6 +2,17 @@ import { useRouter } from "expo-router";
 import { useEffect } from "react";
 
 import { useIdentity } from "./context";
+import type { Identity } from "./types";
+
+const useRequire = (
+  rule: (identity: Identity, router: ReturnType<typeof useRouter>) => void,
+) => {
+  const identity = useIdentity();
+  const router = useRouter();
+  useEffect(() => {
+    rule(identity, router);
+  }, [rule, identity, router]);
+};
 
 /**
  * Redirects to the dashboard if the user is logged in and has a selected profile.
@@ -11,17 +22,14 @@ import { useIdentity } from "./context";
  * @see useRequireLoggedIn
  * @see useRequireHasProfile
  */
-export const useRequireLoggedOut = () => {
-  const router = useRouter();
-  const identity = useIdentity();
-  useEffect(() => {
+export const useRequireLoggedOut = () =>
+  useRequire((identity, router) => {
     if (identity.hasProfile) {
       router.replace("/dashboard");
     } else if (identity.isLoggedIn) {
       router.replace("/profiles/select");
     }
-  }, [router, identity]);
-};
+  });
 
 /**
  * Redirects to the login page if the user is not logged in.
@@ -29,15 +37,12 @@ export const useRequireLoggedOut = () => {
  * @see useRequireLoggedOut
  * @see useRequireHasProfile
  */
-export const useRequireLoggedIn = () => {
-  const router = useRouter();
-  const identity = useIdentity();
-  useEffect(() => {
+export const useRequireLoggedIn = () =>
+  useRequire((identity, router) => {
     if (!identity.isLoggedIn) {
       router.replace("/auth/login");
     }
-  }, [router, identity]);
-};
+  });
 
 /**
  * Redirects to the profile selection page if the user is logged in but has no selected profile.
@@ -47,14 +52,11 @@ export const useRequireLoggedIn = () => {
  * @see useRequireLoggedIn
  * @see useRequireLoggedOut
  */
-export const useRequireHasProfile = () => {
-  const router = useRouter();
-  const identity = useIdentity();
-  useEffect(() => {
+export const useRequireHasProfile = () =>
+  useRequire((identity, router) => {
     if (!identity.hasProfile) {
       router.replace("/profiles/select");
     } else if (!identity.isLoggedIn) {
       router.replace("/auth/login");
     }
-  }, [router, identity]);
-};
+  });

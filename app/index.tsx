@@ -10,7 +10,9 @@ import { MonoText } from "@/components/StyledText";
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
   useRequireLoggedOut();
 
-  const { data, isLoading, error, mutate } = useApi({ url: "/healthz" });
+  const { data, isLoading, error, mutate } = useApi({
+    url: "/api/v1/healthz",
+  });
   const { t } = useI18n();
 
   if (isLoading) {
