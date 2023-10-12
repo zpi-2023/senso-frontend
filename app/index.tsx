@@ -9,7 +9,7 @@ import { MonoText } from "@/components/StyledText";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
   const { data, isLoading, error, mutate } = useApi({ url: "/healthz" });
-  const { token } = useIdentity();
+  const { isLoggedIn } = useIdentity();
   const { t } = useI18n();
 
   if (isLoading) {
@@ -48,7 +48,7 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
     );
   }
 
-  if (token) {
+  if (isLoggedIn) {
     // TODO: redirect if logged in
   }
 
