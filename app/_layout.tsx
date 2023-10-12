@@ -1,8 +1,8 @@
 import { SplashScreen, Stack } from "expo-router";
 import { PaperProvider } from "react-native-paper";
 
-import { AuthProvider } from "@/common/api/auth";
 import { I18nProvider } from "@/common/i18n";
+import { IdentityProvider } from "@/common/identity";
 import { ProviderList, useFontLoader } from "@/common/util";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -18,7 +18,7 @@ export default function RootLayout() {
 
   return (
     <ProviderList
-      providers={[I18nProvider, AuthProvider, PaperProvider, ThemeProvider]}
+      providers={[I18nProvider, IdentityProvider, PaperProvider, ThemeProvider]}
     >
       <Stack />
     </ProviderList>

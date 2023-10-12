@@ -1,7 +1,8 @@
 import useSWR from "swr";
 
-import { useAuth } from "./auth";
 import { type GetPath, type GetOptions, fetcher } from "./client";
+
+import { useIdentity } from "@/common/identity";
 
 const TEST_CONFIG = {
   provider: () => new Map(),
@@ -57,7 +58,7 @@ const buildOptions = <P extends GetPath>(
  * mutate({ name: "Blue bike" });
  */
 export const useApi = <P extends GetPath>(arg: UseApiArg<P>) => {
-  const { token } = useAuth();
+  const { token } = useIdentity();
   return useSWR(
     arg ? [arg.url, buildOptions(arg, token)] : null,
     (args) => fetcher(...args),

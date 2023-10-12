@@ -1,26 +1,10 @@
-import { renderHook, act, waitFor } from "@testing-library/react-native";
+import { renderHook, waitFor } from "@testing-library/react-native";
 
-import { AuthProvider, POST, useApi, useAuth } from "@/common/api";
+import { POST, useApi } from "@/common/api";
 import { fetcher } from "@/common/api/client";
 import { mockApi } from "@/common/api/mocks";
 
 describe("API", () => {
-  describe(useAuth, () => {
-    it("initially returns a null token", () => {
-      const { result } = renderHook(() => useAuth(), { wrapper: AuthProvider });
-
-      expect(result.current.token).toBeNull();
-    });
-
-    it("can change the token", () => {
-      const { result } = renderHook(() => useAuth(), { wrapper: AuthProvider });
-
-      act(() => result.current.setToken("SUPER_SECURE_TOKEN"));
-
-      expect(result.current.token).toBe("SUPER_SECURE_TOKEN");
-    });
-  });
-
   describe(POST, () => {
     it("invokes HTTP POST on the correct endpoint", async () => {
       const handler = jest.fn().mockReturnValue(201);
