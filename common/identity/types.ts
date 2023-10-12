@@ -15,9 +15,9 @@ export type IdentityData =
   | { known: "account"; token: string }
   | { known: "profile"; token: string; profile: Profile };
 
-type LogIn = (token: string) => void;
-type LogOut = () => void;
-type SelectProfile = (profile: Profile) => void;
+export type LogIn = (token: string) => void;
+export type LogOut = () => void;
+export type SelectProfile = (profile: Profile) => void;
 
 type LoggedInIdentity = {
   token: string;

@@ -5,36 +5,32 @@ import {
   createContext,
   useContext,
   useState,
+  useCallback,
+  useMemo,
 } from "react";
 
-import { Identity, IdentityData, Profile } from "./types";
+import {
+  Identity,
+  IdentityData,
+  LogIn,
+  LogOut,
+  Profile,
+  SelectProfile,
+} from "./types";
 
 const IdentityContext = createContext<{
   data: IdentityData;
   setData: Dispatch<SetStateAction<IdentityData>>;
 }>({ data: { known: "nothing" }, setData: () => {} });
 
-/**
- * Reads or modifies data from the encompassing identity context.
- *
- * @see IdentityProvider
- */
-export const useIdentity = (): Identity => {
-  const { data, setData } = useContext(IdentityContext);
-
-  const logOut = () => setData({ known: "nothing" });
-  const logIn = (token: string) => setData({ known: "account", token });
-  const selectProfile = (profile: Profile) =>
-    setData((data) =>
-      data.known !== "nothing"
-        ? {
-            known: "profile",
-            token: data.token,
-            profile,
-          }
-        : data,
-    );
-
+const buildIdentity = (
+  data: IdentityData,
+  {
+    logIn,
+    logOut,
+    selectProfile,
+  }: { logIn: LogIn; logOut: LogOut; selectProfile: SelectProfile },
+): Identity => {
   if (data.known === "nothing") {
     return { isLoggedIn: false, hasProfile: false, logIn };
   }
@@ -59,6 +55,39 @@ export const useIdentity = (): Identity => {
         hasProfile: true,
       };
   }
+};
+
+/**
+ * Reads or modifies data from the encompassing identity context.
+ *
+ * @see IdentityProvider
+ */
+export const useIdentity = (): Identity => {
+  const { data, setData } = useContext(IdentityContext);
+
+  const logIn = useCallback(
+    (token: string) => setData({ known: "account", token }),
+    [setData],
+  );
+  const logOut = useCallback(() => setData({ known: "nothing" }), [setData]);
+  const selectProfile = useCallback(
+    (profile: Profile) =>
+      setData((data) =>
+        data.known !== "nothing"
+          ? {
+              known: "profile",
+              token: data.token,
+              profile,
+            }
+          : data,
+      ),
+    [setData],
+  );
+
+  return useMemo(
+    () => buildIdentity(data, { logIn, logOut, selectProfile }),
+    [data, logIn, logOut, selectProfile],
+  );
 };
 
 /**

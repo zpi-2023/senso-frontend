@@ -17,6 +17,7 @@ import {
 } from "react-native-paper";
 
 import { useI18n } from "@/common/i18n";
+import { useRequireLoggedOut } from "@/common/identity";
 
 interface IRegisterForm {
   email: string;
@@ -26,6 +27,8 @@ interface IRegisterForm {
 }
 
 const Page = () => {
+  useRequireLoggedOut();
+
   const theme = useTheme();
   const { t } = useI18n();
 

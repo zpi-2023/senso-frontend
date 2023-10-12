@@ -15,8 +15,11 @@ import {
 } from "react-native-paper";
 
 import { useI18n } from "@/common/i18n";
+import { useRequireLoggedOut } from "@/common/identity";
 
 const Page = () => {
+  useRequireLoggedOut();
+
   const theme = useTheme();
   const { t } = useI18n();
 
