@@ -18,9 +18,11 @@ export const mockServer = setupServer();
 
 /**
  * Overrides server's response to a request for the duration of one test.
+ *
  * @param method lowercase HTTP method name of CRUD operation (`post`, `get`, `put` or `delete`)
  * @param path pattern describing matched endpoints, you can use `*` as a wildcard
  * @param body function handling the request, use `ctx` (passed as first arg) to construct the response
+ *
  * @example
  * mockApi("get", "/endpoint-name", (ctx, req) => ctx.json({ name: "Hello world!" }));
  */

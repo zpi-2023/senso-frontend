@@ -4,10 +4,12 @@ import { ActivityIndicator, Button, Text } from "react-native-paper";
 
 import { MonoText } from "@/components/StyledText";
 import { BASE_URL, useApi, useAuth } from "@/util/api";
+import { useI18n } from "@/util/i18n";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
   const { data, isLoading, error, mutate } = useApi({ url: "/healthz" });
   const { token } = useAuth();
+  const { t } = useI18n();
 
   if (isLoading) {
     return <ActivityIndicator size="large" />;
@@ -16,15 +18,15 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
   if (error || data?.server !== "Ok" || data?.database !== "Ok") {
     return (
       <>
-        <Text variant="displayMedium">Error</Text>
+        <Text variant="displayMedium">{t("error")}</Text>
 
-        <Text style={styles.description}>We could not connect.</Text>
+        <Text style={styles.description}>{t("landing.noConnection")}</Text>
         <Button
           mode="contained"
           labelStyle={styles.button}
           onPress={() => mutate()}
         >
-          Try again
+          {t("landing.tryAgain")}
         </Button>
         {debug ? (
           <>
@@ -51,14 +53,12 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
 
   return (
     <>
-      <Text variant="displayMedium">Senso</Text>
+      <Text variant="displayMedium">{t("appName")}</Text>
 
-      <Text style={styles.description}>
-        Your all-in-one senior companion app that assists with everyday tasks.
-      </Text>
+      <Text style={styles.description}>{t("landing.description")}</Text>
       <Link href="/auth/login" replace>
         <Button mode="contained" labelStyle={styles.button}>
-          Let's get started
+          {t("landing.startButton")}
         </Button>
       </Link>
     </>
@@ -66,9 +66,10 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
 };
 
 const Page = () => {
+  const { t } = useI18n();
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: "Start" }} />
+      <Stack.Screen options={{ title: t("landing.pageTitle") }} />
       <Landing debug={__DEV__} />
     </View>
   );

@@ -14,8 +14,11 @@ import {
   useTheme,
 } from "react-native-paper";
 
+import { useI18n } from "@/util/i18n";
+
 const Page = () => {
   const theme = useTheme();
+  const { t } = useI18n();
 
   const handleFormSubmit = (values: { email: string; password: string }) => {
     // TODO: Handle form submission, send data to backend API
@@ -29,12 +32,12 @@ const Page = () => {
       validate={(values) => {
         const errors: { email?: string; password?: string } = {};
         if (!values.email) {
-          errors.email = "Required";
+          errors.email = t("auth.required");
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-          errors.email = "Invalid email address";
+          errors.email = t("auth.badEmail");
         }
         if (!values.password) {
-          errors.password = "Required";
+          errors.password = t("auth.required");
         }
         return errors;
       }}
@@ -51,13 +54,13 @@ const Page = () => {
       }) => (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={styles.container}>
-            <Stack.Screen options={{ title: "Login" }} />
+            <Stack.Screen options={{ title: t("login.pageTitle") }} />
             <Text variant="titleLarge" style={styles.title}>
-              Login to your Senso account
+              {t("login.description")}
             </Text>
             <TextInput
               mode="outlined"
-              label="Email"
+              label={t("auth.email")}
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
               value={values.email}
@@ -72,7 +75,7 @@ const Page = () => {
             )}
             <TextInput
               mode="outlined"
-              label="Password"
+              label={t("auth.password")}
               onChangeText={handleChange("password")}
               onBlur={handleBlur("password")}
               value={values.password}
@@ -91,12 +94,14 @@ const Page = () => {
               onPress={() => handleSubmit()}
               style={styles.submit}
             >
-              Continue
+              {t("login.continueButton")}
             </Button>
             <Text style={styles.submit}>
-              Don't have an account?{" "}
+              {t("login.registerPrompt")}{" "}
               <Link href="/auth/register" replace>
-                <Text style={{ color: theme.colors.primary }}>Sign up</Text>
+                <Text style={{ color: theme.colors.primary }}>
+                  {t("login.registerButton")}
+                </Text>
               </Link>
             </Text>
           </View>

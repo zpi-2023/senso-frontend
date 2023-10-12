@@ -1,32 +1,27 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import { SplashScreen, Stack } from "expo-router";
-import { useColorScheme } from "react-native";
 import { PaperProvider } from "react-native-paper";
 
-import { useFontLoader } from "@/util";
 import { AuthProvider } from "@/util/api/auth";
+import { I18nProvider } from "@/util/i18n";
+import { ProviderList } from "@/util/provider-list";
+import { ThemeProvider } from "@/util/theme-provider";
+import { useFontLoader } from "@/util/use-font-loader";
 
 export { ErrorBoundary } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const loaded = useFontLoader();
+  if (!loaded) {
+    return null;
+  }
 
-  return loaded ? (
-    <AuthProvider>
-      <PaperProvider>
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-          <Stack />
-        </ThemeProvider>
-      </PaperProvider>
-    </AuthProvider>
-  ) : null;
+  return (
+    <ProviderList
+      providers={[I18nProvider, AuthProvider, PaperProvider, ThemeProvider]}
+    >
+      <Stack />
+    </ProviderList>
+  );
 }
