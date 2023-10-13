@@ -1,5 +1,6 @@
 import { Link, Stack } from "expo-router";
 import { Formik } from "formik";
+import { useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -32,20 +33,27 @@ const Page = () => {
   const theme = useTheme();
   const { t } = useI18n();
 
+  const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
+
   if (identity.isLoggedIn) {
     return <RedirectIfNotLoggedOut identity={identity} />;
   }
 
-  const onSubmit = (values: IRegisterForm) =>
-    POST("/api/v1/account", { body: values }).then((resp) => {
-      if (!resp.error) {
-        POST("/api/v1/token", { body: values }).then((resp) => {
-          if (!resp.error) {
-            identity.logIn(resp.data.token!); // TODO: Swagger should mark this as non-nullable
-          }
-        });
-      }
-    });
+  const onSubmit = async (values: IRegisterForm) => {
+    const body = {
+      ...values,
+      // Empty string is not a valid value for phoneNumber, but null is.
+      phoneNumber: values.phoneNumber ? values.phoneNumber : null,
+    };
+    setStatus("pending");
+    const accountRes = await POST("/api/v1/account", { body });
+    const tokenRes = await POST("/api/v1/token", { body });
+    if (accountRes.error || tokenRes.error) {
+      setStatus("error");
+    } else {
+      identity.logIn(tokenRes.data.token);
+    }
+  };
 
   return (
     <Formik
@@ -80,7 +88,7 @@ const Page = () => {
         } else if (values.confirmPassword !== values.password) {
           errors.confirmPassword = t("register.passwordMismatch");
         }
-        if (!/^[0-9]{9}$/.test(values.phoneNumber) && values.phoneNumber) {
+        if (values.phoneNumber && !/^[0-9]{9}$/.test(values.phoneNumber)) {
           errors.phoneNumber = t("register.badPhoneNumber");
         }
         return errors;
@@ -173,12 +181,18 @@ const Page = () => {
                 </HelperText>
               )}
               <Button
+                disabled={status === "pending"}
                 mode="contained"
                 onPress={() => handleSubmit()}
                 style={styles.submit}
               >
                 {t("register.registerButton")}
               </Button>
+              {status === "error" ? (
+                <HelperText type="error" style={styles.errorMessage}>
+                  {t("register.serverError")}
+                </HelperText>
+              ) : null}
               <Text style={styles.submit}>
                 {t("register.loginPrompt")}{" "}
                 <Link href="/auth/login" replace>

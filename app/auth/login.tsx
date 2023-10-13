@@ -1,5 +1,6 @@
 import { Link, Stack } from "expo-router";
 import { Formik } from "formik";
+import { useState } from "react";
 import {
   Keyboard,
   StyleSheet,
@@ -23,16 +24,21 @@ const Page = () => {
   const theme = useTheme();
   const { t } = useI18n();
 
+  const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
+
   if (identity.isLoggedIn) {
     return <RedirectIfNotLoggedOut identity={identity} />;
   }
 
-  const onSubmit = (values: { email: string; password: string }) =>
-    POST("/api/v1/token", { body: values }).then((resp) => {
-      if (!resp.error) {
-        identity.logIn(resp.data.token!); // TODO: Swagger should mark this as non-nullable
-      }
-    });
+  const onSubmit = async (body: { email: string; password: string }) => {
+    setStatus("pending");
+    const res = await POST("/api/v1/token", { body });
+    if (res.error) {
+      setStatus("error");
+    } else {
+      identity.logIn(res.data.token);
+    }
+  };
 
   return (
     <Formik
@@ -99,12 +105,18 @@ const Page = () => {
               </HelperText>
             )}
             <Button
+              disabled={status === "pending"}
               mode="contained"
               onPress={() => handleSubmit()}
               style={styles.submit}
             >
               {t("login.continueButton")}
             </Button>
+            {status === "error" ? (
+              <HelperText type="error" style={styles.errorMessage}>
+                {t("login.badCredentials")}
+              </HelperText>
+            ) : null}
             <Text style={styles.submit}>
               {t("login.registerPrompt")}{" "}
               <Link href="/auth/register" replace>

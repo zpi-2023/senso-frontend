@@ -80,13 +80,13 @@ export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     CreateAccountDto: {
-      email?: string;
-      password?: string;
+      email: string;
+      password: string;
       phoneNumber?: string | null;
     };
     GetAccountByCredentialsDto: {
-      email?: string;
-      password?: string;
+      email: string;
+      password: string;
     };
     HealthcheckDto: {
       server?: components["schemas"]["HealthcheckStatus"];
@@ -104,7 +104,7 @@ export interface components {
       [key: string]: unknown;
     };
     TokenDto: {
-      token?: string;
+      token: string;
     };
   };
   responses: never;
