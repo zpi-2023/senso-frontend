@@ -38,7 +38,7 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
               {error?.toString()}
             </MonoText>
             {/* Escape hatch to let us test client without server in development */}
-            <Link href="/profile/list" replace>
+            <Link href="/auth/login" replace>
               <Button textColor="red">IGNORE</Button>
             </Link>
           </>

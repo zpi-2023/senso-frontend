@@ -1,4 +1,4 @@
-import { Link, Stack } from "expo-router";
+import { router, Link, Stack } from "expo-router";
 import { Formik } from "formik";
 import {
   Keyboard,
@@ -23,6 +23,7 @@ const Page = () => {
   const handleFormSubmit = (values: { email: string; password: string }) => {
     // TODO: Handle form submission, send data to backend API
     console.log(values);
+    router.replace("/profile/list");
   };
 
   return (
