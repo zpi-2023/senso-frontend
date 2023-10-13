@@ -131,8 +131,12 @@
     "pl": "Twój profil seniora"
   },
   "profileList.seniorNameFallback": {
-    "en": "Senior",
-    "pl": "Senior"
+    "en": "You",
+    "pl": "Ty"
+  },
+  "profileList.seniorDescription": {
+    "en": "Click to log in to your profile",
+    "pl": "Kliknij, aby zalogować się do profilu"
   },
   "profileList.newProfileButton": {
     "en": "Add new profile",

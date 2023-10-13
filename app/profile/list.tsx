@@ -6,8 +6,8 @@ import { useI18n } from "@/util/i18n";
 
 const mockApiResponse = {
   profiles: [
-    { type: "caretaker", seniorId: "2137" },
-    { type: "caretaker", seniorId: "123" },
+    { type: "caretaker", seniorId: "2137", seniorAlias: "Jan Kowalski" },
+    { type: "caretaker", seniorId: "123", seniorAlias: "Grzegorz Floryda" },
     { type: "senior", seniorId: "789" },
   ],
 };
@@ -34,12 +34,12 @@ const ProfilesList = () => {
         <ScrollView style={styles.scrollView}>
           {profiles
             .filter(({ type }) => type !== "senior")
-            .map(({ seniorId }) => {
+            .map(({ seniorId, seniorAlias }) => {
               return (
                 <List.Item
                   key={seniorId}
                   title={t("profileList.caretakerNameFallback")}
-                  description={`Senior ID: ${seniorId}`}
+                  description={`Senior: ${seniorAlias || seniorId}`}
                   onPress={() => handleItemPress(seniorId)}
                   style={styles.listItem}
                   titleStyle={styles.listItemTitle}
@@ -62,7 +62,7 @@ const ProfilesList = () => {
             </List.Subheader>
             <List.Item
               title={t("profileList.seniorNameFallback")}
-              description={`Senior ID: ${seniorProfile.seniorId}`}
+              description={t("profileList.seniorDescription")}
               onPress={() => handleItemPress(seniorProfile.seniorId)}
               style={styles.listItem}
               titleStyle={styles.listItemTitle}
