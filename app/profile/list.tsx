@@ -2,6 +2,8 @@ import { Link, Stack } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Avatar, Button, List } from "react-native-paper";
 
+import { useI18n } from "@/util/i18n";
+
 const mockApiResponse = {
   profiles: [
     { type: "caretaker", seniorId: "2137" },
@@ -11,6 +13,7 @@ const mockApiResponse = {
 };
 
 const ProfilesList = () => {
+  const { t } = useI18n();
   const profiles = mockApiResponse.profiles;
   const seniorProfile = profiles.find(({ type }) => type === "senior");
   const hasCaretakerProfile = profiles.some(({ type }) => type === "caretaker");
@@ -21,11 +24,11 @@ const ProfilesList = () => {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: "Profiles" }} />
+      <Stack.Screen options={{ title: t("profileList.pageTitle") }} />
       <List.Section>
         {hasCaretakerProfile && (
           <List.Subheader style={styles.listSubheader}>
-            Caretaker profiles
+            {t("profileList.caretakersHeader")}
           </List.Subheader>
         )}
         <ScrollView style={styles.scrollView}>
@@ -35,7 +38,7 @@ const ProfilesList = () => {
               return (
                 <List.Item
                   key={seniorId}
-                  title="Caretaker"
+                  title={t("profileList.caretakerNameFallback")}
                   description={`Senior ID: ${seniorId}`}
                   onPress={() => handleItemPress(seniorId)}
                   style={styles.listItem}
@@ -55,10 +58,10 @@ const ProfilesList = () => {
         {seniorProfile && (
           <>
             <List.Subheader style={styles.listSubheader}>
-              Your senior profile
+              {t("profileList.seniorHeader")}
             </List.Subheader>
             <List.Item
-              title="Senior"
+              title={t("profileList.seniorNameFallback")}
               description={`Senior ID: ${seniorProfile.seniorId}`}
               onPress={() => handleItemPress(seniorProfile.seniorId)}
               style={styles.listItem}
@@ -78,7 +81,7 @@ const ProfilesList = () => {
       <View style={styles.newProfileButtonWrapper}>
         <Link href="/profile/add">
           <Button icon="plus" mode="contained" uppercase>
-            Add new profile
+            {t("profileList.newProfileButton")}
           </Button>
         </Link>
       </View>
