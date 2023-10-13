@@ -1,14 +1,12 @@
 import {
   type PropsWithChildren,
-  type Dispatch,
-  type SetStateAction,
   createContext,
   useContext,
-  useState,
   useCallback,
   useMemo,
 } from "react";
 
+import { useIdentityStorage } from "./storage";
 import {
   Identity,
   IdentityData,
@@ -20,7 +18,7 @@ import {
 
 const IdentityContext = createContext<{
   data: IdentityData;
-  setData: Dispatch<SetStateAction<IdentityData>>;
+  setData: (newData: IdentityData) => void;
 }>({ data: { known: "nothing" }, setData: () => {} });
 
 const buildIdentity = (
@@ -72,7 +70,7 @@ export const useIdentity = (): Identity => {
   const logOut = useCallback(() => setData({ known: "nothing" }), [setData]);
   const selectProfile = useCallback(
     (profile: Profile) =>
-      setData((data) =>
+      setData(
         data.known !== "nothing"
           ? {
               known: "profile",
@@ -81,7 +79,7 @@ export const useIdentity = (): Identity => {
             }
           : data,
       ),
-    [setData],
+    [data, setData],
   );
 
   return useMemo(
@@ -96,7 +94,7 @@ export const useIdentity = (): Identity => {
  * @see useIdentity
  */
 export const IdentityProvider = ({ children }: PropsWithChildren) => {
-  const [data, setData] = useState<IdentityData>({ known: "nothing" });
+  const [data, setData] = useIdentityStorage({ known: "nothing" });
   return (
     <IdentityContext.Provider value={{ data, setData }}>
       {children}

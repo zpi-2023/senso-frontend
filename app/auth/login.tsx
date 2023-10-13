@@ -104,6 +104,11 @@ const Page = () => {
                 {errors.password}
               </HelperText>
             )}
+            {status === "error" ? (
+              <HelperText type="error" style={styles.errorMessage}>
+                {t("login.badCredentials")}
+              </HelperText>
+            ) : null}
             <Button
               disabled={status === "pending"}
               mode="contained"
@@ -112,11 +117,6 @@ const Page = () => {
             >
               {t("login.continueButton")}
             </Button>
-            {status === "error" ? (
-              <HelperText type="error" style={styles.errorMessage}>
-                {t("login.badCredentials")}
-              </HelperText>
-            ) : null}
             <Text style={styles.submit}>
               {t("login.registerPrompt")}{" "}
               <Link href="/auth/register" replace>

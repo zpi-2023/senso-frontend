@@ -180,6 +180,11 @@ const Page = () => {
                   {errors.phoneNumber}
                 </HelperText>
               )}
+              {status === "error" ? (
+                <HelperText type="error" style={styles.errorMessage}>
+                  {t("register.serverError")}
+                </HelperText>
+              ) : null}
               <Button
                 disabled={status === "pending"}
                 mode="contained"
@@ -188,11 +193,6 @@ const Page = () => {
               >
                 {t("register.registerButton")}
               </Button>
-              {status === "error" ? (
-                <HelperText type="error" style={styles.errorMessage}>
-                  {t("register.serverError")}
-                </HelperText>
-              ) : null}
               <Text style={styles.submit}>
                 {t("register.loginPrompt")}{" "}
                 <Link href="/auth/login" replace>
