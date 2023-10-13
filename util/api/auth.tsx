@@ -17,12 +17,14 @@ const AuthContext = createContext<AuthData>({
 
 /**
  * Reads or modifies data from the encompassing authorization context.
+ *
  * @see AuthProvider
  */
 export const useAuth = () => useContext(AuthContext);
 
 /**
  * Provides authorization context access to its children.
+ *
  * @see useAuth
  */
 export const AuthProvider = ({ children }: PropsWithChildren) => {

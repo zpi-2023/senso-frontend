@@ -16,6 +16,8 @@ import {
   useTheme,
 } from "react-native-paper";
 
+import { useI18n } from "@/util/i18n";
+
 interface IRegisterForm {
   email: string;
   password: string;
@@ -25,6 +27,7 @@ interface IRegisterForm {
 
 const Page = () => {
   const theme = useTheme();
+  const { t } = useI18n();
 
   const handleFormSubmit = (values: IRegisterForm) => {
     // TODO: Handle form submission, send data to backend API
@@ -50,22 +53,22 @@ const Page = () => {
           phoneNumber?: string;
         } = {};
         if (!values.email) {
-          errors.email = "Required";
+          errors.email = t("auth.required");
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-          errors.email = "Invalid email address";
+          errors.email = t("auth.badEmail");
         }
         if (!values.password) {
-          errors.password = "Required";
+          errors.password = t("auth.required");
         } else if (values.password.length < 8) {
-          errors.password = "Password must have at least 8 letters";
+          errors.password = t("register.badPasswordLength", { length: 8 });
         }
         if (!values.confirmPassword) {
-          errors.confirmPassword = "Required";
+          errors.confirmPassword = t("auth.required");
         } else if (values.confirmPassword !== values.password) {
-          errors.confirmPassword = "Passwords do not match";
+          errors.confirmPassword = t("register.passwordMismatch");
         }
         if (!/^[0-9]{9}$/.test(values.phoneNumber) && values.phoneNumber) {
-          errors.phoneNumber = "Invalid phone number";
+          errors.phoneNumber = t("register.badPhoneNumber");
         }
         return errors;
       }}
@@ -86,13 +89,13 @@ const Page = () => {
         >
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
-              <Stack.Screen options={{ title: "Register" }} />
+              <Stack.Screen options={{ title: t("register.pageTitle") }} />
               <Text variant="titleLarge" style={styles.title}>
-                Create your Senso account
+                {t("register.description")}
               </Text>
               <TextInput
                 mode="outlined"
-                label="Email"
+                label={t("auth.email")}
                 onChangeText={handleChange("email")}
                 onBlur={handleBlur("email")}
                 value={values.email}
@@ -107,7 +110,7 @@ const Page = () => {
               )}
               <TextInput
                 mode="outlined"
-                label="Password"
+                label={t("auth.password")}
                 onChangeText={handleChange("password")}
                 onBlur={handleBlur("password")}
                 value={values.password}
@@ -125,7 +128,7 @@ const Page = () => {
               )}
               <TextInput
                 mode="outlined"
-                label="Confirm Password"
+                label={t("register.confirmPassword")}
                 onChangeText={handleChange("confirmPassword")}
                 onBlur={handleBlur("confirmPassword")}
                 value={values.confirmPassword}
@@ -143,7 +146,7 @@ const Page = () => {
               )}
               <TextInput
                 mode="outlined"
-                label="Phone Number (optional)"
+                label={t("register.phoneNumber")}
                 onChangeText={handleChange("phoneNumber")}
                 onBlur={handleBlur("phoneNumber")}
                 value={values.phoneNumber}
@@ -161,12 +164,14 @@ const Page = () => {
                 onPress={() => handleSubmit()}
                 style={styles.submit}
               >
-                Register
+                {t("register.registerButton")}
               </Button>
               <Text style={styles.submit}>
-                Already have an account?{" "}
+                {t("register.loginPrompt")}{" "}
                 <Link href="/auth/login" replace>
-                  <Text style={{ color: theme.colors.primary }}>Sign in</Text>
+                  <Text style={{ color: theme.colors.primary }}>
+                    {t("register.loginButton")}
+                  </Text>
                 </Link>
               </Text>
             </View>
