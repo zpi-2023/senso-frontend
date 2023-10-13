@@ -141,5 +141,9 @@
   "profileList.newProfileButton": {
     "en": "Add new profile",
     "pl": "Dodaj nowy profil"
+  },
+  "profileList.noProfiles": {
+    "en": "You don't have any profiles yet.",
+    "pl": "Nie masz jeszcze żadnych profili."
   }
 }
