@@ -12,24 +12,28 @@ class InvalidRedirectUsageError extends Error {
 }
 
 /**
- * Redirects to the dashboard if the user is logged in and has a selected profile.
+ * Redirects to the login page if the user is not logged in.
  *
  * Redirects to the profile selection page if the user is logged in but has no selected profile.
  *
  * Should be used inside a conditional to narrow the type of the identity object.
  *
  * @throws {InvalidRedirectUsageError} If the user is logged out.
- * @see RedirectIfNotLoggedIn
- * @see RedirectIfNotHasProfile
+ * @see RedirectIfLoggedOut
+ * @see RedirectIfLoggedIn
+ * @example
+ * if (!identity.hasProfile) {
+ *   return <RedirectIfNoProfile identity={identity} />;
+ * }
  */
-export const RedirectIfNotLoggedOut = ({ identity }: RedirectProps) => {
-  if (identity.hasProfile) {
-    return <Redirect href="/dashboard" />;
+export const RedirectIfNoProfile = ({ identity }: RedirectProps) => {
+  if (!identity.isLoggedIn) {
+    return <Redirect href="/auth/login" />;
   }
-  if (identity.isLoggedIn) {
-    return <Redirect href="/profiles/select" />;
+  if (!identity.hasProfile) {
+    return <Redirect href="/profiles/list" />;
   }
-  throw new InvalidRedirectUsageError(RedirectIfNotLoggedOut);
+  throw new InvalidRedirectUsageError(RedirectIfNoProfile);
 };
 
 /**
@@ -38,33 +42,41 @@ export const RedirectIfNotLoggedOut = ({ identity }: RedirectProps) => {
  * Should be used inside a conditional to narrow the type of the identity object.
  *
  * @throws {InvalidRedirectUsageError} If the user is logged in.
- * @see RedirectIfNotLoggedOut
- * @see RedirectIfNotHasProfile
+ * @see RedirectIfLoggedIn
+ * @see RedirectIfNoProfile
+ * @example
+ * if (!identity.isLoggedIn) {
+ *   return <RedirectIfLoggedOut identity={identity} />;
+ * }
  */
-export const RedirectIfNotLoggedIn = ({ identity }: RedirectProps) => {
+export const RedirectIfLoggedOut = ({ identity }: RedirectProps) => {
   if (!identity.isLoggedIn) {
     return <Redirect href="/auth/login" />;
   }
-  throw new InvalidRedirectUsageError(RedirectIfNotLoggedIn);
+  throw new InvalidRedirectUsageError(RedirectIfLoggedOut);
 };
 
 /**
- * Redirects to the login page if the user is not logged in.
+ * Redirects to the dashboard if the user is logged in and has a selected profile.
  *
  * Redirects to the profile selection page if the user is logged in but has no selected profile.
  *
  * Should be used inside a conditional to narrow the type of the identity object.
  *
  * @throws {InvalidRedirectUsageError} If the user is logged out.
- * @see RedirectIfNotLoggedIn
- * @see RedirectIfNotLoggedOut
+ * @see RedirectIfLoggedOut
+ * @see RedirectIfNoProfile
+ * @example
+ * if (identity.isLoggedIn) {
+ *    return <RedirectIfLoggedIn identity={identity} />;
+ * }
  */
-export const RedirectIfNotHasProfile = ({ identity }: RedirectProps) => {
-  if (!identity.isLoggedIn) {
-    return <Redirect href="/auth/login" />;
+export const RedirectIfLoggedIn = ({ identity }: RedirectProps) => {
+  if (identity.hasProfile) {
+    return <Redirect href="/dashboard" />;
   }
-  if (!identity.hasProfile) {
-    return <Redirect href="/profiles/select" />;
+  if (identity.isLoggedIn) {
+    return <Redirect href="/profiles/list" />;
   }
-  throw new InvalidRedirectUsageError(RedirectIfNotHasProfile);
+  throw new InvalidRedirectUsageError(RedirectIfLoggedIn);
 };

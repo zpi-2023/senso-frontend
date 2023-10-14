@@ -1,7 +1,7 @@
 export { useIdentity, IdentityProvider } from "./context";
 export {
-  RedirectIfNotLoggedOut,
-  RedirectIfNotLoggedIn,
-  RedirectIfNotHasProfile,
+  RedirectIfNoProfile,
+  RedirectIfLoggedOut,
+  RedirectIfLoggedIn,
 } from "./redirects";
 export type { Identity, Profile } from "./types";

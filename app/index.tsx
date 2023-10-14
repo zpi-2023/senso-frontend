@@ -4,7 +4,7 @@ import { ActivityIndicator, Button, Text } from "react-native-paper";
 
 import { BASE_URL, useApi } from "@/common/api";
 import { useI18n } from "@/common/i18n";
-import { useIdentity, RedirectIfNotLoggedOut } from "@/common/identity";
+import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 import { MonoText } from "@/components/StyledText";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
@@ -13,10 +13,6 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
   });
   const { t } = useI18n();
   const identity = useIdentity();
-
-  if (identity.isLoggedIn) {
-    return <RedirectIfNotLoggedOut identity={identity} />;
-  }
 
   if (isLoading) {
     return <ActivityIndicator size="large" />;
@@ -52,6 +48,10 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
         ) : null}
       </>
     );
+  }
+
+  if (identity.isLoggedIn) {
+    return <RedirectIfLoggedIn identity={identity} />;
   }
 
   return (

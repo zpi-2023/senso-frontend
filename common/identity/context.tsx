@@ -7,58 +7,20 @@ import {
 } from "react";
 
 import { useIdentityStorage } from "./storage";
-import {
-  Identity,
-  IdentityData,
-  LogIn,
-  LogOut,
-  Profile,
-  SelectProfile,
-} from "./types";
+import type { Identity, IdentityData, Profile } from "./types";
+import { buildIdentity } from "./util";
 
-const IdentityContext = createContext<{
+export const IdentityContext = createContext<{
   data: IdentityData;
   setData: (newData: IdentityData) => void;
 }>({ data: { known: "nothing" }, setData: () => {} });
-
-const buildIdentity = (
-  data: IdentityData,
-  {
-    logIn,
-    logOut,
-    selectProfile,
-  }: { logIn: LogIn; logOut: LogOut; selectProfile: SelectProfile },
-): Identity => {
-  if (data.known === "nothing") {
-    return { isLoggedIn: false, hasProfile: false, logIn };
-  }
-
-  const common = {
-    token: data.token,
-    isLoggedIn: true as const,
-    logOut,
-    selectProfile,
-  };
-
-  switch (data.known) {
-    case "account":
-      return {
-        ...common,
-        hasProfile: false,
-      };
-    case "profile":
-      return {
-        ...common,
-        profile: data.profile,
-        hasProfile: true,
-      };
-  }
-};
 
 /**
  * Reads or modifies data from the encompassing identity context.
  *
  * @see IdentityProvider
+ * @example
+ * const identity = useIdentity();
  */
 export const useIdentity = (): Identity => {
   const { data, setData } = useContext(IdentityContext);

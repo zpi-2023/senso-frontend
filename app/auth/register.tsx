@@ -19,7 +19,7 @@ import {
 
 import { POST } from "@/common/api";
 import { useI18n } from "@/common/i18n";
-import { useIdentity, RedirectIfNotLoggedOut } from "@/common/identity";
+import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 
 interface IRegisterForm {
   email: string;
@@ -36,7 +36,7 @@ const Page = () => {
   const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
 
   if (identity.isLoggedIn) {
-    return <RedirectIfNotLoggedOut identity={identity} />;
+    return <RedirectIfLoggedIn identity={identity} />;
   }
 
   const onSubmit = async (values: IRegisterForm) => {

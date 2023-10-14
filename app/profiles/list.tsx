@@ -1,13 +1,13 @@
 import { Text } from "react-native";
 import { Button } from "react-native-paper";
 
-import { useIdentity, RedirectIfNotLoggedIn } from "@/common/identity";
+import { useIdentity, RedirectIfLoggedOut } from "@/common/identity";
 
 const Page = () => {
   const identity = useIdentity();
 
   if (!identity.isLoggedIn) {
-    return <RedirectIfNotLoggedIn identity={identity} />;
+    return <RedirectIfLoggedOut identity={identity} />;
   }
 
   return (
