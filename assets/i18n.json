@@ -121,5 +121,37 @@
   "landing.tryAgain": {
     "en": "Try again",
     "pl": "Spróbuj ponownie"
+  },
+  "profileList.pageTitle": {
+    "en": "Profiles",
+    "pl": "Profile"
+  },
+  "profileList.caretakersHeader": {
+    "en": "Caretaker profiles",
+    "pl": "Profile opiekunów"
+  },
+  "profileList.caretakerNameFallback": {
+    "en": "Caretaker",
+    "pl": "Opiekun"
+  },
+  "profileList.seniorHeader": {
+    "en": "Your senior profile",
+    "pl": "Twój profil seniora"
+  },
+  "profileList.seniorNameFallback": {
+    "en": "You",
+    "pl": "Ty"
+  },
+  "profileList.seniorDescription": {
+    "en": "Click to log in to your profile",
+    "pl": "Kliknij, aby zalogować się do profilu"
+  },
+  "profileList.newProfileButton": {
+    "en": "Add new profile",
+    "pl": "Dodaj nowy profil"
+  },
+  "profileList.noProfiles": {
+    "en": "You don't have any profiles yet.",
+    "pl": "Nie masz jeszcze żadnych profili."
   }
 }
