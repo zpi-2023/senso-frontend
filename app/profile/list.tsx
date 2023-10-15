@@ -1,27 +1,39 @@
-import { Link, Stack } from "expo-router";
+import { Link, Stack, router } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Avatar, Button, List } from "react-native-paper";
 
-import { IProfile } from "./interfaces";
-
-import { useI18n } from "@/util/i18n";
+import { useI18n } from "@/common/i18n";
+import {
+  Profile,
+  isSenior,
+  isCaretaker,
+  useIdentity,
+  RedirectIfLoggedOut,
+} from "@/common/identity";
 
 const mockApiResponse = {
   profiles: [
-    { type: "caretaker", seniorId: "2137", seniorAlias: "Jan Kowalski" },
-    { type: "caretaker", seniorId: "123", seniorAlias: "Grzegorz Floryda" },
-    { type: "senior", seniorId: "789" },
-  ] as IProfile[],
+    { type: "caretaker", seniorId: 2137, seniorAlias: "Jan Kowalski" },
+    { type: "caretaker", seniorId: 123, seniorAlias: "Grzegorz Floryda" },
+    { type: "senior", seniorId: 789 },
+  ] as Profile[],
 };
 
 const ProfilesList = () => {
   const { t } = useI18n();
-  const profiles = mockApiResponse.profiles;
-  const seniorProfile = profiles.find(({ type }) => type === "senior");
-  const caretakerProfiles = profiles.filter(({ type }) => type === "caretaker");
+  const identity = useIdentity();
 
-  const handleItemPress = (seniorId: string) => {
-    console.log(seniorId); // TODO: navigate to profile
+  if (!identity.isLoggedIn) {
+    return <RedirectIfLoggedOut identity={identity} />;
+  }
+
+  const profiles = mockApiResponse.profiles;
+  const seniorProfile = profiles.find(isSenior);
+  const caretakerProfiles = profiles.filter(isCaretaker);
+
+  const handleItemPress = (profile: Profile) => {
+    identity.selectProfile(profile);
+    router.push("/dashboard");
   };
 
   return (
@@ -34,13 +46,13 @@ const ProfilesList = () => {
           </List.Subheader>
         )}
         <ScrollView style={styles.scrollView}>
-          {caretakerProfiles.map(({ seniorId, seniorAlias }) => {
+          {caretakerProfiles.map((p) => {
             return (
               <List.Item
-                key={seniorId}
+                key={p.seniorId}
                 title={t("profileList.caretakerNameFallback")}
-                description={`Senior: ${seniorAlias || seniorId}`}
-                onPress={() => handleItemPress(seniorId)}
+                description={`Senior: ${p.seniorAlias}`}
+                onPress={() => handleItemPress(p)}
                 style={styles.listItem}
                 titleStyle={styles.listItemTitle}
                 descriptionStyle={styles.listItemDescription}
@@ -63,7 +75,7 @@ const ProfilesList = () => {
             <List.Item
               title={t("profileList.seniorNameFallback")}
               description={t("profileList.seniorDescription")}
-              onPress={() => handleItemPress(seniorProfile.seniorId)}
+              onPress={() => handleItemPress(seniorProfile)}
               style={styles.listItem}
               titleStyle={styles.listItemTitle}
               descriptionStyle={styles.listItemDescription}

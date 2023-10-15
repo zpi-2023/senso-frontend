@@ -7,7 +7,7 @@
     "test": "jest",
     "lint": "tsc -p . --noEmit && eslint . --max-warnings=0",
     "format": "prettier . --write --log-level silent",
-    "gen-api": "npx openapi-typescript http://localhost:8088/swagger/v1/swagger.json -o util/api/schema.d.ts",
+    "gen-api": "npx openapi-typescript http://localhost:8088/swagger/v1/swagger.json -o common/api/schema.d.ts",
     "prepare": "husky install"
   },
   "jest": {
@@ -16,7 +16,7 @@
       "@/(.*)": "<rootDir>/$1"
     },
     "setupFilesAfterEnv": [
-      "<rootDir>/util/setup-tests.ts"
+      "<rootDir>/common/util/setup-tests.ts"
     ]
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.72.4",
     "react-native-gesture-handler": "~2.12.0",
+    "react-native-mmkv": "^2.10.2",
     "react-native-paper": "^5.10.6",
     "react-native-safe-area-context": "^4.6.3",
     "react-native-screens": "~3.22.0",

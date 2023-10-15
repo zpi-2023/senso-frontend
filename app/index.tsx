@@ -2,14 +2,17 @@ import { Link, Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 
+import { BASE_URL, useApi } from "@/common/api";
+import { useI18n } from "@/common/i18n";
+import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 import { MonoText } from "@/components/StyledText";
-import { BASE_URL, useApi, useAuth } from "@/util/api";
-import { useI18n } from "@/util/i18n";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
-  const { data, isLoading, error, mutate } = useApi({ url: "/healthz" });
-  const { token } = useAuth();
+  const { data, isLoading, error, mutate } = useApi({
+    url: "/api/v1/healthz",
+  });
   const { t } = useI18n();
+  const identity = useIdentity();
 
   if (isLoading) {
     return <ActivityIndicator size="large" />;
@@ -47,8 +50,8 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
     );
   }
 
-  if (token) {
-    // TODO: redirect if logged in
+  if (identity.isLoggedIn) {
+    return <RedirectIfLoggedIn identity={identity} />;
   }
 
   return (

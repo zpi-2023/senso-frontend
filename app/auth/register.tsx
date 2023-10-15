@@ -1,5 +1,6 @@
-import { Link, Stack, router } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { Formik } from "formik";
+import { useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -16,7 +17,9 @@ import {
   useTheme,
 } from "react-native-paper";
 
-import { useI18n } from "@/util/i18n";
+import { POST } from "@/common/api";
+import { useI18n } from "@/common/i18n";
+import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 
 interface IRegisterForm {
   email: string;
@@ -26,13 +29,30 @@ interface IRegisterForm {
 }
 
 const Page = () => {
+  const identity = useIdentity();
   const theme = useTheme();
   const { t } = useI18n();
 
-  const handleFormSubmit = (values: IRegisterForm) => {
-    // TODO: Handle form submission, send data to backend API
-    console.log({ submittingValues: values });
-    router.replace("/profile/list");
+  const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
+
+  if (identity.isLoggedIn) {
+    return <RedirectIfLoggedIn identity={identity} />;
+  }
+
+  const onSubmit = async (values: IRegisterForm) => {
+    const body = {
+      ...values,
+      // Empty string is not a valid value for phoneNumber, but null is.
+      phoneNumber: values.phoneNumber ? values.phoneNumber : null,
+    };
+    setStatus("pending");
+    const accountRes = await POST("/api/v1/account", { body });
+    const tokenRes = await POST("/api/v1/token", { body });
+    if (accountRes.error || tokenRes.error) {
+      setStatus("error");
+    } else {
+      identity.logIn(tokenRes.data.token);
+    }
   };
 
   return (
@@ -45,7 +65,7 @@ const Page = () => {
           phoneNumber: "",
         } as IRegisterForm
       }
-      onSubmit={handleFormSubmit}
+      onSubmit={onSubmit}
       validate={(values) => {
         const errors: {
           email?: string;
@@ -68,7 +88,7 @@ const Page = () => {
         } else if (values.confirmPassword !== values.password) {
           errors.confirmPassword = t("register.passwordMismatch");
         }
-        if (!/^[0-9]{9}$/.test(values.phoneNumber) && values.phoneNumber) {
+        if (values.phoneNumber && !/^[0-9]{9}$/.test(values.phoneNumber)) {
           errors.phoneNumber = t("register.badPhoneNumber");
         }
         return errors;
@@ -160,7 +180,13 @@ const Page = () => {
                   {errors.phoneNumber}
                 </HelperText>
               )}
+              {status === "error" ? (
+                <HelperText type="error" style={styles.errorMessage}>
+                  {t("register.serverError")}
+                </HelperText>
+              ) : null}
               <Button
+                disabled={status === "pending"}
                 mode="contained"
                 onPress={() => handleSubmit()}
                 style={styles.submit}

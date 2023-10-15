@@ -54,6 +54,10 @@
     "en": "Register",
     "pl": "Zarejestruj się"
   },
+  "login.badCredentials": {
+    "en": "The credentials are incorrect",
+    "pl": "Podane dane są nieprawidłowe"
+  },
   "register.pageTitle": {
     "en": "Register",
     "pl": "Rejestracja"
@@ -83,7 +87,7 @@
     "pl": "Zaloguj się"
   },
   "register.badPasswordLength": {
-    "en": "Password must have at least {length} letters",
+    "en": "Password must have at least {length} characters",
     "pl": "Hasło musi mieć co najmniej {length} znaków"
   },
   "register.passwordMismatch": {
@@ -93,6 +97,10 @@
   "register.badPhoneNumber": {
     "en": "Invalid phone number",
     "pl": "Błędny numer telefonu"
+  },
+  "register.serverError": {
+    "en": "Could not create the account",
+    "pl": "Nie udało się utworzyć konta"
   },
   "landing.pageTitle": {
     "en": "Start",

@@ -1,7 +1,8 @@
 import useSWR from "swr";
 
-import { useAuth } from "./auth";
 import { type GetPath, type GetOptions, fetcher } from "./client";
+
+import { Identity, useIdentity } from "@/common/identity";
 
 const TEST_CONFIG = {
   provider: () => new Map(),
@@ -16,10 +17,10 @@ type UseApiArg<P extends GetPath> =
 
 const buildOptions = <P extends GetPath>(
   { params }: NonNullable<UseApiArg<P>>,
-  token: string | null,
+  identity: Identity,
 ): GetOptions<P> => ({
   ...({ params } as GetOptions<P>),
-  headers: { Authorization: `Bearer ${token}` },
+  ...(identity.isLoggedIn ? { Authorization: `Bearer ${identity.token}` } : {}),
 });
 
 /**
@@ -57,9 +58,9 @@ const buildOptions = <P extends GetPath>(
  * mutate({ name: "Blue bike" });
  */
 export const useApi = <P extends GetPath>(arg: UseApiArg<P>) => {
-  const { token } = useAuth();
+  const identity = useIdentity();
   return useSWR(
-    arg ? [arg.url, buildOptions(arg, token)] : null,
+    arg ? [arg.url, buildOptions(arg, identity)] : null,
     (args) => fetcher(...args),
     __DEV__ ? TEST_CONFIG : undefined,
   );

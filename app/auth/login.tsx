@@ -1,5 +1,6 @@
-import { router, Link, Stack } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { Formik } from "formik";
+import { useState } from "react";
 import {
   Keyboard,
   StyleSheet,
@@ -14,22 +15,35 @@ import {
   useTheme,
 } from "react-native-paper";
 
-import { useI18n } from "@/util/i18n";
+import { POST } from "@/common/api";
+import { useI18n } from "@/common/i18n";
+import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 
 const Page = () => {
+  const identity = useIdentity();
   const theme = useTheme();
   const { t } = useI18n();
 
-  const handleFormSubmit = (values: { email: string; password: string }) => {
-    // TODO: Handle form submission, send data to backend API
-    console.log(values);
-    router.replace("/profile/list");
+  const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
+
+  if (identity.isLoggedIn) {
+    return <RedirectIfLoggedIn identity={identity} />;
+  }
+
+  const onSubmit = async (body: { email: string; password: string }) => {
+    setStatus("pending");
+    const res = await POST("/api/v1/token", { body });
+    if (res.error) {
+      setStatus("error");
+    } else {
+      identity.logIn(res.data.token);
+    }
   };
 
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
-      onSubmit={handleFormSubmit}
+      onSubmit={onSubmit}
       validate={(values) => {
         const errors: { email?: string; password?: string } = {};
         if (!values.email) {
@@ -90,7 +104,13 @@ const Page = () => {
                 {errors.password}
               </HelperText>
             )}
+            {status === "error" ? (
+              <HelperText type="error" style={styles.errorMessage}>
+                {t("login.badCredentials")}
+              </HelperText>
+            ) : null}
             <Button
+              disabled={status === "pending"}
               mode="contained"
               onPress={() => handleSubmit()}
               style={styles.submit}
