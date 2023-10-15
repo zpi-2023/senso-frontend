@@ -42,7 +42,7 @@ const testRedirect = async (
   redirect: ReactNode,
   targetRoute: string,
 ) => {
-  const routes = ["/dashboard", "/auth/login", "/profiles/list"];
+  const routes = ["/dashboard", "/auth/login", "/profile/list"];
 
   render(
     <MockRouter
@@ -117,7 +117,7 @@ describe("Identity", () => {
         testRedirect(
           "/dashboard",
           <RedirectIfNoProfile identity={mockIdentityLoggedIn} />,
-          "/profiles/list",
+          "/profile/list",
         ));
     });
 
@@ -142,7 +142,7 @@ describe("Identity", () => {
         testRedirect(
           "/auth/login",
           <RedirectIfLoggedIn identity={mockIdentityLoggedIn} />,
-          "/profiles/list",
+          "/profile/list",
         ));
     });
   });

@@ -31,7 +31,7 @@ export const RedirectIfNoProfile = ({ identity }: RedirectProps) => {
     return <Redirect href="/auth/login" />;
   }
   if (!identity.hasProfile) {
-    return <Redirect href="/profiles/list" />;
+    return <Redirect href="/profile/list" />;
   }
   throw new InvalidRedirectUsageError(RedirectIfNoProfile);
 };
@@ -76,7 +76,7 @@ export const RedirectIfLoggedIn = ({ identity }: RedirectProps) => {
     return <Redirect href="/dashboard" />;
   }
   if (identity.isLoggedIn) {
-    return <Redirect href="/profiles/list" />;
+    return <Redirect href="/profile/list" />;
   }
   throw new InvalidRedirectUsageError(RedirectIfLoggedIn);
 };

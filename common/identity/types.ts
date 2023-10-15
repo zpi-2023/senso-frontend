@@ -1,16 +1,18 @@
-export type Profile =
-  | {
-      type: "senior";
-      /** For `type` `"senior"`, this is the account ID of the current user. */
-      seniorId: number;
-    }
-  | {
-      type: "caretaker";
-      /** For `type` `"caretaker"`, this is the account ID of the senior which is taken care of (another user). */
-      seniorId: number;
-      /** Custom alias for a given senior's account, set by the current caretaker. */
-      seniorAlias: string;
-    };
+export type SeniorProfile = {
+  type: "senior";
+  /** For `type` `"senior"`, this is the account ID of the current user. */
+  seniorId: number;
+};
+
+export type CaretakerProfile = {
+  type: "caretaker";
+  /** For `type` `"caretaker"`, this is the account ID of the senior which is taken care of (another user). */
+  seniorId: number;
+  /** Custom alias for a given senior's account, set by the current caretaker. */
+  seniorAlias: string;
+};
+
+export type Profile = SeniorProfile | CaretakerProfile;
 
 /**
  * State machine representing the current state of the user's identity.
