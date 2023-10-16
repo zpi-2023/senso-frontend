@@ -1,10 +1,11 @@
-import { Link, Stack } from "expo-router";
+import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 
 import { BASE_URL, useApi } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
+import { Header } from "@/components/Header";
 import { MonoText } from "@/components/StyledText";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
@@ -72,7 +73,7 @@ const Page = () => {
   const { t } = useI18n();
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: t("landing.pageTitle") }} />
+      <Header title={t("landing.pageTitle")} />
       <Landing debug={__DEV__} />
     </View>
   );

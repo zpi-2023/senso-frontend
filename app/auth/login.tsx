@@ -1,4 +1,4 @@
-import { Link, Stack } from "expo-router";
+import { Link } from "expo-router";
 import { Formik } from "formik";
 import { useState } from "react";
 import {
@@ -18,6 +18,7 @@ import {
 import { POST } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
+import { Header } from "@/components/Header";
 
 const Page = () => {
   const identity = useIdentity();
@@ -69,7 +70,7 @@ const Page = () => {
       }) => (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={styles.container}>
-            <Stack.Screen options={{ title: t("login.pageTitle") }} />
+            <Header title={t("login.pageTitle")} />
             <Text variant="titleLarge" style={styles.title}>
               {t("login.description")}
             </Text>

@@ -153,5 +153,13 @@
   "profileList.noProfiles": {
     "en": "You don't have any profiles yet.",
     "pl": "Nie masz jeszcze żadnych profili."
+  },
+  "dashboard.pageTitle": {
+    "en": "Dashboard",
+    "pl": "Panel"
+  },
+  "menu.pageTitle": {
+    "en": "Menu",
+    "pl": "Menu"
   }
 }
