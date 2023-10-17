@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import {
   type PropsWithChildren,
   createContext,
@@ -9,6 +10,7 @@ import {
 import { useIdentityStorage } from "./storage";
 import type { Identity, IdentityData, Profile } from "./types";
 import { buildIdentity } from "./util";
+import { clearHistory } from "../util";
 
 export const IdentityContext = createContext<{
   data: IdentityData;
@@ -23,15 +25,30 @@ export const IdentityContext = createContext<{
  * const identity = useIdentity();
  */
 export const useIdentity = (): Identity => {
+  const router = useRouter();
   const { data, setData } = useContext(IdentityContext);
 
   const logIn = useCallback(
-    (token: string) => setData({ known: "account", token }),
-    [setData],
+    (token: string) => {
+      clearHistory(router, "/profile/list");
+      setData({ known: "account", token });
+    },
+    [router, setData],
   );
-  const logOut = useCallback(() => setData({ known: "nothing" }), [setData]);
+  const logOut = useCallback(() => {
+    clearHistory(router, "/auth/login");
+    setData({ known: "nothing" });
+  }, [router, setData]);
   const selectProfile = useCallback(
-    (profile: Profile) =>
+    (profile: Profile) => {
+      switch (profile.type) {
+        case "senior":
+          clearHistory(router, "/dashboard");
+          break;
+        case "caretaker":
+          clearHistory(router, "/menu");
+          break;
+      }
       setData(
         data.known !== "nothing"
           ? {
@@ -40,8 +57,9 @@ export const useIdentity = (): Identity => {
               profile,
             }
           : data,
-      ),
-    [data, setData],
+      );
+    },
+    [router, data, setData],
   );
 
   return useMemo(

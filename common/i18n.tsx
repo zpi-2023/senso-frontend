@@ -12,6 +12,10 @@ const DEFAULT_LANGUAGE = "en";
 type TranslationKey = keyof typeof data;
 type Language = "en" | "pl";
 type I18nData = { language: Language };
+export type Translator = (
+  key: TranslationKey,
+  substitutions?: Record<string, any>,
+) => string;
 
 const I18nContext = createContext<I18nData>({ language: DEFAULT_LANGUAGE });
 
@@ -33,8 +37,8 @@ const I18nContext = createContext<I18nData>({ language: DEFAULT_LANGUAGE });
 export const useI18n = () => {
   const { language } = useContext(I18nContext);
 
-  const t = (key: TranslationKey, substitutions: Record<string, any> = {}) => {
-    const prop = data[key] as Record<Language, string | undefined>;
+  const t: Translator = (key, substitutions = {}) => {
+    const prop = (data[key] ?? {}) as Record<Language, string | undefined>;
     let value = prop[language] ?? prop[DEFAULT_LANGUAGE] ?? null;
 
     if (!value) {

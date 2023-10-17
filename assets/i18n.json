@@ -161,5 +161,17 @@
   "menu.pageTitle": {
     "en": "Menu",
     "pl": "Menu"
+  },
+  "menu.account": {
+    "en": "Account",
+    "pl": "Konto"
+  },
+  "actions.profileList": {
+    "en": "Select profile",
+    "pl": "Zmień profil"
+  },
+  "actions.logOut": {
+    "en": "Log out",
+    "pl": "Wyloguj się"
   }
 }

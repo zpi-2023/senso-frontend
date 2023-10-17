@@ -29,19 +29,19 @@ export type LogIn = (token: string) => void;
 export type LogOut = () => void;
 export type SelectProfile = (profile: Profile) => void;
 
-type IdentityNothingKnown = {
+export type IdentityNothingKnown = {
   isLoggedIn: false;
   hasProfile: false;
   logIn: LogIn;
 };
-type IdentityAccountKnown = {
+export type IdentityAccountKnown = {
   token: string;
   hasProfile: false;
   isLoggedIn: true;
   logOut: LogOut;
   selectProfile: SelectProfile;
 };
-type IdentityProfileKnown = {
+export type IdentityProfileKnown = {
   token: string;
   profile: Profile;
   hasProfile: true;

@@ -8,9 +8,11 @@ import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 import { Header } from "@/components/Header";
 import { MonoText } from "@/components/StyledText";
 
+const HEALTHZ_PATH = "/api/v1/healthz";
+
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
   const { data, isLoading, error, mutate } = useApi({
-    url: "/api/v1/healthz",
+    url: HEALTHZ_PATH,
   });
   const { t } = useI18n();
   const identity = useIdentity();
@@ -35,7 +37,7 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
         {debug ? (
           <>
             <MonoText style={styles.debug}>
-              {new URL("/healthz", BASE_URL).toString()}
+              {new URL(HEALTHZ_PATH, BASE_URL).toString()}
               {"\n"}
               {JSON.stringify(data)}
               {"\n"}

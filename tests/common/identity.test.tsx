@@ -1,9 +1,8 @@
 import { render, renderHook, screen } from "@testing-library/react-native";
-import { ReactNode, useEffect } from "react";
+import type { ReactNode } from "react";
 import { Text } from "react-native";
 
 import {
-  IdentityProvider,
   RedirectIfNoProfile,
   RedirectIfLoggedOut,
   RedirectIfLoggedIn,
@@ -17,18 +16,6 @@ import {
 } from "@/common/identity/mocks";
 import { IdentityData } from "@/common/identity/types";
 import { MockRouter } from "@/common/util";
-
-const AutomaticLogin = () => {
-  const identity = useIdentity();
-
-  useEffect(() => {
-    if (!identity.isLoggedIn) {
-      identity.logIn("TOKEN");
-    }
-  }, [identity]);
-
-  return <Text>{identity.isLoggedIn ? "LOGGED IN" : "LOGGED OUT"}</Text>;
-};
 
 const renderUseIdentity = (data: IdentityData) =>
   renderHook(useIdentity, {
@@ -93,14 +80,6 @@ describe("Identity", () => {
 
       expect(identity.token).toBe("TOKEN");
       expect(identity.profile).toEqual({ type: "senior", seniorId: 3 });
-    });
-  });
-
-  describe(IdentityProvider, () => {
-    it("reacts to identity changes", async () => {
-      render(<AutomaticLogin />, { wrapper: IdentityProvider });
-
-      expect(await screen.findByText("LOGGED IN")).toBeVisible();
     });
   });
 

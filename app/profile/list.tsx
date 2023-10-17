@@ -1,4 +1,4 @@
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Avatar, Button, List } from "react-native-paper";
 
@@ -32,10 +32,7 @@ const ProfilesList = () => {
   const seniorProfile = profiles.find(isSenior);
   const caretakerProfiles = profiles.filter(isCaretaker);
 
-  const handleItemPress = (profile: Profile) => {
-    identity.selectProfile(profile);
-    router.replace("/dashboard");
-  };
+  const handleItemPress = (profile: Profile) => identity.selectProfile(profile);
 
   return (
     <View style={styles.container}>

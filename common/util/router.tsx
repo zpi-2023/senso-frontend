@@ -1,4 +1,4 @@
-import { ExpoRoot } from "expo-router";
+import { ExpoRoot, useRouter } from "expo-router";
 import { FC } from "react";
 
 const mockContext = (context: Record<string, FC>) =>
@@ -20,3 +20,13 @@ export const MockRouter = ({
     location={new URL(initialRoute, "test://")}
   />
 );
+
+export const clearHistory = (
+  router: ReturnType<typeof useRouter>,
+  newRoot: string,
+) => {
+  while (router.canGoBack()) {
+    router.back();
+  }
+  router.replace(newRoot);
+};

@@ -1,3 +1,3 @@
 export * from "./font-loader";
-export * from "./mock-router";
+export * from "./router";
 export * from "./provider-list";
