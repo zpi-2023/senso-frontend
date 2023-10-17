@@ -166,6 +166,10 @@
     "en": "Account",
     "pl": "Konto"
   },
+  "menu.caretakerBanner": {
+    "en": "You are currently managing {alias}.",
+    "pl": "Obecnie zarządzasz profilem {alias}."
+  },
   "actions.profileList": {
     "en": "Select profile",
     "pl": "Zmień profil"

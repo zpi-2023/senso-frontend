@@ -1,5 +1,4 @@
 import { useRouter } from "expo-router";
-import { Button } from "react-native-paper";
 
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
@@ -24,7 +23,6 @@ const Page = () => {
       />
       {/* TODO: This shouldn't be here */}
       <MonoText>{JSON.stringify(identity.profile, null, 2)}</MonoText>
-      <Button onPress={() => identity.logOut()}>LOG OUT</Button>
     </View>
   );
 };

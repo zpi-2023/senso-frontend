@@ -12,3 +12,5 @@ export const actions = {
     handler: ({ identity }) => identity.logOut(),
   },
 } satisfies Record<string, Action>;
+
+export type ActionKey = keyof typeof actions;
