@@ -1,10 +1,14 @@
 import { useRouter } from "expo-router";
-import { Text, ScrollView } from "react-native";
-import { Banner, List, MD3Theme, useTheme } from "react-native-paper";
+import { ScrollView, StyleSheet } from "react-native";
+import { Banner, List, MD3Theme, useTheme, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
-import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
+import {
+  useIdentity,
+  RedirectIfNoProfile,
+  isCaretaker,
+} from "@/common/identity";
 import { Header } from "@/components/Header";
 import { MenuItem } from "@/components/MenuItem";
 import { View } from "@/components/Themed";
@@ -14,6 +18,7 @@ const Page = () => {
   const router = useRouter();
   const identity = useIdentity();
   const theme = useTheme();
+  const styles = makeStyles(theme);
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
@@ -24,9 +29,9 @@ const Page = () => {
   return (
     <View style={styles.container}>
       <Header left="back" title={t("menu.pageTitle")} />
-      {identity.profile.type === "caretaker" ? (
-        <Banner visible style={styles.banner(theme)}>
-          <Text style={styles.bannerText(theme)}>
+      {isCaretaker(identity.profile) ? (
+        <Banner visible style={styles.banner}>
+          <Text style={styles.bannerText}>
             {t("menu.caretakerBanner", { alias: identity.profile.seniorAlias })}
           </Text>
         </Banner>
@@ -42,17 +47,18 @@ const Page = () => {
   );
 };
 
-const styles = {
-  container: {
-    flex: 1,
-  },
-  banner: (theme: MD3Theme) => ({
-    backgroundColor: theme.colors.primary,
-    paddingBottom: 8,
-  }),
-  bannerText: (theme: MD3Theme) => ({
-    color: theme.colors.onPrimary,
-  }),
-};
+const makeStyles = (theme: MD3Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    banner: {
+      backgroundColor: theme.colors.primary,
+      paddingBottom: 8,
+    },
+    bannerText: {
+      color: theme.colors.onPrimary,
+    },
+  });
 
 export default Page;

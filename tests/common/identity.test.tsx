@@ -1,6 +1,6 @@
 import { render, renderHook, screen } from "@testing-library/react-native";
 import type { ReactNode } from "react";
-import { Text } from "react-native";
+import { Text } from "react-native-paper";
 
 import {
   RedirectIfNoProfile,
