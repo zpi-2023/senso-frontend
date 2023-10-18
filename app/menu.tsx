@@ -11,6 +11,7 @@ import {
 } from "@/common/identity";
 import { Header } from "@/components/Header";
 import { MenuItem } from "@/components/MenuItem";
+import { SosFab } from "@/components/SosFab";
 import { View } from "@/components/Themed";
 
 const Page = () => {
@@ -55,6 +56,7 @@ const Page = () => {
           <MenuItem action={actions.changeLanguage} ctx={ctx} />
         </List.Section>
       </ScrollView>
+      <SosFab ctx={ctx} />
     </View>
   );
 };

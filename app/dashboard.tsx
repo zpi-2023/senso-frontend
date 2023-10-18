@@ -1,12 +1,12 @@
 import { useRouter } from "expo-router";
 import { FlatList, StyleSheet } from "react-native";
-import { FAB } from "react-native-paper";
 
 import { actions, ActionKey } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
 import { DashboardGadget } from "@/components/DashboardGadget";
 import { Header } from "@/components/Header";
+import { SosFab } from "@/components/SosFab";
 import { View } from "@/components/Themed";
 
 const mockDashboardGadgets: ActionKey[] = [
@@ -40,12 +40,7 @@ const Page = () => {
         )}
         style={styles.list}
       />
-      <FAB
-        icon={actions.activateSos.icon}
-        style={styles.fab}
-        onPress={() => actions.activateSos.handler(ctx)}
-        label={actions.activateSos.displayName(t)}
-      />
+      <SosFab ctx={ctx} />
     </View>
   );
 };
@@ -56,12 +51,6 @@ const styles = StyleSheet.create({
   },
   list: {
     padding: 8,
-  },
-  fab: {
-    position: "absolute",
-    bottom: 32,
-    right: 32,
-    backgroundColor: "#991b1b",
   },
 });
 
