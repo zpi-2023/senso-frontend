@@ -1,4 +1,3 @@
-import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet } from "react-native";
 import { Banner, List, MD3Theme, useTheme, Text } from "react-native-paper";
 
@@ -16,7 +15,6 @@ import { View } from "@/components/Themed";
 
 const Page = () => {
   const { t } = useI18n();
-  const router = useRouter();
   const identity = useIdentity();
   const theme = useTheme();
   const styles = makeStyles(theme);
@@ -24,8 +22,6 @@ const Page = () => {
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
   }
-
-  const ctx = { identity, router };
 
   return (
     <View style={styles.container}>
@@ -39,24 +35,24 @@ const Page = () => {
       ) : null}
       <ScrollView>
         <List.Section>
-          <MenuItem action={actions.openDashboard} ctx={ctx} />
-          <MenuItem action={actions.trackMedication} ctx={ctx} />
-          <MenuItem action={actions.playGames} ctx={ctx} />
-          <MenuItem action={actions.manageNotes} ctx={ctx} />
+          <MenuItem action={actions.openDashboard} />
+          <MenuItem action={actions.trackMedication} />
+          <MenuItem action={actions.playGames} />
+          <MenuItem action={actions.manageNotes} />
         </List.Section>
         <List.Section>
           <List.Subheader>{t("menu.account")}</List.Subheader>
-          <MenuItem action={actions.pairCaretaker} ctx={ctx} />
-          <MenuItem action={actions.switchProfile} ctx={ctx} />
-          <MenuItem action={actions.logOut} ctx={ctx} />
+          <MenuItem action={actions.pairCaretaker} />
+          <MenuItem action={actions.switchProfile} />
+          <MenuItem action={actions.logOut} />
         </List.Section>
         <List.Section>
           <List.Subheader>{t("menu.settings")}</List.Subheader>
-          <MenuItem action={actions.editDashboard} ctx={ctx} />
-          <MenuItem action={actions.changeLanguage} ctx={ctx} />
+          <MenuItem action={actions.editDashboard} />
+          <MenuItem action={actions.changeLanguage} />
         </List.Section>
       </ScrollView>
-      <SosFab ctx={ctx} />
+      <SosFab />
     </View>
   );
 };

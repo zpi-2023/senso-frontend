@@ -1,4 +1,3 @@
-import { useRouter } from "expo-router";
 import { FlatList, StyleSheet } from "react-native";
 
 import { actions, ActionKey } from "@/common/actions";
@@ -10,24 +9,21 @@ import { SosFab } from "@/components/SosFab";
 import { View } from "@/components/Themed";
 
 const mockDashboardGadgets: ActionKey[] = [
-  "logOut",
+  "trackMedication",
+  "manageNotes",
+  "playGames",
+  "pairCaretaker",
   "switchProfile",
-  "openMenu",
-  "activateSos",
   "logOut",
-  "switchProfile",
 ];
 
 const Page = () => {
   const { t } = useI18n();
   const identity = useIdentity();
-  const router = useRouter();
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
   }
-
-  const ctx = { identity, router };
 
   return (
     <View style={styles.container}>
@@ -35,12 +31,10 @@ const Page = () => {
       <FlatList
         data={mockDashboardGadgets}
         numColumns={2}
-        renderItem={({ item }) => (
-          <DashboardGadget action={actions[item]} ctx={ctx} />
-        )}
+        renderItem={({ item }) => <DashboardGadget action={actions[item]} />}
         style={styles.list}
       />
-      <SosFab ctx={ctx} />
+      <SosFab />
     </View>
   );
 };

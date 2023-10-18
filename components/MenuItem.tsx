@@ -1,15 +1,20 @@
 import { List } from "react-native-paper";
 
-import { Action, ActionContext } from "@/common/actions";
+import { Action, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 
 type MenuItemProps = {
   action: Action;
-  ctx: ActionContext;
 };
 
-export const MenuItem = ({ action, ctx }: MenuItemProps) => {
+export const MenuItem = ({ action }: MenuItemProps) => {
   const { t } = useI18n();
+  const ctx = useActionContext();
+
+  if (!ctx || action.hidden?.(ctx)) {
+    return null;
+  }
+
   return (
     <List.Item
       title={action.displayName(t)}

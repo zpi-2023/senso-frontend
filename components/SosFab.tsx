@@ -1,19 +1,16 @@
 import { StyleSheet } from "react-native";
 import { FAB } from "react-native-paper";
 
-import { actions, type ActionContext } from "@/common/actions";
+import { actions, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 
 const action = actions.activateSos;
 
-type SosFabProps = {
-  ctx: ActionContext;
-};
-
-export const SosFab = ({ ctx }: SosFabProps) => {
+export const SosFab = () => {
   const { t } = useI18n();
+  const ctx = useActionContext();
 
-  if (action.hidden(ctx)) {
+  if (!ctx || action.hidden(ctx)) {
     return null;
   }
 
