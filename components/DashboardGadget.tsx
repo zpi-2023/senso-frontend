@@ -15,13 +15,15 @@ export const DashboardGadget = ({ action, ctx }: DashboardGadgetProps) => {
   const { t } = useI18n();
   return (
     <View style={styles.wrapper}>
-      <Card style={styles.card}>
-        <TouchableRipple onPress={() => action.handler(ctx)}>
-          <View style={styles.inner}>
-            <IconButton icon={action.icon} size={64} />
-            <Text>{action.displayName(t)}</Text>
-          </View>
-        </TouchableRipple>
+      <Card>
+        <View style={styles.boundary}>
+          <TouchableRipple onPress={() => action.handler(ctx)}>
+            <View style={styles.inner}>
+              <IconButton icon={action.icon} size={64} />
+              <Text>{action.displayName(t)}</Text>
+            </View>
+          </TouchableRipple>
+        </View>
       </Card>
     </View>
   );
@@ -33,9 +35,9 @@ const styles = StyleSheet.create({
     maxWidth: "50%",
     padding: 16,
   },
-  card: {
-    flex: 1,
-    aspectRatio: 1,
+  boundary: {
+    borderRadius: 12,
+    backgroundColor: "transparent",
     overflow: "hidden",
   },
   inner: {
