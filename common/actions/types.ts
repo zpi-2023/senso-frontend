@@ -17,4 +17,5 @@ export type Action = {
   displayName: (t: Translator) => string;
   icon: IconSource;
   handler: (ctx: ActionContext) => void;
+  hidden?: (ctx: ActionContext) => boolean;
 };

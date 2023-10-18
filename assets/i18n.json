@@ -170,6 +170,14 @@
     "en": "You are currently managing {alias}.",
     "pl": "Obecnie zarządzasz profilem {alias}."
   },
+  "actions.goBack": {
+    "en": "Back",
+    "pl": "Wróć"
+  },
+  "actions.openMenu": {
+    "en": "Menu",
+    "pl": "Menu"
+  },
   "actions.profileList": {
     "en": "Select profile",
     "pl": "Zmień profil"
@@ -177,5 +185,9 @@
   "actions.logOut": {
     "en": "Log out",
     "pl": "Wyloguj się"
+  },
+  "actions.activateSos": {
+    "en": "Activate SOS",
+    "pl": "Aktywuj SOS"
   }
 }

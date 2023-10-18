@@ -28,7 +28,7 @@ const Page = () => {
 
   return (
     <View style={styles.container}>
-      <Header left="back" title={t("menu.pageTitle")} />
+      <Header left={actions.goBack} title={t("menu.pageTitle")} />
       {isCaretaker(identity.profile) ? (
         <Banner visible style={styles.banner}>
           <Text style={styles.bannerText}>
@@ -39,7 +39,7 @@ const Page = () => {
       <ScrollView>
         <List.Section>
           <List.Subheader>{t("menu.account")}</List.Subheader>
-          <MenuItem action={actions.profileList} ctx={ctx} />
+          <MenuItem action={actions.switchProfile} ctx={ctx} />
           <MenuItem action={actions.logOut} ctx={ctx} />
         </List.Section>
       </ScrollView>

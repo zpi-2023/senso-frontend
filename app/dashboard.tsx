@@ -11,11 +11,11 @@ import { View } from "@/components/Themed";
 
 const mockDashboardGadgets: ActionKey[] = [
   "logOut",
-  "profileList",
-  "profileList",
+  "switchProfile",
+  "openMenu",
+  "activateSos",
   "logOut",
-  "logOut",
-  "profileList",
+  "switchProfile",
 ];
 
 const Page = () => {
@@ -31,10 +31,7 @@ const Page = () => {
 
   return (
     <View style={styles.container}>
-      <Header
-        left={{ icon: "menu", onPress: () => router.push("/menu") }}
-        title={t("dashboard.pageTitle")}
-      />
+      <Header left={actions.openMenu} title={t("dashboard.pageTitle")} />
       <FlatList
         data={mockDashboardGadgets}
         numColumns={2}
@@ -44,11 +41,10 @@ const Page = () => {
         style={styles.list}
       />
       <FAB
-        icon="alarm-light"
+        icon={actions.activateSos.icon}
         style={styles.fab}
-        onPress={() => {
-          /* TODO */
-        }}
+        onPress={() => actions.activateSos.handler(ctx)}
+        label={actions.activateSos.displayName(t)}
       />
     </View>
   );

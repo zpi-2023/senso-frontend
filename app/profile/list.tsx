@@ -2,6 +2,7 @@ import { Link } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Avatar, Button, List } from "react-native-paper";
 
+import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import {
   Profile,
@@ -36,7 +37,7 @@ const ProfilesList = () => {
 
   return (
     <View style={styles.container}>
-      <Header left="back" title={t("profileList.pageTitle")} />
+      <Header left={actions.goBack} title={t("profileList.pageTitle")} />
       <List.Section>
         {caretakerProfiles.length > 0 && (
           <List.Subheader style={styles.listSubheader}>
