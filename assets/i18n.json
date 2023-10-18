@@ -146,9 +146,13 @@
     "en": "Click to log in to your profile",
     "pl": "Kliknij, aby zalogować się do profilu"
   },
-  "profileList.newProfileButton": {
-    "en": "Add new profile",
-    "pl": "Dodaj nowy profil"
+  "profileList.newCaretakerProfileButton": {
+    "en": "Create caretaker profile",
+    "pl": "Utwórz profil opiekuna"
+  },
+  "profileList.newSeniorProfileButton": {
+    "en": "Create senior profile",
+    "pl": "Utwórz profil seniora"
   },
   "profileList.noProfiles": {
     "en": "You don't have any profiles yet.",
@@ -177,5 +181,17 @@
   "actions.logOut": {
     "en": "Log out",
     "pl": "Wyloguj się"
+  },
+  "scanSeniorQR.pageTitle": {
+    "en": "Scan senior QR code",
+    "pl": "Zeskanuj kod QR seniora"
+  },
+  "scanSeniorQR.description": {
+    "en": "Scan this QR code with your caretaker's app to connect your profiles.",
+    "pl": "Zeskanuj ten kod QR za pomocą aplikacji opiekuna, aby połączyć profile."
+  },
+  "scanSeniorQR.skipButton": {
+    "en": "I'll do it later",
+    "pl": "Zrobię to później"
   }
 }

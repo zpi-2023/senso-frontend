@@ -16,7 +16,7 @@ const mockApiResponse = {
   profiles: [
     { type: "caretaker", seniorId: 2137, seniorAlias: "Jan Kowalski" },
     { type: "caretaker", seniorId: 123, seniorAlias: "Grzegorz Floryda" },
-    { type: "senior", seniorId: 789 },
+    // { type: "senior", seniorId: 789 },
   ] as Profile[],
 };
 
@@ -94,11 +94,18 @@ const ProfilesList = () => {
         </List.Subheader>
       )}
       <View style={styles.newProfileButtonWrapper}>
-        <Link href="/profile/add">
-          <Button icon="plus" mode="contained" uppercase>
-            {t("profileList.newProfileButton")}
+        <Link href="/profile/add_caretaker">
+          <Button icon="account-eye-outline" mode="outlined" uppercase>
+            {t("profileList.newCaretakerProfileButton")}
           </Button>
         </Link>
+        {!seniorProfile && (
+          <Link href="/profile/scan_seniorqr" replace>
+            <Button icon="plus" mode="contained" uppercase>
+              {t("profileList.newSeniorProfileButton")}
+            </Button>
+          </Link>
+        )}
       </View>
     </View>
   );
@@ -138,6 +145,7 @@ const styles = StyleSheet.create({
   },
   newProfileButtonWrapper: {
     alignItems: "center",
+    gap: 16,
   },
 });
 
