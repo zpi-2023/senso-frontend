@@ -206,9 +206,9 @@
     "en": "Edit dashboard gadgets",
     "pl": "Edytuj gadżety panelu"
   },
-  "actions.changeLanguage": {
-    "en": "Change language",
-    "pl": "Zmień język"
+  "actions.toggleLanguage": {
+    "en": "Toggle language (PL)",
+    "pl": "Przełącz język (EN)"
   },
   "actions.trackMedication": {
     "en": "Medication",

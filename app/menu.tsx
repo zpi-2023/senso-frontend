@@ -49,7 +49,7 @@ const Page = () => {
         <List.Section>
           <List.Subheader>{t("menu.settings")}</List.Subheader>
           <MenuItem action={actions.editDashboard} />
-          <MenuItem action={actions.changeLanguage} />
+          <MenuItem action={actions.toggleLanguage} />
         </List.Section>
       </ScrollView>
       <SosFab />

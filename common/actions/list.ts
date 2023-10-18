@@ -50,12 +50,10 @@ export const actions = {
       /* TODO */
     },
   },
-  changeLanguage: {
-    displayName: (t) => t("actions.changeLanguage"),
+  toggleLanguage: {
+    displayName: (t) => t("actions.toggleLanguage"),
     icon: "translate",
-    handler: (_) => {
-      /* TODO */
-    },
+    handler: ({ i18n }) => i18n.toggleLanguage(),
   },
   trackMedication: {
     displayName: (t) => t("actions.trackMedication"),
