@@ -1,15 +1,18 @@
-import { Link, Stack } from "expo-router";
+import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 
 import { BASE_URL, useApi } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
+import { Header } from "@/components/Header";
 import { MonoText } from "@/components/StyledText";
+
+const HEALTHZ_PATH = "/api/v1/healthz";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
   const { data, isLoading, error, mutate } = useApi({
-    url: "/api/v1/healthz",
+    url: HEALTHZ_PATH,
   });
   const { t } = useI18n();
   const identity = useIdentity();
@@ -34,7 +37,7 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
         {debug ? (
           <>
             <MonoText style={styles.debug}>
-              {new URL("/healthz", BASE_URL).toString()}
+              {new URL(HEALTHZ_PATH, BASE_URL).toString()}
               {"\n"}
               {JSON.stringify(data)}
               {"\n"}
@@ -72,7 +75,7 @@ const Page = () => {
   const { t } = useI18n();
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: t("landing.pageTitle") }} />
+      <Header title={t("landing.pageTitle")} />
       <Landing debug={__DEV__} />
     </View>
   );

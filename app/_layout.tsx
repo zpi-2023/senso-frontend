@@ -5,6 +5,7 @@ import { I18nProvider } from "@/common/i18n";
 import { IdentityProvider } from "@/common/identity";
 import { ProviderList, useFontLoader } from "@/common/util";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { View } from "@/components/Themed";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -20,7 +21,10 @@ export default function RootLayout() {
     <ProviderList
       providers={[I18nProvider, IdentityProvider, PaperProvider, ThemeProvider]}
     >
-      <Stack />
+      {/* Fixes white flicker during navigation */}
+      <View style={{ flex: 1 }}>
+        <Stack />
+      </View>
     </ProviderList>
   );
 }

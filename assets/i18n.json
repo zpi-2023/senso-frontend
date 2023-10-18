@@ -153,5 +153,29 @@
   "profileList.noProfiles": {
     "en": "You don't have any profiles yet.",
     "pl": "Nie masz jeszcze żadnych profili."
+  },
+  "dashboard.pageTitle": {
+    "en": "Dashboard",
+    "pl": "Panel"
+  },
+  "menu.pageTitle": {
+    "en": "Menu",
+    "pl": "Menu"
+  },
+  "menu.account": {
+    "en": "Account",
+    "pl": "Konto"
+  },
+  "menu.caretakerBanner": {
+    "en": "You are currently managing {alias}.",
+    "pl": "Obecnie zarządzasz profilem {alias}."
+  },
+  "actions.profileList": {
+    "en": "Select profile",
+    "pl": "Zmień profil"
+  },
+  "actions.logOut": {
+    "en": "Log out",
+    "pl": "Wyloguj się"
   }
 }

@@ -1,4 +1,4 @@
-import { Link, Stack, router } from "expo-router";
+import { Link } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Avatar, Button, List } from "react-native-paper";
 
@@ -10,6 +10,7 @@ import {
   useIdentity,
   RedirectIfLoggedOut,
 } from "@/common/identity";
+import { Header } from "@/components/Header";
 
 const mockApiResponse = {
   profiles: [
@@ -31,14 +32,11 @@ const ProfilesList = () => {
   const seniorProfile = profiles.find(isSenior);
   const caretakerProfiles = profiles.filter(isCaretaker);
 
-  const handleItemPress = (profile: Profile) => {
-    identity.selectProfile(profile);
-    router.push("/dashboard");
-  };
+  const handleItemPress = (profile: Profile) => identity.selectProfile(profile);
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: t("profileList.pageTitle") }} />
+      <Header left="back" title={t("profileList.pageTitle")} />
       <List.Section>
         {caretakerProfiles.length > 0 && (
           <List.Subheader style={styles.listSubheader}>

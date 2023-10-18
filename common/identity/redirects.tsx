@@ -73,7 +73,12 @@ export const RedirectIfLoggedOut = ({ identity }: RedirectProps) => {
  */
 export const RedirectIfLoggedIn = ({ identity }: RedirectProps) => {
   if (identity.hasProfile) {
-    return <Redirect href="/dashboard" />;
+    switch (identity.profile.type) {
+      case "senior":
+        return <Redirect href="/dashboard" />;
+      case "caretaker":
+        return <Redirect href="/menu" />;
+    }
   }
   if (identity.isLoggedIn) {
     return <Redirect href="/profile/list" />;
