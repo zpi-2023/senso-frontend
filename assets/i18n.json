@@ -198,6 +198,10 @@
     "en": "SOS",
     "pl": "SOS"
   },
+  "actions.showSosHistory": {
+    "en": "Alert history",
+    "pl": "Historia zgłoszeń"
+  },
   "actions.pairCaretaker": {
     "en": "Pair with caretaker",
     "pl": "Paruj z opiekunem"

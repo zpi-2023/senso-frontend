@@ -19,4 +19,5 @@ export type Action = {
   icon: IconSource;
   handler: (ctx: ActionContext) => void;
   hidden?: (ctx: ActionContext) => boolean;
+  managed?: true;
 };

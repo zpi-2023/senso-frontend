@@ -18,6 +18,7 @@ export const actions = {
     icon: "view-dashboard",
     handler: ({ router }) => router.push("/dashboard"),
     hidden: ({ identity }) => isSenior(identity.profile),
+    managed: true,
   },
   switchProfile: {
     displayName: (t) => t("actions.profileList"),
@@ -37,6 +38,13 @@ export const actions = {
     },
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
+  showSosHistory: {
+    displayName: (t) => t("actions.showSosHistory"),
+    icon: "account-alert",
+    handler: ({ router }) => router.push("/sos-history"),
+    hidden: ({ identity }) => isSenior(identity.profile),
+    managed: true,
+  },
   pairCaretaker: {
     displayName: (t) => t("actions.pairCaretaker"),
     icon: "link-variant-plus",
@@ -46,9 +54,8 @@ export const actions = {
   editDashboard: {
     displayName: (t) => t("actions.editDashboard"),
     icon: "view-dashboard-edit",
-    handler: (_) => {
-      /* TODO */
-    },
+    handler: ({ router }) => router.push("/dashboard/edit"),
+    managed: true,
   },
   toggleLanguage: {
     displayName: (t) => t("actions.toggleLanguage"),
@@ -58,24 +65,20 @@ export const actions = {
   trackMedication: {
     displayName: (t) => t("actions.trackMedication"),
     icon: "medical-bag",
-    handler: (_) => {
-      /* TODO */
-    },
+    handler: ({ router }) => router.push("/medication"),
+    managed: true,
   },
   playGames: {
     displayName: (t) => t("actions.playGames"),
     icon: "gamepad-variant",
-    handler: (_) => {
-      /* TODO */
-    },
+    handler: ({ router }) => router.push("/games"),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
   manageNotes: {
     displayName: (t) => t("actions.manageNotes"),
     icon: "note-edit",
-    handler: (_) => {
-      /* TODO */
-    },
+    handler: ({ router }) => router.push("/notes"),
+    managed: true,
   },
 } satisfies Record<string, Action>;
 
