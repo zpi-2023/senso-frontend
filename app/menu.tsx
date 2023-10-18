@@ -38,9 +38,21 @@ const Page = () => {
       ) : null}
       <ScrollView>
         <List.Section>
+          <MenuItem action={actions.openDashboard} ctx={ctx} />
+          <MenuItem action={actions.trackMedication} ctx={ctx} />
+          <MenuItem action={actions.playGames} ctx={ctx} />
+          <MenuItem action={actions.manageNotes} ctx={ctx} />
+        </List.Section>
+        <List.Section>
           <List.Subheader>{t("menu.account")}</List.Subheader>
+          <MenuItem action={actions.pairCaretaker} ctx={ctx} />
           <MenuItem action={actions.switchProfile} ctx={ctx} />
           <MenuItem action={actions.logOut} ctx={ctx} />
+        </List.Section>
+        <List.Section>
+          <List.Subheader>{t("menu.settings")}</List.Subheader>
+          <MenuItem action={actions.editDashboard} ctx={ctx} />
+          <MenuItem action={actions.changeLanguage} ctx={ctx} />
         </List.Section>
       </ScrollView>
     </View>

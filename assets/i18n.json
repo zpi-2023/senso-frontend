@@ -166,6 +166,10 @@
     "en": "Account",
     "pl": "Konto"
   },
+  "menu.settings": {
+    "en": "Ustawienia",
+    "pl": "Ustawienia"
+  },
   "menu.caretakerBanner": {
     "en": "You are currently managing {alias}.",
     "pl": "Obecnie zarządzasz profilem {alias}."
@@ -178,6 +182,10 @@
     "en": "Menu",
     "pl": "Menu"
   },
+  "actions.openDashboard": {
+    "en": "Dashboard",
+    "pl": "Panel"
+  },
   "actions.profileList": {
     "en": "Select profile",
     "pl": "Zmień profil"
@@ -189,5 +197,29 @@
   "actions.activateSos": {
     "en": "Activate SOS",
     "pl": "Aktywuj SOS"
+  },
+  "actions.pairCaretaker": {
+    "en": "Pair with caretaker",
+    "pl": "Paruj z opiekunem"
+  },
+  "actions.editDashboard": {
+    "en": "Edit dashboard gadgets",
+    "pl": "Edytuj gadżety panelu"
+  },
+  "actions.changeLanguage": {
+    "en": "Change language",
+    "pl": "Zmień język"
+  },
+  "actions.trackMedication": {
+    "en": "Medication",
+    "pl": "Leki"
+  },
+  "actions.playGames": {
+    "en": "Games",
+    "pl": "Gry"
+  },
+  "actions.manageNotes": {
+    "en": "Notes",
+    "pl": "Notatki"
   }
 }
