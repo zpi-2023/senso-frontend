@@ -11,6 +11,7 @@ import { useIdentityStorage } from "./storage";
 import type { Identity, IdentityData, Profile } from "./types";
 import { buildIdentity } from "./util";
 import { clearHistory } from "../util";
+import { AppRoutes } from "../util/constants";
 
 export const IdentityContext = createContext<{
   data: IdentityData;
@@ -30,23 +31,23 @@ export const useIdentity = (): Identity => {
 
   const logIn = useCallback(
     (token: string) => {
-      clearHistory(router, "/profile/list");
+      clearHistory(router, AppRoutes.ProfileList);
       setData({ known: "account", token });
     },
     [router, setData],
   );
   const logOut = useCallback(() => {
-    clearHistory(router, "/auth/login");
+    clearHistory(router, AppRoutes.Login);
     setData({ known: "nothing" });
   }, [router, setData]);
   const selectProfile = useCallback(
     (profile: Profile) => {
       switch (profile.type) {
         case "senior":
-          clearHistory(router, "/dashboard");
+          clearHistory(router, AppRoutes.Dashboard);
           break;
         case "caretaker":
-          clearHistory(router, "/menu");
+          clearHistory(router, AppRoutes.Menu);
           break;
       }
       setData(

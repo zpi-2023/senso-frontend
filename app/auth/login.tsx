@@ -120,7 +120,7 @@ const Page = () => {
             </Button>
             <Text style={styles.submit}>
               {t("login.registerPrompt")}{" "}
-              <Link href="/auth/register" replace>
+              <Link href="/profile/add_caretaker" replace>
                 <Text style={{ color: theme.colors.primary }}>
                   {t("login.registerButton")}
                 </Text>

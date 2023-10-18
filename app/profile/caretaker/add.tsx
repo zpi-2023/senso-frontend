@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 import { useI18n } from "@/common/i18n";
+import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
 const ProfilesList = () => {
@@ -15,7 +16,7 @@ const ProfilesList = () => {
         {t("scanSeniorQR.description")}
       </Text>
       <View style={styles.mockQR} />
-      <Link href="/dashboard" replace>
+      <Link href={AppRoutes.Dashboard} replace>
         <Button labelStyle={styles.skipButton}>
           {t("scanSeniorQR.skipButton")}
         </Button>

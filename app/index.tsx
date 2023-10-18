@@ -5,6 +5,7 @@ import { ActivityIndicator, Button, Text } from "react-native-paper";
 import { BASE_URL, useApi } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
+import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 import { MonoText } from "@/components/StyledText";
 
@@ -44,7 +45,7 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
               {error?.toString()}
             </MonoText>
             {/* Escape hatch to let us test client without server in development */}
-            <Link href="/auth/login" replace>
+            <Link href={AppRoutes.Login} replace>
               <Button textColor="red">IGNORE</Button>
             </Link>
           </>
@@ -62,7 +63,7 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
       <Text variant="displayMedium">{t("appName")}</Text>
 
       <Text style={styles.description}>{t("landing.description")}</Text>
-      <Link href="/auth/login" replace>
+      <Link href={AppRoutes.Login} replace>
         <Button mode="contained" labelStyle={styles.button}>
           {t("landing.startButton")}
         </Button>

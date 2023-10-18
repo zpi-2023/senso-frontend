@@ -5,6 +5,7 @@ import { FAB } from "react-native-paper";
 import { actions, ActionKey } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
+import { AppRoutes } from "@/common/util/constants";
 import { DashboardGadget } from "@/components/DashboardGadget";
 import { Header } from "@/components/Header";
 import { View } from "@/components/Themed";
@@ -32,7 +33,7 @@ const Page = () => {
   return (
     <View style={styles.container}>
       <Header
-        left={{ icon: "menu", onPress: () => router.push("/menu") }}
+        left={{ icon: "menu", onPress: () => router.push(AppRoutes.Menu) }}
         title={t("dashboard.pageTitle")}
       />
       <FlatList
