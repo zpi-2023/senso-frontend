@@ -167,7 +167,7 @@
     "pl": "Konto"
   },
   "menu.settings": {
-    "en": "Ustawienia",
+    "en": "Settings",
     "pl": "Ustawienia"
   },
   "menu.caretakerBanner": {
@@ -195,8 +195,8 @@
     "pl": "Wyloguj się"
   },
   "actions.activateSos": {
-    "en": "Activate SOS",
-    "pl": "Aktywuj SOS"
+    "en": "SOS",
+    "pl": "SOS"
   },
   "actions.pairCaretaker": {
     "en": "Pair with caretaker",

@@ -14,17 +14,19 @@ export const DashboardGadget = ({ action }: DashboardGadgetProps) => {
   const { t } = useI18n();
   const ctx = useActionContext();
 
+  if (!ctx) {
+    return null;
+  }
+
+  const disabled = action.hidden?.(ctx) ?? false;
+
   return (
     <View style={styles.wrapper}>
-      <Card>
+      <Card style={disabled ? styles.disabled : undefined}>
         <View style={styles.boundary}>
           <TouchableRipple
-            onPress={
-              ctx && !action.hidden?.(ctx)
-                ? () => action.handler(ctx)
-                : undefined
-            }
-            disabled={ctx ? action.hidden?.(ctx) : true}
+            onPress={disabled ? undefined : () => action.handler(ctx)}
+            disabled={disabled}
           >
             <View style={styles.inner}>
               <IconButton icon={action.icon} size={64} />
@@ -55,5 +57,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+  },
+  disabled: {
+    opacity: 0.5,
   },
 });

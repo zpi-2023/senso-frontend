@@ -1,5 +1,8 @@
 import { Stack } from "expo-router";
+import { StyleSheet } from "react-native";
 import { Appbar } from "react-native-paper";
+
+import { View } from "./Themed";
 
 import { Action, useActionContext } from "@/common/actions";
 
@@ -10,8 +13,8 @@ type ActionButtonProps = {
 const ActionButton = ({ action }: ActionButtonProps) => {
   const ctx = useActionContext();
 
-  if (!ctx || !action.hidden?.(ctx)) {
-    return null;
+  if (!ctx || action.hidden?.(ctx)) {
+    return <View style={styles.placeholder} />;
   }
 
   return (
@@ -40,3 +43,10 @@ export const Header = ({ left, title, right }: HeaderProps) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  placeholder: {
+    opacity: 0,
+    padding: 8,
+  },
+});
