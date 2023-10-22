@@ -3,21 +3,31 @@ import { Card, IconButton, Text, TouchableRipple } from "react-native-paper";
 
 import { View } from "./Themed";
 
-import { Action, ActionContext } from "@/common/actions";
+import { Action, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 
 type DashboardGadgetProps = {
   action: Action;
-  ctx: ActionContext;
 };
 
-export const DashboardGadget = ({ action, ctx }: DashboardGadgetProps) => {
+export const DashboardGadget = ({ action }: DashboardGadgetProps) => {
   const { t } = useI18n();
+  const ctx = useActionContext();
+
+  if (!ctx) {
+    return null;
+  }
+
+  const disabled = action.hidden?.(ctx) ?? false;
+
   return (
     <View style={styles.wrapper}>
-      <Card>
+      <Card style={disabled ? styles.disabled : undefined}>
         <View style={styles.boundary}>
-          <TouchableRipple onPress={() => action.handler(ctx)}>
+          <TouchableRipple
+            onPress={disabled ? undefined : () => action.handler(ctx)}
+            disabled={disabled}
+          >
             <View style={styles.inner}>
               <IconButton icon={action.icon} size={64} />
               <Text>{action.displayName(t)}</Text>
@@ -47,5 +57,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+  },
+  disabled: {
+    opacity: 0.5,
   },
 });

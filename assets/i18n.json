@@ -170,9 +170,25 @@
     "en": "Account",
     "pl": "Konto"
   },
+  "menu.settings": {
+    "en": "Settings",
+    "pl": "Ustawienia"
+  },
   "menu.caretakerBanner": {
     "en": "You are currently managing {alias}.",
     "pl": "Obecnie zarządzasz profilem {alias}."
+  },
+  "actions.goBack": {
+    "en": "Back",
+    "pl": "Wróć"
+  },
+  "actions.openMenu": {
+    "en": "Menu",
+    "pl": "Menu"
+  },
+  "actions.openDashboard": {
+    "en": "Dashboard",
+    "pl": "Panel"
   },
   "actions.profileList": {
     "en": "Select profile",
@@ -181,6 +197,38 @@
   "actions.logOut": {
     "en": "Log out",
     "pl": "Wyloguj się"
+  },
+  "actions.activateSos": {
+    "en": "SOS",
+    "pl": "SOS"
+  },
+  "actions.showSosHistory": {
+    "en": "Alert history",
+    "pl": "Historia zgłoszeń"
+  },
+  "actions.pairCaretaker": {
+    "en": "Pair with caretaker",
+    "pl": "Paruj z opiekunem"
+  },
+  "actions.editDashboard": {
+    "en": "Edit dashboard gadgets",
+    "pl": "Edytuj gadżety panelu"
+  },
+  "actions.toggleLanguage": {
+    "en": "Toggle language (PL)",
+    "pl": "Przełącz język (EN)"
+  },
+  "actions.trackMedication": {
+    "en": "Medication",
+    "pl": "Leki"
+  },
+  "actions.playGames": {
+    "en": "Games",
+    "pl": "Gry"
+  },
+  "actions.manageNotes": {
+    "en": "Notes",
+    "pl": "Notatki"
   },
   "createSeniorProfile.pageTitle": {
     "en": "Scan senior QR code",

@@ -2,6 +2,7 @@ import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
+import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
@@ -11,7 +12,10 @@ const AddCaretakerProfile = () => {
 
   return (
     <View style={styles.container}>
-      <Header left="back" title={t("createCaretakerProfile.pageTitle")} />
+      <Header
+        left={actions.goBack}
+        title={t("createCaretakerProfile.pageTitle")}
+      />
       <Text variant="titleLarge" style={styles.description}>
         {t("createCaretakerProfile.description")}
       </Text>

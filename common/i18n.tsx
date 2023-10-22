@@ -3,7 +3,9 @@ import {
   createContext,
   useContext,
   useState,
+  useCallback,
 } from "react";
+import { MMKV, useMMKVObject } from "react-native-mmkv";
 
 import data from "@/assets/i18n.json";
 
@@ -11,13 +13,23 @@ const DEFAULT_LANGUAGE = "en";
 
 type TranslationKey = keyof typeof data;
 type Language = "en" | "pl";
-type I18nData = { language: Language };
+type I18nData = {
+  language: Language;
+  setLanguage: (language: Language) => void;
+};
 export type Translator = (
   key: TranslationKey,
   substitutions?: Record<string, any>,
 ) => string;
+export type I18n = {
+  t: Translator;
+  toggleLanguage: () => void;
+};
 
-const I18nContext = createContext<I18nData>({ language: DEFAULT_LANGUAGE });
+const I18nContext = createContext<I18nData>({
+  language: DEFAULT_LANGUAGE,
+  setLanguage: () => {},
+});
 
 /**
  * Used to access translation strings in a component.
@@ -34,25 +46,47 @@ const I18nContext = createContext<I18nData>({ language: DEFAULT_LANGUAGE });
  * const { t } = useI18n();
  * return <Text>{t("exampleKey", { name: "John" })}</Text>; // => Hi, my name is John!
  */
-export const useI18n = () => {
-  const { language } = useContext(I18nContext);
+export const useI18n = (): I18n => {
+  const { language, setLanguage } = useContext(I18nContext);
 
-  const t: Translator = (key, substitutions = {}) => {
-    const prop = (data[key] ?? {}) as Record<Language, string | undefined>;
-    let value = prop[language] ?? prop[DEFAULT_LANGUAGE] ?? null;
+  const t: Translator = useCallback(
+    (key, substitutions = {}) => {
+      const prop = (data[key] ?? {}) as Record<Language, string | undefined>;
+      let value = prop[language] ?? prop[DEFAULT_LANGUAGE] ?? null;
 
-    if (!value) {
-      return `t('${key}')`;
-    }
+      if (!value) {
+        return `t('${key}')`;
+      }
 
-    for (const [k, v] of Object.entries(substitutions)) {
-      value = value?.replaceAll(`{${k}}`, v?.toString());
-    }
+      for (const [k, v] of Object.entries(substitutions)) {
+        value = value?.replaceAll(`{${k}}`, v?.toString());
+      }
 
-    return value;
-  };
+      return value;
+    },
+    [language],
+  );
 
-  return { t };
+  const toggleLanguage = useCallback(
+    () => setLanguage(language === "en" ? "pl" : "en"),
+    [language, setLanguage],
+  );
+
+  return { t, toggleLanguage };
+};
+
+const languageStorage = __DEV__ ? null : new MMKV({ id: "language" });
+
+export const useLanguageStorage = (): [
+  Language,
+  (language: Language) => void,
+] => {
+  const [value, setValue] = __DEV__
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      useState<Language>(DEFAULT_LANGUAGE)
+    : // eslint-disable-next-line react-hooks/rules-of-hooks
+      useMMKVObject<Language>("identity-data", languageStorage!);
+  return [value ?? DEFAULT_LANGUAGE, setValue];
 };
 
 /**
@@ -62,10 +96,11 @@ export const useI18n = () => {
  * @see MockI18nProvider
  */
 export const I18nProvider = ({ children }: PropsWithChildren) => {
-  const [language] = useState<Language>(DEFAULT_LANGUAGE);
-  // TODO: Setting language from app options
+  const [language, setLanguage] = useLanguageStorage();
   return (
-    <I18nContext.Provider value={{ language }}>{children}</I18nContext.Provider>
+    <I18nContext.Provider value={{ language, setLanguage }}>
+      {children}
+    </I18nContext.Provider>
   );
 };
 
@@ -77,12 +112,14 @@ export const I18nProvider = ({ children }: PropsWithChildren) => {
 export const MockI18nProvider = ({
   children,
   language,
-}: PropsWithChildren<I18nData>) => {
+}: PropsWithChildren<Pick<I18nData, "language">>) => {
   if (!__DEV__) {
     throw new Error("MockI18nProvider should not be used in production!");
   }
 
   return (
-    <I18nContext.Provider value={{ language }}>{children}</I18nContext.Provider>
+    <I18nContext.Provider value={{ language, setLanguage: () => {} }}>
+      {children}
+    </I18nContext.Provider>
   );
 };
