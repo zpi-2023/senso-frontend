@@ -253,5 +253,33 @@
   "createCaretakerProfile.description": {
     "en": "Enter alias for your senior. You can change it later. Then scan the QR code with your senior's app to connect your profiles.",
     "pl": "Wpisz alias dla swojego seniora. Możesz go później zmienić. Następnie zeskanuj kod QR za pomocą aplikacji seniora, aby połączyć profile."
+  },
+  "createCaretakerProfile.scanQR": {
+    "en": "Scan QR code",
+    "pl": "Zeskanuj kod QR"
+  },
+  "scanQR.alertTitle": {
+    "en": "QR code scanned",
+    "pl": "Kod QR zeskanowany"
+  },
+  "scanQR.alertDescription": {
+    "en": "Do you want to add this senior?",
+    "pl": "Czy chcesz dodać tego seniora?"
+  },
+  "scanQR.alertCancel": {
+    "en": "Cancel",
+    "pl": "Anuluj"
+  },
+  "scanQR.alertAdd": {
+    "en": "Add",
+    "pl": "Dodaj"
+  },
+  "scanQR.requestingPermission": {
+    "en": "Requesting for camera permission",
+    "pl": "Prośba o dostęp do kamery"
+  },
+  "scanQR.noPermission": {
+    "en": "You have not granted camera permission",
+    "pl": "Nie udzieliłeś dostępu do kamery"
   }
 }

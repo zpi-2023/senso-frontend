@@ -24,14 +24,14 @@ export default function App() {
 
   const handleBarCodeScanned = ({ type, data }: { type: any; data: any }) => {
     setScanned(true);
-    Alert.alert("QR code scanned!", "Do you want to add this senior?", [
+    Alert.alert(t("scanQR.alertTitle"), t("scanQR.alertDescription"), [
       {
-        text: "Cancel",
+        text: t("scanQR.alertCancel"),
         style: "cancel",
         onPress: () => setScanned(false),
       },
       {
-        text: "Add",
+        text: t("scanQR.alertAdd"),
         onPress: () => {
           router.back();
           setScanned(false);
@@ -41,10 +41,10 @@ export default function App() {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <Text>{t("scanQR.requestingPermission")}</Text>;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>{t("scanQR.noPermission")}</Text>;
   }
 
   return (

@@ -20,7 +20,9 @@ const AddCaretakerProfile = () => {
         {t("createCaretakerProfile.description")}
       </Text>
       <Link href={AppRoutes.ScanSeniorQR}>
-        <Button labelStyle={styles.skipButton}>Scan QR code</Button>
+        <Button labelStyle={styles.skipButton}>
+          {t("createCaretakerProfile.scanQR")}
+        </Button>
       </Link>
     </View>
   );

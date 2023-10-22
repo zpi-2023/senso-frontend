@@ -5,6 +5,6 @@ export const enum AppRoutes {
   Register = "/auth/register",
   ProfileList = "/profile/list",
   AddCaretakerProfile = "/profile/caretaker/add",
-  ScanSeniorQR = "/profile/caretaker/scanQR",
+  ScanSeniorQR = "/profile/caretaker/scan-qr",
   AddSeniorProfile = "/profile/senior/add",
 }
