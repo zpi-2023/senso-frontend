@@ -1,6 +1,7 @@
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { router } from "expo-router";
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Alert } from "react-native";
 
 import { useI18n } from "@/common/i18n";
 import { Header } from "@/components/Header";
@@ -22,7 +23,20 @@ export default function App() {
 
   const handleBarCodeScanned = ({ type, data }: { type: any; data: any }) => {
     setScanned(true);
-    alert(`${data}`);
+    Alert.alert("QR code scanned!", "Do you want to add this senior?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+        onPress: () => setScanned(false),
+      },
+      {
+        text: "Add",
+        onPress: () => {
+          router.back();
+          setScanned(false);
+        },
+      },
+    ]);
   };
 
   if (hasPermission === null) {
@@ -34,14 +48,11 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Header left="back" title={t("scanSeniorQR.pageTitle")} />
+      <Header left="back" title={t("createSeniorProfile.pageTitle")} />
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
-      )}
     </View>
   );
 }

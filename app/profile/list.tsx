@@ -10,6 +10,7 @@ import {
   useIdentity,
   RedirectIfLoggedOut,
 } from "@/common/identity";
+import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
 const mockApiResponse = {
@@ -94,13 +95,13 @@ const ProfilesList = () => {
         </List.Subheader>
       )}
       <View style={styles.newProfileButtonWrapper}>
-        <Link href="/profile/add_caretaker">
+        <Link href={AppRoutes.AddCaretakerProfile}>
           <Button icon="account-eye-outline" mode="outlined" uppercase>
             {t("profileList.newCaretakerProfileButton")}
           </Button>
         </Link>
         {!seniorProfile && (
-          <Link href="/profile/scan_seniorqr" replace>
+          <Link href={AppRoutes.AddSeniorProfile} replace>
             <Button icon="plus" mode="contained" uppercase>
               {t("profileList.newSeniorProfileButton")}
             </Button>

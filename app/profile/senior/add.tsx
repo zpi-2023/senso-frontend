@@ -11,14 +11,14 @@ const ProfilesList = () => {
 
   return (
     <View style={styles.container}>
-      <Header left="back" title={t("scanSeniorQR.pageTitle")} />
+      <Header left="back" title={t("createSeniorProfile.pageTitle")} />
       <Text variant="titleLarge" style={styles.description}>
-        {t("scanSeniorQR.description")}
+        {t("createSeniorProfile.description")}
       </Text>
       <View style={styles.mockQR} />
       <Link href={AppRoutes.Dashboard} replace>
         <Button labelStyle={styles.skipButton}>
-          {t("scanSeniorQR.skipButton")}
+          {t("createSeniorProfile.skipButton")}
         </Button>
       </Link>
     </View>

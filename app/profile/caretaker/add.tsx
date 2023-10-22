@@ -6,20 +6,17 @@ import { useI18n } from "@/common/i18n";
 import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
-const ProfilesList = () => {
+const AddCaretakerProfile = () => {
   const { t } = useI18n();
 
   return (
     <View style={styles.container}>
-      <Header left="back" title={t("scanSeniorQR.pageTitle")} />
+      <Header left="back" title={t("createCaretakerProfile.pageTitle")} />
       <Text variant="titleLarge" style={styles.description}>
-        {t("scanSeniorQR.description")}
+        {t("createCaretakerProfile.description")}
       </Text>
-      <View style={styles.mockQR} />
-      <Link href={AppRoutes.Dashboard} replace>
-        <Button labelStyle={styles.skipButton}>
-          {t("scanSeniorQR.skipButton")}
-        </Button>
+      <Link href={AppRoutes.ScanSeniorQR}>
+        <Button labelStyle={styles.skipButton}>Scan QR code</Button>
       </Link>
     </View>
   );
@@ -37,15 +34,10 @@ const styles = StyleSheet.create({
   description: {
     textAlign: "center",
   },
-  mockQR: {
-    width: "90%",
-    aspectRatio: 1,
-    backgroundColor: "black",
-  },
   skipButton: {
     fontSize: 20,
     lineHeight: 28,
   },
 });
 
-export default ProfilesList;
+export default AddCaretakerProfile;

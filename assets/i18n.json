@@ -182,16 +182,28 @@
     "en": "Log out",
     "pl": "Wyloguj się"
   },
-  "scanSeniorQR.pageTitle": {
+  "createSeniorProfile.pageTitle": {
     "en": "Scan senior QR code",
     "pl": "Zeskanuj kod QR seniora"
   },
-  "scanSeniorQR.description": {
+  "createSeniorProfile.description": {
     "en": "Scan this QR code with your caretaker's app to connect your profiles.",
     "pl": "Zeskanuj ten kod QR za pomocą aplikacji opiekuna, aby połączyć profile."
   },
-  "scanSeniorQR.skipButton": {
+  "createSeniorProfile.skipButton": {
     "en": "I'll do it later",
     "pl": "Zrobię to później"
+  },
+  "createCaretakerProfile.pageTitle": {
+    "en": "Create caretaker profile",
+    "pl": "Utwórz profil opiekuna"
+  },
+  "createCaretakerProfile.seniorAliasInputLabel": {
+    "en": "Senior alias",
+    "pl": "Alias seniora"
+  },
+  "createCaretakerProfile.description": {
+    "en": "Enter alias for your senior. You can change it later. Then scan the QR code with your senior's app to connect your profiles.",
+    "pl": "Wpisz alias dla swojego seniora. Możesz go później zmienić. Następnie zeskanuj kod QR za pomocą aplikacji seniora, aby połączyć profile."
   }
 }
