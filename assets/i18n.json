@@ -146,9 +146,13 @@
     "en": "Click to log in to your profile",
     "pl": "Kliknij, aby zalogować się do profilu"
   },
-  "profileList.newProfileButton": {
-    "en": "Add new profile",
-    "pl": "Dodaj nowy profil"
+  "profileList.newCaretakerProfileButton": {
+    "en": "Create caretaker profile",
+    "pl": "Utwórz profil opiekuna"
+  },
+  "profileList.newSeniorProfileButton": {
+    "en": "Create senior profile",
+    "pl": "Utwórz profil seniora"
   },
   "profileList.noProfiles": {
     "en": "You don't have any profiles yet.",
@@ -225,5 +229,57 @@
   "actions.manageNotes": {
     "en": "Notes",
     "pl": "Notatki"
+  },
+  "createSeniorProfile.pageTitle": {
+    "en": "Scan senior QR code",
+    "pl": "Zeskanuj kod QR seniora"
+  },
+  "createSeniorProfile.description": {
+    "en": "Scan this QR code with your caretaker's app to connect your profiles.",
+    "pl": "Zeskanuj ten kod QR za pomocą aplikacji opiekuna, aby połączyć profile."
+  },
+  "createSeniorProfile.skipButton": {
+    "en": "I'll do it later",
+    "pl": "Zrobię to później"
+  },
+  "createCaretakerProfile.pageTitle": {
+    "en": "Create caretaker profile",
+    "pl": "Utwórz profil opiekuna"
+  },
+  "createCaretakerProfile.seniorAliasInputLabel": {
+    "en": "Senior alias",
+    "pl": "Alias seniora"
+  },
+  "createCaretakerProfile.description": {
+    "en": "Enter alias for your senior. You can change it later. Then scan the QR code with your senior's app to connect your profiles.",
+    "pl": "Wpisz alias dla swojego seniora. Możesz go później zmienić. Następnie zeskanuj kod QR za pomocą aplikacji seniora, aby połączyć profile."
+  },
+  "createCaretakerProfile.scanQR": {
+    "en": "Scan QR code",
+    "pl": "Zeskanuj kod QR"
+  },
+  "scanQR.alertTitle": {
+    "en": "QR code scanned",
+    "pl": "Kod QR zeskanowany"
+  },
+  "scanQR.alertDescription": {
+    "en": "Do you want to add this senior?",
+    "pl": "Czy chcesz dodać tego seniora?"
+  },
+  "scanQR.alertCancel": {
+    "en": "Cancel",
+    "pl": "Anuluj"
+  },
+  "scanQR.alertAdd": {
+    "en": "Add",
+    "pl": "Dodaj"
+  },
+  "scanQR.requestingPermission": {
+    "en": "Requesting for camera permission",
+    "pl": "Prośba o dostęp do kamery"
+  },
+  "scanQR.noPermission": {
+    "en": "You have not granted camera permission",
+    "pl": "Nie udzieliłeś dostępu do kamery"
   }
 }

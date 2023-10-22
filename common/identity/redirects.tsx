@@ -2,6 +2,7 @@ import { Redirect } from "expo-router";
 import { FC } from "react";
 
 import type { Identity } from "./types";
+import { AppRoutes } from "../util/constants";
 
 type RedirectProps = { identity: Identity };
 
@@ -28,10 +29,10 @@ class InvalidRedirectUsageError extends Error {
  */
 export const RedirectIfNoProfile = ({ identity }: RedirectProps) => {
   if (!identity.isLoggedIn) {
-    return <Redirect href="/auth/login" />;
+    return <Redirect href={AppRoutes.Login} />;
   }
   if (!identity.hasProfile) {
-    return <Redirect href="/profile/list" />;
+    return <Redirect href={AppRoutes.ProfileList} />;
   }
   throw new InvalidRedirectUsageError(RedirectIfNoProfile);
 };
@@ -51,7 +52,7 @@ export const RedirectIfNoProfile = ({ identity }: RedirectProps) => {
  */
 export const RedirectIfLoggedOut = ({ identity }: RedirectProps) => {
   if (!identity.isLoggedIn) {
-    return <Redirect href="/auth/login" />;
+    return <Redirect href={AppRoutes.Login} />;
   }
   throw new InvalidRedirectUsageError(RedirectIfLoggedOut);
 };
@@ -75,13 +76,13 @@ export const RedirectIfLoggedIn = ({ identity }: RedirectProps) => {
   if (identity.hasProfile) {
     switch (identity.profile.type) {
       case "senior":
-        return <Redirect href="/dashboard" />;
+        return <Redirect href={AppRoutes.Dashboard} />;
       case "caretaker":
-        return <Redirect href="/menu" />;
+        return <Redirect href={AppRoutes.Menu} />;
     }
   }
   if (identity.isLoggedIn) {
-    return <Redirect href="/profile/list" />;
+    return <Redirect href={AppRoutes.ProfileList} />;
   }
   throw new InvalidRedirectUsageError(RedirectIfLoggedIn);
 };

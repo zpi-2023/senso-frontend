@@ -1,5 +1,6 @@
 import type { Action } from "./types";
 import { isCaretaker, isSenior } from "../identity";
+import { AppRoutes } from "../util/constants";
 
 export const actions = {
   goBack: {
@@ -23,7 +24,7 @@ export const actions = {
   switchProfile: {
     displayName: (t) => t("actions.profileList"),
     icon: "account-switch",
-    handler: ({ router }) => router.push("/profile/list"),
+    handler: ({ router }) => router.push(AppRoutes.ProfileList),
   },
   logOut: {
     displayName: (t) => t("actions.logOut"),

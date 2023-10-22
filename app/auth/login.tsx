@@ -18,6 +18,7 @@ import {
 import { POST } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
+import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
 const Page = () => {
@@ -120,7 +121,7 @@ const Page = () => {
             </Button>
             <Text style={styles.submit}>
               {t("login.registerPrompt")}{" "}
-              <Link href="/auth/register" replace>
+              <Link href={AppRoutes.Register} replace>
                 <Text style={{ color: theme.colors.primary }}>
                   {t("login.registerButton")}
                 </Text>
