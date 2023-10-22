@@ -242,6 +242,26 @@
     "en": "I'll do it later",
     "pl": "Zrobię to później"
   },
+  "createSeniorProfile.codeExpired": {
+    "en": "The QR code has expired.\n Generate a new one.",
+    "pl": "Kod QR wygasł.\n Wygeneruj nowy."
+  },
+  "createSeniorProfile.codeValidFor": {
+    "en": "The code is valid for",
+    "pl": "Kod jest ważny przez"
+  },
+  "createSeniorProfile.seconds": {
+    "en": "seconds",
+    "pl": "sekund"
+  },
+  "createSeniorProfile.second": {
+    "en": "second",
+    "pl": "sekunda"
+  },
+  "createSeniorProfile.resetCode": {
+    "en": "Reset code",
+    "pl": "Zresetuj kod"
+  },
   "createCaretakerProfile.pageTitle": {
     "en": "Create caretaker profile",
     "pl": "Utwórz profil opiekuna"

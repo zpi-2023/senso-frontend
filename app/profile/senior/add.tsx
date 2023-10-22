@@ -1,14 +1,37 @@
 import { Link } from "expo-router";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
+import QRCode from "react-qr-code";
 
 import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
+import { plural } from "@/common/util";
 import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
-const ProfilesList = () => {
+const mockApiResponse = {
+  validFor: 15,
+  seniorDisplayName: "Grzegorz",
+  hash: "a703798c7b69ce2569bfdc20ac2e2e3e",
+};
+
+const CreateSeniorProfile = () => {
   const { t } = useI18n();
+  const [secondsLeft, setSecondsLeft] = useState(mockApiResponse.validFor);
+  const isCodeValid = secondsLeft > 0;
+
+  const handleReset = () => {
+    setSecondsLeft(mockApiResponse.validFor);
+    // TODO: call API for new hash
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSecondsLeft((secondsLeft) => secondsLeft - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -17,9 +40,36 @@ const ProfilesList = () => {
         title={t("createSeniorProfile.pageTitle")}
       />
       <Text variant="titleLarge" style={styles.description}>
-        {t("createSeniorProfile.description")}
+        {isCodeValid
+          ? t("createSeniorProfile.description")
+          : t("createSeniorProfile.codeExpired")}
       </Text>
-      <View style={styles.mockQR} />
+      <QRCode
+        value={
+          JSON.stringify({
+            seniorDisplayName: mockApiResponse.seniorDisplayName,
+            hash: mockApiResponse.hash,
+          }) ?? ""
+        }
+        display={isCodeValid ? "block" : "none"}
+      />
+      {isCodeValid ? (
+        <Text variant="titleLarge">
+          {`${t("createSeniorProfile.codeValidFor")} ${plural(
+            secondsLeft,
+            t("createSeniorProfile.second"),
+            t("createSeniorProfile.seconds"),
+          )}`}
+        </Text>
+      ) : (
+        <Button
+          mode="contained"
+          labelStyle={styles.skipButton}
+          onPress={handleReset}
+        >
+          {t("createSeniorProfile.resetCode")}
+        </Button>
+      )}
       <Link href={AppRoutes.Dashboard} replace>
         <Button labelStyle={styles.skipButton}>
           {t("createSeniorProfile.skipButton")}
@@ -41,15 +91,10 @@ const styles = StyleSheet.create({
   description: {
     textAlign: "center",
   },
-  mockQR: {
-    width: "90%",
-    aspectRatio: 1,
-    backgroundColor: "black",
-  },
   skipButton: {
     fontSize: 20,
     lineHeight: 28,
   },
 });
 
-export default ProfilesList;
+export default CreateSeniorProfile;

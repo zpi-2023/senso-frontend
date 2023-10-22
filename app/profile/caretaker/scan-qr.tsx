@@ -22,22 +22,27 @@ export default function App() {
     getBarCodeScannerPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }: { type: any; data: any }) => {
+  const handleBarCodeScanned = ({ data }: { data: string }) => {
     setScanned(true);
-    Alert.alert(t("scanQR.alertTitle"), t("scanQR.alertDescription"), [
-      {
-        text: t("scanQR.alertCancel"),
-        style: "cancel",
-        onPress: () => setScanned(false),
-      },
-      {
-        text: t("scanQR.alertAdd"),
-        onPress: () => {
-          router.back();
-          setScanned(false);
+    const { seniorDisplayName, hash } = JSON.parse(data);
+    Alert.alert(
+      t("scanQR.alertTitle"),
+      `name: ${seniorDisplayName}\nhash: ${hash}`,
+      [
+        {
+          text: t("scanQR.alertCancel"),
+          style: "cancel",
+          onPress: () => setScanned(false),
         },
-      },
-    ]);
+        {
+          text: t("scanQR.alertAdd"),
+          onPress: () => {
+            router.back();
+            setScanned(false);
+          },
+        },
+      ],
+    );
   };
 
   if (hasPermission === null) {
