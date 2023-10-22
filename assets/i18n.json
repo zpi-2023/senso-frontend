@@ -279,12 +279,12 @@
     "pl": "Zeskanuj kod QR"
   },
   "scanQR.alertTitle": {
-    "en": "QR code scanned",
-    "pl": "Kod QR zeskanowany"
+    "en": "Senior code scanned",
+    "pl": "Zeskanowano kod seniora"
   },
   "scanQR.alertDescription": {
-    "en": "Do you want to add this senior?",
-    "pl": "Czy chcesz dodać tego seniora?"
+    "en": "Do you want to add \"{name}\" as your senior?",
+    "pl": "Czy chcesz dodać \"{name}\" jako swojego seniora?"
   },
   "scanQR.alertCancel": {
     "en": "Cancel",

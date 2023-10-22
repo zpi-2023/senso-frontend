@@ -18,7 +18,7 @@ const mockApiResponse = {
   profiles: [
     { type: "caretaker", seniorId: 2137, seniorAlias: "Jan Kowalski" },
     { type: "caretaker", seniorId: 123, seniorAlias: "Grzegorz Floryda" },
-    // { type: "senior", seniorId: 789 },
+    { type: "senior", seniorId: 789 },
   ] as Profile[],
 };
 

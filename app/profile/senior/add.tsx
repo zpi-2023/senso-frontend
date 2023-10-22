@@ -11,7 +11,7 @@ import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
 const mockApiResponse = {
-  validFor: 15,
+  validFor: 60,
   seniorDisplayName: "Grzegorz",
   hash: "a703798c7b69ce2569bfdc20ac2e2e3e",
 };

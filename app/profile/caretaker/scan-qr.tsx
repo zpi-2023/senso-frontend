@@ -27,7 +27,7 @@ export default function App() {
     const { seniorDisplayName, hash } = JSON.parse(data);
     Alert.alert(
       t("scanQR.alertTitle"),
-      `name: ${seniorDisplayName}\nhash: ${hash}`,
+      t("scanQR.alertDescription", { name: seniorDisplayName }),
       [
         {
           text: t("scanQR.alertCancel"),
@@ -39,6 +39,7 @@ export default function App() {
           onPress: () => {
             router.back();
             setScanned(false);
+            console.log({ hash }); // TODO: call API to add senior profile
           },
         },
       ],
