@@ -258,14 +258,6 @@
     "en": "The code is valid for",
     "pl": "Kod jest ważny przez"
   },
-  "createSeniorProfile.seconds": {
-    "en": "seconds",
-    "pl": "sekund"
-  },
-  "createSeniorProfile.second": {
-    "en": "second",
-    "pl": "sekunda"
-  },
   "createSeniorProfile.resetCode": {
     "en": "Reset code",
     "pl": "Zresetuj kod"

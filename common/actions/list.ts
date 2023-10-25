@@ -49,7 +49,7 @@ export const actions = {
   pairCaretaker: {
     displayName: (t) => t("actions.pairCaretaker"),
     icon: "link-variant-plus",
-    handler: ({ router }) => router.push("/profile/scan_seniorqr"),
+    handler: ({ router }) => router.push(AppRoutes.DisplaySeniorQR),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
   editDashboard: {

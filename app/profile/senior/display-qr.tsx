@@ -6,8 +6,8 @@ import QRCode from "react-qr-code";
 
 import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
-import { plural } from "@/common/util";
 import { AppRoutes } from "@/common/util/constants";
+import { toMinutesAndSeconds } from "@/common/util/helpers";
 import { Header } from "@/components/Header";
 
 const mockApiResponse = {
@@ -20,6 +20,7 @@ const CreateSeniorProfile = () => {
   const { t } = useI18n();
   const [secondsLeft, setSecondsLeft] = useState(mockApiResponse.validFor);
   const isCodeValid = secondsLeft > 0;
+  const timer = toMinutesAndSeconds(secondsLeft);
 
   const handleReset = () => {
     setSecondsLeft(mockApiResponse.validFor);
@@ -55,11 +56,7 @@ const CreateSeniorProfile = () => {
       />
       {isCodeValid ? (
         <Text variant="titleLarge">
-          {`${t("createSeniorProfile.codeValidFor")} ${plural(
-            secondsLeft,
-            t("createSeniorProfile.second"),
-            t("createSeniorProfile.seconds"),
-          )}`}
+          {`${t("createSeniorProfile.codeValidFor")} ${timer}`}
         </Text>
       ) : (
         <Button
