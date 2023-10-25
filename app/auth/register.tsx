@@ -20,10 +20,11 @@ import {
 import { POST } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
-import { AppRoutes } from "@/common/util/constants";
+import { AppRoutes, MIN_DISPLAY_NAME_LENGTH } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
 interface IRegisterForm {
+  displayName: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -61,6 +62,7 @@ const Page = () => {
     <Formik
       initialValues={
         {
+          displayName: "",
           email: "",
           password: "",
           confirmPassword: "",
@@ -70,11 +72,19 @@ const Page = () => {
       onSubmit={onSubmit}
       validate={(values) => {
         const errors: {
+          displayName?: string;
           email?: string;
           password?: string;
           confirmPassword?: string;
           phoneNumber?: string;
         } = {};
+        if (!values.displayName) {
+          errors.displayName = t("auth.required");
+        } else if (values.displayName.length < MIN_DISPLAY_NAME_LENGTH) {
+          errors.displayName = t("register.badDisplayNameLength", {
+            length: MIN_DISPLAY_NAME_LENGTH,
+          });
+        }
         if (!values.email) {
           errors.email = t("auth.required");
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
@@ -116,6 +126,15 @@ const Page = () => {
               <Text variant="titleLarge" style={styles.title}>
                 {t("register.description")}
               </Text>
+              <TextInput
+                mode="outlined"
+                label={t("auth.displayName")}
+                onChangeText={handleChange("displayName")}
+                onBlur={handleBlur("displayName")}
+                value={values.displayName}
+                style={styles.input}
+                error={!!errors.displayName}
+              />
               <TextInput
                 mode="outlined"
                 label={t("auth.email")}
@@ -192,6 +211,7 @@ const Page = () => {
                 mode="contained"
                 onPress={() => handleSubmit()}
                 style={styles.submit}
+                loading={status === "pending"}
               >
                 {t("register.registerButton")}
               </Button>
