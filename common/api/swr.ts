@@ -20,7 +20,11 @@ const buildOptions = <P extends GetPath>(
   identity: Identity,
 ): GetOptions<P> => ({
   ...({ params } as GetOptions<P>),
-  ...(identity.isLoggedIn ? { Authorization: `Bearer ${identity.token}` } : {}),
+  ...(identity.isLoggedIn
+    ? {
+        headers: { Authorization: `Bearer ${identity.token}` },
+      }
+    : {}),
 });
 
 /**

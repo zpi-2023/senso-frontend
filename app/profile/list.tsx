@@ -1,8 +1,9 @@
 import { Link } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Avatar, Button, List } from "react-native-paper";
+import { ActivityIndicator, Avatar, Button, List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
+import { useApi } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import {
   Profile,
@@ -14,23 +15,24 @@ import {
 import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
-const mockApiResponse = {
-  profiles: [
-    { type: "caretaker", seniorId: 2137, seniorAlias: "Jan Kowalski" },
-    { type: "caretaker", seniorId: 123, seniorAlias: "Grzegorz Floryda" },
-    { type: "senior", seniorId: 789 },
-  ] as Profile[],
-};
-
 const ProfilesList = () => {
   const { t } = useI18n();
   const identity = useIdentity();
+  const { data } = useApi({
+    url: "/api/v1/account/profiles",
+  });
+
+  if (!data) {
+    return <ActivityIndicator />;
+  }
+
+  // TODO: add proper API response handling when API is ready
+  const { profiles }: { profiles: Profile[] } = data as any;
 
   if (!identity.isLoggedIn) {
     return <RedirectIfLoggedOut identity={identity} />;
   }
 
-  const profiles = mockApiResponse.profiles;
   const seniorProfile = profiles.find(isSenior);
   const caretakerProfiles = profiles.filter(isCaretaker);
 
