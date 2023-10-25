@@ -22,6 +22,10 @@
     "en": "Email",
     "pl": "Email"
   },
+  "auth.displayName": {
+    "en": "Display name",
+    "pl": "Nazwa"
+  },
   "auth.password": {
     "en": "Password",
     "pl": "Hasło"
@@ -85,6 +89,10 @@
   "register.loginButton": {
     "en": "Sign in",
     "pl": "Zaloguj się"
+  },
+  "register.badDisplayNameLength": {
+    "en": "Display name must have at least {length} characters",
+    "pl": "Nazwa wyświetlana musi mieć co najmniej {length} znaków"
   },
   "register.badPasswordLength": {
     "en": "Password must have at least {length} characters",

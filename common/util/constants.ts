@@ -8,3 +8,5 @@ export const enum AppRoutes {
   ScanSeniorQR = "/profile/caretaker/scan-qr",
   AddSeniorProfile = "/profile/senior/add",
 }
+
+export const MIN_DISPLAY_NAME_LENGTH = 3;
