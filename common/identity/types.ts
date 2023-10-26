@@ -1,3 +1,5 @@
+import { AppRoutes } from "../constants";
+
 export type SeniorProfile = {
   type: "senior";
   /** For `type` `"senior"`, this is the account ID of the current user. */
@@ -27,7 +29,7 @@ export type IdentityData =
 
 export type LogIn = (token: string) => void;
 export type LogOut = () => void;
-export type SelectProfile = (profile: Profile) => void;
+export type SelectProfile = (profile: Profile, redirectTo?: AppRoutes) => void;
 
 export type IdentityNothingKnown = {
   isLoggedIn: false;

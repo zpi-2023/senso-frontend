@@ -1,38 +1,39 @@
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { ActivityIndicator, Button, Text } from "react-native-paper";
 import QRCode from "react-qr-code";
 
 import { actions } from "@/common/actions";
+import { useApi } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { toMinutesAndSeconds } from "@/common/util/helpers";
 import { Header } from "@/components/Header";
 
-const mockApiResponse = {
-  validFor: 60,
-  seniorDisplayName: "Grzegorz",
-  hash: "a703798c7b69ce2569bfdc20ac2e2e3e",
-};
-
 const CreateSeniorProfile = () => {
   const { t } = useI18n();
-  const [secondsLeft, setSecondsLeft] = useState(mockApiResponse.validFor);
+  const { data, isLoading } = useApi({
+    url: "/api/v1/account/profiles/senior",
+  });
+
+  const [secondsLeft, setSecondsLeft] = useState(data?.validFor ?? 0);
+
   const isCodeValid = secondsLeft > 0;
-  const timer = toMinutesAndSeconds(secondsLeft);
+  const timer = isCodeValid ? toMinutesAndSeconds(secondsLeft) : "--:--";
 
   const handleReset = () => {
-    setSecondsLeft(mockApiResponse.validFor);
-    // TODO: call API for new hash
+    setSecondsLeft(data?.validFor ?? 0);
+    // TODO: call for the hash again and update the QR code
   };
 
   useEffect(() => {
     const timer = setInterval(() => {
+      if (isLoading) return;
       setSecondsLeft((secondsLeft) => secondsLeft - 1);
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isLoading]);
 
   return (
     <View style={styles.container}>
@@ -45,15 +46,28 @@ const CreateSeniorProfile = () => {
           ? t("createSeniorProfile.description")
           : t("createSeniorProfile.codeExpired")}
       </Text>
-      <QRCode
-        value={
-          JSON.stringify({
-            seniorDisplayName: mockApiResponse.seniorDisplayName,
-            hash: mockApiResponse.hash,
-          }) ?? ""
-        }
-        display={isCodeValid ? "block" : "none"}
-      />
+      {isLoading ? (
+        <View
+          style={{
+            width: "70%",
+            aspectRatio: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator size="large" />
+        </View>
+      ) : (
+        <QRCode
+          value={
+            JSON.stringify({
+              seniorDisplayName: data?.seniorDisplayName,
+              hash: data?.hash,
+            }) ?? ""
+          }
+          display={isCodeValid ? "block" : "none"}
+        />
+      )}
       {isCodeValid ? (
         <Text variant="titleLarge">
           {`${t("createSeniorProfile.codeValidFor")} ${timer}`}

@@ -1,4 +1,5 @@
 import { Link } from "expo-router";
+import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import {
   ActivityIndicator,
@@ -10,7 +11,7 @@ import {
 } from "react-native-paper";
 
 import { actions } from "@/common/actions";
-import { useApi } from "@/common/api";
+import { POST, useApi } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import {
@@ -19,6 +20,7 @@ import {
   isCaretaker,
   useIdentity,
   RedirectIfLoggedOut,
+  SeniorProfile,
 } from "@/common/identity";
 import { Header } from "@/components/Header";
 
@@ -30,6 +32,11 @@ const ProfilesList = () => {
   const { data } = useApi({
     url: "/api/v1/account/profiles",
   });
+  const [isCreatingSeniorProfile, setIsCreatingSeniorProfile] = useState(false);
+
+  if (!identity.isLoggedIn) {
+    return <RedirectIfLoggedOut identity={identity} />;
+  }
 
   if (!data) {
     return <ActivityIndicator />;
@@ -38,14 +45,30 @@ const ProfilesList = () => {
   // TODO: add proper API response handling when API is ready
   const { profiles }: { profiles: Profile[] } = data as any;
 
-  if (!identity.isLoggedIn) {
-    return <RedirectIfLoggedOut identity={identity} />;
-  }
-
   const seniorProfile = profiles.find(isSenior);
   const caretakerProfiles = profiles.filter(isCaretaker);
 
   const handleItemPress = (profile: Profile) => identity.selectProfile(profile);
+
+  const handleCreateSeniorProfile = async () => {
+    setIsCreatingSeniorProfile(true);
+    const { data: seniorProfile } = await POST(
+      "/api/v1/account/profiles/senior",
+      {
+        headers: { Authorization: `Bearer ${identity.token}` },
+      },
+    );
+
+    if (!seniorProfile) {
+      return; // TODO: handle error
+    }
+
+    identity.selectProfile(
+      seniorProfile as SeniorProfile,
+      AppRoutes.DisplaySeniorQR,
+    );
+    setIsCreatingSeniorProfile(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -114,7 +137,14 @@ const ProfilesList = () => {
         </Link>
         {!seniorProfile && (
           <Link href={AppRoutes.DisplaySeniorQR} replace>
-            <Button icon="plus" mode="contained" uppercase>
+            <Button
+              icon="plus"
+              mode="contained"
+              uppercase
+              disabled={isCreatingSeniorProfile}
+              loading={isCreatingSeniorProfile}
+              onPress={handleCreateSeniorProfile}
+            >
               {t("profileList.newSeniorProfileButton")}
             </Button>
           </Link>

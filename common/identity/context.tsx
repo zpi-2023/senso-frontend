@@ -41,13 +41,13 @@ export const useIdentity = (): Identity => {
     setData({ known: "nothing" });
   }, [router, setData]);
   const selectProfile = useCallback(
-    (profile: Profile) => {
+    (profile: Profile, redirectTo?: AppRoutes) => {
       switch (profile.type) {
         case "senior":
-          clearHistory(router, AppRoutes.Dashboard);
+          clearHistory(router, redirectTo || AppRoutes.Dashboard);
           break;
         case "caretaker":
-          clearHistory(router, AppRoutes.Menu);
+          clearHistory(router, redirectTo || AppRoutes.Menu);
           break;
       }
       setData(
