@@ -15,10 +15,12 @@ type GetPath = keyof {
 type GetOptions<P extends GetPath> = FetchOptions<FilterKeys<paths[P], "get">>;
 
 const fetcher = async <P extends GetPath>(url: P, options: GetOptions<P>) => {
-  const { response, data } = await GET(url, options);
+  const { response, data, error } = await GET(url, options);
   if (!response.ok) {
     // SWR expects the promise to reject on error and openapi-fetch does not do that by default
-    throw new Error("An error occurred while fetching the data.");
+    throw new Error("An error occurred while fetching the data.", {
+      cause: error,
+    });
   }
   return data;
 };

@@ -3,8 +3,8 @@ import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
-import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
 const ProfilesList = () => {

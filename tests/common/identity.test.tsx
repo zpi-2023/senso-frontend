@@ -2,6 +2,7 @@ import { render, renderHook, screen } from "@testing-library/react-native";
 import type { ReactNode } from "react";
 import { Text } from "react-native-paper";
 
+import { AppRoutes } from "@/common/constants";
 import {
   RedirectIfNoProfile,
   RedirectIfLoggedOut,
@@ -29,7 +30,7 @@ const testRedirect = async (
   redirect: ReactNode,
   targetRoute: string,
 ) => {
-  const routes = ["/dashboard", "/auth/login", "/profile/list"];
+  const routes = [AppRoutes.Dashboard, AppRoutes.Login, AppRoutes.ProfileList];
 
   render(
     <MockRouter
@@ -87,41 +88,41 @@ describe("Identity", () => {
     describe(RedirectIfNoProfile, () => {
       it("redirects to the login page if the user is not logged in", () =>
         testRedirect(
-          "/dashboard",
+          AppRoutes.Dashboard,
           <RedirectIfNoProfile identity={mockIdentityLoggedOut} />,
-          "/auth/login",
+          AppRoutes.Login,
         ));
 
       it("redirects to the profile selection page if the user has no selected profile", () =>
         testRedirect(
-          "/dashboard",
+          AppRoutes.Dashboard,
           <RedirectIfNoProfile identity={mockIdentityLoggedIn} />,
-          "/profile/list",
+          AppRoutes.ProfileList,
         ));
     });
 
     describe(RedirectIfLoggedOut, () => {
       it("redirects to the login page if the user is not logged in", () =>
         testRedirect(
-          "/dashboard",
+          AppRoutes.Dashboard,
           <RedirectIfLoggedOut identity={mockIdentityLoggedOut} />,
-          "/auth/login",
+          AppRoutes.Login,
         ));
     });
 
     describe(RedirectIfLoggedIn, () => {
       it("redirects to the dashboard if the user is logged in and has a selected profile", () =>
         testRedirect(
-          "/auth/login",
+          AppRoutes.Login,
           <RedirectIfLoggedIn identity={mockIdentityWithProfile} />,
-          "/dashboard",
+          AppRoutes.Dashboard,
         ));
 
       it("redirects to the profile selection page if the user has no selected profile", () =>
         testRedirect(
-          "/auth/login",
+          AppRoutes.Login,
           <RedirectIfLoggedIn identity={mockIdentityLoggedIn} />,
-          "/profile/list",
+          AppRoutes.ProfileList,
         ));
     });
   });

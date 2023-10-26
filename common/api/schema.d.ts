@@ -30,6 +30,194 @@ export interface paths {
       };
     };
   };
+  "/api/v1/account/profiles": {
+    get: {
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ProfilesDto"];
+            "application/json": components["schemas"]["ProfilesDto"];
+            "text/json": components["schemas"]["ProfilesDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/account/profiles/senior": {
+    get: {
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["EncodedSeniorDto"];
+            "application/json": components["schemas"]["EncodedSeniorDto"];
+            "text/json": components["schemas"]["EncodedSeniorDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    post: {
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ProfileDisplayDto"];
+            "application/json": components["schemas"]["ProfileDisplayDto"];
+            "text/json": components["schemas"]["ProfileDisplayDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Conflict */
+        409: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/account/profiles/caretaker": {
+    post: {
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["CreateCaretakerProfileDto"];
+          "text/json": components["schemas"]["CreateCaretakerProfileDto"];
+          "application/*+json": components["schemas"]["CreateCaretakerProfileDto"];
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["SeniorIdDto"];
+            "application/json": components["schemas"]["SeniorIdDto"];
+            "text/json": components["schemas"]["SeniorIdDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/dashboard/{seniorId}": {
+    get: {
+      parameters: {
+        path: {
+          seniorId: number;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["DashboardDto"];
+            "application/json": components["schemas"]["DashboardDto"];
+            "text/json": components["schemas"]["DashboardDto"];
+          };
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    put: {
+      parameters: {
+        path: {
+          seniorId: number;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["DashboardDto"];
+          "text/json": components["schemas"]["DashboardDto"];
+          "application/*+json": components["schemas"]["DashboardDto"];
+        };
+      };
+      responses: {
+        /** @description No Content */
+        204: {
+          content: never;
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
   "/api/v1/healthz": {
     get: {
       responses: {
@@ -83,6 +271,22 @@ export interface components {
       email: string;
       password: string;
       phoneNumber?: string | null;
+      displayName: string;
+    };
+    CreateCaretakerProfileDto: {
+      /** Format: int32 */
+      hash: number;
+      seniorAlias: string;
+    };
+    DashboardDto: {
+      gadgets?: string[];
+    };
+    EncodedSeniorDto: {
+      /** Format: int32 */
+      hash: number;
+      seniorDisplayName: string;
+      /** Format: int32 */
+      validFor: number;
     };
     GetAccountByCredentialsDto: {
       email: string;
@@ -102,6 +306,19 @@ export interface components {
       detail?: string | null;
       instance?: string | null;
       [key: string]: unknown;
+    };
+    ProfileDisplayDto: {
+      type: string;
+      /** Format: int32 */
+      seniorId: number;
+      seniorAlias: string;
+    };
+    ProfilesDto: {
+      profiles: components["schemas"]["ProfileDisplayDto"][];
+    };
+    SeniorIdDto: {
+      /** Format: int32 */
+      seniorId: number;
     };
     TokenDto: {
       token: string;

@@ -1,6 +1,6 @@
 import type { Action } from "./types";
+import { AppRoutes } from "../constants";
 import { isCaretaker, isSenior } from "../identity";
-import { AppRoutes } from "../util/constants";
 
 export const actions = {
   goBack: {
@@ -12,12 +12,12 @@ export const actions = {
   openMenu: {
     displayName: (t) => t("actions.openMenu"),
     icon: "menu",
-    handler: ({ router }) => router.push("/menu"),
+    handler: ({ router }) => router.push(AppRoutes.Menu),
   },
   openDashboard: {
     displayName: (t) => t("actions.openDashboard"),
     icon: "view-dashboard",
-    handler: ({ router }) => router.push("/dashboard"),
+    handler: ({ router }) => router.push(AppRoutes.Dashboard),
     hidden: ({ identity }) => isSenior(identity.profile),
     managed: true,
   },
@@ -40,22 +40,22 @@ export const actions = {
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
   showSosHistory: {
-    displayName: (t) => t("actions.showSosHistory"),
+    displayName: (t) => t("actions.showAlertHistory"),
     icon: "account-alert",
-    handler: ({ router }) => router.push("/sos-history"),
+    handler: ({ router }) => router.push(AppRoutes.AlertHistory),
     hidden: ({ identity }) => isSenior(identity.profile),
     managed: true,
   },
   pairCaretaker: {
     displayName: (t) => t("actions.pairCaretaker"),
     icon: "link-variant-plus",
-    handler: ({ router }) => router.push("/profile/scan_seniorqr"),
+    handler: ({ router }) => router.push(AppRoutes.DisplaySeniorQR),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
   editDashboard: {
     displayName: (t) => t("actions.editDashboard"),
     icon: "view-dashboard-edit",
-    handler: ({ router }) => router.push("/dashboard/edit"),
+    handler: ({ router }) => router.push(AppRoutes.EditDashboard),
     managed: true,
   },
   toggleLanguage: {
@@ -66,19 +66,19 @@ export const actions = {
   trackMedication: {
     displayName: (t) => t("actions.trackMedication"),
     icon: "medical-bag",
-    handler: ({ router }) => router.push("/medication"),
+    handler: ({ router }) => router.push(AppRoutes.Medication),
     managed: true,
   },
   playGames: {
     displayName: (t) => t("actions.playGames"),
     icon: "gamepad-variant",
-    handler: ({ router }) => router.push("/games"),
+    handler: ({ router }) => router.push(AppRoutes.Games),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
   manageNotes: {
     displayName: (t) => t("actions.manageNotes"),
     icon: "note-edit",
-    handler: ({ router }) => router.push("/notes"),
+    handler: ({ router }) => router.push(AppRoutes.Notes),
     managed: true,
   },
 } satisfies Record<string, Action>;

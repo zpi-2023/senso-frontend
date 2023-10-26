@@ -16,9 +16,9 @@ import {
 } from "react-native-paper";
 
 import { POST } from "@/common/api";
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
-import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
 const Page = () => {

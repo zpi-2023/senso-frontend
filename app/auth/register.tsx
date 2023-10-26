@@ -18,9 +18,9 @@ import {
 } from "react-native-paper";
 
 import { POST } from "@/common/api";
+import { AppRoutes, MIN_DISPLAY_NAME_LENGTH } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
-import { AppRoutes, MIN_DISPLAY_NAME_LENGTH } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
 interface IRegisterForm {
