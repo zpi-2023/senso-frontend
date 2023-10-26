@@ -210,7 +210,7 @@
     "en": "SOS",
     "pl": "SOS"
   },
-  "actions.showSosHistory": {
+  "actions.showAlertHistory": {
     "en": "Alert history",
     "pl": "Historia zgłoszeń"
   },

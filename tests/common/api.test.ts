@@ -3,6 +3,11 @@ import { renderHook, waitFor } from "@testing-library/react-native";
 import { POST, useApi } from "@/common/api";
 import { fetcher } from "@/common/api/client";
 import { mockApi } from "@/common/api/mocks";
+import { buildOptions } from "@/common/api/swr";
+import {
+  mockIdentityLoggedIn,
+  mockIdentityLoggedOut,
+} from "@/common/identity/mocks";
 
 describe("API", () => {
   describe(POST, () => {
@@ -56,6 +61,29 @@ describe("API", () => {
       await waitFor(() => expect(result.current.error).toBeTruthy());
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toBeUndefined();
+    });
+  });
+
+  describe(buildOptions, () => {
+    it("does not include any headers when the user is logged out", () => {
+      const options = buildOptions(
+        { url: "/api/v1/healthz" },
+        mockIdentityLoggedOut,
+      );
+
+      expect(options.headers).toBeUndefined();
+    });
+
+    it("includes the Authorization header when the user is logged in", () => {
+      const options = buildOptions(
+        { url: "/api/v1/healthz" },
+        mockIdentityLoggedIn,
+      );
+
+      expect(Object.entries(options.headers ?? {})).toContainEqual([
+        "Authorization",
+        `Bearer ${mockIdentityLoggedIn.token}`,
+      ]);
     });
   });
 });

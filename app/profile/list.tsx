@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Avatar, Button, List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import {
   Profile,
@@ -11,7 +12,6 @@ import {
   useIdentity,
   RedirectIfLoggedOut,
 } from "@/common/identity";
-import { AppRoutes } from "@/common/util/constants";
 import { Header } from "@/components/Header";
 
 const mockApiResponse = {
@@ -102,7 +102,7 @@ const ProfilesList = () => {
           </Button>
         </Link>
         {!seniorProfile && (
-          <Link href={AppRoutes.AddSeniorProfile} replace>
+          <Link href={AppRoutes.DisplaySeniorQR} replace>
             <Button icon="plus" mode="contained" uppercase>
               {t("profileList.newSeniorProfileButton")}
             </Button>

@@ -1,7 +1,12 @@
 import { PropsWithChildren } from "react";
 
 import { IdentityContext } from "./context";
-import { IdentityData } from "./types";
+import {
+  IdentityAccountKnown,
+  IdentityData,
+  IdentityNothingKnown,
+  IdentityProfileKnown,
+} from "./types";
 import { buildIdentity } from "./util";
 
 /**
@@ -28,12 +33,12 @@ const mockActions = {
 export const mockIdentityLoggedOut = buildIdentity(
   { known: "nothing" },
   mockActions,
-);
+) as IdentityNothingKnown;
 
 export const mockIdentityLoggedIn = buildIdentity(
   { known: "account", token: "TOKEN" },
   mockActions,
-);
+) as IdentityAccountKnown;
 
 export const mockIdentityWithProfile = buildIdentity(
   {
@@ -42,4 +47,4 @@ export const mockIdentityWithProfile = buildIdentity(
     profile: { type: "senior", seniorId: 1 },
   },
   mockActions,
-);
+) as IdentityProfileKnown;
