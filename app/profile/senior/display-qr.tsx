@@ -5,8 +5,8 @@ import { Button, Text } from "react-native-paper";
 import QRCode from "react-qr-code";
 
 import { actions } from "@/common/actions";
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
-import { AppRoutes } from "@/common/util/constants";
 import { toMinutesAndSeconds } from "@/common/util/helpers";
 import { Header } from "@/components/Header";
 

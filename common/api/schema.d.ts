@@ -147,6 +147,77 @@ export interface paths {
       };
     };
   };
+  "/api/v1/dashboard/{seniorId}": {
+    get: {
+      parameters: {
+        path: {
+          seniorId: number;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["DashboardDto"];
+            "application/json": components["schemas"]["DashboardDto"];
+            "text/json": components["schemas"]["DashboardDto"];
+          };
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    put: {
+      parameters: {
+        path: {
+          seniorId: number;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["DashboardDto"];
+          "text/json": components["schemas"]["DashboardDto"];
+          "application/*+json": components["schemas"]["DashboardDto"];
+        };
+      };
+      responses: {
+        /** @description No Content */
+        204: {
+          content: never;
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
   "/api/v1/healthz": {
     get: {
       responses: {
@@ -206,6 +277,9 @@ export interface components {
       /** Format: int32 */
       hash: number;
       seniorAlias: string;
+    };
+    DashboardDto: {
+      gadgets?: string[];
     };
     EncodedSeniorDto: {
       /** Format: int32 */

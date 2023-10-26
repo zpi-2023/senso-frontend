@@ -2,7 +2,7 @@ import { Redirect } from "expo-router";
 import { FC } from "react";
 
 import type { Identity } from "./types";
-import { AppRoutes } from "../util/constants";
+import { AppRoutes } from "../constants";
 
 type RedirectProps = { identity: Identity };
 

@@ -15,15 +15,13 @@ type UseApiArg<P extends GetPath> =
   | ({ url: P } & Pick<GetOptions<P>, "params">)
   | null;
 
-const buildOptions = <P extends GetPath>(
+export const buildOptions = <P extends GetPath>(
   { params }: NonNullable<UseApiArg<P>>,
   identity: Identity,
 ): GetOptions<P> => ({
   ...({ params } as GetOptions<P>),
   ...(identity.isLoggedIn
-    ? {
-        headers: { Authorization: `Bearer ${identity.token}` },
-      }
+    ? { headers: { Authorization: `Bearer ${identity.token}` } }
     : {}),
 });
 
