@@ -10,7 +10,7 @@ import { DashboardGadget } from "@/components/dashboard";
 const Page = () => {
   const { t } = useI18n();
   const identity = useIdentity();
-  const gadgets = useDashboardGadgets(identity);
+  const [gadgets] = useDashboardGadgets(identity);
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;

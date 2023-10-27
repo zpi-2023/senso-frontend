@@ -4,10 +4,15 @@ import { IconButton, List } from "react-native-paper";
 import { ActionKey, actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 
-type DashboardEditAvailableProps = { gadget: ActionKey; onAdd: () => void };
+type DashboardEditAvailableProps = {
+  gadget: ActionKey;
+  disabled: boolean;
+  onAdd: () => void;
+};
 
 export const DashboardEditAvailable = ({
   gadget,
+  disabled,
   onAdd,
 }: DashboardEditAvailableProps) => {
   const { t } = useI18n();
@@ -24,6 +29,7 @@ export const DashboardEditAvailable = ({
           size={16}
           style={styles.button}
           onPress={onAdd}
+          disabled={disabled}
         />
       )}
     />

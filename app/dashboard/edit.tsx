@@ -15,7 +15,7 @@ import {
 const Page = () => {
   const { t } = useI18n();
   const identity = useIdentity();
-  const gadgets = useDashboardGadgets(identity);
+  const [gadgets, setGadgets] = useDashboardGadgets(identity);
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
@@ -42,9 +42,23 @@ const Page = () => {
               gadget={gadget}
               isFirst={index === 0}
               isLast={index === gadgets.length - 1}
-              onRemove={() => {}}
-              onMoveUp={() => {}}
-              onMoveDown={() => {}}
+              onRemove={() => setGadgets(gadgets.filter((g) => g !== gadget))}
+              onMoveUp={() =>
+                setGadgets([
+                  ...gadgets.slice(0, index - 1),
+                  gadgets[index]!,
+                  gadgets[index - 1]!,
+                  ...gadgets.slice(index + 1),
+                ])
+              }
+              onMoveDown={() =>
+                setGadgets([
+                  ...gadgets.slice(0, index),
+                  gadgets[index + 1]!,
+                  gadgets[index]!,
+                  ...gadgets.slice(index + 2),
+                ])
+              }
             />
           ))}
         </List.Section>
@@ -57,7 +71,8 @@ const Page = () => {
               <DashboardEditAvailable
                 key={gadget}
                 gadget={gadget}
-                onAdd={() => {}}
+                disabled={gadgets.length >= MAX_GADGETS}
+                onAdd={() => setGadgets([...gadgets, gadget])}
               />
             ))}
         </List.Section>

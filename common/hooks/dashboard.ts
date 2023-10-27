@@ -1,9 +1,11 @@
 import type { ActionKey } from "../actions";
-import { useApi } from "../api";
+import { PUT, useApi } from "../api";
 import type { Identity } from "../identity";
 
-export const useDashboardGadgets = (identity: Identity): ActionKey[] | null => {
-  const { data } = useApi(
+export const useDashboardGadgets = (
+  identity: Identity,
+): [ActionKey[] | null, (newGadgets: ActionKey[]) => void] => {
+  const { data, mutate } = useApi(
     identity.hasProfile
       ? {
           url: "/api/v1/dashboard/{seniorId}",
@@ -12,9 +14,19 @@ export const useDashboardGadgets = (identity: Identity): ActionKey[] | null => {
       : null,
   );
 
-  if (!data?.gadgets) {
-    return null;
-  }
+  const setGadgets = (newGadgets: ActionKey[]) => {
+    if (!identity.hasProfile) {
+      return;
+    }
 
-  return data.gadgets as ActionKey[];
+    const body = { gadgets: newGadgets };
+
+    PUT("/api/v1/dashboard/{seniorId}", {
+      params: { path: { seniorId: identity.profile.seniorId } },
+      body,
+      headers: { Authorization: `Bearer ${identity.token}` },
+    }).then(() => mutate(body));
+  };
+
+  return [data?.gadgets ? (data.gadgets as ActionKey[]) : null, setGadgets];
 };
