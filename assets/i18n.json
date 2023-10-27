@@ -219,8 +219,8 @@
     "pl": "Paruj z opiekunem"
   },
   "actions.editDashboard": {
-    "en": "Edit dashboard gadgets",
-    "pl": "Edytuj gadżety panelu"
+    "en": "Edit dashboard",
+    "pl": "Edytuj panel"
   },
   "actions.toggleLanguage": {
     "en": "Toggle language (PL)",
@@ -289,5 +289,9 @@
   "scanQR.noPermission": {
     "en": "You have not granted camera permission",
     "pl": "Nie udzieliłeś dostępu do kamery"
+  },
+  "editDashboard.pageTitle": {
+    "en": "Edit dashboard",
+    "pl": "Edytuj panel"
   }
 }
