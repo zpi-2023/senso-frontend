@@ -4,13 +4,8 @@ import { actions } from "@/common/actions";
 import { useDashboardGadgets } from "@/common/hooks";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
-import {
-  LoadingScreen,
-  Header,
-  SosFab,
-  View,
-  DashboardGadget,
-} from "@/components";
+import { LoadingScreen, Header, SosFab, View } from "@/components";
+import { DashboardGadget } from "@/components/dashboard";
 
 const Page = () => {
   const { t } = useI18n();

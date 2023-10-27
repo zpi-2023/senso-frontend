@@ -6,13 +6,11 @@ import { MAX_GADGETS, availableGadgets } from "@/common/constants";
 import { useDashboardGadgets } from "@/common/hooks";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
+import { Header, View, LoadingScreen } from "@/components";
 import {
-  Header,
-  View,
-  LoadingScreen,
   DashboardEditSelected,
   DashboardEditAvailable,
-} from "@/components";
+} from "@/components/dashboard";
 
 const Page = () => {
   const { t } = useI18n();
