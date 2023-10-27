@@ -1,10 +1,18 @@
-import { FlatList, StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
+import { Divider, List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
+import { MAX_GADGETS, availableGadgets } from "@/common/constants";
 import { useDashboardGadgets } from "@/common/hooks";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
-import { Header, View, LoadingScreen, DashboardGadget } from "@/components";
+import {
+  Header,
+  View,
+  LoadingScreen,
+  DashboardEditSelected,
+  DashboardEditAvailable,
+} from "@/components";
 
 const Page = () => {
   const { t } = useI18n();
@@ -20,27 +28,44 @@ const Page = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <Header left={actions.goBack} title={t("editDashboard.pageTitle")} />
-      <FlatList
-        data={gadgets}
-        numColumns={2}
-        renderItem={({ item }) => (
-          <DashboardGadget action={actions[item]} inactive />
-        )}
-        style={styles.list}
-      />
+      <ScrollView>
+        <List.Section>
+          <List.Subheader>
+            {t("editDashboard.selectedGadgets", {
+              current: gadgets.length,
+              max: MAX_GADGETS,
+            })}
+          </List.Subheader>
+          {gadgets.map((gadget, index) => (
+            <DashboardEditSelected
+              key={gadget}
+              gadget={gadget}
+              isFirst={index === 0}
+              isLast={index === gadgets.length - 1}
+              onRemove={() => {}}
+              onMoveUp={() => {}}
+              onMoveDown={() => {}}
+            />
+          ))}
+        </List.Section>
+        <Divider />
+        <List.Section>
+          <List.Subheader>{t("editDashboard.availableGadgets")}</List.Subheader>
+          {availableGadgets
+            .filter((gadget) => !gadgets.includes(gadget))
+            .map((gadget) => (
+              <DashboardEditAvailable
+                key={gadget}
+                gadget={gadget}
+                onAdd={() => {}}
+              />
+            ))}
+        </List.Section>
+      </ScrollView>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  list: {
-    padding: 8,
-  },
-});
 
 export default Page;

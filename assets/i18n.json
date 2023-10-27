@@ -293,5 +293,13 @@
   "editDashboard.pageTitle": {
     "en": "Edit dashboard",
     "pl": "Edytuj panel"
+  },
+  "editDashboard.selectedGadgets": {
+    "en": "Selected gadgets ({current}/{max})",
+    "pl": "Wybrane gadżety ({current}/{max})"
+  },
+  "editDashboard.availableGadgets": {
+    "en": "Available gadgets",
+    "pl": "Dostępne gadżety"
   }
 }

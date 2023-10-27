@@ -44,7 +44,6 @@ export const DashboardGadget = ({ action, inactive }: DashboardGadgetProps) => {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    maxWidth: "50%",
     padding: 16,
   },
   boundary: {
