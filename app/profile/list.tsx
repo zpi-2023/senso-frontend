@@ -39,7 +39,7 @@ const ProfilesList = () => {
   }
 
   if (!data) {
-    return <ActivityIndicator />;
+    return <LoadingScreen title={t("profileList.pageTitle")} />;
   }
 
   // TODO: add proper API response handling when API is ready
