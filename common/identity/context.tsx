@@ -44,10 +44,10 @@ export const useIdentity = (): Identity => {
     (profile: Profile, redirectTo?: AppRoutes) => {
       switch (profile.type) {
         case "senior":
-          clearHistory(router, redirectTo || AppRoutes.Dashboard);
+          clearHistory(router, redirectTo ?? AppRoutes.Dashboard);
           break;
         case "caretaker":
-          clearHistory(router, redirectTo || AppRoutes.Menu);
+          clearHistory(router, redirectTo ?? AppRoutes.Menu);
           break;
       }
       setData(

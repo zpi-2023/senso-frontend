@@ -67,8 +67,8 @@ const CreateSeniorProfile = () => {
           <QRCode
             value={
               JSON.stringify({
-                seniorDisplayName: data?.seniorDisplayName,
-                hash: data?.hash,
+                seniorDisplayName: data.seniorDisplayName,
+                hash: data.hash,
               }) ?? ""
             }
           />

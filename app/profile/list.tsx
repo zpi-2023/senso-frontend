@@ -1,14 +1,7 @@
 import { Link } from "expo-router";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import {
-  ActivityIndicator,
-  Avatar,
-  Button,
-  List,
-  MD3Theme,
-  useTheme,
-} from "react-native-paper";
+import { Avatar, Button, List, MD3Theme, useTheme } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { POST, useApi } from "@/common/api";
@@ -23,6 +16,7 @@ import {
   SeniorProfile,
 } from "@/common/identity";
 import { Header } from "@/components/Header";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 const ProfilesList = () => {
   const { t } = useI18n();
