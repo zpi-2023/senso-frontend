@@ -43,7 +43,7 @@ const ProfilesList = () => {
   }
 
   // TODO: add proper API response handling when API is ready
-  const { profiles }: { profiles: Profile[] } = data as any;
+  const { profiles } = data as { profiles: Profile[] };
 
   const seniorProfile = profiles.find(isSenior);
   const caretakerProfiles = profiles.filter(isCaretaker);
