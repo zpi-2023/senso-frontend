@@ -10,22 +10,14 @@ import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { toMinutesAndSeconds } from "@/common/util/helpers";
 import { Header } from "@/components/Header";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 const CreateSeniorProfile = () => {
   const { t } = useI18n();
-  const { data, isLoading } = useApi({
+  const { data, isLoading, mutate } = useApi({
     url: "/api/v1/account/profiles/senior",
   });
-
-  const [secondsLeft, setSecondsLeft] = useState(data?.validFor ?? 0);
-
-  const isCodeValid = secondsLeft > 0;
-  const timer = isCodeValid ? toMinutesAndSeconds(secondsLeft) : "--:--";
-
-  const handleReset = () => {
-    setSecondsLeft(data?.validFor ?? 0);
-    // TODO: call for the hash again and update the QR code
-  };
+  const [secondsLeft, setSecondsLeft] = useState<number>(data?.validFor || 10);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -34,6 +26,18 @@ const CreateSeniorProfile = () => {
     }, 1000);
     return () => clearInterval(timer);
   }, [isLoading]);
+
+  if (!data) {
+    return <LoadingScreen title={t("createSeniorProfile.pageTitle")} />;
+  }
+
+  const isCodeValid = secondsLeft > 0;
+  const timer = isCodeValid ? toMinutesAndSeconds(secondsLeft) : "--:--";
+
+  const handleReset = () => {
+    setSecondsLeft(data?.validFor);
+    mutate();
+  };
 
   return (
     <View style={styles.container}>
@@ -46,7 +50,7 @@ const CreateSeniorProfile = () => {
           ? t("createSeniorProfile.description")
           : t("createSeniorProfile.codeExpired")}
       </Text>
-      {isLoading ? (
+      {!data && (
         <View
           style={{
             width: "70%",
@@ -57,16 +61,18 @@ const CreateSeniorProfile = () => {
         >
           <ActivityIndicator size="large" />
         </View>
-      ) : (
-        <QRCode
-          value={
-            JSON.stringify({
-              seniorDisplayName: data?.seniorDisplayName,
-              hash: data?.hash,
-            }) ?? ""
-          }
-          display={isCodeValid ? "block" : "none"}
-        />
+      )}
+      {data && isCodeValid && (
+        <View style={styles.codeWrapper}>
+          <QRCode
+            value={
+              JSON.stringify({
+                seniorDisplayName: data?.seniorDisplayName,
+                hash: data?.hash,
+              }) ?? ""
+            }
+          />
+        </View>
       )}
       {isCodeValid ? (
         <Text variant="titleLarge">
@@ -78,7 +84,7 @@ const CreateSeniorProfile = () => {
           labelStyle={styles.skipButton}
           onPress={handleReset}
         >
-          {t("createSeniorProfile.resetCode")}
+          {t("createSeniorProfile.generateCode")}
         </Button>
       )}
       <Link href={AppRoutes.Dashboard} replace>
@@ -98,6 +104,10 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     marginHorizontal: 24,
     gap: 32,
+  },
+  codeWrapper: {
+    backgroundColor: "white",
+    padding: 16,
   },
   description: {
     textAlign: "center",

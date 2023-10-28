@@ -123,9 +123,9 @@ export interface paths {
         /** @description Success */
         200: {
           content: {
-            "text/plain": components["schemas"]["SeniorIdDto"];
-            "application/json": components["schemas"]["SeniorIdDto"];
-            "text/json": components["schemas"]["SeniorIdDto"];
+            "text/plain": components["schemas"]["ProfileDisplayDto"];
+            "application/json": components["schemas"]["ProfileDisplayDto"];
+            "text/json": components["schemas"]["ProfileDisplayDto"];
           };
         };
         /** @description Unauthorized */
@@ -279,7 +279,7 @@ export interface components {
       seniorAlias: string;
     };
     DashboardDto: {
-      gadgets?: string[];
+      gadgets: string[];
     };
     EncodedSeniorDto: {
       /** Format: int32 */
@@ -315,10 +315,6 @@ export interface components {
     };
     ProfilesDto: {
       profiles: components["schemas"]["ProfileDisplayDto"][];
-    };
-    SeniorIdDto: {
-      /** Format: int32 */
-      seniorId: number;
     };
     TokenDto: {
       token: string;

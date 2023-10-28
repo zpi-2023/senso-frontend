@@ -54,9 +54,7 @@ const ProfilesList = () => {
     setIsCreatingSeniorProfile(true);
     const { data: seniorProfile } = await POST(
       "/api/v1/account/profiles/senior",
-      {
-        headers: { Authorization: `Bearer ${identity.token}` },
-      },
+      { headers: { Authorization: `Bearer ${identity.token}` } },
     );
 
     if (!seniorProfile) {

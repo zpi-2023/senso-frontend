@@ -258,9 +258,9 @@
     "en": "The code is valid for",
     "pl": "Kod jest ważny przez"
   },
-  "createSeniorProfile.resetCode": {
-    "en": "Reset code",
-    "pl": "Zresetuj kod"
+  "createSeniorProfile.generateCode": {
+    "en": "Generate code",
+    "pl": "Wygeneruj kod"
   },
   "createCaretakerProfile.pageTitle": {
     "en": "Create caretaker profile",

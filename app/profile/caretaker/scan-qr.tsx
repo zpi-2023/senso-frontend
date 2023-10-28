@@ -4,11 +4,14 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 
 import { actions } from "@/common/actions";
+import { POST } from "@/common/api";
 import { useI18n } from "@/common/i18n";
+import { RedirectIfLoggedOut, useIdentity } from "@/common/identity";
 import { Header } from "@/components/Header";
 
 export default function App() {
   const { t } = useI18n();
+  const identity = useIdentity();
 
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
@@ -21,6 +24,10 @@ export default function App() {
 
     getBarCodeScannerPermissions();
   }, []);
+
+  if (!identity.isLoggedIn) {
+    return <RedirectIfLoggedOut identity={identity} />;
+  }
 
   const handleBarCodeScanned = ({ data }: { data: string }) => {
     setScanned(true);
@@ -36,10 +43,23 @@ export default function App() {
         },
         {
           text: t("scanQR.alertAdd"),
-          onPress: () => {
+          onPress: async () => {
             router.back();
             setScanned(false);
-            console.log({ hash }); // TODO: call API to add senior profile
+            const { data } = await POST("/api/v1/account/profiles/caretaker", {
+              headers: { Authorization: `Bearer ${identity.token}` },
+              body: { hash, seniorAlias: seniorDisplayName },
+            });
+            if (!data) {
+              return;
+            }
+
+            const { seniorId, seniorAlias, type } = data as any; // TODO remove when backend type is ready
+            identity.selectProfile({
+              type,
+              seniorAlias,
+              seniorId,
+            });
           },
         },
       ],
