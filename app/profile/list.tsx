@@ -1,8 +1,10 @@
 import { Link } from "expo-router";
+import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Avatar, Button, List } from "react-native-paper";
+import { Avatar, Button, List, MD3Theme, useTheme } from "react-native-paper";
 
 import { actions } from "@/common/actions";
+import { POST, useApi } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import {
@@ -11,30 +13,54 @@ import {
   isCaretaker,
   useIdentity,
   RedirectIfLoggedOut,
+  SeniorProfile,
 } from "@/common/identity";
 import { Header } from "@/components/Header";
-
-const mockApiResponse = {
-  profiles: [
-    { type: "caretaker", seniorId: 2137, seniorAlias: "Jan Kowalski" },
-    { type: "caretaker", seniorId: 123, seniorAlias: "Grzegorz Floryda" },
-    { type: "senior", seniorId: 1 },
-  ] as Profile[],
-};
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 const ProfilesList = () => {
   const { t } = useI18n();
+  const theme = useTheme();
+  const styles = makeStyles(theme);
   const identity = useIdentity();
+  const { data } = useApi({
+    url: "/api/v1/account/profiles",
+  });
+  const [isCreatingSeniorProfile, setIsCreatingSeniorProfile] = useState(false);
 
   if (!identity.isLoggedIn) {
     return <RedirectIfLoggedOut identity={identity} />;
   }
 
-  const profiles = mockApiResponse.profiles;
+  if (!data) {
+    return <LoadingScreen title={t("profileList.pageTitle")} />;
+  }
+
+  // TODO: add proper API response handling when API is ready
+  const { profiles } = data as { profiles: Profile[] };
+
   const seniorProfile = profiles.find(isSenior);
   const caretakerProfiles = profiles.filter(isCaretaker);
 
   const handleItemPress = (profile: Profile) => identity.selectProfile(profile);
+
+  const handleCreateSeniorProfile = async () => {
+    setIsCreatingSeniorProfile(true);
+    const { data: seniorProfile } = await POST(
+      "/api/v1/account/profiles/senior",
+      { headers: { Authorization: `Bearer ${identity.token}` } },
+    );
+
+    if (!seniorProfile) {
+      return; // TODO: handle error
+    }
+
+    identity.selectProfile(
+      seniorProfile as SeniorProfile,
+      AppRoutes.DisplaySeniorQR,
+    );
+    setIsCreatingSeniorProfile(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -103,7 +129,14 @@ const ProfilesList = () => {
         </Link>
         {!seniorProfile && (
           <Link href={AppRoutes.DisplaySeniorQR} replace>
-            <Button icon="plus" mode="contained" uppercase>
+            <Button
+              icon="plus"
+              mode="contained"
+              uppercase
+              disabled={isCreatingSeniorProfile}
+              loading={isCreatingSeniorProfile}
+              onPress={handleCreateSeniorProfile}
+            >
               {t("profileList.newSeniorProfileButton")}
             </Button>
           </Link>
@@ -113,42 +146,44 @@ const ProfilesList = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "space-evenly",
-  },
-  scrollView: {
-    maxHeight: 380,
-  },
-  listSubheader: {
-    textTransform: "uppercase",
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: 20,
-    lineHeight: 28,
-  },
-  listItem: {
-    backgroundColor: "#b9a6e5",
-    borderRadius: 16,
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  listItemTitle: {
-    fontSize: 28,
-    lineHeight: 36,
-    marginRight: 32,
-  },
-  listItemDescription: {
-    fontSize: 20,
-    lineHeight: 28,
-  },
-  newProfileButtonWrapper: {
-    alignItems: "center",
-    gap: 16,
-  },
-});
+const makeStyles = (theme: MD3Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "space-evenly",
+    },
+    scrollView: {
+      maxHeight: 380,
+    },
+    listSubheader: {
+      textTransform: "uppercase",
+      fontWeight: "bold",
+      textAlign: "center",
+      fontSize: 20,
+      lineHeight: 28,
+    },
+    listItem: {
+      borderColor: theme.colors.primary,
+      borderWidth: 2,
+      borderRadius: 16,
+      paddingVertical: 16,
+      paddingHorizontal: 16,
+      marginVertical: 8,
+      marginHorizontal: 16,
+    },
+    listItemTitle: {
+      fontSize: 28,
+      lineHeight: 36,
+      marginRight: 32,
+    },
+    listItemDescription: {
+      fontSize: 20,
+      lineHeight: 28,
+    },
+    newProfileButtonWrapper: {
+      alignItems: "center",
+      gap: 16,
+    },
+  });
 
 export default ProfilesList;

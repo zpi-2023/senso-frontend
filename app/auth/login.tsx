@@ -116,6 +116,7 @@ const Page = () => {
               mode="contained"
               onPress={() => handleSubmit()}
               style={styles.submit}
+              loading={status === "pending"}
             >
               {t("login.continueButton")}
             </Button>

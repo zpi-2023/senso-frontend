@@ -4,11 +4,14 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 
 import { actions } from "@/common/actions";
+import { POST } from "@/common/api";
 import { useI18n } from "@/common/i18n";
+import { RedirectIfLoggedOut, useIdentity } from "@/common/identity";
 import { Header } from "@/components/Header";
 
 export default function App() {
   const { t } = useI18n();
+  const identity = useIdentity();
 
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
@@ -22,22 +25,45 @@ export default function App() {
     getBarCodeScannerPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }: { type: any; data: any }) => {
+  if (!identity.isLoggedIn) {
+    return <RedirectIfLoggedOut identity={identity} />;
+  }
+
+  const handleBarCodeScanned = ({ data }: { data: string }) => {
     setScanned(true);
-    Alert.alert(t("scanQR.alertTitle"), t("scanQR.alertDescription"), [
-      {
-        text: t("scanQR.alertCancel"),
-        style: "cancel",
-        onPress: () => setScanned(false),
-      },
-      {
-        text: t("scanQR.alertAdd"),
-        onPress: () => {
-          router.back();
-          setScanned(false);
+    const { seniorDisplayName, hash } = JSON.parse(data);
+    Alert.alert(
+      t("scanQR.alertTitle"),
+      t("scanQR.alertDescription", { name: seniorDisplayName }),
+      [
+        {
+          text: t("scanQR.alertCancel"),
+          style: "cancel",
+          onPress: () => setScanned(false),
         },
-      },
-    ]);
+        {
+          text: t("scanQR.alertAdd"),
+          onPress: async () => {
+            router.back();
+            setScanned(false);
+            const { data } = await POST("/api/v1/account/profiles/caretaker", {
+              headers: { Authorization: `Bearer ${identity.token}` },
+              body: { hash, seniorAlias: seniorDisplayName },
+            });
+            if (!data) {
+              return;
+            }
+
+            const { seniorId, seniorAlias, type } = data;
+            identity.selectProfile({
+              type: type as "senior" | "caretaker", // TODO remove when backend type is ready
+              seniorAlias,
+              seniorId,
+            });
+          },
+        },
+      ],
+    );
   };
 
   if (hasPermission === null) {
