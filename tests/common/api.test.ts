@@ -3,7 +3,7 @@ import { renderHook, waitFor } from "@testing-library/react-native";
 import { POST, useQuery } from "@/common/api";
 import { fetcher } from "@/common/api/client";
 import { mockApi } from "@/common/api/mocks";
-import { buildOptions } from "@/common/api/swr";
+import { buildOptions } from "@/common/api/query";
 import {
   mockIdentityLoggedIn,
   mockIdentityLoggedOut,
