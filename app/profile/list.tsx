@@ -26,7 +26,10 @@ const ProfilesList = () => {
   const { data } = useQuery({
     url: "/api/v1/account/profiles",
   });
-  const { post } = useMutation();
+  const createSeniorProfile = useMutation(
+    "post",
+    "/api/v1/account/profiles/senior",
+  );
   const [isCreatingSeniorProfile, setIsCreatingSeniorProfile] = useState(false);
 
   if (!identity.isLoggedIn) {
@@ -47,10 +50,7 @@ const ProfilesList = () => {
 
   const handleCreateSeniorProfile = async () => {
     setIsCreatingSeniorProfile(true);
-    const { data: seniorProfile } = await post(
-      "/api/v1/account/profiles/senior",
-      {},
-    );
+    const { data: seniorProfile } = await createSeniorProfile({});
 
     if (!seniorProfile) {
       return; // TODO: handle error

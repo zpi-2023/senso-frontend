@@ -12,7 +12,10 @@ import { Header } from "@/components/Header";
 export default function App() {
   const { t } = useI18n();
   const identity = useIdentity();
-  const { post } = useMutation();
+  const createCaretakerProfile = useMutation(
+    "post",
+    "/api/v1/account/profiles/caretaker",
+  );
 
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
@@ -47,7 +50,7 @@ export default function App() {
           onPress: async () => {
             router.back();
             setScanned(false);
-            const { data } = await post("/api/v1/account/profiles/caretaker", {
+            const { data } = await createCaretakerProfile({
               body: { hash, seniorAlias: seniorDisplayName },
             });
             if (!data) {

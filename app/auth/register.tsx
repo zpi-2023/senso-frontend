@@ -35,7 +35,8 @@ const Page = () => {
   const identity = useIdentity();
   const theme = useTheme();
   const { t } = useI18n();
-  const { post } = useMutation();
+  const createAccount = useMutation("post", "/api/v1/account");
+  const obtainToken = useMutation("post", "/api/v1/token");
 
   const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
 
@@ -50,8 +51,8 @@ const Page = () => {
       phoneNumber: values.phoneNumber ? values.phoneNumber : null,
     };
     setStatus("pending");
-    const accountRes = await post("/api/v1/account", { body });
-    const tokenRes = await post("/api/v1/token", { body });
+    const accountRes = await createAccount({ body });
+    const tokenRes = await obtainToken({ body });
     if (accountRes.error || tokenRes.error) {
       setStatus("error");
     } else {

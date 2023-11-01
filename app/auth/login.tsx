@@ -25,7 +25,7 @@ const Page = () => {
   const identity = useIdentity();
   const theme = useTheme();
   const { t } = useI18n();
-  const { post } = useMutation();
+  const obtainToken = useMutation("post", "/api/v1/token");
 
   const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
 
@@ -35,7 +35,7 @@ const Page = () => {
 
   const onSubmit = async (body: { email: string; password: string }) => {
     setStatus("pending");
-    const res = await post("/api/v1/token", { body });
+    const res = await obtainToken({ body });
     if (res.error) {
       setStatus("error");
     } else {

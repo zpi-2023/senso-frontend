@@ -13,7 +13,7 @@ export const useDashboardGadgets = (
         }
       : null,
   );
-  const { put } = useMutation();
+  const updateDashboard = useMutation("put", "/api/v1/dashboard/{seniorId}");
 
   const setGadgets = (newGadgets: ActionKey[]) => {
     if (!identity.hasProfile) {
@@ -22,7 +22,7 @@ export const useDashboardGadgets = (
 
     const body = { gadgets: newGadgets };
 
-    put("/api/v1/dashboard/{seniorId}", {
+    updateDashboard({
       params: { path: { seniorId: identity.profile.seniorId } },
       body,
     }).then(() => mutate(body));

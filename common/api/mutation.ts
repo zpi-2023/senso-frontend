@@ -8,27 +8,33 @@ import {
 } from "./client";
 import { useIdentity } from "../identity";
 
-export const useMutation = () => {
+export const useMutation = <
+  M extends "post" | "put" | "patch" | "delete",
+  P extends MethodPath<M>,
+>(
+  method: M,
+  url: P,
+) => {
   const identity = useIdentity();
 
   const common = identity.isLoggedIn
     ? { headers: { Authorization: `Bearer ${identity.token}` } }
     : {};
 
-  return {
-    post: <P extends MethodPath<"post">>(
-      url: P,
-      init: MethodOptions<"post", P>,
-    ) => POST(url, { ...init, ...common }),
-    put: <P extends MethodPath<"put">>(url: P, init: MethodOptions<"put", P>) =>
-      PUT(url, { ...init, ...common }),
-    patch: <P extends MethodPath<"patch">>(
-      url: P,
-      init: MethodOptions<"patch", P>,
-    ) => PATCH(url, { ...init, ...common }),
-    del: <P extends MethodPath<"delete">>(
-      url: P,
-      init: MethodOptions<"delete", P>,
-    ) => DELETE(url, { ...init, ...common }),
-  };
+  const executor = { post: POST, put: PUT, patch: PATCH, delete: DELETE }[
+    method
+  ] as (
+    url: P,
+    options: MethodOptions<M, P>,
+  ) => ReturnType<
+    {
+      post: typeof POST<P extends MethodPath<"post"> ? P : never>;
+      put: typeof PUT<P extends MethodPath<"put"> ? P : never>;
+      patch: typeof PATCH<P extends MethodPath<"patch"> ? P : never>;
+      delete: typeof DELETE<P extends MethodPath<"delete"> ? P : never>;
+    }[M]
+  >;
+
+  return (options: MethodOptions<M, P>) =>
+    executor(url, { ...options, ...common });
 };
