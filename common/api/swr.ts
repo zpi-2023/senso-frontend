@@ -59,7 +59,7 @@ export const buildOptions = <P extends GetPath>(
  * const { mutate } = useApi({ url: "/products/{id}", params: { path: { id: 123 } } });
  * mutate({ name: "Blue bike" });
  */
-export const useApi = <P extends GetPath>(arg: UseApiArg<P>) => {
+export const useQuery = <P extends GetPath>(arg: UseApiArg<P>) => {
   const identity = useIdentity();
   return useSWR(
     arg ? [arg.url, buildOptions(arg, identity)] : null,

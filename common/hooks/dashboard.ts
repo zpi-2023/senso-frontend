@@ -1,11 +1,11 @@
 import type { ActionKey } from "../actions";
-import { PUT, useApi } from "../api";
+import { PUT, useQuery } from "../api";
 import type { Identity } from "../identity";
 
 export const useDashboardGadgets = (
   identity: Identity,
 ): [ActionKey[] | null, (newGadgets: ActionKey[]) => void] => {
-  const { data, mutate } = useApi(
+  const { data, mutate } = useQuery(
     identity.hasProfile
       ? {
           url: "/api/v1/dashboard/{seniorId}",

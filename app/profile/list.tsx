@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Avatar, Button, List, MD3Theme, useTheme } from "react-native-paper";
 
 import { actions } from "@/common/actions";
-import { POST, useApi } from "@/common/api";
+import { POST, useQuery } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import {
@@ -23,7 +23,7 @@ const ProfilesList = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const identity = useIdentity();
-  const { data } = useApi({
+  const { data } = useQuery({
     url: "/api/v1/account/profiles",
   });
   const [isCreatingSeniorProfile, setIsCreatingSeniorProfile] = useState(false);

@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react-native";
 
-import { POST, useApi } from "@/common/api";
+import { POST, useQuery } from "@/common/api";
 import { fetcher } from "@/common/api/client";
 import { mockApi } from "@/common/api/mocks";
 import { buildOptions } from "@/common/api/swr";
@@ -42,11 +42,11 @@ describe("API", () => {
     });
   });
 
-  describe(useApi, () => {
+  describe(useQuery, () => {
     it("fetches data correctly", async () => {
       mockApi("get", "/api/v1/healthz", (ctx) => ctx.json(["Anne"]));
 
-      const { result } = renderHook(() => useApi({ url: "/api/v1/healthz" }));
+      const { result } = renderHook(() => useQuery({ url: "/api/v1/healthz" }));
 
       await waitFor(() => expect(result.current.data).toEqual(["Anne"]));
       expect(result.current.isLoading).toBe(false);
@@ -56,7 +56,7 @@ describe("API", () => {
     it("returns error when data is unavailable", async () => {
       mockApi("get", "/api/v1/healthz", (ctx) => ctx.status(404));
 
-      const { result } = renderHook(() => useApi({ url: "/api/v1/healthz" }));
+      const { result } = renderHook(() => useQuery({ url: "/api/v1/healthz" }));
 
       await waitFor(() => expect(result.current.error).toBeTruthy());
       expect(result.current.isLoading).toBe(false);
