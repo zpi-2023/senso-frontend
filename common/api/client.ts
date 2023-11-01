@@ -4,18 +4,28 @@ import type { FilterKeys } from "openapi-typescript-helpers";
 import { BASE_URL } from "./consts";
 import type { paths } from "./schema";
 
-const { POST, GET, PUT, DELETE } = createClient<paths>({ baseUrl: BASE_URL });
+const client = createClient<paths>({
+  baseUrl: BASE_URL,
+});
 
-type ApiPath = keyof paths;
+export const { POST, PUT, PATCH, DELETE } = client;
 
-type GetPath = keyof {
-  [P in keyof paths as paths[P] extends { get: any } ? P : never]: P;
-};
+export type MethodPath<M extends "get" | "post" | "put" | "patch" | "delete"> =
+  keyof paths &
+    keyof {
+      [P in keyof paths as paths[P] extends { [K in M]: any } ? P : never]: P;
+    };
 
-type GetOptions<P extends GetPath> = FetchOptions<FilterKeys<paths[P], "get">>;
+export type MethodOptions<
+  M extends "get" | "post" | "put" | "patch" | "delete",
+  P extends MethodPath<M>,
+> = FetchOptions<FilterKeys<paths[P], M>>;
 
-const fetcher = async <P extends GetPath>(url: P, options: GetOptions<P>) => {
-  const { response, data, error } = await GET(url, options);
+export const fetcher = async <P extends MethodPath<"get">>(
+  url: P,
+  options: MethodOptions<"get", P>,
+) => {
+  const { response, data, error } = await client.GET(url, options);
   if (!response.ok) {
     // SWR expects the promise to reject on error and openapi-fetch does not do that by default
     throw new Error("An error occurred while fetching the data.", {
@@ -24,6 +34,3 @@ const fetcher = async <P extends GetPath>(url: P, options: GetOptions<P>) => {
   }
   return data;
 };
-
-export type { ApiPath, GetPath, GetOptions };
-export { POST, PUT, DELETE, fetcher };

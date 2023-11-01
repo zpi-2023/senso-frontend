@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react-native";
 
-import { POST, useQuery } from "@/common/api";
+import { useQuery } from "@/common/api";
 import { fetcher } from "@/common/api/client";
 import { mockApi } from "@/common/api/mocks";
 import { buildOptions } from "@/common/api/query";
@@ -10,18 +10,6 @@ import {
 } from "@/common/identity/mocks";
 
 describe("API", () => {
-  describe(POST, () => {
-    it("invokes HTTP POST on the correct endpoint", async () => {
-      const handler = jest.fn().mockReturnValue(201);
-      mockApi("post", "/api/v1/account", (ctx) => ctx.status(handler()));
-
-      const { response } = await POST("/api/v1/account", { parseAs: "text" });
-
-      expect(handler).toHaveBeenCalled();
-      expect(response.status).toBe(201);
-    });
-  });
-
   describe(fetcher, () => {
     it("invokes HTTP GET on the correct endpoint", async () => {
       const handler = jest.fn().mockReturnValue(["John", "Mark"]);

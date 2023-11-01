@@ -17,7 +17,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
-import { POST } from "@/common/api";
+import { useMutation } from "@/common/api";
 import { AppRoutes, MIN_DISPLAY_NAME_LENGTH } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
@@ -35,6 +35,7 @@ const Page = () => {
   const identity = useIdentity();
   const theme = useTheme();
   const { t } = useI18n();
+  const { post } = useMutation();
 
   const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
 
@@ -49,8 +50,8 @@ const Page = () => {
       phoneNumber: values.phoneNumber ? values.phoneNumber : null,
     };
     setStatus("pending");
-    const accountRes = await POST("/api/v1/account", { body });
-    const tokenRes = await POST("/api/v1/token", { body });
+    const accountRes = await post("/api/v1/account", { body });
+    const tokenRes = await post("/api/v1/token", { body });
     if (accountRes.error || tokenRes.error) {
       setStatus("error");
     } else {

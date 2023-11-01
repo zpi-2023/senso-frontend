@@ -1,5 +1,5 @@
 import type { ActionKey } from "../actions";
-import { PUT, useQuery } from "../api";
+import { useQuery, useMutation } from "../api";
 import type { Identity } from "../identity";
 
 export const useDashboardGadgets = (
@@ -13,6 +13,7 @@ export const useDashboardGadgets = (
         }
       : null,
   );
+  const { put } = useMutation();
 
   const setGadgets = (newGadgets: ActionKey[]) => {
     if (!identity.hasProfile) {
@@ -21,10 +22,9 @@ export const useDashboardGadgets = (
 
     const body = { gadgets: newGadgets };
 
-    PUT("/api/v1/dashboard/{seniorId}", {
+    put("/api/v1/dashboard/{seniorId}", {
       params: { path: { seniorId: identity.profile.seniorId } },
       body,
-      headers: { Authorization: `Bearer ${identity.token}` },
     }).then(() => mutate(body));
   };
 
