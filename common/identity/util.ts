@@ -1,4 +1,10 @@
-import { Identity, IdentityData, LogIn, LogOut, SelectProfile } from "./types";
+import type {
+  Identity,
+  IdentityData,
+  LogIn,
+  LogOut,
+  SelectProfile,
+} from "./types";
 
 export const buildIdentity = (
   data: IdentityData,

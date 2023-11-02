@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 
 import { I18nContext } from "./context";
-import { I18nData } from "./types";
+import type { I18nData } from "./types";
 
 /**
  * Used to enforce a specific language in translation tests.
@@ -17,7 +17,7 @@ export const MockI18nProvider = ({
   }
 
   return (
-    <I18nContext.Provider value={{ language, setLanguage: () => {} }}>
+    <I18nContext.Provider value={{ language, setLanguage: () => undefined }}>
       {children}
     </I18nContext.Provider>
   );

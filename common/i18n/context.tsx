@@ -2,11 +2,11 @@ import { type PropsWithChildren, createContext } from "react";
 
 import { DEFAULT_LANGUAGE } from "./consts";
 import { useLanguageStorage } from "./storage";
-import { I18nData } from "./types";
+import type { I18nData } from "./types";
 
 export const I18nContext = createContext<I18nData>({
   language: DEFAULT_LANGUAGE,
-  setLanguage: () => {},
+  setLanguage: () => undefined,
 });
 
 /**

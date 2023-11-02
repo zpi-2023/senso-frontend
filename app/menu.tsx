@@ -1,5 +1,11 @@
 import { ScrollView, StyleSheet } from "react-native";
-import { Banner, List, MD3Theme, useTheme, Text } from "react-native-paper";
+import {
+  Banner,
+  List,
+  type MD3Theme,
+  useTheme,
+  Text,
+} from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";

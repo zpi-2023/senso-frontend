@@ -11,7 +11,7 @@ export type I18nData = {
 
 export type Translator = (
   key: TranslationKey,
-  substitutions?: Record<string, any>,
+  substitutions?: Record<string, unknown>,
 ) => string;
 
 export type I18n = {

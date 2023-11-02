@@ -1,4 +1,4 @@
-import { ActionKey } from "../actions";
+import type { ActionKey } from "../actions";
 
 export const MAX_GADGETS = 6;
 

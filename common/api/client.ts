@@ -9,7 +9,7 @@ const { POST, GET, PUT, DELETE } = createClient<paths>({ baseUrl: BASE_URL });
 type ApiPath = keyof paths;
 
 type GetPath = keyof {
-  [P in keyof paths as paths[P] extends { get: any } ? P : never]: P;
+  [P in keyof paths as paths[P] extends { get: unknown } ? P : never]: P;
 };
 
 type GetOptions<P extends GetPath> = FetchOptions<FilterKeys<paths[P], "get">>;

@@ -2,7 +2,7 @@ import useSWR from "swr";
 
 import { type GetPath, type GetOptions, fetcher } from "./client";
 
-import { Identity, useIdentity } from "@/common/identity";
+import { type Identity, useIdentity } from "@/common/identity";
 
 const TEST_CONFIG = {
   provider: () => new Map(),

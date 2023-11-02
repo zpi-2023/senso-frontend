@@ -1,3 +1,12 @@
 {
-  "extends": ["universe", "plugin:react-hooks/recommended"]
+  "extends": [
+    "universe",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended"
+    // "plugin:@typescript-eslint/stylistic"
+  ],
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": "warn",
+    "@typescript-eslint/no-non-null-assertion": "off"
+  }
 }
