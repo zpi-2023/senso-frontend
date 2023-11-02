@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react-native";
 
-import { useQuery } from "@/common/api";
+import { useMutation, useQuery } from "@/common/api";
 import { fetcher } from "@/common/api/client";
 import { mockApi } from "@/common/api/mocks";
 import { buildOptions } from "@/common/api/query";
@@ -49,6 +49,20 @@ describe("API", () => {
       await waitFor(() => expect(result.current.error).toBeTruthy());
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toBeUndefined();
+    });
+  });
+
+  describe(useMutation, () => {
+    it("sends correct requests", async () => {
+      mockApi("post", "/api/v1/token", (ctx) => ctx.json({ token: "123" }));
+
+      const { result } = renderHook(() => useMutation("post", "/api/v1/token"));
+
+      const response = await result.current({
+        body: { email: "john@paul.pl", password: "12345678" },
+      });
+
+      expect(response.data).toEqual({ token: "123" });
     });
   });
 
