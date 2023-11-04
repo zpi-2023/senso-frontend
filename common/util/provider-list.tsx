@@ -1,10 +1,10 @@
 import type { FC, PropsWithChildren } from "react";
 
 export const ProviderList = ({
-  providers,
+  providers = [],
   children,
 }: PropsWithChildren<{
-  providers: FC<{ children: JSX.Element }>[];
+  providers?: FC<{ children: JSX.Element }>[];
 }>) => {
   const Current = providers[0];
 
