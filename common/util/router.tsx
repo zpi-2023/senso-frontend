@@ -1,5 +1,5 @@
-import { ExpoRoot, useRouter } from "expo-router";
-import { FC } from "react";
+import { ExpoRoot, type useRouter } from "expo-router";
+import type { FC } from "react";
 
 const mockContext = (context: Record<string, FC>) =>
   Object.assign((id: string) => ({ default: context[id] }), {

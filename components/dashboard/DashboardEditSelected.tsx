@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { IconButton, List, useTheme } from "react-native-paper";
 
-import { ActionKey, actions } from "@/common/actions";
+import { type ActionKey, actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 
 type DashboardEditSelectedProps = {

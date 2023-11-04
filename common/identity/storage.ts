@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MMKV, useMMKVObject } from "react-native-mmkv";
 
-import { IdentityData } from "./types";
+import type { IdentityData } from "./types";
 
 // We can't use storage in Expo Go, so we need to disable it in dev mode.
 

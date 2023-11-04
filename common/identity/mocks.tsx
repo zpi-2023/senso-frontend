@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 import { IdentityContext } from "./context";
-import {
+import type {
   IdentityAccountKnown,
   IdentityData,
   IdentityNothingKnown,
@@ -19,15 +19,15 @@ export const MockIdentityProvider = ({
   children,
   data,
 }: PropsWithChildren<{ data: IdentityData }>) => (
-  <IdentityContext.Provider value={{ data, setData: () => {} }}>
+  <IdentityContext.Provider value={{ data, setData: () => undefined }}>
     {children}
   </IdentityContext.Provider>
 );
 
 const mockActions = {
-  logIn: () => {},
-  logOut: () => {},
-  selectProfile: () => {},
+  logIn: () => undefined,
+  logOut: () => undefined,
+  selectProfile: () => undefined,
 };
 
 export const mockIdentityLoggedOut = buildIdentity(

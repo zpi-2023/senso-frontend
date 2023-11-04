@@ -4,7 +4,7 @@ import { Appbar } from "react-native-paper";
 
 import { View } from "./Themed";
 
-import { Action, useActionContext } from "@/common/actions";
+import { type Action, useActionContext } from "@/common/actions";
 
 type ActionButtonProps = {
   action: Action;

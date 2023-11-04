@@ -13,7 +13,9 @@ export const { POST, PUT, PATCH, DELETE } = client;
 export type MethodPath<M extends "get" | "post" | "put" | "patch" | "delete"> =
   keyof paths &
     keyof {
-      [P in keyof paths as paths[P] extends { [K in M]: any } ? P : never]: P;
+      [P in keyof paths as paths[P] extends { [K in M]: unknown }
+        ? P
+        : never]: P;
     };
 
 export type MethodOptions<

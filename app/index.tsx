@@ -46,6 +46,7 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
             </MonoText>
             {/* Escape hatch to let us test client without server in development */}
             <Link href={AppRoutes.Login} replace>
+              {/* eslint-disable-next-line react/jsx-no-literals */}
               <Button textColor="red">IGNORE</Button>
             </Link>
           </>
