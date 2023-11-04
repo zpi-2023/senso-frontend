@@ -1,11 +1,11 @@
 import type { ActionKey } from "../actions";
-import { PUT, useApi } from "../api";
+import { useQuery, useMutation } from "../api";
 import type { Identity } from "../identity";
 
 export const useDashboardGadgets = (
   identity: Identity,
 ): [ActionKey[] | null, (newGadgets: ActionKey[]) => void] => {
-  const { data, mutate } = useApi(
+  const { data, mutate } = useQuery(
     identity.hasProfile
       ? {
           url: "/api/v1/dashboard/{seniorId}",
@@ -13,6 +13,7 @@ export const useDashboardGadgets = (
         }
       : null,
   );
+  const updateDashboard = useMutation("put", "/api/v1/dashboard/{seniorId}");
 
   const setGadgets = (newGadgets: ActionKey[]) => {
     if (!identity.hasProfile) {
@@ -21,10 +22,9 @@ export const useDashboardGadgets = (
 
     const body = { gadgets: newGadgets };
 
-    PUT("/api/v1/dashboard/{seniorId}", {
+    updateDashboard({
       params: { path: { seniorId: identity.profile.seniorId } },
       body,
-      headers: { Authorization: `Bearer ${identity.token}` },
     }).then(() => mutate(body));
   };
 

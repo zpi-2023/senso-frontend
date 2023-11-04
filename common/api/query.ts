@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-import { type GetPath, type GetOptions, fetcher } from "./client";
+import { type MethodPath, type MethodOptions, fetcher } from "./client";
 
 import { type Identity, useIdentity } from "@/common/identity";
 
@@ -11,15 +11,15 @@ const TEST_CONFIG = {
   shouldRetryOnError: false,
 } as const;
 
-type UseApiArg<P extends GetPath> =
-  | ({ url: P } & Pick<GetOptions<P>, "params">)
+type UseQueryArg<P extends MethodPath<"get">> =
+  | ({ url: P } & Pick<MethodOptions<"get", P>, "params">)
   | null;
 
-export const buildOptions = <P extends GetPath>(
-  { params }: NonNullable<UseApiArg<P>>,
+export const buildOptions = <P extends MethodPath<"get">>(
+  { params }: NonNullable<UseQueryArg<P>>,
   identity: Identity,
-): GetOptions<P> => ({
-  ...({ params } as GetOptions<P>),
+): MethodOptions<"get", P> => ({
+  ...({ params } as MethodOptions<"get", P>),
   ...(identity.isLoggedIn
     ? { headers: { Authorization: `Bearer ${identity.token}` } }
     : {}),
@@ -59,7 +59,7 @@ export const buildOptions = <P extends GetPath>(
  * const { mutate } = useApi({ url: "/products/{id}", params: { path: { id: 123 } } });
  * mutate({ name: "Blue bike" });
  */
-export const useApi = <P extends GetPath>(arg: UseApiArg<P>) => {
+export const useQuery = <P extends MethodPath<"get">>(arg: UseQueryArg<P>) => {
   const identity = useIdentity();
   return useSWR(
     arg ? [arg.url, buildOptions(arg, identity)] : null,

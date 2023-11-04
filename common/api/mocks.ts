@@ -1,10 +1,10 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 
-import type { ApiPath } from "./client";
+import type { MethodPath } from "./client";
 import { BASE_URL } from "./consts";
 
-type CrudMethod = "post" | "get" | "put" | "delete";
+type CrudMethod = "get" | "post" | "put" | "patch" | "delete";
 type PromiseOrValue<T> = Promise<T> | T;
 type ResolverParams<M extends CrudMethod> = Parameters<
   Parameters<(typeof rest)[M]>[1]
@@ -28,7 +28,7 @@ export const mockServer = setupServer();
  */
 export const mockApi = <M extends CrudMethod>(
   method: M,
-  path: ApiPath | (string & Record<never, never>), // https://github.com/microsoft/TypeScript/issues/29729
+  path: MethodPath<CrudMethod> | (string & Record<never, never>), // https://github.com/microsoft/TypeScript/issues/29729
   body: EndpointBody<M>,
 ) => {
   if (!__DEV__) {
