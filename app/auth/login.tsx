@@ -15,7 +15,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
-import { POST } from "@/common/api";
+import { useMutation } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
@@ -25,6 +25,7 @@ const Page = () => {
   const identity = useIdentity();
   const theme = useTheme();
   const { t } = useI18n();
+  const obtainToken = useMutation("post", "/api/v1/token");
 
   const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
 
@@ -34,7 +35,7 @@ const Page = () => {
 
   const onSubmit = async (body: { email: string; password: string }) => {
     setStatus("pending");
-    const res = await POST("/api/v1/token", { body });
+    const res = await obtainToken({ body });
     if (res.error) {
       setStatus("error");
     } else {

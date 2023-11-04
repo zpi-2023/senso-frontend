@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Avatar, Button, List, MD3Theme, useTheme } from "react-native-paper";
 
 import { actions } from "@/common/actions";
-import { POST, useApi } from "@/common/api";
+import { useQuery, useMutation } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import {
@@ -23,9 +23,13 @@ const ProfilesList = () => {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const identity = useIdentity();
-  const { data } = useApi({
+  const { data } = useQuery({
     url: "/api/v1/account/profiles",
   });
+  const createSeniorProfile = useMutation(
+    "post",
+    "/api/v1/account/profiles/senior",
+  );
   const [isCreatingSeniorProfile, setIsCreatingSeniorProfile] = useState(false);
 
   if (!identity.isLoggedIn) {
@@ -46,10 +50,7 @@ const ProfilesList = () => {
 
   const handleCreateSeniorProfile = async () => {
     setIsCreatingSeniorProfile(true);
-    const { data: seniorProfile } = await POST(
-      "/api/v1/account/profiles/senior",
-      { headers: { Authorization: `Bearer ${identity.token}` } },
-    );
+    const { data: seniorProfile } = await createSeniorProfile({});
 
     if (!seniorProfile) {
       return; // TODO: handle error
