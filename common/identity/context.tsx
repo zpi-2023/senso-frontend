@@ -16,7 +16,7 @@ import { clearHistory } from "../util";
 export const IdentityContext = createContext<{
   data: IdentityData;
   setData: (newData: IdentityData) => void;
-}>({ data: { known: "nothing" }, setData: () => {} });
+}>({ data: { known: "nothing" }, setData: () => undefined });
 
 /**
  * Reads or modifies data from the encompassing identity context.

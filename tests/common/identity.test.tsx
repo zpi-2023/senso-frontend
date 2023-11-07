@@ -15,7 +15,7 @@ import {
   mockIdentityLoggedOut,
   mockIdentityWithProfile,
 } from "@/common/identity/mocks";
-import { IdentityData } from "@/common/identity/types";
+import type { IdentityData } from "@/common/identity/types";
 import { MockRouter } from "@/common/util";
 
 const renderUseIdentity = (data: IdentityData) =>

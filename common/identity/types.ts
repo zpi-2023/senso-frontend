@@ -1,4 +1,4 @@
-import { AppRoutes } from "../constants";
+import type { AppRoutes } from "../constants";
 
 export type SeniorProfile = {
   type: "senior";

@@ -1,10 +1,10 @@
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { router } from "expo-router";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 
 import { actions } from "@/common/actions";
-import { POST } from "@/common/api";
+import { useMutation } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfLoggedOut, useIdentity } from "@/common/identity";
 import { Header } from "@/components/Header";
@@ -12,6 +12,10 @@ import { Header } from "@/components/Header";
 export default function App() {
   const { t } = useI18n();
   const identity = useIdentity();
+  const createCaretakerProfile = useMutation(
+    "post",
+    "/api/v1/account/profiles/caretaker",
+  );
 
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
@@ -46,8 +50,7 @@ export default function App() {
           onPress: async () => {
             router.back();
             setScanned(false);
-            const { data } = await POST("/api/v1/account/profiles/caretaker", {
-              headers: { Authorization: `Bearer ${identity.token}` },
+            const { data } = await createCaretakerProfile({
               body: { hash, seniorAlias: seniorDisplayName },
             });
             if (!data) {

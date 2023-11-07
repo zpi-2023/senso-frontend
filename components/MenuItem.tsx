@@ -1,6 +1,6 @@
 import { List, useTheme } from "react-native-paper";
 
-import { Action, useActionContext } from "@/common/actions";
+import { type Action, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { isCaretaker } from "@/common/identity";
 

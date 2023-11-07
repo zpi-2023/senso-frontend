@@ -1,5 +1,5 @@
 import { Redirect } from "expo-router";
-import { FC } from "react";
+import type { FC } from "react";
 
 import type { Identity } from "./types";
 import { AppRoutes } from "../constants";

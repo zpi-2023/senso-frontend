@@ -3,7 +3,7 @@ import {
   DefaultTheme,
   ThemeProvider as NativeThemeProvider,
 } from "@react-navigation/native";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { useColorScheme } from "react-native";
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {

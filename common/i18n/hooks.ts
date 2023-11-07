@@ -34,7 +34,7 @@ export const useI18n = (): I18n => {
       }
 
       for (const [k, v] of Object.entries(substitutions)) {
-        value = value?.replaceAll(`{${k}}`, v?.toString());
+        value = value?.replaceAll(`{${k}}`, String(v));
       }
 
       return value;

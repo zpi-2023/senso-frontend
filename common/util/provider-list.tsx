@@ -1,13 +1,17 @@
-import { FC, PropsWithChildren } from "react";
+import type { FC, PropsWithChildren } from "react";
 
 export const ProviderList = ({
-  providers,
+  providers = [],
   children,
 }: PropsWithChildren<{
-  providers: FC<{ children: JSX.Element }>[];
+  providers?: FC<{ children: JSX.Element }>[];
 }>) => {
-  if (providers.length === 0) return <>{children}</>;
-  const Current = providers[0]!;
+  const Current = providers[0];
+
+  if (!Current) {
+    return <>{children}</>;
+  }
+
   return (
     <Current>
       <ProviderList providers={providers.slice(1)}>{children}</ProviderList>

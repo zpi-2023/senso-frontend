@@ -2,7 +2,7 @@ import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 
-import { BASE_URL, useApi } from "@/common/api";
+import { BASE_URL, useQuery } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
@@ -12,7 +12,7 @@ import { MonoText } from "@/components/StyledText";
 const HEALTHZ_PATH = "/api/v1/healthz";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
-  const { data, isLoading, error, mutate } = useApi({
+  const { data, isLoading, error, mutate } = useQuery({
     url: HEALTHZ_PATH,
   });
   const { t } = useI18n();
@@ -46,6 +46,7 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
             </MonoText>
             {/* Escape hatch to let us test client without server in development */}
             <Link href={AppRoutes.Login} replace>
+              {/* eslint-disable-next-line react/jsx-no-literals */}
               <Button textColor="red">IGNORE</Button>
             </Link>
           </>

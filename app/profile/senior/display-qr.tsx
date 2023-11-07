@@ -5,7 +5,7 @@ import { ActivityIndicator, Button, Text } from "react-native-paper";
 import QRCode from "react-qr-code";
 
 import { actions } from "@/common/actions";
-import { useApi } from "@/common/api";
+import { useQuery } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { toMinutesAndSeconds } from "@/common/util/helpers";
@@ -14,7 +14,7 @@ import { LoadingScreen } from "@/components/LoadingScreen";
 
 const CreateSeniorProfile = () => {
   const { t } = useI18n();
-  const { data, isLoading, mutate } = useApi({
+  const { data, isLoading, mutate } = useQuery({
     url: "/api/v1/account/profiles/senior",
   });
   const [secondsLeft, setSecondsLeft] = useState<number>(data?.validFor || 10);
