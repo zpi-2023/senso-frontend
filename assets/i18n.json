@@ -313,5 +313,13 @@
   "editDashboard.availableGadgets": {
     "en": "Available gadgets",
     "pl": "Dostępne gadżety"
+  },
+  "sosSlider.description": {
+    "en": "Slide to activate SOS",
+    "pl": "Przesuń, aby aktywować SOS"
+  },
+  "sosSlider.slider": {
+    "en": "Caretaker notified",
+    "pl": "Powiadomiono opiekuna"
   }
 }
