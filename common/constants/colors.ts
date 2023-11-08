@@ -16,4 +16,5 @@ export const colors = {
     tabIconDefault: "#ccc",
     tabIconSelected: tintColorDark,
   },
+  error: "#ff443a",
 };
