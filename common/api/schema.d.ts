@@ -232,6 +232,222 @@ export interface paths {
       };
     };
   };
+  "/api/v1/notes": {
+    post: {
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["UpsertNoteDto"];
+          "text/json": components["schemas"]["UpsertNoteDto"];
+          "application/*+json": components["schemas"]["UpsertNoteDto"];
+        };
+      };
+      responses: {
+        /** @description Created */
+        201: {
+          content: {
+            "text/plain": components["schemas"]["NoteDto"];
+            "application/json": components["schemas"]["NoteDto"];
+            "text/json": components["schemas"]["NoteDto"];
+          };
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/notes/senior/{seniorId}": {
+    get: {
+      parameters: {
+        path: {
+          seniorId: number;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["NoteListDto"];
+            "application/json": components["schemas"]["NoteListDto"];
+            "text/json": components["schemas"]["NoteListDto"];
+          };
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/notes/{noteId}": {
+    get: {
+      parameters: {
+        path: {
+          noteId: number;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["NoteDto"];
+            "application/json": components["schemas"]["NoteDto"];
+            "text/json": components["schemas"]["NoteDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    put: {
+      parameters: {
+        path: {
+          noteId: number;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["UpsertNoteDto"];
+          "text/json": components["schemas"]["UpsertNoteDto"];
+          "application/*+json": components["schemas"]["UpsertNoteDto"];
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["NoteDto"];
+            "application/json": components["schemas"]["NoteDto"];
+            "text/json": components["schemas"]["NoteDto"];
+          };
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    delete: {
+      parameters: {
+        path: {
+          noteId: number;
+        };
+      };
+      responses: {
+        /** @description No Content */
+        204: {
+          content: never;
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
   "/api/v1/token": {
     post: {
       requestBody?: {
@@ -298,6 +514,18 @@ export interface components {
     };
     /** @enum {string} */
     HealthcheckStatus: "Ok" | "Unhealthy";
+    NoteDto: {
+      /** Format: int32 */
+      id: number;
+      content: string;
+      /** Format: date-time */
+      createdAt: string;
+      isPrivate: boolean;
+      title?: string | null;
+    };
+    NoteListDto: {
+      notes: components["schemas"]["NoteDto"][];
+    };
     ProblemDetails: {
       type?: string | null;
       title?: string | null;
@@ -318,6 +546,11 @@ export interface components {
     };
     TokenDto: {
       token: string;
+    };
+    UpsertNoteDto: {
+      content: string;
+      isPrivate: boolean;
+      title?: string | null;
     };
   };
   responses: never;

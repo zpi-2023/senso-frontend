@@ -1,10 +1,13 @@
 import type { ActionKey } from "../actions";
 import { useQuery, useMutation } from "../api";
-import type { Identity } from "../identity";
+import { useIdentity } from "../identity";
 
-export const useDashboardGadgets = (
-  identity: Identity,
-): [ActionKey[] | null, (newGadgets: ActionKey[]) => void] => {
+export const useDashboardGadgets = (): [
+  ActionKey[] | null,
+  (newGadgets: ActionKey[]) => void,
+] => {
+  const identity = useIdentity();
+
   const { data, mutate } = useQuery(
     identity.hasProfile
       ? {

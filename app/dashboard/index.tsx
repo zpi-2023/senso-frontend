@@ -1,16 +1,16 @@
 import { FlatList, StyleSheet } from "react-native";
 
 import { actions } from "@/common/actions";
-import { useDashboardGadgets } from "@/common/hooks";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
+import { useDashboardGadgets } from "@/common/logic";
 import { LoadingScreen, Header, SosFab, View } from "@/components";
 import { DashboardGadget } from "@/components/dashboard";
 
 const Page = () => {
   const { t } = useI18n();
   const identity = useIdentity();
-  const [gadgets] = useDashboardGadgets(identity);
+  const [gadgets] = useDashboardGadgets();
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;

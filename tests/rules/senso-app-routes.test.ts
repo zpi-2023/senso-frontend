@@ -14,7 +14,13 @@ tester.run("senso-app-routes", rule, {
   valid: [
     { code: "router.push(AppRoutes.Menu)" },
     { code: "router.replace(AppRoutes.Dashboard)" },
-    { code: "const link = <Link href={AppRoutes.ProfileList}>Test</Link>" },
+    { code: "<Link href={AppRoutes.ProfileList}>Test</Link>" },
+    {
+      code: "<Link href={{ pathname: AppRoutes.NoteDetails, params: { noteId: 0 } }}>Test</Link>",
+    },
+    {
+      code: "router.push({ pathname: AppRoutes.NoteDetails, params: { noteId: 0 } })",
+    },
   ],
   invalid: [
     {
@@ -27,6 +33,14 @@ tester.run("senso-app-routes", rule, {
     },
     {
       code: "const link = <Link href='/profile/list'>Test</Link>",
+      errors,
+    },
+    {
+      code: "const link = <Link href={{ pathname: '/notes' }}>Test</Link>",
+      errors,
+    },
+    {
+      code: "router.push({ pathname: '/notes/[noteId]', params: { noteId: 0 } })",
       errors,
     },
   ],

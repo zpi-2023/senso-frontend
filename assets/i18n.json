@@ -313,5 +313,33 @@
   "editDashboard.availableGadgets": {
     "en": "Available gadgets",
     "pl": "Dostępne gadżety"
+  },
+  "noteList.pageTitle": {
+    "en": "Notes",
+    "pl": "Notatki"
+  },
+  "noteList.createNote": {
+    "en": "Add new",
+    "pl": "Dodaj nową"
+  },
+  "noteDetails.unnamedNote": {
+    "en": "Unnamed note",
+    "pl": "Nienazwana notatka"
+  },
+  "noteDetails.edit": {
+    "en": "Edit",
+    "pl": "Edytuj"
+  },
+  "noteDetails.delete": {
+    "en": "Delete",
+    "pl": "Usuń"
+  },
+  "time.today": {
+    "en": "Today",
+    "pl": "Dzisiaj"
+  },
+  "time.yesterday": {
+    "en": "Yesterday",
+    "pl": "Wczoraj"
   }
 }

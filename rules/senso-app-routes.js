@@ -17,6 +17,11 @@ const isRouteBanned = (node) => {
     return isRouteBanned(node.expression);
   }
 
+  const pathname = node.properties?.find(({ key }) => key.name === "pathname");
+  if (node.type === "ObjectExpression" && pathname) {
+    return isRouteBanned(pathname.value);
+  }
+
   return false;
 };
 
