@@ -3,9 +3,9 @@ import { Divider, List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { MAX_GADGETS, availableGadgets } from "@/common/constants";
-import { useDashboardGadgets } from "@/common/hooks";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
+import { useDashboardGadgets } from "@/common/logic";
 import { Header, View, LoadingScreen } from "@/components";
 import {
   DashboardEditSelected,
@@ -15,7 +15,7 @@ import {
 const Page = () => {
   const { t } = useI18n();
   const identity = useIdentity();
-  const [gadgets, setGadgets] = useDashboardGadgets(identity);
+  const [gadgets, setGadgets] = useDashboardGadgets();
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;

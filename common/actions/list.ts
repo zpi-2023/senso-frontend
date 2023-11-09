@@ -77,7 +77,7 @@ export const actions = {
   },
   manageNotes: {
     displayName: (t) => t("actions.manageNotes"),
-    icon: "note-edit",
+    icon: "note",
     handler: ({ router }) => router.push(AppRoutes.Notes),
     managed: true,
   },
