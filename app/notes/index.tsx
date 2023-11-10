@@ -1,7 +1,9 @@
+import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet } from "react-native";
 import { Button, type MD3Theme, useTheme } from "react-native-paper";
 
 import { actions } from "@/common/actions";
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
 import { useNoteList } from "@/common/logic";
@@ -12,6 +14,7 @@ const Page = () => {
   const { t } = useI18n();
   const theme = useTheme();
   const identity = useIdentity();
+  const router = useRouter();
   const notes = useNoteList();
 
   if (!identity.hasProfile) {
@@ -33,7 +36,11 @@ const Page = () => {
         ))}
       </ScrollView>
       <View style={styles.bar}>
-        <Button mode="contained" icon="pencil-plus" onPress={() => undefined}>
+        <Button
+          mode="contained"
+          icon="pencil-plus"
+          onPress={() => router.push(AppRoutes.CreateNote)}
+        >
           {t("noteList.createNote")}
         </Button>
       </View>

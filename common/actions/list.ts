@@ -81,6 +81,12 @@ export const actions = {
     handler: ({ router }) => router.push(AppRoutes.Notes),
     managed: true,
   },
+  quickCreateNote: {
+    displayName: (t) => t("actions.quickCreateNote"),
+    icon: "pencil-plus",
+    handler: ({ router }) => router.push(AppRoutes.CreateNote),
+    hidden: ({ identity }) => isCaretaker(identity.profile),
+  },
 } satisfies Record<string, Action>;
 
 export type ActionKey = keyof typeof actions;

@@ -13,6 +13,7 @@ export const enum AppRoutes {
   Games = "/games",
   Notes = "/notes",
   NoteDetails = "/notes/[noteId]",
+  CreateNote = "/notes/create",
 }
 
 export const MIN_DISPLAY_NAME_LENGTH = 3;

@@ -13,6 +13,8 @@ export type Note = {
   title?: string | null;
 };
 
+export type NoteEdit = Pick<Note, "content" | "isPrivate" | "title">;
+
 export const formatNoteCreationDate = (
   createdAt: string,
   now: Date,
