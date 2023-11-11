@@ -78,7 +78,7 @@ export const actions = {
   manageNotes: {
     displayName: (t) => t("actions.manageNotes"),
     icon: "note",
-    handler: ({ router }) => router.push(AppRoutes.Notes),
+    handler: ({ router }) => router.push(AppRoutes.NoteList),
     managed: true,
   },
   quickCreateNote: {

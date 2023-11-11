@@ -1,4 +1,8 @@
-import { useQuery } from "../api";
+import { useLocalSearchParams } from "expo-router";
+import { useCallback } from "react";
+import { useSWRConfig } from "swr";
+
+import { useMutation, useQuery } from "../api";
 import type { Translator } from "../i18n";
 import { useIdentity } from "../identity";
 
@@ -82,8 +86,25 @@ export const useNoteList = (): Note[] | null => {
   return data?.notes ?? null;
 };
 
-export const useNote = (noteId: number | null): Note | null => {
-  const { data } = useQuery(
+const useRefreshNoteList = (): (() => Promise<void>) => {
+  const { mutate } = useSWRConfig();
+  return useCallback(async () => {
+    await mutate(
+      (key) =>
+        Array.isArray(key) && key[0] === "/api/v1/notes/senior/{seniorId}",
+    );
+  }, [mutate]);
+};
+
+export const useNote = (
+  noteId: number | null,
+): {
+  note: Note | null;
+  editNote: (body: NoteEdit) => Promise<void>;
+  deleteNote: () => Promise<void>;
+} => {
+  const refreshNoteList = useRefreshNoteList();
+  const { data, mutate } = useQuery(
     noteId
       ? {
           url: "/api/v1/notes/{noteId}",
@@ -92,5 +113,49 @@ export const useNote = (noteId: number | null): Note | null => {
       : null,
   );
 
-  return data ?? null;
+  const editMutation = useMutation("put", "/api/v1/notes/{noteId}");
+  const deleteMutation = useMutation("delete", "/api/v1/notes/{noteId}");
+
+  const note = data ?? null;
+  const editNote = useCallback(
+    async (body: NoteEdit) => {
+      if (note) {
+        const { response, data } = await editMutation({
+          params: { path: { noteId: note.id } },
+          body,
+        });
+        if (response.ok) {
+          await mutate(data);
+          await refreshNoteList();
+        }
+      }
+    },
+    [note, editMutation, mutate, refreshNoteList],
+  );
+  const deleteNote = useCallback(async () => {
+    if (note) {
+      await deleteMutation({ params: { path: { noteId: note.id } } });
+      await refreshNoteList();
+    }
+  }, [note, deleteMutation, refreshNoteList]);
+
+  return { note, editNote, deleteNote };
+};
+
+export const useCreateNote = (): ((body: NoteEdit) => Promise<Note | null>) => {
+  const createMutation = useMutation("post", "/api/v1/notes");
+  const refreshNoteList = useRefreshNoteList();
+  return async (body: NoteEdit) => {
+    const { response, data } = await createMutation({ body });
+    if (response.ok) {
+      await refreshNoteList();
+    }
+    return data ?? null;
+  };
+};
+
+export const useNoteIdParam = (): number | null => {
+  const { noteId: noteIdString } = useLocalSearchParams<{ noteId: string }>();
+  const noteId = noteIdString ? parseInt(noteIdString, 10) : null;
+  return Number.isNaN(noteId) ? null : noteId;
 };

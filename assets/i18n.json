@@ -346,11 +346,31 @@
     "en": "Delete",
     "pl": "Usuń"
   },
+  "noteDetails.deleteTitle": {
+    "en": "Delete note",
+    "pl": "Usuń notatkę"
+  },
+  "noteDetails.deleteDescription": {
+    "en": "Are you sure you want to delete this note?",
+    "pl": "Czy na pewno chcesz usunąć tę notatkę?"
+  },
+  "noteDetails.deleteCancel": {
+    "en": "Cancel",
+    "pl": "Anuluj"
+  },
+  "noteDetails.deleteConfirm": {
+    "en": "Delete",
+    "pl": "Usuń"
+  },
   "createNote.pageTitle": {
     "en": "New note",
     "pl": "Nowa notatka"
   },
   "createNote.submit": {
+    "en": "Save",
+    "pl": "Zapisz"
+  },
+  "editNote.submit": {
     "en": "Save",
     "pl": "Zapisz"
   },
@@ -369,6 +389,10 @@
   "noteForm.contentRequired": {
     "en": "Content is required",
     "pl": "Treść jest wymagana"
+  },
+  "noteForm.titleTooLong": {
+    "en": "Title is too long",
+    "pl": "Tytuł jest za długi"
   },
   "time.today": {
     "en": "Today",

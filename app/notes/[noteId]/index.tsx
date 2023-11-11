@@ -1,5 +1,5 @@
-import { Redirect, useLocalSearchParams } from "expo-router";
-import { ScrollView, StyleSheet } from "react-native";
+import { Redirect, useRouter } from "expo-router";
+import { Alert, ScrollView, StyleSheet } from "react-native";
 import {
   useTheme,
   type MD3Theme,
@@ -12,22 +12,23 @@ import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
-import { useNote, notePageTitle } from "@/common/logic";
+import { useNote, notePageTitle, useNoteIdParam } from "@/common/logic";
 import { Header, LoadingScreen, View } from "@/components";
 
 const Page = () => {
   const { t } = useI18n();
   const theme = useTheme();
   const identity = useIdentity();
+  const router = useRouter();
   const noteId = useNoteIdParam();
-  const note = useNote(noteId);
+  const { note, deleteNote } = useNote(noteId);
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
   }
 
   if (!noteId) {
-    return <Redirect href={AppRoutes.Notes} />;
+    return <Redirect href={AppRoutes.NoteList} />;
   }
 
   if (!note) {
@@ -51,10 +52,35 @@ const Page = () => {
             size={24}
           />
         ) : null}
-        <Button mode="outlined" icon="note-edit" onPress={() => undefined}>
+        <Button
+          mode="outlined"
+          icon="note-edit"
+          onPress={() =>
+            router.push({
+              pathname: AppRoutes.EditNote,
+              params: { noteId: note.id },
+            })
+          }
+        >
           {t("noteDetails.edit")}
         </Button>
-        <Button mode="outlined" icon="note-remove" onPress={() => undefined}>
+        <Button
+          mode="outlined"
+          icon="note-remove"
+          onPress={() =>
+            Alert.alert(
+              t("noteDetails.deleteTitle"),
+              t("noteDetails.deleteDescription"),
+              [
+                { text: t("noteDetails.deleteCancel"), style: "cancel" },
+                {
+                  text: t("noteDetails.deleteConfirm"),
+                  onPress: () => deleteNote().then(router.back),
+                },
+              ],
+            )
+          }
+        >
           {t("noteDetails.delete")}
         </Button>
       </View>
@@ -87,11 +113,5 @@ const makeStyles = (theme: MD3Theme) =>
       padding: 0,
     },
   });
-
-const useNoteIdParam = (): number | null => {
-  const { noteId: noteIdString } = useLocalSearchParams<{ noteId: string }>();
-  const noteId = noteIdString ? parseInt(noteIdString, 10) : null;
-  return Number.isNaN(noteId) ? null : noteId;
-};
 
 export default Page;

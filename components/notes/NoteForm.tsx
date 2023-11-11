@@ -1,4 +1,4 @@
-import { Formik } from "formik";
+import { Formik, type FormikErrors } from "formik";
 import { useState } from "react";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import {
@@ -7,11 +7,12 @@ import {
   TextInput,
   Text,
   IconButton,
+  HelperText,
 } from "react-native-paper";
 
 import { View } from "../Themed";
 
-import { useI18n } from "@/common/i18n";
+import { type Translator, useI18n } from "@/common/i18n";
 import type { NoteEdit } from "@/common/logic";
 
 type NoteFormValues = Required<{
@@ -35,6 +36,7 @@ export const NoteForm = ({
   return (
     <Formik
       initialValues={serialize(initialValues)}
+      validate={(v) => validate(v, t)}
       validateOnBlur={true}
       validateOnChange={false}
       onSubmit={(v) => {
@@ -42,7 +44,15 @@ export const NoteForm = ({
         onSubmit(deserialize(v));
       }}
     >
-      {({ values, handleChange, handleBlur, setFieldValue, handleSubmit }) => (
+      {({
+        values,
+        touched,
+        errors,
+        handleChange,
+        handleBlur,
+        setFieldValue,
+        handleSubmit,
+      }) => (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={styles.container}>
             <TextInput
@@ -51,16 +61,24 @@ export const NoteForm = ({
               onChangeText={handleChange("title")}
               onBlur={handleBlur("title")}
               value={values.title}
+              error={"title" in errors}
             />
+            {touched.title && errors.title ? (
+              <HelperText type="error">{errors.title}</HelperText>
+            ) : null}
             <TextInput
               mode="outlined"
               label={t("noteForm.content")}
               onChangeText={handleChange("content")}
               onBlur={handleBlur("content")}
               value={values.content}
+              error={"content" in errors}
               multiline
               style={styles.content}
             />
+            {touched.content && errors.content ? (
+              <HelperText type="error">{errors.content}</HelperText>
+            ) : null}
             <View style={styles.switchWrapper}>
               <IconButton icon="shield-lock" style={styles.privateIcon} />
               <Text>{t("noteForm.isPrivate")}</Text>
@@ -121,3 +139,17 @@ const deserialize = (values: NoteFormValues): NoteEdit => ({
   ...values,
   title: (values.title?.trim().length ?? 0) > 0 ? values.title : null,
 });
+
+const validate = (
+  values: NoteFormValues,
+  t: Translator,
+): FormikErrors<NoteFormValues> => {
+  const errors: FormikErrors<NoteFormValues> = {};
+  if (values.content.length === 0) {
+    errors.content = t("noteForm.contentRequired");
+  }
+  if (values.title.length > 255) {
+    errors.title = t("noteForm.titleTooLong");
+  }
+  return errors;
+};

@@ -27,6 +27,13 @@ const Page = () => {
 
   const styles = makeStyles(theme);
 
+  /*
+    TODO:
+    - no notes message
+    - caretaker's view
+    - refresh on overscroll
+  */
+
   return (
     <View style={styles.container}>
       <Header left={actions.goBack} title={t("noteList.pageTitle")} />
