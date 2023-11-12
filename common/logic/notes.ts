@@ -1,13 +1,16 @@
 import { useLocalSearchParams } from "expo-router";
 import { useCallback } from "react";
-import { useSWRConfig } from "swr";
 
-import { useMutation, useQuery } from "../api";
+import { useMutation, useQuery, useQueryInvalidation } from "../api";
 import type { Translator } from "../i18n";
 import { useIdentity } from "../identity";
 
 const dayInMs = 1000 * 60 * 60 * 24;
 const extractedTitleLength = 20;
+
+const SENIOR_NOTES_URL = "/api/v1/notes/senior/{seniorId}" as const;
+const NOTE_DETAILS_URL = "/api/v1/notes/{noteId}" as const;
+const CREATE_NOTE_URL = "/api/v1/notes" as const;
 
 export type Note = {
   id: number;
@@ -25,7 +28,7 @@ export const formatNoteCreationDate = (
   t: Translator,
 ) => {
   const date = new Date(createdAt);
-  const daysAgo = Math.floor((now.getTime() - date.getTime()) / dayInMs);
+  const daysAgo = Math.trunc((now.getTime() - date.getTime()) / dayInMs);
 
   switch (daysAgo) {
     case 0:
@@ -77,23 +80,13 @@ export const useNoteList = (): Note[] | null => {
   const { data } = useQuery(
     identity.hasProfile
       ? {
-          url: "/api/v1/notes/senior/{seniorId}",
+          url: SENIOR_NOTES_URL,
           params: { path: { seniorId: identity.profile.seniorId } },
         }
       : null,
   );
 
   return data?.notes ?? null;
-};
-
-const useRefreshNoteList = (): (() => Promise<void>) => {
-  const { mutate } = useSWRConfig();
-  return useCallback(async () => {
-    await mutate(
-      (key) =>
-        Array.isArray(key) && key[0] === "/api/v1/notes/senior/{seniorId}",
-    );
-  }, [mutate]);
 };
 
 export const useNote = (
@@ -103,18 +96,18 @@ export const useNote = (
   editNote: (body: NoteEdit) => Promise<void>;
   deleteNote: () => Promise<void>;
 } => {
-  const refreshNoteList = useRefreshNoteList();
+  const refreshNoteList = useQueryInvalidation(SENIOR_NOTES_URL);
   const { data, mutate } = useQuery(
     noteId
       ? {
-          url: "/api/v1/notes/{noteId}",
+          url: NOTE_DETAILS_URL,
           params: { path: { noteId } },
         }
       : null,
   );
 
-  const editMutation = useMutation("put", "/api/v1/notes/{noteId}");
-  const deleteMutation = useMutation("delete", "/api/v1/notes/{noteId}");
+  const editMutation = useMutation("put", NOTE_DETAILS_URL);
+  const deleteMutation = useMutation("delete", NOTE_DETAILS_URL);
 
   const note = data ?? null;
   const editNote = useCallback(
@@ -143,8 +136,8 @@ export const useNote = (
 };
 
 export const useCreateNote = (): ((body: NoteEdit) => Promise<Note | null>) => {
-  const createMutation = useMutation("post", "/api/v1/notes");
-  const refreshNoteList = useRefreshNoteList();
+  const createMutation = useMutation("post", CREATE_NOTE_URL);
+  const refreshNoteList = useQueryInvalidation(SENIOR_NOTES_URL);
   return async (body: NoteEdit) => {
     const { response, data } = await createMutation({ body });
     if (response.ok) {

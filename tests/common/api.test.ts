@@ -2,6 +2,7 @@ import { renderHook, waitFor } from "@testing-library/react-native";
 
 import { useMutation, useQuery } from "@/common/api";
 import { fetcher } from "@/common/api/client";
+import { doArgumentsMatch } from "@/common/api/invalidation";
 import { mockApi } from "@/common/api/mocks";
 import { buildOptions } from "@/common/api/query";
 import {
@@ -86,6 +87,39 @@ describe("API", () => {
         "Authorization",
         `Bearer ${mockIdentityLoggedIn.token}`,
       ]);
+    });
+  });
+
+  describe(doArgumentsMatch, () => {
+    it("matches exact strings", () => {
+      expect(doArgumentsMatch("/api/v1/healthz", "/api/v1/healthz")).toBe(true);
+      expect(doArgumentsMatch("/api/v1/notes", "/api/v1/notes")).toBe(true);
+    });
+
+    it("matches strings with correct prefix", () => {
+      expect(
+        doArgumentsMatch(
+          "/api/v1/notes/senior/{seniorId}",
+          "/api/v1/notes/senior",
+        ),
+      ).toBe(true);
+      expect(doArgumentsMatch("/api/v1/notes/{noteId}", "")).toBe(true);
+    });
+
+    it("matches tuples with path as the first element", () => {
+      doArgumentsMatch(["/api/v1/notes", {}], "/api/v1/notes");
+      doArgumentsMatch(
+        ["/api/v1/healthz", { headers: { Authentication: "Bearer TEST" } }],
+        "/api/v1",
+      );
+    });
+
+    it("matches objects with url property", () => {
+      doArgumentsMatch({ url: "/api/v1/notes" }, "/api/v1/notes");
+      doArgumentsMatch(
+        { url: "/api/v1/notes/{noteId}", params: { path: { noteId: "123" } } },
+        "/api/v1/notes/{noteId}",
+      );
     });
   });
 });
