@@ -78,8 +78,14 @@ export const actions = {
   manageNotes: {
     displayName: (t) => t("actions.manageNotes"),
     icon: "note",
-    handler: ({ router }) => router.push(AppRoutes.Notes),
+    handler: ({ router }) => router.push(AppRoutes.NoteList),
     managed: true,
+  },
+  quickCreateNote: {
+    displayName: (t) => t("actions.quickCreateNote"),
+    icon: "pencil-plus",
+    handler: ({ router }) => router.push(AppRoutes.CreateNote),
+    hidden: ({ identity }) => isCaretaker(identity.profile),
   },
 } satisfies Record<string, Action>;
 

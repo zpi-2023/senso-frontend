@@ -238,6 +238,10 @@
     "en": "Notes",
     "pl": "Notatki"
   },
+  "actions.quickCreateNote": {
+    "en": "Quick note",
+    "pl": "Szybka notatka"
+  },
   "createSeniorProfile.pageTitle": {
     "en": "Scan senior QR code",
     "pl": "Zeskanuj kod QR seniora"
@@ -341,6 +345,54 @@
   "noteDetails.delete": {
     "en": "Delete",
     "pl": "Usuń"
+  },
+  "noteDetails.deleteTitle": {
+    "en": "Delete note",
+    "pl": "Usuń notatkę"
+  },
+  "noteDetails.deleteDescription": {
+    "en": "Are you sure you want to delete this note?",
+    "pl": "Czy na pewno chcesz usunąć tę notatkę?"
+  },
+  "noteDetails.deleteCancel": {
+    "en": "Cancel",
+    "pl": "Anuluj"
+  },
+  "noteDetails.deleteConfirm": {
+    "en": "Delete",
+    "pl": "Usuń"
+  },
+  "createNote.pageTitle": {
+    "en": "New note",
+    "pl": "Nowa notatka"
+  },
+  "createNote.submit": {
+    "en": "Save",
+    "pl": "Zapisz"
+  },
+  "editNote.submit": {
+    "en": "Save",
+    "pl": "Zapisz"
+  },
+  "noteForm.title": {
+    "en": "Title",
+    "pl": "Tytuł"
+  },
+  "noteForm.content": {
+    "en": "Content",
+    "pl": "Treść"
+  },
+  "noteForm.isPrivate": {
+    "en": "Is private?",
+    "pl": "Prywatna?"
+  },
+  "noteForm.contentRequired": {
+    "en": "Content is required",
+    "pl": "Treść jest wymagana"
+  },
+  "noteForm.titleTooLong": {
+    "en": "Title is too long",
+    "pl": "Tytuł jest za długi"
   },
   "time.today": {
     "en": "Today",

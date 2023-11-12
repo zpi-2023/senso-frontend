@@ -7,6 +7,7 @@ export const availableGadgets = [
   "trackMedication",
   "playGames",
   "manageNotes",
+  "quickCreateNote",
   "switchProfile",
   "logOut",
   "pairCaretaker",
