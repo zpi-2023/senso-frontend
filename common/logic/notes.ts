@@ -74,10 +74,13 @@ export const notePageTitle = (note: Note) => {
   return note.content.substring(0, extractedTitleLength) + "...";
 };
 
-export const useNoteList = (): Note[] | null => {
+export const useNoteList = (): {
+  notes: Note[] | null;
+  refresh: () => Promise<void>;
+} => {
   const identity = useIdentity();
 
-  const { data } = useQuery(
+  const { data, mutate } = useQuery(
     identity.hasProfile
       ? {
           url: SENIOR_NOTES_URL,
@@ -86,7 +89,7 @@ export const useNoteList = (): Note[] | null => {
       : null,
   );
 
-  return data?.notes ?? null;
+  return { notes: data?.notes ?? null, refresh: mutate };
 };
 
 export const useNote = (

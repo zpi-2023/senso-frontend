@@ -7,6 +7,7 @@ import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
 import { useNoteList } from "@/common/logic";
+import { useRefreshControl } from "@/common/util";
 import { CaretakerBanner, Header, LoadingScreen, View } from "@/components";
 import { NoteItem } from "@/components/notes";
 
@@ -15,7 +16,8 @@ const Page = () => {
   const theme = useTheme();
   const identity = useIdentity();
   const router = useRouter();
-  const notes = useNoteList();
+  const { notes, refresh } = useNoteList();
+  const refreshControl = useRefreshControl(refresh);
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
@@ -27,16 +29,11 @@ const Page = () => {
 
   const styles = makeStyles(theme);
 
-  /*
-    TODO:
-    - refresh on overscroll
-  */
-
   return (
     <View style={styles.container}>
       <Header left={actions.goBack} title={t("noteList.pageTitle")} />
       <CaretakerBanner />
-      <ScrollView>
+      <ScrollView refreshControl={refreshControl}>
         {notes.map((note) => (
           <NoteItem key={note.id} note={note} />
         ))}
