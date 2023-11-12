@@ -11,9 +11,9 @@ import {
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
-import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
+import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
 import { useNote, notePageTitle, useNoteIdParam } from "@/common/logic";
-import { Header, LoadingScreen, View } from "@/components";
+import { CaretakerBanner, Header, LoadingScreen, View } from "@/components";
 
 const Page = () => {
   const { t } = useI18n();
@@ -40,50 +40,53 @@ const Page = () => {
   return (
     <View style={styles.container}>
       <Header left={actions.goBack} title={notePageTitle(note)} />
+      <CaretakerBanner />
       <ScrollView>
         <Text style={styles.content}>{note.content}</Text>
       </ScrollView>
-      <View style={styles.bar}>
-        {note.isPrivate ? (
-          <IconButton
-            style={styles.privateIcon}
-            icon="shield-lock"
-            iconColor={theme.colors.primary}
-            size={24}
-          />
-        ) : null}
-        <Button
-          mode="outlined"
-          icon="note-edit"
-          onPress={() =>
-            router.push({
-              pathname: AppRoutes.EditNote,
-              params: { noteId: note.id },
-            })
-          }
-        >
-          {t("noteDetails.edit")}
-        </Button>
-        <Button
-          mode="outlined"
-          icon="note-remove"
-          onPress={() =>
-            Alert.alert(
-              t("noteDetails.deleteTitle"),
-              t("noteDetails.deleteDescription"),
-              [
-                { text: t("noteDetails.deleteCancel"), style: "cancel" },
-                {
-                  text: t("noteDetails.deleteConfirm"),
-                  onPress: () => deleteNote().then(router.back),
-                },
-              ],
-            )
-          }
-        >
-          {t("noteDetails.delete")}
-        </Button>
-      </View>
+      {isSenior(identity.profile) ? (
+        <View style={styles.bar}>
+          {note.isPrivate ? (
+            <IconButton
+              style={styles.privateIcon}
+              icon="shield-lock"
+              iconColor={theme.colors.primary}
+              size={24}
+            />
+          ) : null}
+          <Button
+            mode="outlined"
+            icon="note-edit"
+            onPress={() =>
+              router.push({
+                pathname: AppRoutes.EditNote,
+                params: { noteId: note.id },
+              })
+            }
+          >
+            {t("noteDetails.edit")}
+          </Button>
+          <Button
+            mode="outlined"
+            icon="note-remove"
+            onPress={() =>
+              Alert.alert(
+                t("noteDetails.deleteTitle"),
+                t("noteDetails.deleteDescription"),
+                [
+                  { text: t("noteDetails.deleteCancel"), style: "cancel" },
+                  {
+                    text: t("noteDetails.deleteConfirm"),
+                    onPress: () => deleteNote().then(router.back),
+                  },
+                ],
+              )
+            }
+          >
+            {t("noteDetails.delete")}
+          </Button>
+        </View>
+      ) : null}
     </View>
   );
 };

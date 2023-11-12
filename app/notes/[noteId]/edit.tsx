@@ -4,7 +4,11 @@ import { StyleSheet } from "react-native";
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
-import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
+import {
+  RedirectIfNoProfile,
+  isCaretaker,
+  useIdentity,
+} from "@/common/identity";
 import {
   type NoteEdit,
   notePageTitle,
@@ -16,15 +20,15 @@ import { NoteForm } from "@/components/notes";
 
 const Page = () => {
   const { t } = useI18n();
-  const indentity = useIdentity();
+  const identity = useIdentity();
   const noteId = useNoteIdParam();
   const { note, editNote } = useNote(noteId);
 
-  if (!indentity.hasProfile) {
-    return <RedirectIfNoProfile identity={indentity} />;
+  if (!identity.hasProfile) {
+    return <RedirectIfNoProfile identity={identity} />;
   }
 
-  if (!noteId) {
+  if (!noteId || isCaretaker(identity.profile)) {
     return <Redirect href={AppRoutes.NoteList} />;
   }
 

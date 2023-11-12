@@ -6,7 +6,7 @@ import { MAX_GADGETS, availableGadgets } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
 import { useDashboardGadgets } from "@/common/logic";
-import { Header, View, LoadingScreen } from "@/components";
+import { Header, View, LoadingScreen, CaretakerBanner } from "@/components";
 import {
   DashboardEditSelected,
   DashboardEditAvailable,
@@ -28,6 +28,7 @@ const Page = () => {
   return (
     <View>
       <Header left={actions.goBack} title={t("editDashboard.pageTitle")} />
+      <CaretakerBanner />
       <ScrollView>
         <List.Section>
           <List.Subheader>

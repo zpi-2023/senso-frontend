@@ -1,29 +1,14 @@
 import { ScrollView, StyleSheet } from "react-native";
-import {
-  Banner,
-  List,
-  type MD3Theme,
-  useTheme,
-  Text,
-} from "react-native-paper";
+import { List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
-import {
-  useIdentity,
-  RedirectIfNoProfile,
-  isCaretaker,
-} from "@/common/identity";
-import { Header } from "@/components/Header";
-import { MenuItem } from "@/components/MenuItem";
-import { SosFab } from "@/components/SosFab";
-import { View } from "@/components/Themed";
+import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
+import { CaretakerBanner, View, SosFab, MenuItem, Header } from "@/components";
 
 const Page = () => {
   const { t } = useI18n();
   const identity = useIdentity();
-  const theme = useTheme();
-  const styles = makeStyles(theme);
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
@@ -32,13 +17,7 @@ const Page = () => {
   return (
     <View style={styles.container}>
       <Header left={actions.goBack} title={t("menu.pageTitle")} />
-      {isCaretaker(identity.profile) ? (
-        <Banner visible style={styles.banner}>
-          <Text style={styles.bannerText}>
-            {t("menu.caretakerBanner", { alias: identity.profile.seniorAlias })}
-          </Text>
-        </Banner>
-      ) : null}
+      <CaretakerBanner />
       <ScrollView>
         <List.Section>
           <MenuItem action={actions.openDashboard} />
@@ -64,18 +43,6 @@ const Page = () => {
   );
 };
 
-const makeStyles = (theme: MD3Theme) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    banner: {
-      backgroundColor: theme.colors.primary,
-      paddingBottom: 8,
-    },
-    bannerText: {
-      color: theme.colors.onPrimary,
-    },
-  });
+const styles = StyleSheet.create({ container: { flex: 1 } });
 
 export default Page;
