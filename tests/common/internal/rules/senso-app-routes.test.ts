@@ -1,6 +1,6 @@
 import { RuleTester } from "eslint";
 
-import rule from "@/rules/senso-app-routes";
+import rule from "@/common/internal/rules/senso-app-routes";
 
 const tester = new RuleTester({
   parserOptions: { ecmaVersion: "latest", ecmaFeatures: { jsx: true } },

@@ -8,6 +8,6 @@
   "files.insertFinalNewline": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.options": {
-    "rulePaths": ["rules"]
+    "rulePaths": ["common/internal/rules"]
   }
 }
