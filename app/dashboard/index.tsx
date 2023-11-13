@@ -3,13 +3,8 @@ import { FlatList, StyleSheet } from "react-native";
 import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
-import {
-  LoadingScreen,
-  Header,
-  SosFab,
-  View,
-  CaretakerBanner,
-} from "@/components";
+import { LoadingScreen, Header, View, CaretakerBanner } from "@/components";
+import { SosFab } from "@/components/alerts";
 import { DashboardGadget } from "@/components/dashboard";
 import { useDashboardGadgets } from "@/logic/dashboard";
 

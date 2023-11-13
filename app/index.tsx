@@ -7,7 +7,6 @@ import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 import { Header } from "@/components/Header";
-import { MonoText } from "@/components/StyledText";
 
 const HEALTHZ_PATH = "/api/v1/healthz";
 
@@ -37,13 +36,13 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
         </Button>
         {debug ? (
           <>
-            <MonoText style={styles.debug}>
+            <Text style={styles.debug}>
               {new URL(HEALTHZ_PATH, BASE_URL).toString()}
               {"\n"}
               {JSON.stringify(data)}
               {"\n"}
               {error?.toString()}
-            </MonoText>
+            </Text>
             {/* Escape hatch to let us test client without server in development */}
             <Link href={AppRoutes.Login} replace>
               {/* eslint-disable-next-line react/jsx-no-literals */}
@@ -105,6 +104,7 @@ const styles = StyleSheet.create({
     color: "#ff0000",
     textAlign: "center",
     padding: 8,
+    fontFamily: "SpaceMono",
   },
 });
 

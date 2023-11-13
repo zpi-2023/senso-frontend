@@ -16,7 +16,7 @@
       "@/(.*)": "<rootDir>/$1"
     },
     "setupFilesAfterEnv": [
-      "<rootDir>/common/util/setup-tests.ts"
+      "<rootDir>/common/internal/setup-tests.ts"
     ]
   },
   "dependencies": {

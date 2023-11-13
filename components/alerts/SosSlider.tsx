@@ -14,7 +14,7 @@ import { useI18n } from "@/common/i18n";
 const sliderWidth = Dimensions.get("window").width - 100;
 const circleRadius = 35;
 
-const PowerOffSlider = () => {
+export const SosSlider = () => {
   const { t } = useI18n();
   const theme = useTheme();
   const styles = makeStyles(theme);
@@ -114,5 +114,3 @@ const makeStyles = (theme: MD3Theme) =>
       color: "black",
     },
   });
-
-export default PowerOffSlider;

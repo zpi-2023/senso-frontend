@@ -10,7 +10,7 @@ import {
   HelperText,
 } from "react-native-paper";
 
-import { View } from "../Themed";
+import { View } from "../themed";
 
 import { type Translator, useI18n } from "@/common/i18n";
 import type { NoteEdit } from "@/logic/notes";

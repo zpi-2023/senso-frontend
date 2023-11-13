@@ -3,9 +3,8 @@ import { PaperProvider } from "react-native-paper";
 
 import { I18nProvider } from "@/common/i18n";
 import { IdentityProvider } from "@/common/identity";
-import { ProviderList, useFontLoader } from "@/common/util";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { View } from "@/components/Themed";
+import { ProviderList, useFontLoader, ThemeProvider } from "@/common/internal";
+import { View } from "@/components/themed";
 
 export { ErrorBoundary } from "expo-router";
 

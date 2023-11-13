@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
-import SosSlider from "./SosSlider";
+import { SosSlider } from "./SosSlider";
 
 import { actions, useActionContext } from "@/common/actions";
 import { colors } from "@/common/constants";

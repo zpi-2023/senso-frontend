@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
-import { View } from "../Themed";
+import { View } from "../themed";
 
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";

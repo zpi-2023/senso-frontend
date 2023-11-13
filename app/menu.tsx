@@ -4,7 +4,9 @@ import { List } from "react-native-paper";
 import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
-import { CaretakerBanner, View, SosFab, MenuItem, Header } from "@/components";
+import { CaretakerBanner, View, Header } from "@/components";
+import { SosFab } from "@/components/alerts";
+import { MenuItem } from "@/components/menu";
 
 const Page = () => {
   const { t } = useI18n();
