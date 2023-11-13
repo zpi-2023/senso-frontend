@@ -30,6 +30,7 @@ type HeaderProps = {
 
 export const Header = ({ left, title, right }: HeaderProps) => {
   return (
+    // eslint-disable-next-line senso-stack-screen -- implementation of Header can't use Header
     <Stack.Screen
       options={{
         header: () => (

@@ -27,7 +27,8 @@
     "@typescript-eslint/no-unsafe-enum-comparison": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/unbound-method": "off",
-    "senso-app-routes": "warn"
+    "senso-app-routes": "warn",
+    "senso-stack-screen": "warn"
   },
   "settings": {
     "react": {

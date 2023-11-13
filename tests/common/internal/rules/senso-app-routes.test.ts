@@ -1,10 +1,6 @@
-import { RuleTester } from "eslint";
+import { ruleTester } from "./ruleTester";
 
-import rule from "@/common/internal/rules/senso-app-routes";
-
-const tester = new RuleTester({
-  parserOptions: { ecmaVersion: "latest", ecmaFeatures: { jsx: true } },
-});
+import sensoAppRoutes from "@/common/internal/rules/senso-app-routes";
 
 const errors = [
   {
@@ -13,7 +9,7 @@ const errors = [
   },
 ];
 
-tester.run("senso-app-routes", rule, {
+ruleTester.run("senso-app-routes", sensoAppRoutes, {
   valid: [
     { code: "router.push(AppRoutes.Menu)" },
     { code: "router.replace(AppRoutes.Dashboard)" },
