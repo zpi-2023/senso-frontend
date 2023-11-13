@@ -2,7 +2,7 @@ import { ScrollView } from "react-native";
 import { Divider, List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
-import { MAX_GADGETS, availableGadgets } from "@/common/constants";
+import { maxGadgets, availableGadgets } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
 import { Header, View, LoadingScreen, CaretakerBanner } from "@/components";
@@ -34,7 +34,7 @@ const Page = () => {
           <List.Subheader>
             {t("editDashboard.selectedGadgets", {
               current: gadgets.length,
-              max: MAX_GADGETS,
+              max: maxGadgets,
             })}
           </List.Subheader>
           {gadgets.map((gadget, index) => (
@@ -72,7 +72,7 @@ const Page = () => {
               <DashboardEditAvailable
                 key={gadget}
                 gadget={gadget}
-                disabled={gadgets.length >= MAX_GADGETS}
+                disabled={gadgets.length >= maxGadgets}
                 onAdd={() => setGadgets([...gadgets, gadget])}
               />
             ))}

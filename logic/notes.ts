@@ -6,9 +6,9 @@ import { useIdentity } from "../common/identity";
 
 const extractedTitleLength = 20;
 
-const seniorNotesUrl = "/api/v1/notes/senior/{seniorId}" as const;
-const noteDetailsUrl = "/api/v1/notes/{noteId}" as const;
-const createNoteUrl = "/api/v1/notes" as const;
+const seniorNotesUrl = "/api/v1/notes/senior/{seniorId}";
+const noteDetailsUrl = "/api/v1/notes/{noteId}";
+const createNoteUrl = "/api/v1/notes";
 
 export type Note = {
   id: number;

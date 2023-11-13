@@ -2,17 +2,17 @@ import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 
-import { BASE_URL, useQuery } from "@/common/api";
+import { baseUrl, useQuery } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 import { Header } from "@/components/Header";
 
-const HEALTHZ_PATH = "/api/v1/healthz";
+const healthzPath = "/api/v1/healthz";
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
   const { data, isLoading, error, mutate } = useQuery({
-    url: HEALTHZ_PATH,
+    url: healthzPath,
   });
   const { t } = useI18n();
   const identity = useIdentity();
@@ -37,7 +37,7 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
         {debug ? (
           <>
             <Text style={styles.debug}>
-              {new URL(HEALTHZ_PATH, BASE_URL).toString()}
+              {new URL(healthzPath, baseUrl).toString()}
               {"\n"}
               {JSON.stringify(data)}
               {"\n"}

@@ -10,6 +10,15 @@
     "no-void": ["error", { "allowAsStatement": true }],
     "react/jsx-no-literals": "warn",
     "@typescript-eslint/consistent-type-imports": "warn",
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        "selector": "variableLike",
+        "format": ["camelCase", "PascalCase"],
+        "leadingUnderscore": "allow"
+      },
+      { "selector": "typeLike", "format": ["PascalCase"] }
+    ],
     "@typescript-eslint/no-misused-promises": [
       "error",
       { "checksVoidReturn": false }

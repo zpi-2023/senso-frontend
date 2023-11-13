@@ -2,7 +2,7 @@ import { rest } from "msw";
 import { setupServer } from "msw/node";
 
 import type { MethodPath } from "./client";
-import { BASE_URL } from "./consts";
+import { baseUrl } from "./consts";
 
 type CrudMethod = "get" | "post" | "put" | "patch" | "delete";
 type PromiseOrValue<T> = Promise<T> | T;
@@ -37,7 +37,7 @@ export const mockApi = <M extends CrudMethod>(
   }
 
   mockServer.use(
-    rest[method](new URL(path, BASE_URL).toString(), async (req, res, ctx) =>
+    rest[method](new URL(path, baseUrl).toString(), async (req, res, ctx) =>
       res(await body(ctx, req)),
     ),
   );

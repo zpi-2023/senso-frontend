@@ -1,6 +1,6 @@
 import type { Translator } from "../common/i18n";
 
-const DAY_IN_MS = 1000 * 60 * 60 * 24;
+const dayInMs = 1000 * 60 * 60 * 24;
 
 export const toMinutesAndSeconds = (totalSeconds: number) => {
   const minutes = Math.floor(totalSeconds / 60);
@@ -13,7 +13,7 @@ export const toMinutesAndSeconds = (totalSeconds: number) => {
 };
 
 export const formatDateOffset = (date: Date, now: Date, t: Translator) => {
-  const daysAgo = Math.trunc((now.getTime() - date.getTime()) / DAY_IN_MS);
+  const daysAgo = Math.trunc((now.getTime() - date.getTime()) / dayInMs);
 
   switch (daysAgo) {
     case 0:

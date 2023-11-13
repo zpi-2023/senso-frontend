@@ -18,7 +18,7 @@ import {
 } from "react-native-paper";
 
 import { useMutation } from "@/common/api";
-import { AppRoutes, MIN_DISPLAY_NAME_LENGTH } from "@/common/constants";
+import { AppRoutes, minDisplayNameLength } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 import { Header } from "@/components/Header";
@@ -82,9 +82,9 @@ const Page = () => {
         } = {};
         if (!values.displayName) {
           errors.displayName = t("auth.required");
-        } else if (values.displayName.length < MIN_DISPLAY_NAME_LENGTH) {
+        } else if (values.displayName.length < minDisplayNameLength) {
           errors.displayName = t("register.badDisplayNameLength", {
-            length: MIN_DISPLAY_NAME_LENGTH,
+            length: minDisplayNameLength,
           });
         }
         if (!values.email) {
