@@ -1,3 +1,2 @@
-export const BASE_URL = __DEV__
-  ? process.env["IP"] ?? "http://localhost:8088/"
-  : "https://senso.org.pl/";
+const PROD_URL = "https://senso.org.pl/";
+export const BASE_URL = __DEV__ ? process.env["IP"] ?? PROD_URL : PROD_URL;
