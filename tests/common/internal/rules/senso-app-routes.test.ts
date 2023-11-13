@@ -7,7 +7,10 @@ const tester = new RuleTester({
 });
 
 const errors = [
-  { message: "You should use the `AppRoutes` enum for all routes." },
+  {
+    message:
+      "You should use the `AppRoutes` enum for all routes.\nThe enum is accessible via `@/common/constants`.",
+  },
 ];
 
 tester.run("senso-app-routes", rule, {
@@ -20,6 +23,9 @@ tester.run("senso-app-routes", rule, {
     },
     {
       code: "router.push({ pathname: AppRoutes.NoteDetails, params: { noteId: 0 } })",
+    },
+    {
+      code: "router.push(true ? AppRoutes.ExampleTrue : AppRoutes.ExampleFalse)",
     },
   ],
   invalid: [
@@ -41,6 +47,14 @@ tester.run("senso-app-routes", rule, {
     },
     {
       code: "router.push({ pathname: '/notes/[noteId]', params: { noteId: 0 } })",
+      errors,
+    },
+    {
+      code: "router.push(true ? '/notes' : AppRoutes.NoteDetails)",
+      errors,
+    },
+    {
+      code: "router.push(true ? { pathname: '/' } : AppRoutes.Notes)",
       errors,
     },
   ],

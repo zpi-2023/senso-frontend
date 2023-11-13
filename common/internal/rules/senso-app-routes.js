@@ -5,36 +5,44 @@
  */
 
 /**
- * @param {Node} node
- * @returns {boolean}
+ * @param {Node} tree
+ * @returns {Node[]}
  */
-const isRouteBanned = (node) => {
-  if (["Literal", "TemplateLiteral", "BinaryExpression"].includes(node.type)) {
-    return true;
+const findBannedNodes = (tree) => {
+  if (["Literal", "TemplateLiteral", "BinaryExpression"].includes(tree.type)) {
+    return [tree];
   }
 
-  if (node.type === "JSXExpressionContainer") {
-    return isRouteBanned(node.expression);
+  if (tree.type === "ConditionalExpression") {
+    return [
+      ...findBannedNodes(tree.consequent),
+      ...findBannedNodes(tree.alternate),
+    ];
   }
 
-  const pathname = node.properties?.find(({ key }) => key.name === "pathname");
-  if (node.type === "ObjectExpression" && pathname) {
-    return isRouteBanned(pathname.value);
+  if (tree.type === "JSXExpressionContainer") {
+    return findBannedNodes(tree.expression);
   }
 
-  return false;
+  const pathname = tree.properties?.find(({ key }) => key.name === "pathname");
+  if (tree.type === "ObjectExpression" && pathname) {
+    return findBannedNodes(pathname.value);
+  }
+
+  return [];
 };
 
 /**
  * @param {RuleContext} context
- * @param {Node} node
+ * @param {Node} tree
  * @returns {void}
  */
-const checkRoute = (context, node) => {
-  if (isRouteBanned(node)) {
+const checkRoute = (context, tree) => {
+  for (const node of findBannedNodes(tree)) {
     context.report({
       node,
-      message: "You should use the `AppRoutes` enum for all routes.",
+      message:
+        "You should use the `AppRoutes` enum for all routes.\nThe enum is accessible via `@/common/constants`.",
     });
   }
 };
