@@ -41,11 +41,11 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
               {"\n"}
               {JSON.stringify(data)}
               {"\n"}
-              {error?.toString()}
+              {String(error)}
             </Text>
             {/* Escape hatch to let us test client without server in development */}
             <Link href={AppRoutes.Login} replace>
-              {/* eslint-disable-next-line react/jsx-no-literals */}
+              {/* eslint-disable-next-line react/jsx-no-literals -- this string is hidden in prod build */}
               <Button textColor="red">IGNORE</Button>
             </Link>
           </>

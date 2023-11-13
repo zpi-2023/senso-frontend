@@ -4,17 +4,28 @@
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended-type-checked"
   ],
   "rules": {
-    "@typescript-eslint/consistent-type-imports": "warn",
-    "@typescript-eslint/no-non-null-assertion": "off",
+    "no-void": ["error", { "allowAsStatement": true }],
     "react/jsx-no-literals": "warn",
+    "@typescript-eslint/consistent-type-imports": "warn",
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      { "checksVoidReturn": false }
+    ],
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unsafe-enum-comparison": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/unbound-method": "off",
     "senso-app-routes": "warn"
   },
   "settings": {
     "react": {
       "version": "detect"
     }
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
   }
 }

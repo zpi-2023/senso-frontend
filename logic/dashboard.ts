@@ -25,7 +25,7 @@ export const useDashboardGadgets = (): [
 
     const body = { gadgets: newGadgets };
 
-    updateDashboard({
+    void updateDashboard({
       params: { path: { seniorId: identity.profile.seniorId } },
       body,
     }).then(() => mutate(body));

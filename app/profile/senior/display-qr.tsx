@@ -36,7 +36,7 @@ const CreateSeniorProfile = () => {
 
   const handleReset = () => {
     setSecondsLeft(data?.validFor);
-    mutate();
+    void mutate();
   };
 
   return (

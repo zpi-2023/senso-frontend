@@ -60,7 +60,7 @@
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.10.0",
-    "eslint-config-universe": "^11.3.0",
+    "eslint-config-universe": "^12.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",

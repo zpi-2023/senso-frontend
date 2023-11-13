@@ -13,9 +13,9 @@ export const useLanguageStorage = (): [
   (language: Language) => void,
 ] => {
   const [value, setValue] = __DEV__
-    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks -- the call order is stable between renders
       useState<Language>(DEFAULT_LANGUAGE)
-    : // eslint-disable-next-line react-hooks/rules-of-hooks
+    : // eslint-disable-next-line react-hooks/rules-of-hooks -- the call order is stable between renders
       useMMKVObject<Language>("identity-data", languageStorage!);
   return [value ?? DEFAULT_LANGUAGE, setValue];
 };

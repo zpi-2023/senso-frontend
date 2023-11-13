@@ -9,7 +9,7 @@ import { useI18n } from "@/common/i18n";
 import { RedirectIfLoggedOut, useIdentity } from "@/common/identity";
 import { Header } from "@/components/Header";
 
-export default function App() {
+export default function Page() {
   const { t } = useI18n();
   const identity = useIdentity();
   const createCaretakerProfile = useMutation(
@@ -26,7 +26,7 @@ export default function App() {
       setHasPermission(status === "granted");
     };
 
-    getBarCodeScannerPermissions();
+    void getBarCodeScannerPermissions();
   }, []);
 
   if (!identity.isLoggedIn) {
@@ -34,8 +34,13 @@ export default function App() {
   }
 
   const handleBarCodeScanned = ({ data }: { data: string }) => {
+    const parsed = parseQrData(data);
+    if (!parsed) {
+      return;
+    }
+    const { seniorDisplayName, hash } = parsed;
     setScanned(true);
-    const { seniorDisplayName, hash } = JSON.parse(data);
+
     Alert.alert(
       t("scanQR.alertTitle"),
       t("scanQR.alertDescription", { name: seniorDisplayName }),
@@ -97,3 +102,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+const parseQrData = (data: string) => {
+  try {
+    const parsed = JSON.parse(data) as unknown;
+    if (
+      parsed &&
+      typeof parsed === "object" &&
+      "seniorDisplayName" in parsed &&
+      typeof parsed["seniorDisplayName"] === "string" &&
+      "hash" in parsed &&
+      typeof parsed["hash"] === "number"
+    ) {
+      const { seniorDisplayName, hash } = parsed;
+      return { seniorDisplayName, hash };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};

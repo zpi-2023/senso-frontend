@@ -1,6 +1,11 @@
 import { Link } from "expo-router";
 import { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import {
+  type ImageSourcePropType,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import {
   Avatar,
   Button,
@@ -93,7 +98,9 @@ const ProfilesList = () => {
                   <Avatar.Image
                     {...props}
                     size={64}
-                    source={require("../../assets/images/caretaker16.png")}
+                    source={
+                      require("../../assets/images/caretaker16.png") as ImageSourcePropType
+                    }
                   />
                 )}
               />
@@ -116,7 +123,9 @@ const ProfilesList = () => {
                 <Avatar.Image
                   {...props}
                   size={64}
-                  source={require("../../assets/images/oldman16.png")}
+                  source={
+                    require("../../assets/images/oldman16.png") as ImageSourcePropType
+                  }
                 />
               )}
             />

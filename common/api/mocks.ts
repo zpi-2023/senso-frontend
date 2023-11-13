@@ -28,7 +28,8 @@ export const mockServer = setupServer();
  */
 export const mockApi = <M extends CrudMethod>(
   method: M,
-  path: MethodPath<CrudMethod> | (string & Record<never, never>), // https://github.com/microsoft/TypeScript/issues/29729
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents -- https://github.com/microsoft/TypeScript/issues/29729
+  path: MethodPath<CrudMethod> | (string & Record<never, never>),
   body: EndpointBody<M>,
 ) => {
   if (!__DEV__) {

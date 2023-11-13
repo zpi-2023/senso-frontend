@@ -85,7 +85,7 @@ export const NoteForm = ({
               <Switch
                 value={values.isPrivate}
                 onValueChange={(v) => {
-                  setFieldValue("isPrivate", v);
+                  void setFieldValue("isPrivate", v);
                 }}
                 style={styles.switch}
               />

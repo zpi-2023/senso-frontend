@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 export const useFontLoader = () => {
   const [loaded, error] = useFonts({
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- we can't typecheck require() calls
     SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
