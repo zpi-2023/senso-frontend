@@ -10,15 +10,6 @@
     "gen-api": "npx openapi-typescript https://senso.org.pl/swagger/v1/swagger.json -o common/api/schema.d.ts",
     "prepare": "husky install"
   },
-  "jest": {
-    "preset": "jest-expo",
-    "moduleNameMapper": {
-      "@/(.*)": "<rootDir>/$1"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/common/internal/setup-tests.ts"
-    ]
-  },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/native": "^6.0.2",
