@@ -12,8 +12,8 @@ import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
-import { useNote, notePageTitle, useNoteIdParam } from "@/common/logic";
 import { CaretakerBanner, Header, LoadingScreen, View } from "@/components";
+import { useNote, notePageTitle, useNoteIdParam } from "@/logic/notes";
 
 const Page = () => {
   const { t } = useI18n();

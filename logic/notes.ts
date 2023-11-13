@@ -1,9 +1,9 @@
 import { useLocalSearchParams } from "expo-router";
 import { useCallback } from "react";
 
-import { useMutation, useQuery, useQueryInvalidation } from "../api";
-import type { Translator } from "../i18n";
-import { useIdentity } from "../identity";
+import { useMutation, useQuery, useQueryInvalidation } from "../common/api";
+import type { Translator } from "../common/i18n";
+import { useIdentity } from "../common/identity";
 
 const dayInMs = 1000 * 60 * 60 * 24;
 const extractedTitleLength = 20;

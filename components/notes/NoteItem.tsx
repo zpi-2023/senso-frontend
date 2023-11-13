@@ -16,7 +16,7 @@ import {
   type Note,
   summarizeNote,
   formatNoteCreationDate,
-} from "@/common/logic";
+} from "@/logic/notes";
 
 type NoteItemProps = {
   note: Note;

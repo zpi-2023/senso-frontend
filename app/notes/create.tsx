@@ -9,9 +9,9 @@ import {
   isCaretaker,
   useIdentity,
 } from "@/common/identity";
-import { type NoteEdit, useCreateNote } from "@/common/logic";
 import { Header, View } from "@/components";
 import { NoteForm } from "@/components/notes";
+import { type NoteEdit, useCreateNote } from "@/logic/notes";
 
 const Page = () => {
   const { t } = useI18n();

@@ -5,12 +5,12 @@ import { actions } from "@/common/actions";
 import { MAX_GADGETS, availableGadgets } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
-import { useDashboardGadgets } from "@/common/logic";
 import { Header, View, LoadingScreen, CaretakerBanner } from "@/components";
 import {
   DashboardEditSelected,
   DashboardEditAvailable,
 } from "@/components/dashboard";
+import { useDashboardGadgets } from "@/logic/dashboard";
 
 const Page = () => {
   const { t } = useI18n();

@@ -3,7 +3,6 @@ import { FlatList, StyleSheet } from "react-native";
 import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
-import { useDashboardGadgets } from "@/common/logic";
 import {
   LoadingScreen,
   Header,
@@ -12,6 +11,7 @@ import {
   CaretakerBanner,
 } from "@/components";
 import { DashboardGadget } from "@/components/dashboard";
+import { useDashboardGadgets } from "@/logic/dashboard";
 
 const Page = () => {
   const { t } = useI18n();

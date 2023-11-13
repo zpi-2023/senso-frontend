@@ -3,7 +3,7 @@ import {
   formatNoteCreationDate,
   summarizeNote,
   notePageTitle,
-} from "@/common/logic";
+} from "@/logic/notes";
 
 const mockDate = new Date("2022-04-12T13:18:30.000Z");
 

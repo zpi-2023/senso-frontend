@@ -13,7 +13,7 @@ import {
 import { View } from "../Themed";
 
 import { type Translator, useI18n } from "@/common/i18n";
-import type { NoteEdit } from "@/common/logic";
+import type { NoteEdit } from "@/logic/notes";
 
 type NoteFormValues = Required<{
   [P in keyof NoteEdit]: NonNullable<NoteEdit[P]>;

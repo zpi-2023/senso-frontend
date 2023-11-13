@@ -6,10 +6,10 @@ import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
-import { useNoteList } from "@/common/logic";
 import { useRefreshControl } from "@/common/util";
 import { CaretakerBanner, Header, LoadingScreen, View } from "@/components";
 import { NoteItem } from "@/components/notes";
+import { useNoteList } from "@/logic/notes";
 
 const Page = () => {
   const { t } = useI18n();

@@ -9,14 +9,14 @@ import {
   isCaretaker,
   useIdentity,
 } from "@/common/identity";
+import { Header, LoadingScreen, View } from "@/components";
+import { NoteForm } from "@/components/notes";
 import {
   type NoteEdit,
   notePageTitle,
   useNote,
   useNoteIdParam,
-} from "@/common/logic";
-import { Header, LoadingScreen, View } from "@/components";
-import { NoteForm } from "@/components/notes";
+} from "@/logic/notes";
 
 const Page = () => {
   const { t } = useI18n();
