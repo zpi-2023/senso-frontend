@@ -1,7 +1,5 @@
 /**
  * @typedef {import("eslint").Rule.RuleModule} RuleModule
- * @typedef {import("eslint").Rule.RuleContext} RuleContext
- * @typedef {import("eslint").Rule.Node} Node
  */
 
 /**
