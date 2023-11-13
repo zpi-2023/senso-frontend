@@ -2,15 +2,13 @@ import { useLocalSearchParams } from "expo-router";
 import { useCallback } from "react";
 
 import { useMutation, useQuery, useQueryInvalidation } from "../common/api";
-import type { Translator } from "../common/i18n";
 import { useIdentity } from "../common/identity";
 
-const dayInMs = 1000 * 60 * 60 * 24;
 const extractedTitleLength = 20;
 
-const SENIOR_NOTES_URL = "/api/v1/notes/senior/{seniorId}" as const;
-const NOTE_DETAILS_URL = "/api/v1/notes/{noteId}" as const;
-const CREATE_NOTE_URL = "/api/v1/notes" as const;
+const seniorNotesUrl = "/api/v1/notes/senior/{seniorId}" as const;
+const noteDetailsUrl = "/api/v1/notes/{noteId}" as const;
+const createNoteUrl = "/api/v1/notes" as const;
 
 export type Note = {
   id: number;
@@ -21,24 +19,6 @@ export type Note = {
 };
 
 export type NoteEdit = Pick<Note, "content" | "isPrivate" | "title">;
-
-export const formatNoteCreationDate = (
-  createdAt: string,
-  now: Date,
-  t: Translator,
-) => {
-  const date = new Date(createdAt);
-  const daysAgo = Math.trunc((now.getTime() - date.getTime()) / dayInMs);
-
-  switch (daysAgo) {
-    case 0:
-      return t("time.today");
-    case 1:
-      return t("time.yesterday");
-    default:
-      return date.toISOString().split("T")[0];
-  }
-};
 
 export const summarizeNote = (note: Note) => {
   const title = note.title;
@@ -83,7 +63,7 @@ export const useNoteList = (): {
   const { data, mutate } = useQuery(
     identity.hasProfile
       ? {
-          url: SENIOR_NOTES_URL,
+          url: seniorNotesUrl,
           params: { path: { seniorId: identity.profile.seniorId } },
         }
       : null,
@@ -99,18 +79,18 @@ export const useNote = (
   editNote: (body: NoteEdit) => Promise<void>;
   deleteNote: () => Promise<void>;
 } => {
-  const refreshNoteList = useQueryInvalidation(SENIOR_NOTES_URL);
+  const refreshNoteList = useQueryInvalidation(seniorNotesUrl);
   const { data, mutate } = useQuery(
     noteId
       ? {
-          url: NOTE_DETAILS_URL,
+          url: noteDetailsUrl,
           params: { path: { noteId } },
         }
       : null,
   );
 
-  const editMutation = useMutation("put", NOTE_DETAILS_URL);
-  const deleteMutation = useMutation("delete", NOTE_DETAILS_URL);
+  const editMutation = useMutation("put", noteDetailsUrl);
+  const deleteMutation = useMutation("delete", noteDetailsUrl);
 
   const note = data ?? null;
   const editNote = useCallback(
@@ -139,8 +119,8 @@ export const useNote = (
 };
 
 export const useCreateNote = (): ((body: NoteEdit) => Promise<Note | null>) => {
-  const createMutation = useMutation("post", CREATE_NOTE_URL);
-  const refreshNoteList = useQueryInvalidation(SENIOR_NOTES_URL);
+  const createMutation = useMutation("post", createNoteUrl);
+  const refreshNoteList = useQueryInvalidation(seniorNotesUrl);
   return async (body: NoteEdit) => {
     const { response, data } = await createMutation({ body });
     if (response.ok) {

@@ -8,7 +8,7 @@ import { actions } from "@/common/actions";
 import { useQuery } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
-import { toMinutesAndSeconds } from "@/common/util/helpers";
+import { toMinutesAndSeconds } from "@/common/time";
 import { Header } from "@/components/Header";
 import { LoadingScreen } from "@/components/LoadingScreen";
 
