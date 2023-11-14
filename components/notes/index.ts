@@ -1,2 +1,2 @@
-export * from "./NoteForm";
-export * from "./NoteItem";
+export { NoteForm } from "./NoteForm";
+export { NoteItem } from "./NoteItem";

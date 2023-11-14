@@ -14,6 +14,7 @@ module.exports = {
       context.cwd,
       path.dirname(context.physicalFilename),
     );
+
     return {
       ImportDeclaration({ source }) {
         if (source.value.startsWith("..")) {

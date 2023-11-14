@@ -1,1 +1,1 @@
-export * from "./SosFab";
+export { SosFab } from "./SosFab";

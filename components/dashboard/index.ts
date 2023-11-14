@@ -1,3 +1,3 @@
-export * from "./DashboardEditAvailable";
-export * from "./DashboardEditSelected";
-export * from "./DashboardGadget";
+export { DashboardEditAvailable } from "./DashboardEditAvailable";
+export { DashboardEditSelected } from "./DashboardEditSelected";
+export { DashboardGadget } from "./DashboardGadget";
