@@ -14,7 +14,7 @@ module.exports = {
           context.report({
             node,
             message:
-              "Illegal use of `Stack.Screen`.\nUse `Header` from `@/components` instead.",
+              "Illegal use of `Stack.Screen`, use `Header` from `@/components` instead.",
           });
         }
       },

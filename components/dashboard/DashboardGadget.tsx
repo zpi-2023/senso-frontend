@@ -1,10 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { Card, Text, TouchableRipple } from "react-native-paper";
 
-import { Icon } from "../Icon";
-
 import { type Action, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
+import { Icon } from "@/components";
 
 type DashboardGadgetProps = {
   action: Action;

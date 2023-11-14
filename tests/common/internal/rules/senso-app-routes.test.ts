@@ -5,7 +5,7 @@ import sensoAppRoutes from "@/common/internal/rules/senso-app-routes";
 const errors = [
   {
     message:
-      "You should use the `AppRoutes` enum for all routes.\nThe enum is accessible via `@/common/constants`.",
+      "You should use the `AppRoutes` enum for all routes. The enum is accessible via `@/common/constants`.",
   },
 ];
 

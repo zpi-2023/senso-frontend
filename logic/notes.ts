@@ -1,8 +1,8 @@
 import { useLocalSearchParams } from "expo-router";
 import { useCallback } from "react";
 
-import { useMutation, useQuery, useQueryInvalidation } from "../common/api";
-import { useIdentity } from "../common/identity";
+import { useMutation, useQuery, useQueryInvalidation } from "@/common/api";
+import { useIdentity } from "@/common/identity";
 
 const extractedTitleLength = 20;
 

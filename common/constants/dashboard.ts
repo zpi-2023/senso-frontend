@@ -1,4 +1,4 @@
-import type { ActionKey } from "../actions";
+import type { ActionKey } from "@/common/actions";
 
 export const maxGadgets = 6;
 

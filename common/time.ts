@@ -1,4 +1,4 @@
-import type { Translator } from "../common/i18n";
+import type { Translator } from "@/common/i18n";
 
 const dayInMs = 1000 * 60 * 60 * 24;
 

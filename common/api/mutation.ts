@@ -6,7 +6,8 @@ import {
   PATCH,
   DELETE,
 } from "./client";
-import { useIdentity } from "../identity";
+
+import { useIdentity } from "@/common/identity";
 
 /**
  * Wrapper which should be used for all POST, PUT, PATCH and DELETE requests within components.

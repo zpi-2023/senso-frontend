@@ -1,6 +1,6 @@
-import type { ActionKey } from "../common/actions";
-import { useQuery, useMutation } from "../common/api";
-import { useIdentity } from "../common/identity";
+import type { ActionKey } from "@/common/actions";
+import { useQuery, useMutation } from "@/common/api";
+import { useIdentity } from "@/common/identity";
 
 export const useDashboardGadgets = (): [
   ActionKey[] | null,

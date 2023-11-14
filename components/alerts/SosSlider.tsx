@@ -8,10 +8,9 @@ import {
 } from "react-native";
 import { Text } from "react-native-paper";
 
-import { Icon } from "../Icon";
-
 import { useI18n } from "@/common/i18n";
 import { useTheme, type SensoTheme } from "@/common/theme";
+import { Icon } from "@/components";
 
 const sliderWidth = Dimensions.get("window").width - 100;
 const circleRadius = 35;
