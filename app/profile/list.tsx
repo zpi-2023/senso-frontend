@@ -16,8 +16,7 @@ import {
   type SeniorProfile,
 } from "@/common/identity";
 import { sty } from "@/common/styles";
-import { Header } from "@/components";
-import { LoadingScreen } from "@/components/LoadingScreen";
+import { Header, LoadingScreen } from "@/components";
 
 const ProfilesList = () => {
   const { t } = useI18n();

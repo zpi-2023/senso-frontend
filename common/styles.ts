@@ -1,3 +1,5 @@
+/* eslint-disable senso-style-wrapper -- used internally */
+
 import { StyleSheet } from "react-native";
 
 import { useTheme, type SensoTheme } from "./theme";

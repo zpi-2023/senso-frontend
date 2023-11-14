@@ -11,7 +11,7 @@ import {
 
 import { type Translator, useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components";
 import type { NoteEdit } from "@/logic/notes";
 
 type NoteFormValues = Required<{
