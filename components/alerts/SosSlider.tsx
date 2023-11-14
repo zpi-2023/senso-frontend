@@ -6,7 +6,9 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import { IconButton, type MD3Theme, Text, useTheme } from "react-native-paper";
+import { type MD3Theme, Text, useTheme } from "react-native-paper";
+
+import { Icon } from "../Icon";
 
 import { useI18n } from "@/common/i18n";
 
@@ -72,7 +74,7 @@ export const SosSlider = () => {
             ]}
             {...panResponder.panHandlers}
           >
-            <IconButton icon="arrow-right" size={circleRadius} />
+            <Icon icon="arrow-right" size={circleRadius} />
           </Animated.View>
         )}
       </View>

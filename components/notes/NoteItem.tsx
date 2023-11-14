@@ -1,12 +1,13 @@
 import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import {
-  IconButton,
   type MD3Theme,
   Text,
   TouchableRipple,
   useTheme,
 } from "react-native-paper";
+
+import { Icon } from "../Icon";
 
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
@@ -41,8 +42,7 @@ export const NoteItem = ({ note }: NoteItemProps) => {
             {title}
           </Text>
           {note.isPrivate ? (
-            <IconButton
-              style={styles.headerIcon}
+            <Icon
               icon="shield-lock"
               iconColor={theme.colors.primary}
               size={28}
@@ -82,10 +82,6 @@ const makeStyles = (theme: MD3Theme) =>
     headerText: {
       fontSize: 22,
       fontWeight: "bold",
-    },
-    headerIcon: {
-      margin: 0,
-      padding: 0,
     },
     summary: {
       fontSize: 18,

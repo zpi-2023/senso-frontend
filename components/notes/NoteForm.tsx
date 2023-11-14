@@ -11,9 +11,10 @@ import {
   Switch,
   TextInput,
   Text,
-  IconButton,
   HelperText,
 } from "react-native-paper";
+
+import { Icon } from "../Icon";
 
 import { type Translator, useI18n } from "@/common/i18n";
 import type { NoteEdit } from "@/logic/notes";
@@ -83,7 +84,7 @@ export const NoteForm = ({
               <HelperText type="error">{errors.content}</HelperText>
             ) : null}
             <View style={styles.switchWrapper}>
-              <IconButton icon="shield-lock" style={styles.privateIcon} />
+              <Icon icon="shield-lock" />
               <Text>{t("noteForm.isPrivate")}</Text>
               <Switch
                 value={values.isPrivate}
@@ -124,9 +125,6 @@ const styles = StyleSheet.create({
   },
   switch: {
     marginLeft: "auto",
-  },
-  privateIcon: {
-    margin: 0,
   },
   submit: {
     marginTop: "auto",

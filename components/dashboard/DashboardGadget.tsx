@@ -1,5 +1,7 @@
 import { StyleSheet, View } from "react-native";
-import { Card, IconButton, Text, TouchableRipple } from "react-native-paper";
+import { Card, Text, TouchableRipple } from "react-native-paper";
+
+import { Icon } from "../Icon";
 
 import { type Action, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
@@ -29,7 +31,7 @@ export const DashboardGadget = ({ action, inactive }: DashboardGadgetProps) => {
             disabled={disabled}
           >
             <View style={styles.inner}>
-              <IconButton icon={action.icon} size={64} />
+              <Icon icon={action.icon} size={64} />
               <Text>{action.displayName(t)}</Text>
             </View>
           </TouchableRipple>

@@ -1,18 +1,12 @@
 import { Redirect, useRouter } from "expo-router";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
-import {
-  useTheme,
-  type MD3Theme,
-  Button,
-  Text,
-  IconButton,
-} from "react-native-paper";
+import { useTheme, type MD3Theme, Button, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
-import { CaretakerBanner, Header, LoadingScreen } from "@/components";
+import { CaretakerBanner, Header, Icon, LoadingScreen } from "@/components";
 import { useNote, notePageTitle, useNoteIdParam } from "@/logic/notes";
 
 const Page = () => {
@@ -47,8 +41,7 @@ const Page = () => {
       {isSenior(identity.profile) ? (
         <View style={styles.bar}>
           {note.isPrivate ? (
-            <IconButton
-              style={styles.privateIcon}
+            <Icon
               icon="shield-lock"
               iconColor={theme.colors.primary}
               size={24}
@@ -110,10 +103,6 @@ const makeStyles = (theme: MD3Theme) =>
       flexDirection: "row",
       justifyContent: "space-evenly",
       alignContent: "center",
-    },
-    privateIcon: {
-      margin: 0,
-      padding: 0,
     },
   });
 
