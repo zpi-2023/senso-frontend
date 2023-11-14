@@ -12,7 +12,6 @@ import {
 import { SosSlider } from "./SosSlider";
 
 import { actions, useActionContext } from "@/common/actions";
-import { colors } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 
 const action = actions.activateSos;
@@ -45,7 +44,7 @@ export const SosFab = () => {
           onDismiss={handleClose}
           contentContainerStyle={styles.contentContainerStyle}
         >
-          <Text variant="headlineLarge" style={{ textAlign: "center" }}>
+          <Text variant="headlineSmall" style={{ textAlign: "center" }}>
             {t("sosSlider.description")}
           </Text>
           <SosSlider />
@@ -68,6 +67,6 @@ const makeStyles = (theme: MD3Theme) =>
       position: "absolute",
       bottom: 32,
       right: 32,
-      backgroundColor: colors.error,
+      backgroundColor: theme.colors.error,
     },
   });

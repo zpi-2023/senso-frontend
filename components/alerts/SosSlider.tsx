@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { IconButton, type MD3Theme, Text, useTheme } from "react-native-paper";
 
-import { colors } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 
 const sliderWidth = Dimensions.get("window").width - 100;
@@ -100,7 +99,7 @@ const makeStyles = (theme: MD3Theme) =>
       top: 0,
       width: circleRadius * 2,
       height: circleRadius * 2,
-      backgroundColor: colors.error,
+      backgroundColor: theme.colors.error,
       borderRadius: circleRadius,
       justifyContent: "center",
       alignItems: "center",

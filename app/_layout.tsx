@@ -1,5 +1,4 @@
 import { SplashScreen, Stack } from "expo-router";
-import { PaperProvider } from "react-native-paper";
 
 import { I18nProvider } from "@/common/i18n";
 import { IdentityProvider } from "@/common/identity";
@@ -21,16 +20,10 @@ export default function RootLayout() {
   }
 
   return (
-    <ProviderList
-      providers={[
-        I18nProvider,
-        IdentityProvider,
-        PaperProvider,
-        ThemeProvider,
-        MaskingView,
-      ]}
-    >
-      <Stack />
+    <ProviderList providers={[I18nProvider, IdentityProvider, ThemeProvider]}>
+      <MaskingView>
+        <Stack />
+      </MaskingView>
     </ProviderList>
   );
 }
