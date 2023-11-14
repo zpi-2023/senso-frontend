@@ -1,11 +1,6 @@
 import { Link } from "expo-router";
 import { useState } from "react";
-import {
-  type ImageSourcePropType,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { type ImageSourcePropType, ScrollView, View } from "react-native";
 import { Avatar, Button, List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
@@ -20,14 +15,13 @@ import {
   RedirectIfLoggedOut,
   type SeniorProfile,
 } from "@/common/identity";
-import { useTheme, type SensoTheme } from "@/common/theme";
-import { Header } from "@/components/Header";
+import { sty } from "@/common/styles";
+import { Header } from "@/components";
 import { LoadingScreen } from "@/components/LoadingScreen";
 
 const ProfilesList = () => {
   const { t } = useI18n();
-  const theme = useTheme();
-  const styles = makeStyles(theme);
+  const styles = useStyles();
   const identity = useIdentity();
   const { data } = useQuery({
     url: "/api/v1/account/profiles",
@@ -157,44 +151,43 @@ const ProfilesList = () => {
   );
 };
 
-const makeStyles = (theme: SensoTheme) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "space-evenly",
-    },
-    scrollView: {
-      maxHeight: 380,
-    },
-    listSubheader: {
-      textTransform: "uppercase",
-      fontWeight: "bold",
-      textAlign: "center",
-      fontSize: 20,
-      lineHeight: 28,
-    },
-    listItem: {
-      borderColor: theme.colors.primary,
-      borderWidth: 2,
-      borderRadius: 16,
-      paddingVertical: 16,
-      paddingHorizontal: 16,
-      marginVertical: 8,
-      marginHorizontal: 16,
-    },
-    listItemTitle: {
-      fontSize: 28,
-      lineHeight: 36,
-      marginRight: 32,
-    },
-    listItemDescription: {
-      fontSize: 20,
-      lineHeight: 28,
-    },
-    newProfileButtonWrapper: {
-      alignItems: "center",
-      gap: 16,
-    },
-  });
+const useStyles = sty.themedHook(({ colors }) => ({
+  container: {
+    flex: 1,
+    justifyContent: "space-evenly",
+  },
+  scrollView: {
+    maxHeight: 380,
+  },
+  listSubheader: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 20,
+    lineHeight: 28,
+  },
+  listItem: {
+    borderColor: colors.primary,
+    borderWidth: 2,
+    borderRadius: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  listItemTitle: {
+    fontSize: 28,
+    lineHeight: 36,
+    marginRight: 32,
+  },
+  listItemDescription: {
+    fontSize: 20,
+    lineHeight: 28,
+  },
+  newProfileButtonWrapper: {
+    alignItems: "center",
+    gap: 16,
+  },
+}));
 
 export default ProfilesList;

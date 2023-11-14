@@ -1,9 +1,10 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
+import { sty } from "@/common/styles";
 import { CaretakerBanner, Header } from "@/components";
 import { SosFab } from "@/components/alerts";
 import { MenuItem } from "@/components/menu";
@@ -17,7 +18,7 @@ const Page = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={sty.full}>
       <Header left={actions.goBack} title={t("menu.pageTitle")} />
       <CaretakerBanner />
       <ScrollView>
@@ -44,7 +45,5 @@ const Page = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({ container: { flex: 1 } });
 
 export default Page;

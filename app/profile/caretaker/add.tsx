@@ -1,11 +1,12 @@
 import { Link } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
-import { Header } from "@/components/Header";
+import { sty } from "@/common/styles";
+import { Header } from "@/components";
 
 const AddCaretakerProfile = () => {
   const { t } = useI18n();
@@ -28,7 +29,7 @@ const AddCaretakerProfile = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   container: {
     flex: 1,
     alignItems: "center",

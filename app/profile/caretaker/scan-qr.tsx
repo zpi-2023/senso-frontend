@@ -1,13 +1,14 @@
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { router } from "expo-router";
 import { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Alert } from "react-native";
+import { Text, View, Alert } from "react-native";
 
 import { actions } from "@/common/actions";
 import { useMutation } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfLoggedOut, useIdentity } from "@/common/identity";
-import { Header } from "@/components/Header";
+import { sty } from "@/common/styles";
+import { Header } from "@/components";
 
 export default function Page() {
   const { t } = useI18n();
@@ -89,13 +90,13 @@ export default function Page() {
       />
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
+        style={sty.absoluteFill}
       />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   container: {
     flex: 1,
     flexDirection: "column",

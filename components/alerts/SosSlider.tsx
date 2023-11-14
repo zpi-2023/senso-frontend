@@ -1,15 +1,9 @@
 import { useState } from "react";
-import {
-  View,
-  PanResponder,
-  Animated,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { View, PanResponder, Animated, Dimensions } from "react-native";
 import { Text } from "react-native-paper";
 
 import { useI18n } from "@/common/i18n";
-import { useTheme, type SensoTheme } from "@/common/theme";
+import { sty } from "@/common/styles";
 import { Icon } from "@/components";
 
 const sliderWidth = Dimensions.get("window").width - 100;
@@ -17,8 +11,7 @@ const circleRadius = 35;
 
 export const SosSlider = () => {
   const { t } = useI18n();
-  const theme = useTheme();
-  const styles = makeStyles(theme);
+  const styles = useStyles();
   const [slideAnim] = useState(new Animated.Value(0));
   const [calledForHelp, setCalledForHelp] = useState(false);
 
@@ -56,10 +49,10 @@ export const SosSlider = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={sty.center}>
       <View style={styles.sliderBackground}>
         {calledForHelp ? (
-          <View style={styles.sosContainer}>
+          <View style={sty.center}>
             <Text variant="titleLarge" style={styles.sosText}>
               {t("sosSlider.slider")}
             </Text>
@@ -82,36 +75,25 @@ export const SosSlider = () => {
   );
 };
 
-const makeStyles = (theme: SensoTheme) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    sliderBackground: {
-      width: sliderWidth,
-      height: 70,
-      backgroundColor: theme.colors.onBackground,
-      borderRadius: circleRadius,
-      overflow: "hidden",
-    },
-    circle: {
-      position: "absolute",
-      top: 0,
-      width: circleRadius * 2,
-      height: circleRadius * 2,
-      backgroundColor: theme.colors.alert,
-      borderRadius: circleRadius,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    sosContainer: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    sosText: {
-      color: "black",
-    },
-  });
+const useStyles = sty.themedHook(({ colors }) => ({
+  sliderBackground: {
+    width: sliderWidth,
+    height: 70,
+    backgroundColor: colors.onBackground,
+    borderRadius: circleRadius,
+    overflow: "hidden",
+  },
+  circle: {
+    position: "absolute",
+    top: 0,
+    width: circleRadius * 2,
+    height: circleRadius * 2,
+    backgroundColor: colors.alert,
+    borderRadius: circleRadius,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  sosText: {
+    color: "black",
+  },
+}));

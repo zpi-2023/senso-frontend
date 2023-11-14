@@ -1,26 +1,18 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 
 import { useI18n } from "@/common/i18n";
-import { Header } from "@/components/Header";
+import { sty } from "@/common/styles";
+import { Header } from "@/components";
 import { Landing } from "@/components/home";
 
 const Page = () => {
   const { t } = useI18n();
   return (
-    <View style={styles.container}>
+    <View style={[sty.center, { gap: 32 }]}>
       <Header title={t("landing.pageTitle")} />
       <Landing debug={__DEV__} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 32,
-  },
-});
 
 export default Page;

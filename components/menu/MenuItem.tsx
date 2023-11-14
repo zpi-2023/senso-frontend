@@ -1,8 +1,9 @@
-import { List, useTheme } from "react-native-paper";
+import { List } from "react-native-paper";
 
 import { type Action, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { isCaretaker } from "@/common/identity";
+import { useTheme } from "@/common/theme";
 
 type MenuItemProps = {
   action: Action;

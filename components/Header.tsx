@@ -1,8 +1,9 @@
 import { Stack } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { Appbar } from "react-native-paper";
 
 import { type Action, useActionContext } from "@/common/actions";
+import { sty } from "@/common/styles";
 
 type ActionButtonProps = {
   action: Action;
@@ -43,7 +44,7 @@ export const Header = ({ left, title, right }: HeaderProps) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   placeholder: {
     opacity: 0,
     padding: 8,

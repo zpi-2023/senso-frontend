@@ -1,23 +1,17 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
 import { Header } from "./Header";
+
+import { sty } from "@/common/styles";
 
 type LoadingScreenProps = {
   title: string;
 };
 
 export const LoadingScreen = ({ title }: LoadingScreenProps) => (
-  <View style={styles.container}>
+  <View style={sty.center}>
     <Header title={title} />
     <ActivityIndicator size="large" />
   </View>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    display: "flex",
-    justifyContent: "center",
-  },
-});

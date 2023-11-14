@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
 import { IconButton, List, useTheme } from "react-native-paper";
 
 import { type ActionKey, actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
+import { sty } from "@/common/styles";
 
 type DashboardEditSelectedProps = {
   gadget: ActionKey;
@@ -40,7 +40,7 @@ export const DashboardEditSelected = ({
           <IconButton
             icon="chevron-up"
             size={16}
-            style={[styles.button, isFirst ? styles.disabled : null]}
+            style={[styles.button, isFirst ? sty.invisible : null]}
             disabled={isFirst}
             onPress={onMoveUp}
           />
@@ -54,7 +54,7 @@ export const DashboardEditSelected = ({
           <IconButton
             icon="chevron-down"
             size={16}
-            style={[styles.button, isLast ? styles.disabled : null]}
+            style={[styles.button, isLast ? sty.invisible : null]}
             disabled={isLast}
             onPress={onMoveDown}
           />
@@ -64,12 +64,9 @@ export const DashboardEditSelected = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   button: {
     marginVertical: 0,
     transform: [{ scale: 1.5 }],
-  },
-  disabled: {
-    opacity: 0,
   },
 });

@@ -1,10 +1,11 @@
 import { router } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { Text, TouchableRipple } from "react-native-paper";
 
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
-import { type SensoTheme, useTheme } from "@/common/theme";
+import { sty } from "@/common/styles";
+import { useTheme } from "@/common/theme";
 import { formatDateOffset } from "@/common/time";
 import { Icon } from "@/components";
 import { type Note, summarizeNote } from "@/logic/notes";
@@ -16,8 +17,7 @@ type NoteItemProps = {
 export const NoteItem = ({ note }: NoteItemProps) => {
   const { t } = useI18n();
   const theme = useTheme();
-
-  const styles = makeStyles(theme);
+  const styles = useStyles();
 
   const { title, summary } = summarizeNote(note);
   const createdAt = formatDateOffset(new Date(note.createdAt), new Date(), t);
@@ -55,35 +55,34 @@ export const NoteItem = ({ note }: NoteItemProps) => {
   );
 };
 
-const makeStyles = (theme: SensoTheme) =>
-  StyleSheet.create({
-    container: {
-      backgroundColor: "transparent",
-      padding: 24,
-      borderTopWidth: 1,
-      borderBottomWidth: 1,
-      borderTopColor: theme.colors.surface,
-      borderBottomColor: theme.colors.surface,
-      marginTop: -1,
-    },
-    header: {
-      backgroundColor: "transparent",
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      height: 32,
-    },
-    headerText: {
-      fontSize: 22,
-      fontWeight: "bold",
-    },
-    summary: {
-      fontSize: 18,
-      paddingVertical: 8,
-    },
-    createdAt: {
-      fontSize: 18,
-      color: theme.colors.onSurfaceDisabled,
-    },
-  });
+const useStyles = sty.themedHook(({ colors }) => ({
+  container: {
+    backgroundColor: "transparent",
+    padding: 24,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopColor: colors.surface,
+    borderBottomColor: colors.surface,
+    marginTop: -1,
+  },
+  header: {
+    backgroundColor: "transparent",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 32,
+  },
+  headerText: {
+    fontSize: 22,
+    fontWeight: "bold",
+  },
+  summary: {
+    fontSize: 18,
+    paddingVertical: 8,
+  },
+  createdAt: {
+    fontSize: 18,
+    color: colors.onSurfaceDisabled,
+  },
+}));

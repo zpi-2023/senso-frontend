@@ -1,11 +1,6 @@
 import { Formik, type FormikErrors } from "formik";
 import { useState } from "react";
-import {
-  Keyboard,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
 import {
   Button,
   Switch,
@@ -15,6 +10,7 @@ import {
 } from "react-native-paper";
 
 import { type Translator, useI18n } from "@/common/i18n";
+import { sty } from "@/common/styles";
 import { Icon } from "@/components/Icon";
 import type { NoteEdit } from "@/logic/notes";
 
@@ -109,7 +105,7 @@ export const NoteForm = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   container: {
     flex: 1,
     padding: 32,

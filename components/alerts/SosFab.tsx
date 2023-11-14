@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { StyleSheet } from "react-native";
 import { FAB, Modal, Portal, Text } from "react-native-paper";
 
 import { SosSlider } from "./SosSlider";
 
 import { actions, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
-import { useTheme, type SensoTheme } from "@/common/theme";
+import { sty } from "@/common/styles";
 
 const action = actions.activateSos;
 
 export const SosFab = () => {
   const { t } = useI18n();
-  const theme = useTheme();
-  const styles = makeStyles(theme);
+  const styles = useStyles();
   const [visible, setVisible] = useState(false);
   const ctx = useActionContext();
 
@@ -48,19 +46,18 @@ export const SosFab = () => {
   );
 };
 
-const makeStyles = (theme: SensoTheme) =>
-  StyleSheet.create({
-    contentContainerStyle: {
-      padding: 30,
-      margin: 20,
-      borderRadius: 10,
-      height: 200,
-      backgroundColor: theme.colors.background,
-    },
-    fab: {
-      position: "absolute",
-      bottom: 32,
-      right: 32,
-      backgroundColor: theme.colors.alert,
-    },
-  });
+const useStyles = sty.themedHook(({ colors }) => ({
+  contentContainerStyle: {
+    padding: 30,
+    margin: 20,
+    borderRadius: 10,
+    height: 200,
+    backgroundColor: colors.background,
+  },
+  fab: {
+    position: "absolute",
+    bottom: 32,
+    right: 32,
+    backgroundColor: colors.alert,
+  },
+}));

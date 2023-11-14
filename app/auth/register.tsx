@@ -5,7 +5,6 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -21,7 +20,8 @@ import { useMutation } from "@/common/api";
 import { AppRoutes, minDisplayNameLength } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
-import { Header } from "@/components/Header";
+import { sty } from "@/common/styles";
+import { Header } from "@/components";
 
 interface IRegisterForm {
   displayName: string;
@@ -123,7 +123,7 @@ const Page = () => {
           style={{ flex: 1 }}
         >
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={styles.container}>
+            <View style={sty.center}>
               <Header title={t("register.pageTitle")} />
               <Text variant="titleLarge" style={styles.title}>
                 {t("register.description")}
@@ -233,12 +233,7 @@ const Page = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+const styles = sty.create({
   input: {
     width: "80%",
     marginHorizontal: 132,

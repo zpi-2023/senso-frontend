@@ -1,11 +1,11 @@
 import { Link } from "expo-router";
-import { StyleSheet } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 
 import { baseUrl, useQuery } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
+import { sty } from "@/common/styles";
 
 const healthzPath = "/api/v1/healthz";
 
@@ -71,7 +71,7 @@ export const Landing = ({ debug = false }: { debug?: boolean }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   description: {
     textAlign: "center",
     fontSize: 20,

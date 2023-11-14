@@ -1,12 +1,13 @@
 import { Redirect, useRouter } from "expo-router";
-import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
-import { type SensoTheme, useTheme } from "@/common/theme";
+import { sty } from "@/common/styles";
+import { useTheme } from "@/common/theme";
 import { CaretakerBanner, Header, Icon, LoadingScreen } from "@/components";
 import { useNote, notePageTitle, useNoteIdParam } from "@/logic/notes";
 
@@ -17,6 +18,7 @@ const Page = () => {
   const router = useRouter();
   const noteId = useNoteIdParam();
   const { note, deleteNote } = useNote(noteId);
+  const styles = useStyles();
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
@@ -30,10 +32,8 @@ const Page = () => {
     return <LoadingScreen title={t("noteDetails.unnamedNote")} />;
   }
 
-  const styles = makeStyles(theme);
-
   return (
-    <View style={styles.container}>
+    <View style={sty.full}>
       <Header left={actions.goBack} title={notePageTitle(note)} />
       <CaretakerBanner />
       <ScrollView>
@@ -85,26 +85,22 @@ const Page = () => {
   );
 };
 
-const makeStyles = (theme: SensoTheme) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    content: {
-      padding: 24,
-      fontSize: 20,
-      textAlign: "justify",
-    },
-    bar: {
-      padding: 16,
-      backgroundColor: theme.colors.surface,
-      borderTopLeftRadius: 16,
-      borderTopRightRadius: 16,
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      alignContent: "center",
-    },
-  });
+const useStyles = sty.themedHook(({ colors }) => ({
+  content: {
+    padding: 24,
+    fontSize: 20,
+    textAlign: "justify",
+  },
+  bar: {
+    padding: 16,
+    backgroundColor: colors.surface,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignContent: "center",
+  },
+}));
 
 export default Page;
