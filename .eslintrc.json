@@ -29,6 +29,7 @@
     "@typescript-eslint/unbound-method": "off",
     "senso-app-routes": "warn",
     "senso-export-policy": "warn",
+    "senso-import-sources": "error",
     "senso-parent-import": "warn",
     "senso-stack-screen": "warn",
     "senso-style-wrapper": "warn",

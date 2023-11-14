@@ -1,7 +1,8 @@
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { router } from "expo-router";
 import { useState, useEffect } from "react";
-import { Text, View, Alert } from "react-native";
+import { View, Alert } from "react-native";
+import { Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useMutation } from "@/common/api";

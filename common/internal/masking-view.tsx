@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from "react";
 import { View } from "react-native";
-import { useTheme } from "react-native-paper";
+
+import { useTheme } from "@/common/theme";
 
 export const MaskingView = ({ children }: PropsWithChildren) => {
   const theme = useTheme();

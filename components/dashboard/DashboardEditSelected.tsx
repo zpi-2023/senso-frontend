@@ -1,8 +1,9 @@
-import { IconButton, List, useTheme } from "react-native-paper";
+import { IconButton, List } from "react-native-paper";
 
 import { type ActionKey, actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
+import { useTheme } from "@/common/theme";
 
 type DashboardEditSelectedProps = {
   gadget: ActionKey;

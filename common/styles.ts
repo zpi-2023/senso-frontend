@@ -2,7 +2,7 @@
 
 import { StyleSheet } from "react-native";
 
-import { useTheme, type SensoTheme } from "./theme";
+import { useTheme, type SensoTheme } from "@/common/theme";
 
 const common = StyleSheet.create({
   full: { flex: 1 },

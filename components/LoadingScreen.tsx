@@ -1,9 +1,8 @@
 import { View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
-import { Header } from "./Header";
-
 import { sty } from "@/common/styles";
+import { Header } from "@/components";
 
 type LoadingScreenProps = {
   title: string;

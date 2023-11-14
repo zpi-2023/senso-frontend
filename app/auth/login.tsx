@@ -2,19 +2,14 @@ import { Link } from "expo-router";
 import { Formik } from "formik";
 import { useState } from "react";
 import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
-import {
-  Button,
-  HelperText,
-  Text,
-  TextInput,
-  useTheme,
-} from "react-native-paper";
+import { Button, HelperText, Text, TextInput } from "react-native-paper";
 
 import { useMutation } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 import { sty } from "@/common/styles";
+import { useTheme } from "@/common/theme";
 import { Header } from "@/components";
 
 const Page = () => {
