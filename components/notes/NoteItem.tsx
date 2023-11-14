@@ -1,16 +1,12 @@
 import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
-import {
-  type MD3Theme,
-  Text,
-  TouchableRipple,
-  useTheme,
-} from "react-native-paper";
+import { Text, TouchableRipple } from "react-native-paper";
 
 import { Icon } from "../Icon";
 
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
+import { type SensoTheme, useTheme } from "@/common/theme";
 import { formatDateOffset } from "@/common/time";
 import { type Note, summarizeNote } from "@/logic/notes";
 
@@ -60,7 +56,7 @@ export const NoteItem = ({ note }: NoteItemProps) => {
   );
 };
 
-const makeStyles = (theme: MD3Theme) =>
+const makeStyles = (theme: SensoTheme) =>
   StyleSheet.create({
     container: {
       backgroundColor: "transparent",

@@ -6,13 +6,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import {
-  Avatar,
-  Button,
-  List,
-  type MD3Theme,
-  useTheme,
-} from "react-native-paper";
+import { Avatar, Button, List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useQuery, useMutation } from "@/common/api";
@@ -26,6 +20,7 @@ import {
   RedirectIfLoggedOut,
   type SeniorProfile,
 } from "@/common/identity";
+import { useTheme, type SensoTheme } from "@/common/theme";
 import { Header } from "@/components/Header";
 import { LoadingScreen } from "@/components/LoadingScreen";
 
@@ -162,7 +157,7 @@ const ProfilesList = () => {
   );
 };
 
-const makeStyles = (theme: MD3Theme) =>
+const makeStyles = (theme: SensoTheme) =>
   StyleSheet.create({
     container: {
       flex: 1,

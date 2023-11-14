@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
-import { Banner, type MD3Theme, Text, useTheme } from "react-native-paper";
+import { Banner, Text } from "react-native-paper";
 
 import { useI18n } from "@/common/i18n";
 import { isCaretaker, useIdentity } from "@/common/identity";
+import { useTheme, type SensoTheme } from "@/common/theme";
 
 export const CaretakerBanner = () => {
   const { t } = useI18n();
@@ -20,7 +21,7 @@ export const CaretakerBanner = () => {
   ) : null;
 };
 
-const makeStyles = (theme: MD3Theme) =>
+const makeStyles = (theme: SensoTheme) =>
   StyleSheet.create({
     banner: {
       backgroundColor: theme.colors.primary,

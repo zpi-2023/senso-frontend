@@ -1,18 +1,12 @@
 import { useState } from "react";
 import { StyleSheet } from "react-native";
-import {
-  FAB,
-  type MD3Theme,
-  Modal,
-  Portal,
-  Text,
-  useTheme,
-} from "react-native-paper";
+import { FAB, Modal, Portal, Text } from "react-native-paper";
 
 import { SosSlider } from "./SosSlider";
 
 import { actions, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
+import { useTheme, type SensoTheme } from "@/common/theme";
 
 const action = actions.activateSos;
 
@@ -54,7 +48,7 @@ export const SosFab = () => {
   );
 };
 
-const makeStyles = (theme: MD3Theme) =>
+const makeStyles = (theme: SensoTheme) =>
   StyleSheet.create({
     contentContainerStyle: {
       padding: 30,
@@ -67,6 +61,6 @@ const makeStyles = (theme: MD3Theme) =>
       position: "absolute",
       bottom: 32,
       right: 32,
-      backgroundColor: theme.colors.error,
+      backgroundColor: theme.colors.alert,
     },
   });

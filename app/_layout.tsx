@@ -2,12 +2,8 @@ import { SplashScreen, Stack } from "expo-router";
 
 import { I18nProvider } from "@/common/i18n";
 import { IdentityProvider } from "@/common/identity";
-import {
-  ProviderList,
-  useFontLoader,
-  ThemeProvider,
-  MaskingView,
-} from "@/common/internal";
+import { ProviderList, useFontLoader, MaskingView } from "@/common/internal";
+import { ThemeProvider } from "@/common/theme";
 
 export { ErrorBoundary } from "expo-router";
 

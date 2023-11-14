@@ -1,11 +1,12 @@
 import { Redirect, useRouter } from "expo-router";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
-import { useTheme, type MD3Theme, Button, Text } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
+import { type SensoTheme, useTheme } from "@/common/theme";
 import { CaretakerBanner, Header, Icon, LoadingScreen } from "@/components";
 import { useNote, notePageTitle, useNoteIdParam } from "@/logic/notes";
 
@@ -84,7 +85,7 @@ const Page = () => {
   );
 };
 
-const makeStyles = (theme: MD3Theme) =>
+const makeStyles = (theme: SensoTheme) =>
   StyleSheet.create({
     container: {
       flex: 1,

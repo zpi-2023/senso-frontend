@@ -5,9 +5,14 @@ import {
 } from "@react-navigation/native";
 import type { PropsWithChildren } from "react";
 import { useColorScheme } from "react-native";
-import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
+import {
+  MD3DarkTheme,
+  MD3LightTheme,
+  PaperProvider,
+  useTheme as useThemeNative,
+} from "react-native-paper";
 
-import { colors } from "../constants";
+import { colors } from "@/common/constants";
 
 const lightTheme = {
   ...NavigationDefaultTheme,
@@ -29,6 +34,8 @@ const darkTheme = {
   },
 };
 
+export type SensoTheme = typeof lightTheme & typeof darkTheme;
+
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "dark" ? darkTheme : lightTheme;
@@ -41,3 +48,5 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
     </PaperProvider>
   );
 };
+
+export const useTheme = () => useThemeNative<SensoTheme>();

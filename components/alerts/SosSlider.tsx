@@ -6,11 +6,12 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import { type MD3Theme, Text, useTheme } from "react-native-paper";
+import { Text } from "react-native-paper";
 
 import { Icon } from "../Icon";
 
 import { useI18n } from "@/common/i18n";
+import { useTheme, type SensoTheme } from "@/common/theme";
 
 const sliderWidth = Dimensions.get("window").width - 100;
 const circleRadius = 35;
@@ -82,7 +83,7 @@ export const SosSlider = () => {
   );
 };
 
-const makeStyles = (theme: MD3Theme) =>
+const makeStyles = (theme: SensoTheme) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -101,7 +102,7 @@ const makeStyles = (theme: MD3Theme) =>
       top: 0,
       width: circleRadius * 2,
       height: circleRadius * 2,
-      backgroundColor: theme.colors.error,
+      backgroundColor: theme.colors.alert,
       borderRadius: circleRadius,
       justifyContent: "center",
       alignItems: "center",
