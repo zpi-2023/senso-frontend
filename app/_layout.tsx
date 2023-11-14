@@ -3,8 +3,12 @@ import { PaperProvider } from "react-native-paper";
 
 import { I18nProvider } from "@/common/i18n";
 import { IdentityProvider } from "@/common/identity";
-import { ProviderList, useFontLoader, ThemeProvider } from "@/common/internal";
-import { View } from "@/components/themed";
+import {
+  ProviderList,
+  useFontLoader,
+  ThemeProvider,
+  MaskingView,
+} from "@/common/internal";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -18,12 +22,15 @@ export default function RootLayout() {
 
   return (
     <ProviderList
-      providers={[I18nProvider, IdentityProvider, PaperProvider, ThemeProvider]}
+      providers={[
+        I18nProvider,
+        IdentityProvider,
+        PaperProvider,
+        ThemeProvider,
+        MaskingView,
+      ]}
     >
-      {/* Fixes white flicker during navigation */}
-      <View style={{ flex: 1 }}>
-        <Stack />
-      </View>
+      <Stack />
     </ProviderList>
   );
 }

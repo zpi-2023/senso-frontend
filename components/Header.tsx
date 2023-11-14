@@ -1,8 +1,6 @@
 import { Stack } from "expo-router";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Appbar } from "react-native-paper";
-
-import { View } from "./themed";
 
 import { type Action, useActionContext } from "@/common/actions";
 

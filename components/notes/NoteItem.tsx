@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   IconButton,
   type MD3Theme,
@@ -7,8 +7,6 @@ import {
   TouchableRipple,
   useTheme,
 } from "react-native-paper";
-
-import { View } from "../themed";
 
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";

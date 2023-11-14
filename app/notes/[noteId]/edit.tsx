@@ -1,5 +1,5 @@
 import { Redirect, router } from "expo-router";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
@@ -9,7 +9,7 @@ import {
   isCaretaker,
   useIdentity,
 } from "@/common/identity";
-import { Header, LoadingScreen, View } from "@/components";
+import { Header, LoadingScreen } from "@/components";
 import { NoteForm } from "@/components/notes";
 import {
   type NoteEdit,

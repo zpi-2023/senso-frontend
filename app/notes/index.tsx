@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Button, type MD3Theme, useTheme } from "react-native-paper";
 
 import { actions } from "@/common/actions";
@@ -7,7 +7,7 @@ import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
 import { useRefreshControl } from "@/common/refresh";
-import { CaretakerBanner, Header, LoadingScreen, View } from "@/components";
+import { CaretakerBanner, Header, LoadingScreen } from "@/components";
 import { NoteItem } from "@/components/notes";
 import { useNoteList } from "@/logic/notes";
 

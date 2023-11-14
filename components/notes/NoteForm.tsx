@@ -1,6 +1,11 @@
 import { Formik, type FormikErrors } from "formik";
 import { useState } from "react";
-import { Keyboard, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import {
+  Keyboard,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import {
   Button,
   Switch,
@@ -9,8 +14,6 @@ import {
   IconButton,
   HelperText,
 } from "react-native-paper";
-
-import { View } from "../themed";
 
 import { type Translator, useI18n } from "@/common/i18n";
 import type { NoteEdit } from "@/logic/notes";

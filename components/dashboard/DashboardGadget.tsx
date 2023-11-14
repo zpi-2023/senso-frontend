@@ -1,7 +1,5 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Card, IconButton, Text, TouchableRipple } from "react-native-paper";
-
-import { View } from "../themed";
 
 import { type Action, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";

@@ -1,11 +1,11 @@
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Divider, List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { maxGadgets, availableGadgets } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
-import { Header, View, LoadingScreen, CaretakerBanner } from "@/components";
+import { Header, LoadingScreen, CaretakerBanner } from "@/components";
 import {
   DashboardEditSelected,
   DashboardEditAvailable,

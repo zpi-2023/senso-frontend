@@ -1,10 +1,10 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
-import { CaretakerBanner, View, Header } from "@/components";
+import { CaretakerBanner, Header } from "@/components";
 import { SosFab } from "@/components/alerts";
 import { MenuItem } from "@/components/menu";
 
