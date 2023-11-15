@@ -1,19 +1,15 @@
 import { Redirect, useRouter } from "expo-router";
-import { Alert, ScrollView, StyleSheet } from "react-native";
-import {
-  useTheme,
-  type MD3Theme,
-  Button,
-  Text,
-  IconButton,
-} from "react-native-paper";
+import { Alert, ScrollView, View } from "react-native";
+import { Button, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
-import { useNote, notePageTitle, useNoteIdParam } from "@/common/logic";
-import { CaretakerBanner, Header, LoadingScreen, View } from "@/components";
+import { sty } from "@/common/styles";
+import { useTheme } from "@/common/theme";
+import { CaretakerBanner, Header, Icon, LoadingScreen } from "@/components";
+import { useNote, notePageTitle, useNoteIdParam } from "@/logic/notes";
 
 const Page = () => {
   const { t } = useI18n();
@@ -22,6 +18,7 @@ const Page = () => {
   const router = useRouter();
   const noteId = useNoteIdParam();
   const { note, deleteNote } = useNote(noteId);
+  const styles = useStyles();
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
@@ -35,10 +32,8 @@ const Page = () => {
     return <LoadingScreen title={t("noteDetails.unnamedNote")} />;
   }
 
-  const styles = makeStyles(theme);
-
   return (
-    <View style={styles.container}>
+    <View style={sty.full}>
       <Header left={actions.goBack} title={notePageTitle(note)} />
       <CaretakerBanner />
       <ScrollView>
@@ -47,8 +42,7 @@ const Page = () => {
       {isSenior(identity.profile) ? (
         <View style={styles.bar}>
           {note.isPrivate ? (
-            <IconButton
-              style={styles.privateIcon}
+            <Icon
               icon="shield-lock"
               iconColor={theme.colors.primary}
               size={24}
@@ -91,30 +85,22 @@ const Page = () => {
   );
 };
 
-const makeStyles = (theme: MD3Theme) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    content: {
-      padding: 24,
-      fontSize: 20,
-      textAlign: "justify",
-    },
-    bar: {
-      padding: 16,
-      backgroundColor: theme.colors.surface,
-      borderTopLeftRadius: 16,
-      borderTopRightRadius: 16,
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      alignContent: "center",
-    },
-    privateIcon: {
-      margin: 0,
-      padding: 0,
-    },
-  });
+const useStyles = sty.themedHook(({ colors }) => ({
+  content: {
+    padding: 24,
+    fontSize: 20,
+    textAlign: "justify",
+  },
+  bar: {
+    padding: 16,
+    backgroundColor: colors.surface,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignContent: "center",
+  },
+}));
 
 export default Page;

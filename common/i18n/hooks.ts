@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
 
-import { DEFAULT_LANGUAGE } from "./consts";
+import { defaultLanguage } from "./consts";
 import { I18nContext } from "./context";
 import type { I18n, Language, Translator } from "./types";
 
@@ -27,7 +27,7 @@ export const useI18n = (): I18n => {
   const t: Translator = useCallback(
     (key, substitutions = {}) => {
       const prop = (data[key] ?? {}) as Record<Language, string | undefined>;
-      let value = prop[language] ?? prop[DEFAULT_LANGUAGE] ?? null;
+      let value = prop[language] ?? prop[defaultLanguage] ?? null;
 
       if (!value) {
         return `t('${key}')`;

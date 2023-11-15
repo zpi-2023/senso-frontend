@@ -1,12 +1,11 @@
 import { SplashScreen, Stack } from "expo-router";
-import { PaperProvider } from "react-native-paper";
 
 import { I18nProvider } from "@/common/i18n";
 import { IdentityProvider } from "@/common/identity";
-import { ProviderList, useFontLoader } from "@/common/util";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { View } from "@/components/Themed";
+import { ProviderList, useFontLoader, MaskingView } from "@/common/internal";
+import { ThemeProvider } from "@/common/theme";
 
+// eslint-disable-next-line senso-export-policy -- special case for Expo
 export { ErrorBoundary } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
@@ -18,13 +17,10 @@ export default function RootLayout() {
   }
 
   return (
-    <ProviderList
-      providers={[I18nProvider, IdentityProvider, PaperProvider, ThemeProvider]}
-    >
-      {/* Fixes white flicker during navigation */}
-      <View style={{ flex: 1 }}>
+    <ProviderList providers={[I18nProvider, IdentityProvider, ThemeProvider]}>
+      <MaskingView>
         <Stack />
-      </View>
+      </MaskingView>
     </ProviderList>
   );
 }

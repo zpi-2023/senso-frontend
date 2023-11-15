@@ -1,22 +1,14 @@
 import { router } from "expo-router";
-import { StyleSheet } from "react-native";
-import {
-  IconButton,
-  type MD3Theme,
-  Text,
-  TouchableRipple,
-  useTheme,
-} from "react-native-paper";
-
-import { View } from "../Themed";
+import { View } from "react-native";
+import { Text, TouchableRipple } from "react-native-paper";
 
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
-import {
-  type Note,
-  summarizeNote,
-  formatNoteCreationDate,
-} from "@/common/logic";
+import { sty } from "@/common/styles";
+import { useTheme } from "@/common/theme";
+import { formatDateOffset } from "@/common/time";
+import { Icon } from "@/components";
+import { type Note, summarizeNote } from "@/logic/notes";
 
 type NoteItemProps = {
   note: Note;
@@ -25,11 +17,10 @@ type NoteItemProps = {
 export const NoteItem = ({ note }: NoteItemProps) => {
   const { t } = useI18n();
   const theme = useTheme();
-
-  const styles = makeStyles(theme);
+  const styles = useStyles();
 
   const { title, summary } = summarizeNote(note);
-  const createdAt = formatNoteCreationDate(note.createdAt, new Date(), t);
+  const createdAt = formatDateOffset(new Date(note.createdAt), new Date(), t);
 
   return (
     <TouchableRipple
@@ -46,8 +37,7 @@ export const NoteItem = ({ note }: NoteItemProps) => {
             {title}
           </Text>
           {note.isPrivate ? (
-            <IconButton
-              style={styles.headerIcon}
+            <Icon
               icon="shield-lock"
               iconColor={theme.colors.primary}
               size={28}
@@ -65,39 +55,34 @@ export const NoteItem = ({ note }: NoteItemProps) => {
   );
 };
 
-const makeStyles = (theme: MD3Theme) =>
-  StyleSheet.create({
-    container: {
-      backgroundColor: "transparent",
-      padding: 24,
-      borderTopWidth: 1,
-      borderBottomWidth: 1,
-      borderTopColor: theme.colors.surface,
-      borderBottomColor: theme.colors.surface,
-      marginTop: -1,
-    },
-    header: {
-      backgroundColor: "transparent",
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      height: 32,
-    },
-    headerText: {
-      fontSize: 22,
-      fontWeight: "bold",
-    },
-    headerIcon: {
-      margin: 0,
-      padding: 0,
-    },
-    summary: {
-      fontSize: 18,
-      paddingVertical: 8,
-    },
-    createdAt: {
-      fontSize: 18,
-      color: theme.colors.onSurfaceDisabled,
-    },
-  });
+const useStyles = sty.themedHook(({ colors }) => ({
+  container: {
+    backgroundColor: "transparent",
+    padding: 24,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopColor: colors.surface,
+    borderBottomColor: colors.surface,
+    marginTop: -1,
+  },
+  header: {
+    backgroundColor: "transparent",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 32,
+  },
+  headerText: {
+    fontSize: 22,
+    fontWeight: "bold",
+  },
+  summary: {
+    fontSize: 18,
+    paddingVertical: 8,
+  },
+  createdAt: {
+    fontSize: 18,
+    color: colors.onSurfaceDisabled,
+  },
+}));

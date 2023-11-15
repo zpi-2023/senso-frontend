@@ -1,12 +1,10 @@
 import createClient, { type FetchOptions } from "openapi-fetch";
 import type { FilterKeys } from "openapi-typescript-helpers";
 
-import { BASE_URL } from "./consts";
+import { baseUrl } from "./consts";
 import type { paths } from "./schema";
 
-const client = createClient<paths>({
-  baseUrl: BASE_URL,
-});
+const client = createClient<paths>({ baseUrl });
 
 export const { POST, PUT, PATCH, DELETE } = client;
 

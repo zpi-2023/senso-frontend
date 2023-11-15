@@ -1,16 +1,24 @@
 import { type Arguments, useSWRConfig } from "swr";
 
+const isArgs = (args: unknown): args is Arguments =>
+  args === false ||
+  args === null ||
+  args === undefined ||
+  typeof args === "string" ||
+  Array.isArray(args) ||
+  typeof args === "object";
+
 export const doArgumentsMatch = (args: Arguments, key: string): boolean => {
   if (!args) {
     return false;
   }
 
-  if (Array.isArray(args)) {
+  if (Array.isArray(args) && isArgs(args[0])) {
     return doArgumentsMatch(args[0], key);
   }
 
   if (typeof args === "object") {
-    if ("url" in args) {
+    if ("url" in args && isArgs(args["url"])) {
       return doArgumentsMatch(args["url"], key);
     } else {
       return false;

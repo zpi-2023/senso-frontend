@@ -1,15 +1,17 @@
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { router } from "expo-router";
 import { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Alert } from "react-native";
+import { View, Alert } from "react-native";
+import { Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useMutation } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfLoggedOut, useIdentity } from "@/common/identity";
-import { Header } from "@/components/Header";
+import { sty } from "@/common/styles";
+import { Header } from "@/components";
 
-export default function App() {
+export default function Page() {
   const { t } = useI18n();
   const identity = useIdentity();
   const createCaretakerProfile = useMutation(
@@ -26,7 +28,7 @@ export default function App() {
       setHasPermission(status === "granted");
     };
 
-    getBarCodeScannerPermissions();
+    void getBarCodeScannerPermissions();
   }, []);
 
   if (!identity.isLoggedIn) {
@@ -34,8 +36,13 @@ export default function App() {
   }
 
   const handleBarCodeScanned = ({ data }: { data: string }) => {
+    const parsed = parseQrData(data);
+    if (!parsed) {
+      return;
+    }
+    const { seniorDisplayName, hash } = parsed;
     setScanned(true);
-    const { seniorDisplayName, hash } = JSON.parse(data);
+
     Alert.alert(
       t("scanQR.alertTitle"),
       t("scanQR.alertDescription", { name: seniorDisplayName }),
@@ -84,16 +91,36 @@ export default function App() {
       />
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
+        style={sty.absoluteFill}
       />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   container: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
   },
 });
+
+const parseQrData = (data: string) => {
+  try {
+    const parsed = JSON.parse(data) as unknown;
+    if (
+      parsed &&
+      typeof parsed === "object" &&
+      "seniorDisplayName" in parsed &&
+      typeof parsed["seniorDisplayName"] === "string" &&
+      "hash" in parsed &&
+      typeof parsed["hash"] === "number"
+    ) {
+      const { seniorDisplayName, hash } = parsed;
+      return { seniorDisplayName, hash };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};

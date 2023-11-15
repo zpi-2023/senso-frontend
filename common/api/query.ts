@@ -1,10 +1,10 @@
-import useSWR from "swr";
+import useSWR, { type SWRResponse } from "swr";
 
 import { type MethodPath, type MethodOptions, fetcher } from "./client";
 
 import { type Identity, useIdentity } from "@/common/identity";
 
-const TEST_CONFIG = {
+const testConfig = {
   provider: () => new Map(),
   loadingTimeout: 0,
   dedupingInterval: 0,
@@ -64,6 +64,6 @@ export const useQuery = <P extends MethodPath<"get">>(arg: UseQueryArg<P>) => {
   return useSWR(
     arg ? [arg.url, buildOptions(arg, identity)] : null,
     (args) => fetcher(...args),
-    __DEV__ ? TEST_CONFIG : undefined,
-  );
+    __DEV__ ? testConfig : undefined,
+  ) as SWRResponse<Awaited<ReturnType<typeof fetcher<P>>>, unknown>;
 };

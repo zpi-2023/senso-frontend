@@ -1,5 +1,5 @@
 import { Redirect, useRouter } from "expo-router";
-import { StyleSheet } from "react-native";
+import { View } from "react-native";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
@@ -9,9 +9,10 @@ import {
   isCaretaker,
   useIdentity,
 } from "@/common/identity";
-import { type NoteEdit, useCreateNote } from "@/common/logic";
-import { Header, View } from "@/components";
+import { sty } from "@/common/styles";
+import { Header } from "@/components";
 import { NoteForm } from "@/components/notes";
+import { type NoteEdit, useCreateNote } from "@/logic/notes";
 
 const Page = () => {
   const { t } = useI18n();
@@ -38,7 +39,7 @@ const Page = () => {
     });
 
   return (
-    <View style={styles.container}>
+    <View style={sty.full}>
       <Header left={actions.goBack} title={t("createNote.pageTitle")} />
       <NoteForm
         initialValues={{ content: "", isPrivate: false }}
@@ -48,7 +49,5 @@ const Page = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({ container: { flex: 1 } });
 
 export default Page;

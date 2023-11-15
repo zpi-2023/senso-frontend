@@ -1,13 +1,7 @@
 import { Link } from "expo-router";
 import { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import {
-  Avatar,
-  Button,
-  List,
-  type MD3Theme,
-  useTheme,
-} from "react-native-paper";
+import { type ImageSourcePropType, ScrollView, View } from "react-native";
+import { Avatar, Button, List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useQuery, useMutation } from "@/common/api";
@@ -21,13 +15,12 @@ import {
   RedirectIfLoggedOut,
   type SeniorProfile,
 } from "@/common/identity";
-import { Header } from "@/components/Header";
-import { LoadingScreen } from "@/components/LoadingScreen";
+import { sty } from "@/common/styles";
+import { Header, LoadingScreen } from "@/components";
 
 const ProfilesList = () => {
   const { t } = useI18n();
-  const theme = useTheme();
-  const styles = makeStyles(theme);
+  const styles = useStyles();
   const identity = useIdentity();
   const { data } = useQuery({
     url: "/api/v1/account/profiles",
@@ -93,7 +86,9 @@ const ProfilesList = () => {
                   <Avatar.Image
                     {...props}
                     size={64}
-                    source={require("../../assets/images/caretaker16.png")}
+                    source={
+                      require("../../assets/images/caretaker16.png") as ImageSourcePropType
+                    }
                   />
                 )}
               />
@@ -116,7 +111,9 @@ const ProfilesList = () => {
                 <Avatar.Image
                   {...props}
                   size={64}
-                  source={require("../../assets/images/oldman16.png")}
+                  source={
+                    require("../../assets/images/oldman16.png") as ImageSourcePropType
+                  }
                 />
               )}
             />
@@ -153,44 +150,43 @@ const ProfilesList = () => {
   );
 };
 
-const makeStyles = (theme: MD3Theme) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "space-evenly",
-    },
-    scrollView: {
-      maxHeight: 380,
-    },
-    listSubheader: {
-      textTransform: "uppercase",
-      fontWeight: "bold",
-      textAlign: "center",
-      fontSize: 20,
-      lineHeight: 28,
-    },
-    listItem: {
-      borderColor: theme.colors.primary,
-      borderWidth: 2,
-      borderRadius: 16,
-      paddingVertical: 16,
-      paddingHorizontal: 16,
-      marginVertical: 8,
-      marginHorizontal: 16,
-    },
-    listItemTitle: {
-      fontSize: 28,
-      lineHeight: 36,
-      marginRight: 32,
-    },
-    listItemDescription: {
-      fontSize: 20,
-      lineHeight: 28,
-    },
-    newProfileButtonWrapper: {
-      alignItems: "center",
-      gap: 16,
-    },
-  });
+const useStyles = sty.themedHook(({ colors }) => ({
+  container: {
+    flex: 1,
+    justifyContent: "space-evenly",
+  },
+  scrollView: {
+    maxHeight: 380,
+  },
+  listSubheader: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 20,
+    lineHeight: 28,
+  },
+  listItem: {
+    borderColor: colors.primary,
+    borderWidth: 2,
+    borderRadius: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  listItemTitle: {
+    fontSize: 28,
+    lineHeight: 36,
+    marginRight: 32,
+  },
+  listItemDescription: {
+    fontSize: 20,
+    lineHeight: 28,
+  },
+  newProfileButtonWrapper: {
+    alignItems: "center",
+    gap: 16,
+  },
+}));
 
 export default ProfilesList;

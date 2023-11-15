@@ -1,15 +1,13 @@
-import { StyleSheet } from "react-native";
-import { Banner, type MD3Theme, Text, useTheme } from "react-native-paper";
+import { Banner, Text } from "react-native-paper";
 
 import { useI18n } from "@/common/i18n";
 import { isCaretaker, useIdentity } from "@/common/identity";
+import { sty } from "@/common/styles";
 
 export const CaretakerBanner = () => {
   const { t } = useI18n();
-  const theme = useTheme();
   const identity = useIdentity();
-
-  const styles = makeStyles(theme);
+  const styles = useStyles();
 
   return identity.hasProfile && isCaretaker(identity.profile) ? (
     <Banner visible style={styles.banner}>
@@ -20,13 +18,12 @@ export const CaretakerBanner = () => {
   ) : null;
 };
 
-const makeStyles = (theme: MD3Theme) =>
-  StyleSheet.create({
-    banner: {
-      backgroundColor: theme.colors.primary,
-      paddingBottom: 8,
-    },
-    bannerText: {
-      color: theme.colors.onPrimary,
-    },
-  });
+const useStyles = sty.themedHook(({ colors }) => ({
+  banner: {
+    backgroundColor: colors.primary,
+    paddingBottom: 8,
+  },
+  bannerText: {
+    color: colors.onPrimary,
+  },
+}));

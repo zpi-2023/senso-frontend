@@ -11,9 +11,9 @@ export const useIdentityStorage = (
   defaultData: IdentityData,
 ): [IdentityData, (newData: IdentityData) => void] => {
   const [value, setValue] = __DEV__
-    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks -- the call order is stable between renders
       useState<IdentityData>(defaultData)
-    : // eslint-disable-next-line react-hooks/rules-of-hooks
+    : // eslint-disable-next-line react-hooks/rules-of-hooks -- the call order is stable between renders
       useMMKVObject<IdentityData>("identity-data", identityStorage!);
   return [value ?? defaultData, setValue];
 };

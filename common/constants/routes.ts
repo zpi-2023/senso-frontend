@@ -16,5 +16,3 @@ export const enum AppRoutes {
   CreateNote = "/notes/create",
   EditNote = "/notes/[noteId]/edit",
 }
-
-export const MIN_DISPLAY_NAME_LENGTH = 3;

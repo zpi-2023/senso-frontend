@@ -1,8 +1,4 @@
-export * from "./CaretakerBanner";
-export * from "./Header";
-export * from "./LoadingScreen";
-export * from "./MenuItem";
-export * from "./SosFab";
-export * from "./StyledText";
-export * from "./Themed";
-export * from "./ThemeProvider";
+export { CaretakerBanner } from "./CaretakerBanner";
+export { Header } from "./Header";
+export { Icon } from "./Icon";
+export { LoadingScreen } from "./LoadingScreen";

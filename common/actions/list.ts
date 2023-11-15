@@ -1,6 +1,7 @@
 import type { Action } from "./types";
-import { AppRoutes } from "../constants";
-import { isCaretaker, isSenior } from "../identity";
+
+import { AppRoutes } from "@/common/constants";
+import { isCaretaker, isSenior } from "@/common/identity";
 
 export const actions = {
   goBack: {

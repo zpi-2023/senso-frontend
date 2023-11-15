@@ -1,10 +1,10 @@
-import { StyleSheet } from "react-native";
-import { Card, IconButton, Text, TouchableRipple } from "react-native-paper";
-
-import { View } from "../Themed";
+import { View } from "react-native";
+import { Card, Text, TouchableRipple } from "react-native-paper";
 
 import { type Action, useActionContext } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
+import { sty } from "@/common/styles";
+import { Icon } from "@/components";
 
 type DashboardGadgetProps = {
   action: Action;
@@ -30,8 +30,8 @@ export const DashboardGadget = ({ action, inactive }: DashboardGadgetProps) => {
             onPress={disabled ? undefined : () => action.handler(ctx)}
             disabled={disabled}
           >
-            <View style={styles.inner}>
-              <IconButton icon={action.icon} size={64} />
+            <View style={[styles.inner, sty.center]}>
+              <Icon icon={action.icon} size={64} />
               <Text>{action.displayName(t)}</Text>
             </View>
           </TouchableRipple>
@@ -41,7 +41,7 @@ export const DashboardGadget = ({ action, inactive }: DashboardGadgetProps) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   wrapper: {
     flex: 1,
     maxWidth: "50%",
@@ -49,16 +49,10 @@ const styles = StyleSheet.create({
   },
   boundary: {
     borderRadius: 12,
-    backgroundColor: "transparent",
     overflow: "hidden",
   },
   inner: {
     aspectRatio: 1,
-    backgroundColor: "transparent",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
   },
   hidden: {
     opacity: 0.5,

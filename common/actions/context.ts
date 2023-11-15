@@ -1,8 +1,9 @@
 import { useRouter } from "expo-router";
 
 import type { ActionContext } from "./types";
-import { useI18n } from "../i18n";
-import { useIdentity } from "../identity";
+
+import { useI18n } from "@/common/i18n";
+import { useIdentity } from "@/common/identity";
 
 export const useActionContext = (): ActionContext | null => {
   const identity = useIdentity();

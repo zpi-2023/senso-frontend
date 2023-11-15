@@ -1,6 +1,6 @@
-import type { ActionKey } from "../actions";
+import type { ActionKey } from "@/common/actions";
 
-export const MAX_GADGETS = 6;
+export const maxGadgets = 6;
 
 export const availableGadgets = [
   "openMenu",

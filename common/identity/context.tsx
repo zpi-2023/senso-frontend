@@ -10,8 +10,9 @@ import {
 import { useIdentityStorage } from "./storage";
 import type { Identity, IdentityData, Profile } from "./types";
 import { buildIdentity } from "./util";
-import { AppRoutes } from "../constants";
-import { clearHistory } from "../util";
+
+import { AppRoutes } from "@/common/constants";
+import { clearHistory } from "@/common/router";
 
 export const IdentityContext = createContext<{
   data: IdentityData;

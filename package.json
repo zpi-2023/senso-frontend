@@ -5,19 +5,10 @@
   "scripts": {
     "start": "expo start --tunnel --reset-cache",
     "test": "jest",
-    "lint": "tsc -p . --noEmit && eslint . --max-warnings=0 --rulesdir=rules",
+    "lint": "tsc -p . --noEmit && eslint . --max-warnings=0 --rulesdir=common/internal/rules",
     "format": "prettier . --write --log-level silent",
     "gen-api": "npx openapi-typescript https://senso.org.pl/swagger/v1/swagger.json -o common/api/schema.d.ts",
     "prepare": "husky install"
-  },
-  "jest": {
-    "preset": "jest-expo",
-    "moduleNameMapper": {
-      "@/(.*)": "<rootDir>/$1"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/common/util/setup-tests.ts"
-    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -60,7 +51,7 @@
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.10.0",
-    "eslint-config-universe": "^11.3.0",
+    "eslint-config-universe": "^12.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",

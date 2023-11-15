@@ -1,10 +1,9 @@
 import { Stack } from "expo-router";
-import { StyleSheet } from "react-native";
+import { View } from "react-native";
 import { Appbar } from "react-native-paper";
 
-import { View } from "./Themed";
-
 import { type Action, useActionContext } from "@/common/actions";
+import { sty } from "@/common/styles";
 
 type ActionButtonProps = {
   action: Action;
@@ -30,6 +29,7 @@ type HeaderProps = {
 
 export const Header = ({ left, title, right }: HeaderProps) => {
   return (
+    // eslint-disable-next-line senso-stack-screen -- implementation of Header can't use Header
     <Stack.Screen
       options={{
         header: () => (
@@ -44,7 +44,7 @@ export const Header = ({ left, title, right }: HeaderProps) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   placeholder: {
     opacity: 0,
     padding: 8,

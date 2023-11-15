@@ -1,3 +1,6 @@
-/.expo
-node_modules
-util/api/schema.d.ts
+.expo/
+node_modules/
+coverage/
+common/api/schema.d.ts
+common/internal/rules/
+*.config.js

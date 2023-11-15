@@ -1,19 +1,18 @@
 import { Formik, type FormikErrors } from "formik";
 import { useState } from "react";
-import { Keyboard, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
 import {
   Button,
   Switch,
   TextInput,
   Text,
-  IconButton,
   HelperText,
 } from "react-native-paper";
 
-import { View } from "../Themed";
-
 import { type Translator, useI18n } from "@/common/i18n";
-import type { NoteEdit } from "@/common/logic";
+import { sty } from "@/common/styles";
+import { Icon } from "@/components";
+import type { NoteEdit } from "@/logic/notes";
 
 type NoteFormValues = Required<{
   [P in keyof NoteEdit]: NonNullable<NoteEdit[P]>;
@@ -80,12 +79,12 @@ export const NoteForm = ({
               <HelperText type="error">{errors.content}</HelperText>
             ) : null}
             <View style={styles.switchWrapper}>
-              <IconButton icon="shield-lock" style={styles.privateIcon} />
+              <Icon icon="shield-lock" />
               <Text>{t("noteForm.isPrivate")}</Text>
               <Switch
                 value={values.isPrivate}
                 onValueChange={(v) => {
-                  setFieldValue("isPrivate", v);
+                  void setFieldValue("isPrivate", v);
                 }}
                 style={styles.switch}
               />
@@ -106,7 +105,7 @@ export const NoteForm = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   container: {
     flex: 1,
     padding: 32,
@@ -121,9 +120,6 @@ const styles = StyleSheet.create({
   },
   switch: {
     marginLeft: "auto",
-  },
-  privateIcon: {
-    margin: 0,
   },
   submit: {
     marginTop: "auto",

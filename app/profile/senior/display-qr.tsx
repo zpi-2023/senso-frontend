@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 import QRCode from "react-qr-code";
 
@@ -8,9 +8,9 @@ import { actions } from "@/common/actions";
 import { useQuery } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
-import { toMinutesAndSeconds } from "@/common/util/helpers";
-import { Header } from "@/components/Header";
-import { LoadingScreen } from "@/components/LoadingScreen";
+import { sty } from "@/common/styles";
+import { toMinutesAndSeconds } from "@/common/time";
+import { Header, LoadingScreen } from "@/components";
 
 const CreateSeniorProfile = () => {
   const { t } = useI18n();
@@ -36,7 +36,7 @@ const CreateSeniorProfile = () => {
 
   const handleReset = () => {
     setSecondsLeft(data?.validFor);
-    mutate();
+    void mutate();
   };
 
   return (
@@ -96,7 +96,7 @@ const CreateSeniorProfile = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   container: {
     flex: 1,
     alignItems: "center",

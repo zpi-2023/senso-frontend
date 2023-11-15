@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
 import { IconButton, List } from "react-native-paper";
 
 import { type ActionKey, actions } from "@/common/actions";
 import { useI18n } from "@/common/i18n";
+import { sty } from "@/common/styles";
 
 type DashboardEditAvailableProps = {
   gadget: ActionKey;
@@ -36,6 +36,6 @@ export const DashboardEditAvailable = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = sty.create({
   button: { marginVertical: 0, transform: [{ scale: 1.5 }] },
 });

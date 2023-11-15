@@ -16,7 +16,7 @@ import {
   mockIdentityWithProfile,
 } from "@/common/identity/mocks";
 import type { IdentityData } from "@/common/identity/types";
-import { MockRouter } from "@/common/util";
+import { MockRouter } from "@/common/router";
 
 const renderUseIdentity = (data: IdentityData) =>
   renderHook(useIdentity, {
