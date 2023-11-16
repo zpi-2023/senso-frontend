@@ -2,12 +2,12 @@ const validSources = {
   ActivityIndicator: "react-native-paper",
   AppRoutes: "@/common/constants",
   Button: "react-native-paper",
-  CaretakerBanner: "@/components",
-  Header: "@/components",
-  Icon: "@/components",
+  CaretakerBanner: ["@/components", "./CaretakerBanner"],
+  Header: ["@/components", "./Header"],
+  Icon: ["@/components", "./Icon"],
   Link: "expo-router",
   Modal: "react-native-paper",
-  LoadingScreen: "@/components",
+  LoadingScreen: ["@/components", "./LoadingScreen"],
   StyleSheet: "react-native",
   Text: "react-native-paper",
   ThemeProvider: "@/common/theme",
@@ -34,7 +34,8 @@ module.exports = {
 
           if (
             identifier in validSources &&
-            source.value !== validSources[identifier]
+            source.value !== validSources[identifier] &&
+            !validSources[identifier].includes(source.value)
           ) {
             context.report({
               node: specifier,

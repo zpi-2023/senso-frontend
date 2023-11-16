@@ -16,5 +16,6 @@ export type Translator = (
 
 export type I18n = {
   t: Translator;
+  language: Language;
   toggleLanguage: () => void;
 };
