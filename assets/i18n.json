@@ -401,5 +401,33 @@
   "time.yesterday": {
     "en": "Yesterday",
     "pl": "Wczoraj"
+  },
+  "memoryGame.pageTitle": {
+    "en": "Memory game",
+    "pl": "Gra Memory"
+  },
+  "memoryGame.startButton": {
+    "en": "Start game",
+    "pl": "Rozpocznij grę"
+  },
+  "memoryGame.restartButton": {
+    "en": "Restart",
+    "pl": "Zrestartuj"
+  },
+  "memoryGame.movesCounter": {
+    "en": "Moves: {moves}",
+    "pl": "Ruchy: {moves}"
+  },
+  "memoryGame.timeCounter": {
+    "en": "Time {time}",
+    "pl": "Czas {time}"
+  },
+  "memoryGame.alertTitle": {
+    "en": "Congratulations!",
+    "pl": "Gratulacje!"
+  },
+  "memoryGame.alertDescription": {
+    "en": "You have completed the game in {moves} moves and time {time}.",
+    "pl": "Ukończyłeś grę w {moves} ruchach i czasie {time}."
   }
 }
