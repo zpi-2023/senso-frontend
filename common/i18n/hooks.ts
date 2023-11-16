@@ -47,5 +47,5 @@ export const useI18n = (): I18n => {
     [language, setLanguage],
   );
 
-  return { t, toggleLanguage };
+  return { t, language, toggleLanguage };
 };

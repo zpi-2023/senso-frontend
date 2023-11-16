@@ -1,6 +1,6 @@
 import { Redirect, useRouter } from "expo-router";
 import { Alert, ScrollView, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Button, FAB, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
@@ -8,6 +8,7 @@ import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
 import { sty } from "@/common/styles";
 import { useTheme } from "@/common/theme";
+import { useSpeech } from "@/common/tts";
 import { CaretakerBanner, Header, Icon, LoadingScreen } from "@/components";
 import { useNote, notePageTitle, useNoteIdParam } from "@/logic/notes";
 
@@ -19,6 +20,7 @@ const Page = () => {
   const noteId = useNoteIdParam();
   const { note, deleteNote } = useNote(noteId);
   const styles = useStyles();
+  const { speak } = useSpeech();
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
@@ -81,6 +83,11 @@ const Page = () => {
           </Button>
         </View>
       ) : null}
+      <FAB
+        icon="text-to-speech"
+        style={styles.fab}
+        onPress={() => speak(note.content)}
+      />
     </View>
   );
 };
@@ -100,6 +107,11 @@ const useStyles = sty.themedHook(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignContent: "center",
+  },
+  fab: {
+    position: "absolute",
+    bottom: 96,
+    right: 32,
   },
 }));
 
