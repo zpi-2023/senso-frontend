@@ -6,6 +6,7 @@ export const availableGadgets = [
   "openMenu",
   "trackMedication",
   "playGames",
+  "playMemoryGame",
   "manageNotes",
   "quickCreateNote",
   "switchProfile",

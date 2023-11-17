@@ -184,21 +184,9 @@ const Page = () => {
   }, [matchedPairs, moves, handleResetGame, seconds, t]);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "column",
-        gap: 16,
-        marginVertical: 16,
-      }}
-    >
+    <View style={styles.componentWrapper}>
       <Header left={actions.goBack} title={t("memoryGame.pageTitle")} />
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-        }}
-      >
+      <View style={styles.optionsWrapper}>
         <Button
           mode="contained"
           onPress={handleStartGame}
@@ -214,12 +202,7 @@ const Page = () => {
           {t("memoryGame.restartButton")}
         </Button>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-        }}
-      >
+      <View style={styles.optionsWrapper}>
         <Text style={styles.statsLabel}>
           {t("memoryGame.movesCounter", {
             moves,
@@ -245,6 +228,16 @@ const Page = () => {
 };
 
 const useStyles = sty.themedHook(({ colors }) => ({
+  componentWrapper: {
+    flex: 1,
+    flexDirection: "column",
+    gap: 16,
+    marginVertical: 16,
+  },
+  optionsWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",

@@ -234,6 +234,10 @@
     "en": "Games",
     "pl": "Gry"
   },
+  "actions.playMemoryGame": {
+    "en": "Memory game",
+    "pl": "Gra Memory"
+  },
   "actions.manageNotes": {
     "en": "Notes",
     "pl": "Notatki"
