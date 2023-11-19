@@ -73,7 +73,7 @@ export const actions = {
   playGames: {
     displayName: (t) => t("actions.playGames"),
     icon: "gamepad-variant",
-    handler: ({ router }) => router.push(AppRoutes.MemoryGame), // TODO: replace with Games if BE allow to add memory game as a gadget
+    handler: ({ router }) => router.push(AppRoutes.Games),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
   playMemoryGame: {

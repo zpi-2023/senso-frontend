@@ -10,7 +10,9 @@ import {
 import { Button, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
+import { useMutation } from "@/common/api";
 import { useI18n } from "@/common/i18n";
+import { calculateScore } from "@/common/score";
 import { sty } from "@/common/styles";
 import { toMinutesAndSeconds } from "@/common/time";
 import { Header } from "@/components";
@@ -78,6 +80,8 @@ const Page = () => {
       }))
       .sort(() => Math.random() - 0.5),
   );
+
+  const postNewScore = useMutation("post", "/api/v1/games/{gameName}/score");
 
   const handleFlipCard = (card: ICard) => {
     if (card.flipped) {
@@ -167,6 +171,16 @@ const Page = () => {
   useEffect(() => {
     if (matchedPairs === images.length) {
       setGameStarted(false);
+      void postNewScore({
+        params: {
+          path: {
+            gameName: "memory",
+          },
+        },
+        body: {
+          score: calculateScore(moves, seconds),
+        },
+      });
       Alert.alert(
         t("memoryGame.alertTitle"),
         t("memoryGame.alertDescription", {
@@ -181,7 +195,7 @@ const Page = () => {
         ],
       );
     }
-  }, [matchedPairs, moves, handleResetGame, seconds, t]);
+  }, [matchedPairs, moves, handleResetGame, seconds, t, postNewScore]);
 
   return (
     <View style={styles.componentWrapper}>

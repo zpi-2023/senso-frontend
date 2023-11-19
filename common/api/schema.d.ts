@@ -109,6 +109,38 @@ export interface paths {
         };
       };
     };
+    delete: {
+      responses: {
+        /** @description No Content */
+        204: {
+          content: never;
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
   };
   "/api/v1/account/profiles/caretaker": {
     post: {
@@ -138,6 +170,93 @@ export interface paths {
         };
         /** @description Forbidden */
         403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/account/profiles/caretaker/{seniorId}": {
+    put: {
+      parameters: {
+        path: {
+          seniorId: number;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["EditCaretakerProfileDto"];
+          "text/json": components["schemas"]["EditCaretakerProfileDto"];
+          "application/*+json": components["schemas"]["EditCaretakerProfileDto"];
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ProfileDisplayDto"];
+            "application/json": components["schemas"]["ProfileDisplayDto"];
+            "text/json": components["schemas"]["ProfileDisplayDto"];
+          };
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    delete: {
+      parameters: {
+        path: {
+          seniorId: number;
+        };
+      };
+      responses: {
+        /** @description No Content */
+        204: {
+          content: never;
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
             "application/json": components["schemas"]["ProblemDetails"];
@@ -218,6 +337,116 @@ export interface paths {
       };
     };
   };
+  "/api/v1/games/{gameName}/score": {
+    get: {
+      parameters: {
+        path: {
+          gameName: string;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ScoreDto"];
+            "application/json": components["schemas"]["ScoreDto"];
+            "text/json": components["schemas"]["ScoreDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    post: {
+      parameters: {
+        path: {
+          gameName: string;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["ScoreDto"];
+          "text/json": components["schemas"]["ScoreDto"];
+          "application/*+json": components["schemas"]["ScoreDto"];
+        };
+      };
+      responses: {
+        /** @description No Content */
+        204: {
+          content: never;
+        };
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/games/{gameName}/leaderboard": {
+    get: {
+      parameters: {
+        query?: {
+          offset?: number;
+          limit?: number;
+        };
+        path: {
+          gameName: string;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["LeaderboardEntryDtoPaginatedDto"];
+            "application/json": components["schemas"]["LeaderboardEntryDtoPaginatedDto"];
+            "text/json": components["schemas"]["LeaderboardEntryDtoPaginatedDto"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
   "/api/v1/healthz": {
     get: {
       responses: {
@@ -227,6 +456,25 @@ export interface paths {
             "text/plain": components["schemas"]["HealthcheckDto"];
             "application/json": components["schemas"]["HealthcheckDto"];
             "text/json": components["schemas"]["HealthcheckDto"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/medication": {
+    get: {
+      parameters: {
+        query?: {
+          search?: string;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["MedicationDtoPaginatedDto"];
+            "application/json": components["schemas"]["MedicationDtoPaginatedDto"];
+            "text/json": components["schemas"]["MedicationDtoPaginatedDto"];
           };
         };
       };
@@ -448,6 +696,390 @@ export interface paths {
       };
     };
   };
+  "/api/v1/reminders/{reminderId}": {
+    get: {
+      parameters: {
+        path: {
+          reminderId: number;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ReminderDto"];
+            "application/json": components["schemas"]["ReminderDto"];
+            "text/json": components["schemas"]["ReminderDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    put: {
+      parameters: {
+        path: {
+          reminderId: number;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["UpdateReminderDto"];
+          "text/json": components["schemas"]["UpdateReminderDto"];
+          "application/*+json": components["schemas"]["UpdateReminderDto"];
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ReminderDto"];
+            "application/json": components["schemas"]["ReminderDto"];
+            "text/json": components["schemas"]["ReminderDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    delete: {
+      parameters: {
+        path: {
+          reminderId: number;
+        };
+      };
+      responses: {
+        /** @description No Content */
+        204: {
+          content: never;
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/reminders/{reminderId}/intakes": {
+    get: {
+      parameters: {
+        query?: {
+          offset?: number;
+          limit?: number;
+        };
+        path: {
+          reminderId: number;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["IntakeDtoPaginatedDto"];
+            "application/json": components["schemas"]["IntakeDtoPaginatedDto"];
+            "text/json": components["schemas"]["IntakeDtoPaginatedDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    post: {
+      parameters: {
+        path: {
+          reminderId: number;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["CreateIntakeDto"];
+          "text/json": components["schemas"]["CreateIntakeDto"];
+          "application/*+json": components["schemas"]["CreateIntakeDto"];
+        };
+      };
+      responses: {
+        /** @description Created */
+        201: {
+          content: {
+            "text/plain": components["schemas"]["IntakeDto"];
+            "application/json": components["schemas"]["IntakeDto"];
+            "text/json": components["schemas"]["IntakeDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/reminders/intakes/{intakeId}": {
+    get: {
+      parameters: {
+        path: {
+          intakeId: number;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["IntakeDto"];
+            "application/json": components["schemas"]["IntakeDto"];
+            "text/json": components["schemas"]["IntakeDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/reminders/senior/{seniorId}": {
+    get: {
+      parameters: {
+        query?: {
+          offset?: number;
+          limit?: number;
+        };
+        path: {
+          seniorId: number;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ReminderDtoPaginatedDto"];
+            "application/json": components["schemas"]["ReminderDtoPaginatedDto"];
+            "text/json": components["schemas"]["ReminderDtoPaginatedDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    post: {
+      parameters: {
+        path: {
+          seniorId: number;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["CreateReminderDto"];
+          "text/json": components["schemas"]["CreateReminderDto"];
+          "application/*+json": components["schemas"]["CreateReminderDto"];
+        };
+      };
+      responses: {
+        /** @description Created */
+        201: {
+          content: {
+            "text/plain": components["schemas"]["ReminderDto"];
+            "application/json": components["schemas"]["ReminderDto"];
+            "text/json": components["schemas"]["ReminderDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/reminders/senior/{seniorId}/intakes": {
+    get: {
+      parameters: {
+        query?: {
+          offset?: number;
+          limit?: number;
+        };
+        path: {
+          seniorId: number;
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["IntakeDtoPaginatedDto"];
+            "application/json": components["schemas"]["IntakeDtoPaginatedDto"];
+            "text/json": components["schemas"]["IntakeDtoPaginatedDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Forbidden */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
   "/api/v1/token": {
     post: {
       requestBody?: {
@@ -494,8 +1126,29 @@ export interface components {
       hash: number;
       seniorAlias: string;
     };
+    CreateIntakeDto: {
+      /** Format: date-time */
+      takenAt: string;
+      /** Format: float */
+      amountTaken: number;
+    };
+    CreateReminderDto: {
+      medicationName: string;
+      /** Format: float */
+      medicationAmountInPackage?: number | null;
+      /** Format: float */
+      amountPerIntake: number;
+      /** Format: float */
+      amountOwned?: number | null;
+      amountUnit?: string | null;
+      cron?: string | null;
+      description?: string | null;
+    };
     DashboardDto: {
       gadgets: string[];
+    };
+    EditCaretakerProfileDto: {
+      seniorAlias: string;
     };
     EncodedSeniorDto: {
       /** Format: int32 */
@@ -514,6 +1167,40 @@ export interface components {
     };
     /** @enum {string} */
     HealthcheckStatus: "Ok" | "Unhealthy";
+    IntakeDto: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      reminderId: number;
+      medicationName: string;
+      /** Format: date-time */
+      takenAt: string;
+      /** Format: float */
+      amountTaken: number;
+      amountUnit?: string | null;
+    };
+    IntakeDtoPaginatedDto: {
+      items?: components["schemas"]["IntakeDto"][];
+    };
+    LeaderboardEntryDto: {
+      displayName: string;
+      /** Format: int32 */
+      accountId: number;
+      /** Format: int32 */
+      score: number;
+    };
+    LeaderboardEntryDtoPaginatedDto: {
+      items?: components["schemas"]["LeaderboardEntryDto"][];
+    };
+    MedicationDto: {
+      name: string;
+      /** Format: float */
+      amountInPackage?: number | null;
+      amountUnit?: string | null;
+    };
+    MedicationDtoPaginatedDto: {
+      items?: components["schemas"]["MedicationDto"][];
+    };
     NoteDto: {
       /** Format: int32 */
       id: number;
@@ -544,8 +1231,40 @@ export interface components {
     ProfilesDto: {
       profiles: components["schemas"]["ProfileDisplayDto"][];
     };
+    ReminderDto: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      seniorId: number;
+      medicationName: string;
+      /** Format: float */
+      medicationAmountInPackage?: number | null;
+      isActive: boolean;
+      /** Format: float */
+      amountPerIntake: number;
+      /** Format: float */
+      amountOwned?: number | null;
+      amountUnit?: string | null;
+      cron?: string | null;
+      description?: string | null;
+    };
+    ReminderDtoPaginatedDto: {
+      items?: components["schemas"]["ReminderDto"][];
+    };
+    ScoreDto: {
+      /** Format: int32 */
+      score: number;
+    };
     TokenDto: {
       token: string;
+    };
+    UpdateReminderDto: {
+      /** Format: float */
+      amountPerIntake: number;
+      /** Format: float */
+      amountOwned?: number | null;
+      cron?: string | null;
+      description?: string | null;
     };
     UpsertNoteDto: {
       content: string;
