@@ -73,7 +73,7 @@ export const actions = {
   playGames: {
     displayName: (t) => t("actions.playGames"),
     icon: "gamepad-variant",
-    handler: ({ router }) => router.push(AppRoutes.Games),
+    handler: ({ router }) => router.push(AppRoutes.WordleGame),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
   playMemoryGame: {
