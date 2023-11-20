@@ -130,7 +130,7 @@ const Page = () => {
   };
 
   const shuffleCards = () => {
-    setCards((prevCards) => prevCards.sort(() => Math.random() - 0.5));
+    setCards((prevCards) => [...prevCards].sort(() => Math.random() - 0.5));
   };
 
   const handleStartGame = () => {
