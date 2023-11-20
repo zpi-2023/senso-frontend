@@ -11,6 +11,7 @@ export const enum AppRoutes {
   AlertHistory = "/alert/history",
   Medication = "/medication",
   Games = "/games",
+  MemoryGame = "/games/memory",
   NoteList = "/notes",
   NoteDetails = "/notes/[noteId]",
   CreateNote = "/notes/create",

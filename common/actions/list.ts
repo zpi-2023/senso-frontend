@@ -76,6 +76,12 @@ export const actions = {
     handler: ({ router }) => router.push(AppRoutes.Games),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
+  playMemoryGame: {
+    displayName: (t) => t("actions.playMemoryGame"),
+    icon: "cards",
+    handler: ({ router }) => router.push(AppRoutes.MemoryGame),
+    hidden: ({ identity }) => isCaretaker(identity.profile),
+  },
   manageNotes: {
     displayName: (t) => t("actions.manageNotes"),
     icon: "note",
