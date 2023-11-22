@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { useState } from "react";
 import { type ImageSourcePropType, ScrollView, View } from "react-native";
-import { Avatar, Button, List } from "react-native-paper";
+import { Button, List } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useQuery, useMutation } from "@/common/api";
@@ -17,6 +17,12 @@ import {
 } from "@/common/identity";
 import { sty } from "@/common/styles";
 import { Header, LoadingScreen } from "@/components";
+import { ProfileEntry } from "@/components/profile";
+
+const caretakerAvatar =
+  require("../../assets/images/caretaker16.png") as ImageSourcePropType;
+const seniorAvatar =
+  require("../../assets/images/oldman16.png") as ImageSourcePropType;
 
 const ProfilesList = () => {
   const { t } = useI18n();
@@ -74,23 +80,12 @@ const ProfilesList = () => {
         <ScrollView style={styles.scrollView}>
           {caretakerProfiles.map((p) => {
             return (
-              <List.Item
+              <ProfileEntry
                 key={p.seniorId}
                 title={t("profileList.caretakerNameFallback")}
                 description={`Senior: ${p.seniorAlias}`}
                 onPress={() => handleItemPress(p)}
-                style={styles.listItem}
-                titleStyle={styles.listItemTitle}
-                descriptionStyle={styles.listItemDescription}
-                left={(props) => (
-                  <Avatar.Image
-                    {...props}
-                    size={64}
-                    source={
-                      require("../../assets/images/caretaker16.png") as ImageSourcePropType
-                    }
-                  />
-                )}
+                avatar={caretakerAvatar}
               />
             );
           })}
@@ -100,22 +95,11 @@ const ProfilesList = () => {
             <List.Subheader style={styles.listSubheader}>
               {t("profileList.seniorHeader")}
             </List.Subheader>
-            <List.Item
+            <ProfileEntry
               title={t("profileList.seniorNameFallback")}
               description={t("profileList.seniorDescription")}
               onPress={() => handleItemPress(seniorProfile)}
-              style={styles.listItem}
-              titleStyle={styles.listItemTitle}
-              descriptionStyle={styles.listItemDescription}
-              left={(props) => (
-                <Avatar.Image
-                  {...props}
-                  size={64}
-                  source={
-                    require("../../assets/images/oldman16.png") as ImageSourcePropType
-                  }
-                />
-              )}
+              avatar={seniorAvatar}
             />
           </>
         )}
@@ -162,24 +146,6 @@ const useStyles = sty.themedHook(({ colors }) => ({
     textTransform: "uppercase",
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 20,
-    lineHeight: 28,
-  },
-  listItem: {
-    borderColor: colors.primary,
-    borderWidth: 2,
-    borderRadius: 16,
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  listItemTitle: {
-    fontSize: 28,
-    lineHeight: 36,
-    marginRight: 32,
-  },
-  listItemDescription: {
     fontSize: 20,
     lineHeight: 28,
   },
