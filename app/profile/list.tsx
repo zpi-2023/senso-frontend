@@ -1,7 +1,14 @@
 import { Link } from "expo-router";
 import { useCallback, useState } from "react";
 import { type ImageSourcePropType, ScrollView, View } from "react-native";
-import { Button, Dialog, List, Portal, TextInput } from "react-native-paper";
+import {
+  Button,
+  Dialog,
+  List,
+  Portal,
+  Text,
+  TextInput,
+} from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useQuery, useMutation } from "@/common/api";
@@ -161,7 +168,10 @@ const ProfilesList = () => {
         )}
       </View>
       <Portal>
-        <Dialog visible={dialogState.type !== "hidden"}>
+        <Dialog
+          visible={dialogState.type !== "hidden"}
+          onDismiss={dismissDialog}
+        >
           {dialogState.type === "edit-prompt" ? (
             <>
               <Dialog.Title>{t("profileList.editProfile")}</Dialog.Title>
@@ -198,7 +208,9 @@ const ProfilesList = () => {
             <>
               <Dialog.Title>{t("profileList.deleteProfile")}</Dialog.Title>
               <Dialog.Content>
-                {t("profileList.deleteProfileDescription")}
+                <Text variant="bodyLarge">
+                  {t("profileList.deleteProfileDescription")}
+                </Text>
               </Dialog.Content>
               <Dialog.Actions>
                 <Button onPress={dismissDialog}>{t("dialog.cancel")}</Button>
@@ -251,7 +263,7 @@ const useDialogState = () => {
       setDialogState({
         type: "edit-prompt",
         profile,
-        text: "",
+        text: profile.seniorAlias,
         changeText,
       }),
     [changeText],

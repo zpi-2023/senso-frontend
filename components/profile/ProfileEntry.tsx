@@ -51,14 +51,20 @@ export const ProfileEntry = ({
           >
             {onProfileEdit ? (
               <Menu.Item
-                onPress={onProfileEdit}
+                onPress={() => {
+                  setMenuVisible(false);
+                  onProfileEdit();
+                }}
                 leadingIcon="account-edit"
                 title={t("profileList.editProfile")}
               />
             ) : null}
             {onProfileDelete ? (
               <Menu.Item
-                onPress={onProfileDelete}
+                onPress={() => {
+                  setMenuVisible(false);
+                  onProfileDelete();
+                }}
                 leadingIcon="account-remove"
                 title={t("profileList.deleteProfile")}
               />
