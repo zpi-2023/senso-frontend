@@ -10,6 +10,7 @@ const validSources = {
   LoadingScreen: ["@/components", "./LoadingScreen"],
   StyleSheet: "react-native",
   Text: "react-native-paper",
+  TextInput: "react-native-paper",
   ThemeProvider: "@/common/theme",
   TouchableWithoutFeedback: "react-native",
   useRouter: "expo-router",

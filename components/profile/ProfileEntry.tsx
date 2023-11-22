@@ -1,22 +1,31 @@
+import { useState } from "react";
 import type { ImageSourcePropType } from "react-native";
-import { Avatar, List } from "react-native-paper";
+import { Avatar, IconButton, List, Menu } from "react-native-paper";
 
+import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
 
 type ProfileEntryProps = {
   title: string;
   description: string;
-  onPress: () => void;
   avatar: ImageSourcePropType;
+  onPress: () => void;
+  onProfileEdit: (() => void) | null;
+  onProfileDelete: (() => void) | null;
 };
 
 export const ProfileEntry = ({
   title,
   description,
-  onPress,
   avatar,
+  onPress,
+  onProfileEdit,
+  onProfileDelete,
 }: ProfileEntryProps) => {
   const styles = useStyles();
+  const { t } = useI18n();
+
+  const [menuVisible, setMenuVisible] = useState(false);
 
   return (
     <List.Item
@@ -27,6 +36,36 @@ export const ProfileEntry = ({
       titleStyle={styles.title}
       descriptionStyle={styles.description}
       left={(props) => <Avatar.Image {...props} size={32} source={avatar} />}
+      right={(props) =>
+        onProfileEdit || onProfileDelete ? (
+          <Menu
+            {...props}
+            visible={menuVisible}
+            onDismiss={() => setMenuVisible(false)}
+            anchor={
+              <IconButton
+                icon="dots-vertical"
+                onPress={() => setMenuVisible(true)}
+              />
+            }
+          >
+            {onProfileEdit ? (
+              <Menu.Item
+                onPress={onProfileEdit}
+                leadingIcon="account-edit"
+                title={t("profileList.editProfile")}
+              />
+            ) : null}
+            {onProfileDelete ? (
+              <Menu.Item
+                onPress={onProfileDelete}
+                leadingIcon="account-remove"
+                title={t("profileList.deleteProfile")}
+              />
+            ) : null}
+          </Menu>
+        ) : null
+      }
     />
   );
 };

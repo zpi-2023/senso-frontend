@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { type ImageSourcePropType, ScrollView, View } from "react-native";
-import { Button, List } from "react-native-paper";
+import { Button, Dialog, List, Portal, TextInput } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useQuery, useMutation } from "@/common/api";
@@ -14,6 +14,7 @@ import {
   useIdentity,
   RedirectIfLoggedOut,
   type SeniorProfile,
+  type CaretakerProfile,
 } from "@/common/identity";
 import { sty } from "@/common/styles";
 import { Header, LoadingScreen } from "@/components";
@@ -24,18 +25,44 @@ const caretakerAvatar =
 const seniorAvatar =
   require("../../assets/images/oldman16.png") as ImageSourcePropType;
 
+type DialogState =
+  | { type: "hidden" }
+  | {
+      type: "edit-prompt";
+      profile: CaretakerProfile;
+      text: string;
+      changeText: (text: string) => void;
+    }
+  | { type: "delete-alert"; profile: Profile };
+
 const ProfilesList = () => {
   const { t } = useI18n();
   const styles = useStyles();
   const identity = useIdentity();
-  const { data } = useQuery({
+
+  const { data, mutate } = useQuery({
     url: "/api/v1/account/profiles",
   });
   const createSeniorProfile = useMutation(
     "post",
     "/api/v1/account/profiles/senior",
   );
+  const editCaretakerProfile = useMutation(
+    "put",
+    "/api/v1/account/profiles/caretaker/{seniorId}",
+  );
+  const deleteCaretakerProfile = useMutation(
+    "delete",
+    "/api/v1/account/profiles/caretaker/{seniorId}",
+  );
+  const deleteSeniorProfile = useMutation(
+    "delete",
+    "/api/v1/account/profiles/senior",
+  );
+
   const [isCreatingSeniorProfile, setIsCreatingSeniorProfile] = useState(false);
+  const { dialogState, dismissDialog, showEditPrompt, showDeleteAlert } =
+    useDialogState();
 
   if (!identity.isLoggedIn) {
     return <RedirectIfLoggedOut identity={identity} />;
@@ -45,7 +72,6 @@ const ProfilesList = () => {
     return <LoadingScreen title={t("profileList.pageTitle")} />;
   }
 
-  // TODO: add proper API response handling when API is ready
   const { profiles } = data as { profiles: Profile[] };
 
   const seniorProfile = profiles.find(isSenior);
@@ -84,8 +110,10 @@ const ProfilesList = () => {
                 key={p.seniorId}
                 title={t("profileList.caretakerNameFallback")}
                 description={`Senior: ${p.seniorAlias}`}
-                onPress={() => handleItemPress(p)}
                 avatar={caretakerAvatar}
+                onPress={() => handleItemPress(p)}
+                onProfileEdit={() => showEditPrompt(p)}
+                onProfileDelete={() => showDeleteAlert(p)}
               />
             );
           })}
@@ -98,8 +126,10 @@ const ProfilesList = () => {
             <ProfileEntry
               title={t("profileList.seniorNameFallback")}
               description={t("profileList.seniorDescription")}
-              onPress={() => handleItemPress(seniorProfile)}
               avatar={seniorAvatar}
+              onPress={() => handleItemPress(seniorProfile)}
+              onProfileEdit={null}
+              onProfileDelete={() => showDeleteAlert(seniorProfile)}
             />
           </>
         )}
@@ -130,8 +160,109 @@ const ProfilesList = () => {
           </Link>
         )}
       </View>
+      <Portal>
+        <Dialog visible={dialogState.type !== "hidden"}>
+          {dialogState.type === "edit-prompt" ? (
+            <>
+              <Dialog.Title>{t("profileList.editProfile")}</Dialog.Title>
+              <Dialog.Content>
+                <TextInput
+                  mode="outlined"
+                  label={t("createCaretakerProfile.seniorAliasInputLabel")}
+                  onChangeText={dialogState.changeText}
+                  value={dialogState.text}
+                />
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button onPress={dismissDialog}>{t("dialog.cancel")}</Button>
+                <Button
+                  onPress={async () => {
+                    dismissDialog();
+                    await editCaretakerProfile({
+                      params: {
+                        path: { seniorId: dialogState.profile.seniorId },
+                      },
+                      body: {
+                        seniorAlias: dialogState.text,
+                      },
+                    });
+                    await mutate();
+                  }}
+                >
+                  {t("dialog.confirm")}
+                </Button>
+              </Dialog.Actions>
+            </>
+          ) : null}
+          {dialogState.type === "delete-alert" ? (
+            <>
+              <Dialog.Title>{t("profileList.deleteProfile")}</Dialog.Title>
+              <Dialog.Content>
+                {t("profileList.deleteProfileDescription")}
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button onPress={dismissDialog}>{t("dialog.cancel")}</Button>
+                <Button
+                  onPress={async () => {
+                    dismissDialog();
+                    if (dialogState.profile.type === "senior") {
+                      await deleteSeniorProfile({});
+                    } else if (dialogState.profile.type === "caretaker") {
+                      await deleteCaretakerProfile({
+                        params: {
+                          path: { seniorId: dialogState.profile.seniorId },
+                        },
+                      });
+                    }
+                    await mutate();
+                  }}
+                >
+                  {t("dialog.confirm")}
+                </Button>
+              </Dialog.Actions>
+            </>
+          ) : null}
+        </Dialog>
+      </Portal>
     </View>
   );
+};
+
+const useDialogState = () => {
+  const [dialogState, setDialogState] = useState<DialogState>({
+    type: "hidden",
+  });
+
+  const dismissDialog = useCallback(
+    () => setDialogState({ type: "hidden" }),
+    [],
+  );
+
+  const changeText = useCallback(
+    (text: string) =>
+      setDialogState((prev) =>
+        prev.type === "edit-prompt" ? { ...prev, text } : prev,
+      ),
+    [],
+  );
+
+  const showEditPrompt = useCallback(
+    (profile: CaretakerProfile) =>
+      setDialogState({
+        type: "edit-prompt",
+        profile,
+        text: "",
+        changeText,
+      }),
+    [changeText],
+  );
+
+  const showDeleteAlert = useCallback(
+    (profile: Profile) => setDialogState({ type: "delete-alert", profile }),
+    [],
+  );
+
+  return { dialogState, dismissDialog, showEditPrompt, showDeleteAlert };
 };
 
 const useStyles = sty.themedHook(({ colors }) => ({
