@@ -433,5 +433,9 @@
   "memoryGame.alertDescription": {
     "en": "You have completed the game in {moves} moves and time {time}.",
     "pl": "Ukończyłeś grę w {moves} ruchach i czasie {time}."
+  },
+  "wordle.pageTitle": {
+    "en": "Graydle",
+    "pl": "Graydle"
   }
 }
