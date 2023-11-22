@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import {
   View,
   TextInput,
@@ -8,12 +8,18 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import { Text } from "react-native-paper";
 
+import { randomWord } from "@/assets/words";
 import { actions } from "@/common/actions";
+import { useMutation } from "@/common/api";
 import { useI18n } from "@/common/i18n";
+import { I18nContext } from "@/common/i18n/context";
+import { calculateScore } from "@/common/score";
 import { sty } from "@/common/styles";
+import { toMinutesAndSeconds } from "@/common/time";
 import { Header } from "@/components";
 
 const screenWidth = Dimensions.get("window").width;
@@ -45,16 +51,33 @@ const LetterTile = (
 };
 
 const Page = () => {
-  const correctWord = "REACT".split("");
-  const styles = useStyles();
   const { t } = useI18n();
+  const { language } = useContext(I18nContext);
+  const [correctWord, setCorrectWord] = useState<string[]>(
+    randomWord(language).toUpperCase().split(""),
+  );
+  const styles = useStyles();
+  const postNewScore = useMutation("post", "/api/v1/games/{gameName}/score");
+
   const textInputRefs = useRef<TextInput[]>([]);
   const lastGuessRef = useRef<View>(null);
   const scrollViewRef = useRef<ScrollView>(null);
+  const [seconds, setSeconds] = useState<number>(0);
+  const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [previousGuesses, setPreviousGuesses] = useState<string[]>([]);
   const [currentGuess, setCurrentGuess] = useState<string[]>(
     new Array(5).fill(""),
   );
+
+  const handleResetGame = () => {
+    setCorrectWord(randomWord(language).toUpperCase().split(""));
+    setGameStarted(true);
+    setSeconds(0);
+    setPreviousGuesses([]);
+    setCurrentGuess(new Array(5).fill(""));
+    clearInputs();
+    textInputRefs.current[0]?.focus();
+  };
 
   const handleTextChange = (text: string, index: number) => {
     const newGuess = [...currentGuess];
@@ -63,6 +86,33 @@ const Page = () => {
     if (newGuess.every((letter) => letter !== "")) {
       setPreviousGuesses([...previousGuesses, newGuess.join("")]);
       setCurrentGuess(new Array(5).fill(""));
+
+      if (newGuess.join("") === correctWord.join("")) {
+        setGameStarted(false);
+        void postNewScore({
+          params: {
+            path: {
+              gameName: "wordle",
+            },
+          },
+          body: {
+            score: calculateScore(previousGuesses.length, seconds),
+          },
+        });
+        Alert.alert(
+          t("wordle.alertTitle"),
+          t("wordle.alertDescription", {
+            guesses: previousGuesses.length,
+            time: toMinutesAndSeconds(seconds),
+          }),
+          [
+            {
+              text: t("wordle.alertButton"),
+              onPress: () => handleResetGame(),
+            },
+          ],
+        );
+      }
     } else {
       textInputRefs.current[index + 1]?.focus();
     }
@@ -72,6 +122,11 @@ const Page = () => {
     textInputRefs.current.forEach((input) => input.clear());
     textInputRefs.current[0]?.focus();
   };
+
+  useEffect(() => {
+    setGameStarted(true);
+    textInputRefs.current[0]?.focus();
+  }, []);
 
   useEffect(() => {
     if (previousGuesses.length > 0) {
@@ -87,8 +142,14 @@ const Page = () => {
   }, [previousGuesses]);
 
   useEffect(() => {
-    textInputRefs.current[0]?.focus();
-  }, []);
+    if (gameStarted) {
+      const interval = setInterval(() => {
+        setSeconds((seconds) => seconds + 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+    return () => {};
+  }, [gameStarted]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -97,6 +158,17 @@ const Page = () => {
         style={styles.container}
       >
         <Header left={actions.goBack} title={t("wordle.pageTitle")} />
+        <View style={styles.optionsWrapper}>
+          <Text style={styles.statsLabel}>
+            {t("wordle.timer", { time: seconds })}
+          </Text>
+          <Text style={styles.statsLabel}>
+            {t("wordle.guesses", {
+              guesses: previousGuesses.length,
+            })}
+          </Text>
+        </View>
+
         <ScrollView
           ref={scrollViewRef}
           contentContainerStyle={styles.scrollViewContainer}
@@ -194,6 +266,15 @@ const useStyles = sty.themedHook(({ colors }) => ({
   },
   row: {
     flexDirection: "row",
+  },
+  statsLabel: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  optionsWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
   },
 }));
 

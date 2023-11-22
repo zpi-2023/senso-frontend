@@ -437,5 +437,25 @@
   "wordle.pageTitle": {
     "en": "Graydle",
     "pl": "Graydle"
+  },
+  "wordle.timer": {
+    "en": "Time: {time}",
+    "pl": "Czas: {time}"
+  },
+  "wordle.guesses": {
+    "en": "Guesses: {guesses}",
+    "pl": "Próby: {guesses}"
+  },
+  "wordle.alertTitle": {
+    "en": "Congratulations!",
+    "pl": "Gratulacje!"
+  },
+  "wordle.alertDescription": {
+    "en": "You have completed the game in {guesses} guesses and time {time}.",
+    "pl": "Ukończyłeś grę w {guesses} próbach i czasie {time}."
+  },
+  "wordle.alertButton": {
+    "en": "Play again",
+    "pl": "Zagraj ponownie"
   }
 }
