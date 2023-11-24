@@ -47,8 +47,11 @@ const ProfilesList = () => {
   const styles = useStyles();
   const identity = useIdentity();
 
-  const { data, mutate } = useQuery({
+  const { data: profileData, mutate } = useQuery({
     url: "/api/v1/account/profiles",
+  });
+  const { data: caretakersData, isLoading: caretakersLoading } = useQuery({
+    url: "/api/v1/account/profiles/senior/caretakers",
   });
   const createSeniorProfile = useMutation(
     "post",
@@ -75,11 +78,14 @@ const ProfilesList = () => {
     return <RedirectIfLoggedOut identity={identity} />;
   }
 
-  if (!data) {
+  if (!profileData) {
     return <LoadingScreen title={t("profileList.pageTitle")} />;
   }
 
-  const { profiles } = data as { profiles: Profile[] };
+  const { profiles } = profileData as { profiles: Profile[] };
+
+  const canDeleteSenior =
+    !caretakersLoading && caretakersData?.profiles?.length === 0;
 
   const seniorProfile = profiles.find(isSenior);
   const caretakerProfiles = profiles.filter(isCaretaker);
@@ -136,7 +142,9 @@ const ProfilesList = () => {
               avatar={seniorAvatar}
               onPress={() => handleItemPress(seniorProfile)}
               onProfileEdit={null}
-              onProfileDelete={() => showDeleteAlert(seniorProfile)}
+              onProfileDelete={
+                canDeleteSenior ? () => showDeleteAlert(seniorProfile) : null
+              }
             />
           </>
         )}
