@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -16,7 +16,6 @@ import { randomWord } from "@/assets/words";
 import { actions } from "@/common/actions";
 import { useMutation } from "@/common/api";
 import { useI18n } from "@/common/i18n";
-import { I18nContext } from "@/common/i18n/context";
 import { calculateScore } from "@/common/score";
 import { sty } from "@/common/styles";
 import { toMinutesAndSeconds } from "@/common/time";
@@ -51,8 +50,7 @@ const LetterTile = (
 };
 
 const Page = () => {
-  const { t } = useI18n();
-  const { language } = useContext(I18nContext);
+  const { t, language } = useI18n();
   const [correctWord, setCorrectWord] = useState<string[]>(
     randomWord(language).toUpperCase().split(""),
   );
