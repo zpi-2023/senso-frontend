@@ -238,6 +238,10 @@
     "en": "Memory game",
     "pl": "Gra Memory"
   },
+  "actions.playWordleGame": {
+    "en": "Graydle",
+    "pl": "Graydle"
+  },
   "actions.manageNotes": {
     "en": "Notes",
     "pl": "Notatki"
