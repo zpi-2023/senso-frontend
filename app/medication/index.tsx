@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
-import { IOScrollView, InView } from "react-native-intersection-observer";
+import { IOScrollView } from "react-native-intersection-observer";
 import { ActivityIndicator, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
@@ -8,18 +8,17 @@ import { useQuery, useQueryInvalidation } from "@/common/api";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
 import { useRefreshControl } from "@/common/refresh";
 import { sty } from "@/common/styles";
-import { CaretakerBanner, Header } from "@/components";
+import { CaretakerBanner, Header, OnViewEnter } from "@/components";
 
 const remindersPerFragment = 3;
 
 type FragmentProps = {
   index: number;
   seniorId: number;
-  loadMore: (index: number) => void;
+  loadMore: () => void;
 };
 
 const Fragment = ({ index, seniorId, loadMore }: FragmentProps) => {
-  const [isVisible, setIsVisible] = useState(false);
   const { data } = useQuery({
     url: "/api/v1/reminders/senior/{seniorId}",
     params: {
@@ -30,12 +29,6 @@ const Fragment = ({ index, seniorId, loadMore }: FragmentProps) => {
       },
     },
   });
-
-  useEffect(() => {
-    if (isVisible && data?.items?.length === remindersPerFragment) {
-      loadMore(index);
-    }
-  }, [isVisible, data?.items?.length, loadMore, index]);
 
   if (!data || !data.items) {
     return <ActivityIndicator />;
@@ -48,9 +41,10 @@ const Fragment = ({ index, seniorId, loadMore }: FragmentProps) => {
           {r.medicationName}
         </Text>
       ))}
-      <InView onChange={setIsVisible}>
-        <View style={{ width: 1, height: 1 }} />
-      </InView>
+      <OnViewEnter
+        handler={loadMore}
+        disabled={data?.items?.length !== remindersPerFragment}
+      />
     </>
   );
 };
@@ -62,11 +56,6 @@ const Page = () => {
     "/api/v1/reminders/senior/{seniorId}",
   );
   const refreshControl = useRefreshControl(invalidateReminders);
-
-  const loadMore = useCallback(
-    (index: number) => setFragCount((c) => Math.max(c, index + 2)),
-    [],
-  );
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
@@ -80,7 +69,12 @@ const Page = () => {
       <CaretakerBanner />
       <IOScrollView refreshControl={refreshControl}>
         {Array.from({ length: fragCount }).map((_, i) => (
-          <Fragment key={i} index={i} seniorId={seniorId} loadMore={loadMore} />
+          <Fragment
+            key={i}
+            index={i}
+            seniorId={seniorId}
+            loadMore={() => setFragCount((c) => Math.max(c, i + 2))}
+          />
         ))}
       </IOScrollView>
     </View>
