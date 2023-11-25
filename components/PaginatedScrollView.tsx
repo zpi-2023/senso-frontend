@@ -1,4 +1,4 @@
-import { type ReactNode, useState, Fragment } from "react";
+import { type ReactNode, useState, Fragment, type ComponentProps } from "react";
 import { IOScrollView } from "react-native-intersection-observer";
 import { ActivityIndicator } from "react-native-paper";
 
@@ -37,7 +37,7 @@ type PaginatedScrollViewProps<P extends PaginatedPath> = {
   query: QueryArg<P> | null;
   itemsPerPage: number;
   invalidationUrl: string | null;
-};
+} & ComponentProps<typeof IOScrollView>;
 
 type PageProps<P extends PaginatedPath> = {
   renderer: (item: PaginatedItem<P>) => ReactNode;
@@ -52,13 +52,14 @@ export const PaginatedScrollView = <P extends PaginatedPath>({
   query,
   itemsPerPage,
   invalidationUrl,
+  ...props
 }: PaginatedScrollViewProps<P>) => {
   const [fragCount, setFragCount] = useState(1);
   const invalidateReminders = useQueryInvalidation(invalidationUrl);
   const refreshControl = useRefreshControl(invalidateReminders);
 
   return (
-    <IOScrollView refreshControl={refreshControl}>
+    <IOScrollView {...props} refreshControl={refreshControl}>
       {Array.from({ length: fragCount }).map((_, i) => (
         <Page
           key={i}

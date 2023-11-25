@@ -1,9 +1,14 @@
-import { Text } from "react-native-paper";
+import { View } from "react-native";
 
+import { actions } from "@/common/actions";
+import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
-import { PaginatedScrollView } from "@/components";
+import { sty } from "@/common/styles";
+import { CaretakerBanner, Header, PaginatedScrollView } from "@/components";
+import { ReminderCard } from "@/components/medication";
 
 const Page = () => {
+  const { t } = useI18n();
   const identity = useIdentity();
 
   if (!identity.hasProfile) {
@@ -13,18 +18,36 @@ const Page = () => {
   const { seniorId } = identity.profile;
 
   return (
-    <PaginatedScrollView
-      renderer={(item) => (
-        <Text style={{ height: 100 }}>{item.medicationName}</Text>
-      )}
-      query={{
-        url: "/api/v1/reminders/senior/{seniorId}",
-        params: { path: { seniorId } },
-      }}
-      itemsPerPage={1}
-      invalidationUrl="/api/v1/reminders/senior/{seniorId}"
-    />
+    <View style={sty.full}>
+      <Header
+        left={actions.goBack}
+        title={t("medicationList.pageTitle")}
+        right={actions.intakeHistory}
+      />
+      <CaretakerBanner />
+      <PaginatedScrollView
+        style={styles.view}
+        renderer={(item) => (
+          <ReminderCard reminder={item} style={styles.card} />
+        )}
+        query={{
+          url: "/api/v1/reminders/senior/{seniorId}",
+          params: { path: { seniorId } },
+        }}
+        itemsPerPage={5}
+        invalidationUrl="/api/v1/reminders/senior/{seniorId}"
+      />
+    </View>
   );
 };
+
+const styles = sty.create({
+  view: {
+    padding: 8,
+  },
+  card: {
+    marginVertical: 8,
+  },
+});
 
 export default Page;
