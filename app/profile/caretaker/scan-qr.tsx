@@ -48,7 +48,7 @@ export default function Page() {
       t("scanQR.alertDescription", { name: seniorDisplayName }),
       [
         {
-          text: t("scanQR.alertCancel"),
+          text: t("dialog.cancel"),
           style: "cancel",
           onPress: () => setScanned(false),
         },

@@ -142,6 +142,36 @@ export interface paths {
       };
     };
   };
+  "/api/v1/account/profiles/senior/caretakers": {
+    get: {
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ExtendedProfilesDto"];
+            "application/json": components["schemas"]["ExtendedProfilesDto"];
+            "text/json": components["schemas"]["ExtendedProfilesDto"];
+          };
+        };
+        /** @description Unauthorized */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description Not Found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
   "/api/v1/account/profiles/caretaker": {
     post: {
       requestBody?: {
@@ -1156,6 +1186,19 @@ export interface components {
       seniorDisplayName: string;
       /** Format: int32 */
       validFor: number;
+    };
+    ExtendedProfileDto: {
+      /** Format: int32 */
+      accountId: number;
+      /** Format: int32 */
+      seniorId: number;
+      type: string;
+      displayName: string;
+      email: string;
+      phoneNumber?: string | null;
+    };
+    ExtendedProfilesDto: {
+      profiles: components["schemas"]["ExtendedProfileDto"][];
     };
     GetAccountByCredentialsDto: {
       email: string;
