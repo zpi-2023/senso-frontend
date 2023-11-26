@@ -88,6 +88,12 @@ export const actions = {
     handler: ({ router }) => router.push(AppRoutes.MemoryGame),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
+  playWordleGame: {
+    displayName: (t) => t("actions.playWordleGame"),
+    icon: "file-word-box",
+    handler: ({ router }) => router.push(AppRoutes.WordleGame),
+    hidden: ({ identity }) => isCaretaker(identity.profile),
+  },
   manageNotes: {
     displayName: (t) => t("actions.manageNotes"),
     icon: "note",

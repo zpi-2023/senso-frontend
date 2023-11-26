@@ -254,6 +254,10 @@
     "en": "Memory game",
     "pl": "Gra Memory"
   },
+  "actions.playWordleGame": {
+    "en": "Graydle",
+    "pl": "Graydle"
+  },
   "actions.manageNotes": {
     "en": "Notes",
     "pl": "Notatki"
@@ -461,6 +465,30 @@
   "memoryGame.alertDescription": {
     "en": "You have completed the game in {moves} moves and time {time}.",
     "pl": "Ukończyłeś grę w {moves} ruchach i czasie {time}."
+  },
+  "wordle.pageTitle": {
+    "en": "Graydle",
+    "pl": "Graydle"
+  },
+  "wordle.timer": {
+    "en": "Time: {time}",
+    "pl": "Czas: {time}"
+  },
+  "wordle.guesses": {
+    "en": "Guesses: {guesses}",
+    "pl": "Próby: {guesses}"
+  },
+  "wordle.alertTitle": {
+    "en": "Congratulations!",
+    "pl": "Gratulacje!"
+  },
+  "wordle.alertDescription": {
+    "en": "You have completed the game in {guesses} guesses and time {time}.",
+    "pl": "Ukończyłeś grę w {guesses} próbach i czasie {time}."
+  },
+  "wordle.alertButton": {
+    "en": "Play again",
+    "pl": "Zagraj ponownie"
   },
   "medicationList.pageTitle": {
     "en": "Medication",
