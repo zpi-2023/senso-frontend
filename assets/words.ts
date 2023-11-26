@@ -1,0 +1,60 @@
+import { type Language } from "@/common/i18n/types";
+
+export const wordleWords = {
+  en: [
+    "apple",
+    "beach",
+    "candy",
+    "daisy",
+    "eagle",
+    "fairy",
+    "grape",
+    "happy",
+    "jelly",
+    "kitty",
+    "lemon",
+    "mango",
+    "ninja",
+    "olive",
+    "piano",
+    "queen",
+    "radio",
+    "sunny",
+    "tiger",
+    "umbra",
+    "vivid",
+    "waltz",
+    "xerox",
+    "yacht",
+    "zebra",
+  ],
+  pl: [
+    "abrys",
+    "bogin",
+    "cyrki",
+    "dusza",
+    "ekran",
+    "fizyk",
+    "grypa",
+    "hakus",
+    "jacht",
+    "karma",
+    "lampa",
+    "miska",
+    "nawis",
+    "pasta",
+    "rampa",
+    "słowo",
+    "tango",
+    "ulica",
+    "wazon",
+    "zenon",
+    "yacht",
+    "zamek",
+  ],
+};
+
+export const randomWord = (language: Language): string => {
+  const words = wordleWords[language];
+  return words[Math.floor(Math.random() * words.length)] as string;
+};
