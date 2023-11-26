@@ -1,20 +1,21 @@
 const validSources = {
-  ActivityIndicator: "react-native-paper",
-  AppRoutes: "@/common/constants",
-  Button: "react-native-paper",
+  ActivityIndicator: ["react-native-paper"],
+  AppRoutes: ["@/common/constants"],
+  Button: ["react-native-paper"],
   CaretakerBanner: ["@/components", "./CaretakerBanner"],
   Header: ["@/components", "./Header"],
   Icon: ["@/components", "./Icon"],
-  Link: "expo-router",
-  Modal: "react-native-paper",
+  Link: ["expo-router"],
+  Modal: ["react-native-paper"],
   LoadingScreen: ["@/components", "./LoadingScreen"],
-  StyleSheet: "react-native",
-  Text: "react-native-paper",
-  ThemeProvider: "@/common/theme",
-  TouchableWithoutFeedback: "react-native",
-  useRouter: "expo-router",
-  useTheme: "@/common/theme",
-  View: "react-native",
+  StyleSheet: ["react-native"],
+  Text: ["react-native-paper"],
+  TextInput: ["react-native-paper"],
+  ThemeProvider: ["@/common/theme"],
+  TouchableWithoutFeedback: ["react-native"],
+  useRouter: ["expo-router"],
+  useTheme: ["@/common/theme"],
+  View: ["react-native"],
 };
 
 /**
@@ -34,7 +35,6 @@ module.exports = {
 
           if (
             identifier in validSources &&
-            source.value !== validSources[identifier] &&
             !validSources[identifier].includes(source.value)
           ) {
             context.report({

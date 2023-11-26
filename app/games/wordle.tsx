@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import {
   View,
-  TextInput,
+  TextInput, // eslint-disable-line senso-import-sources
   Dimensions,
   KeyboardAvoidingView,
   Platform,

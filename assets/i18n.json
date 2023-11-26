@@ -166,6 +166,18 @@
     "en": "You don't have any profiles yet.",
     "pl": "Nie masz jeszcze żadnych profili."
   },
+  "profileList.editProfile": {
+    "en": "Edit profile",
+    "pl": "Edytuj profil"
+  },
+  "profileList.deleteProfile": {
+    "en": "Delete profile",
+    "pl": "Usuń profil"
+  },
+  "profileList.deleteProfileDescription": {
+    "en": "Are you sure you want to delete this profile?",
+    "pl": "Czy na pewno chcesz usunąć ten profil?"
+  },
   "dashboard.pageTitle": {
     "en": "Dashboard",
     "pl": "Panel"
@@ -297,10 +309,6 @@
   "scanQR.alertDescription": {
     "en": "Do you want to add \"{name}\" as your senior?",
     "pl": "Czy chcesz dodać \"{name}\" jako swojego seniora?"
-  },
-  "scanQR.alertCancel": {
-    "en": "Cancel",
-    "pl": "Anuluj"
   },
   "scanQR.alertAdd": {
     "en": "Add",
@@ -461,5 +469,13 @@
   "wordle.alertButton": {
     "en": "Play again",
     "pl": "Zagraj ponownie"
+  },
+  "dialog.cancel": {
+    "en": "Cancel",
+    "pl": "Anuluj"
+  },
+  "dialog.confirm": {
+    "en": "Confirm",
+    "pl": "Potwierdź"
   }
 }
