@@ -8,8 +8,11 @@ const isArgs = (args: unknown): args is Arguments =>
   Array.isArray(args) ||
   typeof args === "object";
 
-export const doArgumentsMatch = (args: Arguments, key: string): boolean => {
-  if (!args) {
+export const doArgumentsMatch = (
+  args: Arguments,
+  key: string | null,
+): boolean => {
+  if (!args || key === null) {
     return false;
   }
 
@@ -38,7 +41,9 @@ export const doArgumentsMatch = (args: Arguments, key: string): boolean => {
  * // "/api/v1/notes/senior", e.g. /api/v1/notes/senior/{seniorId}
  * const invalidateUsers = useQueryInvalidation("/api/v1/notes/senior");
  */
-export const useQueryInvalidation = (key: string): (() => Promise<void>) => {
+export const useQueryInvalidation = (
+  key: string | null,
+): (() => Promise<void>) => {
   const { mutate } = useSWRConfig();
   return async () => {
     await mutate((args) => doArgumentsMatch(args, key));

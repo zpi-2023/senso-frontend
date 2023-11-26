@@ -242,6 +242,10 @@
     "en": "Medication",
     "pl": "Leki"
   },
+  "actions.intakeHistory": {
+    "en": "Intake history",
+    "pl": "Historia dawkowań"
+  },
   "actions.playGames": {
     "en": "Games",
     "pl": "Gry"
@@ -418,6 +422,22 @@
     "en": "Yesterday",
     "pl": "Wczoraj"
   },
+  "time.hours": {
+    "en": "hours",
+    "pl": "godzin"
+  },
+  "time.minutes": {
+    "en": "minutes",
+    "pl": "minuty"
+  },
+  "time.in": {
+    "en": "in",
+    "pl": "za"
+  },
+  "time.ago": {
+    "en": "ago",
+    "pl": "temu"
+  },
   "memoryGame.pageTitle": {
     "en": "Memory game",
     "pl": "Gra Memory"
@@ -469,6 +489,30 @@
   "wordle.alertButton": {
     "en": "Play again",
     "pl": "Zagraj ponownie"
+  },
+  "medicationList.pageTitle": {
+    "en": "Medication",
+    "pl": "Leki"
+  },
+  "medicationList.pills": {
+    "en": "pills",
+    "pl": "tabletki"
+  },
+  "medicationList.takeDose": {
+    "en": "Take",
+    "pl": "Weź"
+  },
+  "medicationList.history": {
+    "en": "History",
+    "pl": "Historia"
+  },
+  "medicationList.editReminder": {
+    "en": "Edit reminder",
+    "pl": "Edytuj przypomnienie"
+  },
+  "medicationList.deactivateReminder": {
+    "en": "Deactivate reminder",
+    "pl": "Wyłącz przypomnienie"
   },
   "dialog.cancel": {
     "en": "Cancel",
