@@ -13,10 +13,10 @@ export type Reminder = {
   description?: string | null;
 };
 
-export const useMedicationIdParam = (): number | null => {
-  const { medicationId: medicationIdString } = useLocalSearchParams<{
-    medicationId: string;
+export const useReminderIdParam = (): number | null => {
+  const { reminderId: reminderIdString } = useLocalSearchParams<{
+    reminderId: string;
   }>();
-  const noteId = medicationIdString ? parseInt(medicationIdString, 10) : null;
+  const noteId = reminderIdString ? parseInt(reminderIdString, 10) : null;
   return Number.isNaN(noteId) ? null : noteId;
 };

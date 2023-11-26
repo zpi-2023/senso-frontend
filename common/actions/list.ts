@@ -67,7 +67,7 @@ export const actions = {
   trackMedication: {
     displayName: (t) => t("actions.trackMedication"),
     icon: "medical-bag",
-    handler: ({ router }) => router.push(AppRoutes.Medication),
+    handler: ({ router }) => router.push(AppRoutes.MedicationList),
     managed: true,
   },
   playGames: {

@@ -8,15 +8,19 @@ import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
 import { sty } from "@/common/styles";
 import { CaretakerBanner, Header, LoadingScreen } from "@/components";
-import { ReminderDetails, ReminderHistory } from "@/components/medication";
-import { useMedicationIdParam } from "@/logic/medication";
+import {
+  ReminderDetails,
+  ReminderHistory,
+  useReminderDeactivateDialog,
+} from "@/components/medication";
+import { useReminderIdParam } from "@/logic/medication";
 
 const Page = () => {
   const { t } = useI18n();
   const styles = useStyles();
   const identity = useIdentity();
 
-  const reminderId = useMedicationIdParam();
+  const reminderId = useReminderIdParam();
   const { data: reminder } = useQuery(
     reminderId
       ? {
@@ -25,6 +29,9 @@ const Page = () => {
         }
       : null,
   );
+
+  const { dialog: deactivateDialog, showDialog: showDeactivateDialog } =
+    useReminderDeactivateDialog(reminder?.id ?? null);
 
   const [tab, setTab] = useState<"details" | "history">("details");
 
@@ -66,7 +73,7 @@ const Page = () => {
         {tab === "details" ? (
           <ReminderDetails
             reminder={reminder}
-            canTake={isSenior(identity.profile)}
+            canTake={reminder.isActive && isSenior(identity.profile)}
           />
         ) : (
           <ReminderHistory reminderId={reminder.id} />
@@ -77,11 +84,16 @@ const Page = () => {
           <Button mode="outlined" icon="pencil" onPress={() => {}}>
             {t("medicationDetails.editReminder")}
           </Button>
-          <Button mode="outlined" icon="bell-off-outline" onPress={() => {}}>
+          <Button
+            mode="outlined"
+            icon="bell-off-outline"
+            onPress={showDeactivateDialog}
+          >
             {t("medicationDetails.deactivateReminder")}
           </Button>
         </View>
       ) : null}
+      {deactivateDialog}
     </View>
   );
 };

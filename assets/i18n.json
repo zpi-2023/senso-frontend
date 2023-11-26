@@ -522,6 +522,14 @@
     "en": "in package",
     "pl": "w opakowaniu"
   },
+  "medication.deactivateDialog.title": {
+    "en": "Deactivate reminder",
+    "pl": "Wyłącz przypomnienie"
+  },
+  "medication.deactivateDialog.description": {
+    "en": "Are you sure you want to deactivate this reminder?",
+    "pl": "Czy na pewno chcesz wyłączyć to przypomnienie?"
+  },
   "dialog.cancel": {
     "en": "Cancel",
     "pl": "Anuluj"
