@@ -10,6 +10,7 @@ export const enum AppRoutes {
   DisplaySeniorQR = "/profile/senior/display-qr",
   AlertHistory = "/alert/history",
   Medication = "/medication",
+  MedicationDetails = "/medication/[medicationId]",
   Games = "/games",
   MemoryGame = "/games/memory",
   WordleGame = "/games/wordle",
