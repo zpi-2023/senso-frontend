@@ -4,7 +4,7 @@ import { FAB, Text } from "react-native-paper";
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
 import { nextOccurences } from "@/common/time";
-import type { Reminder } from "@/logic/medication";
+import { formatAmount, type Reminder } from "@/logic/medication";
 
 type SegmentProps = {
   label: string;
@@ -67,16 +67,16 @@ export const ReminderDetails = ({
       <View style={styles.row}>
         <Segment
           label={t("medication.details.amountPerIntake")}
-          value={`${reminder.amountPerIntake} ${
-            reminder.amountUnit ?? t("medication.pills")
-          }`}
+          value={formatAmount(reminder.amountPerIntake, reminder.amountUnit, t)}
         />
         <Segment
           right
           label={t("medication.details.amountOwned")}
-          value={`${reminder.amountOwned} ${
-            reminder.amountUnit ?? t("medication.pills")
-          }${
+          value={`${formatAmount(
+            reminder.amountOwned ?? 0,
+            reminder.amountUnit,
+            t,
+          )}${
             reminder.medicationAmountInPackage
               ? `\n(${reminder.medicationAmountInPackage} ${t(
                   "medication.details.inPackage",

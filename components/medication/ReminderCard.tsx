@@ -8,7 +8,11 @@ import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
 import { formatCron } from "@/common/time";
-import { canMakeQuickIntake, type Reminder } from "@/logic/medication";
+import {
+  canMakeQuickIntake,
+  formatAmount,
+  type Reminder,
+} from "@/logic/medication";
 
 type ReminderCardProps = {
   reminder: Reminder;
@@ -36,9 +40,11 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
       }
     >
       <Card.Title
-        title={`${reminder.medicationName} - ${reminder.amountPerIntake} ${
-          reminder.amountUnit ?? t("medication.pills")
-        }`}
+        title={`${reminder.medicationName} - ${formatAmount(
+          reminder.amountPerIntake,
+          reminder.amountUnit,
+          t,
+        )}`}
         right={(props) =>
           reminder.isActive ? (
             <Menu

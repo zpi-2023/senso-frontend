@@ -1,6 +1,8 @@
 import { parseExpression } from "cron-parser";
 import { useLocalSearchParams } from "expo-router";
 
+import type { Translator } from "@/common/i18n";
+
 const quickIntakeThresholdMs = 1000 * 60 * 5;
 
 export type Reminder = {
@@ -31,6 +33,12 @@ export const canMakeQuickIntake = (reminder: Reminder, now: Date) => {
 
   return Math.min(tillPrev, tillNext) < quickIntakeThresholdMs;
 };
+
+export const formatAmount = (
+  amount: number,
+  unit: string | null | undefined,
+  t: Translator,
+) => (unit ? `${amount} ${unit}` : t("medication.pills", { count: amount }));
 
 export const useReminderParams = (): {
   reminderId: number | null;

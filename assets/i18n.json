@@ -10,6 +10,13 @@
   "__MOCK_DEFAULT": {
     "en": "Only English value"
   },
+  "__MOCK_COUNT": {
+    "en": "{count} examples",
+    "en_1": "{count} example",
+    "pl": "{count} przykładów",
+    "pl_1": "{count} przykład",
+    "pl_2,3,4": "{count} przykłady"
+  },
   "appName": {
     "en": "Senso",
     "pl": "Senso"
@@ -422,21 +429,33 @@
     "en": "Yesterday",
     "pl": "Wczoraj"
   },
-  "time.hours": {
-    "en": "hours",
-    "pl": "godzin"
+  "time.inHours": {
+    "en": "in {count} hours",
+    "en_1": "in {count} hour",
+    "pl": "za {count} godzin",
+    "pl_1": "za {count} godzinę",
+    "pl_2,3,4": "za {count} godziny"
   },
-  "time.minutes": {
-    "en": "minutes",
-    "pl": "minuty"
+  "time.inMinutes": {
+    "en": "in {count} minutes",
+    "en_1": "in {count} minute",
+    "pl": "za {count} minut",
+    "pl_1": "za {count} minutę",
+    "pl_2,3,4": "za {count} minuty"
   },
-  "time.in": {
-    "en": "in",
-    "pl": "za"
+  "time.hoursAgo": {
+    "en": "{count} hours ago",
+    "en_1": "{count} hour ago",
+    "pl": "{count} godzin temu",
+    "pl_1": "{count} godzina temu",
+    "pl_2,3,4": "{count} godziny temu"
   },
-  "time.ago": {
-    "en": "ago",
-    "pl": "temu"
+  "time.minutesAgo": {
+    "en": "{count} minutes ago",
+    "en_1": "{count} minute ago",
+    "pl": "{count} minut temu",
+    "pl_1": "{count} minuta temu",
+    "pl_2,3,4": "{count} minuty temu"
   },
   "games.memory.pageTitle": {
     "en": "Memory game",
@@ -463,8 +482,10 @@
     "pl": "Gratulacje!"
   },
   "games.memory.alertDescription": {
-    "en": "You have completed the game in {moves} moves and time {time}.",
-    "pl": "Ukończyłeś grę w {moves} ruchach i czasie {time}."
+    "en": "You have completed the game in {count} moves and time {time}.",
+    "en_1": "You have completed the game in {count} move and time {time}.",
+    "pl": "Ukończyłeś grę w {count} ruchach i czasie {time}.",
+    "pl_1": "Ukończyłeś grę w {count} ruchu i czasie {time}."
   },
   "games.wordle.pageTitle": {
     "en": "Graydle",
@@ -483,16 +504,21 @@
     "pl": "Gratulacje!"
   },
   "games.wordle.alertDescription": {
-    "en": "You have completed the game in {guesses} guesses and time {time}.",
-    "pl": "Ukończyłeś grę w {guesses} próbach i czasie {time}."
+    "en": "You have completed the game in {count} guesses and time {time}.",
+    "en_1": "You have completed the game in {count} guess and time {time}.",
+    "pl": "Ukończyłeś grę w {count} próbach i czasie {time}.",
+    "pl_1": "Ukończyłeś grę w {count} próbie i czasie {time}."
   },
   "games.wordle.alertButton": {
     "en": "Play again",
     "pl": "Zagraj ponownie"
   },
   "medication.pills": {
-    "en": "pills",
-    "pl": "tabletek"
+    "en": "{count} pills",
+    "en_1": "{count} pill",
+    "pl": "{count} tabletek",
+    "pl_1": "{count} tabletka",
+    "pl_2,3,4": "{count} tabletki"
   },
   "medication.takeDose": {
     "en": "Take",

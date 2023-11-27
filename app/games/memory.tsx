@@ -184,7 +184,7 @@ const Page = () => {
       Alert.alert(
         t("games.memory.alertTitle"),
         t("games.memory.alertDescription", {
-          moves,
+          count: moves,
           time: toMinutesAndSeconds(seconds),
         }),
         [

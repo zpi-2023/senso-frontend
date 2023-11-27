@@ -100,7 +100,7 @@ const Page = () => {
         Alert.alert(
           t("games.wordle.alertTitle"),
           t("games.wordle.alertDescription", {
-            guesses: previousGuesses.length,
+            count: previousGuesses.length,
             time: toMinutesAndSeconds(seconds),
           }),
           [

@@ -13,7 +13,7 @@ import {
   ReminderHistory,
   useReminderDeactivateDialog,
 } from "@/components/medication";
-import { useReminderParams } from "@/logic/medication";
+import { formatAmount, useReminderParams } from "@/logic/medication";
 
 const Page = () => {
   const { t } = useI18n();
@@ -47,9 +47,11 @@ const Page = () => {
     <View style={sty.full}>
       <Header
         left={actions.goBack}
-        title={`${reminder.medicationName} - ${reminder.amountPerIntake} ${
-          reminder.amountUnit ?? t("medication.pills")
-        }`}
+        title={`${reminder.medicationName} - ${formatAmount(
+          reminder.amountPerIntake,
+          reminder.amountUnit,
+          t,
+        )}`}
       />
       <CaretakerBanner />
       <SegmentedButtons
