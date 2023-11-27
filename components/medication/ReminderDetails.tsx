@@ -113,7 +113,7 @@ const styles = sty.create({
   },
   fab: {
     position: "absolute",
-    right: 16,
-    bottom: 16,
+    right: 32,
+    bottom: 32,
   },
 });

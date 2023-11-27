@@ -1,6 +1,10 @@
+import { router } from "expo-router";
 import { useState, type ComponentProps } from "react";
 import { Button, Card, IconButton, Menu, Text } from "react-native-paper";
 
+import { useReminderDeactivateDialog } from "./ReminderDeactivateDialog";
+
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
 import { formatCron } from "@/common/time";
@@ -13,6 +17,8 @@ type ReminderCardProps = {
 export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
   const { t } = useI18n();
   const [menuVisible, setMenuVisible] = useState(false);
+  const { showDialog: showDeactivateDialog, dialog: deactivateDialog } =
+    useReminderDeactivateDialog(reminder.id);
 
   return (
     <Card
@@ -22,35 +28,46 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
         styles.card,
         reminder.isActive ? null : styles.inactive,
       ]}
+      onPress={() =>
+        router.push({
+          pathname: AppRoutes.ReminderDetails,
+          params: { reminderId: reminder.id },
+        })
+      }
     >
       <Card.Title
         title={`${reminder.medicationName} - ${reminder.amountPerIntake} ${
           reminder.amountUnit ?? t("medication.pills")
         }`}
-        right={(props) => (
-          <Menu
-            {...props}
-            visible={menuVisible}
-            onDismiss={() => setMenuVisible(false)}
-            anchor={
-              <IconButton
-                icon="dots-vertical"
-                onPress={() => setMenuVisible(true)}
+        right={(props) =>
+          reminder.isActive ? (
+            <Menu
+              {...props}
+              visible={menuVisible}
+              onDismiss={() => setMenuVisible(false)}
+              anchor={
+                <IconButton
+                  icon="dots-vertical"
+                  onPress={() => setMenuVisible(true)}
+                />
+              }
+            >
+              <Menu.Item
+                onPress={() => setMenuVisible(false)}
+                leadingIcon="pencil"
+                title={t("medicationList.editReminder")}
               />
-            }
-          >
-            <Menu.Item
-              onPress={() => setMenuVisible(false)}
-              leadingIcon="pencil"
-              title={t("medicationList.editReminder")}
-            />
-            <Menu.Item
-              onPress={() => setMenuVisible(false)}
-              leadingIcon="bell-off-outline"
-              title={t("medicationList.deactivateReminder")}
-            />
-          </Menu>
-        )}
+              <Menu.Item
+                onPress={() => {
+                  setMenuVisible(false);
+                  showDeactivateDialog();
+                }}
+                leadingIcon="bell-off-outline"
+                title={t("medicationList.deactivateReminder")}
+              />
+            </Menu>
+          ) : null
+        }
         subtitle={
           reminder.cron ? formatCron(reminder.cron, new Date(), t) : null
         }
@@ -72,6 +89,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
           {t("medicationList.history")}
         </Button>
       </Card.Actions>
+      {deactivateDialog}
     </Card>
   );
 };
