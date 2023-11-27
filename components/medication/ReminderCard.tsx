@@ -31,7 +31,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
       onPress={() =>
         router.push({
           pathname: AppRoutes.ReminderDetails,
-          params: { reminderId: reminder.id },
+          params: { reminderId: reminder.id, tab: "details" },
         })
       }
     >
@@ -85,7 +85,16 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
             {t("medication.takeDose")}
           </Button>
         ) : null}
-        <Button mode="outlined" onPress={() => {}} icon="history">
+        <Button
+          mode="outlined"
+          onPress={() =>
+            router.push({
+              pathname: AppRoutes.ReminderDetails,
+              params: { reminderId: reminder.id, tab: "history" },
+            })
+          }
+          icon="history"
+        >
           {t("medicationList.history")}
         </Button>
       </Card.Actions>

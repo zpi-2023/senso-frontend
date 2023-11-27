@@ -13,14 +13,14 @@ import {
   ReminderHistory,
   useReminderDeactivateDialog,
 } from "@/components/medication";
-import { useReminderIdParam } from "@/logic/medication";
+import { useReminderParams } from "@/logic/medication";
 
 const Page = () => {
   const { t } = useI18n();
   const styles = useStyles();
   const identity = useIdentity();
 
-  const reminderId = useReminderIdParam();
+  const { reminderId, tab: defaultTab } = useReminderParams();
   const { data: reminder } = useQuery(
     reminderId
       ? {
@@ -33,7 +33,7 @@ const Page = () => {
   const { dialog: deactivateDialog, showDialog: showDeactivateDialog } =
     useReminderDeactivateDialog(reminder?.id ?? null);
 
-  const [tab, setTab] = useState<"details" | "history">("details");
+  const [tab, setTab] = useState<"details" | "history">(defaultTab);
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
