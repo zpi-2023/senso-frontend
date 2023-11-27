@@ -490,17 +490,17 @@
     "en": "Play again",
     "pl": "Zagraj ponownie"
   },
+  "medication.pills": {
+    "en": "pills",
+    "pl": "tabletek"
+  },
+  "medication.takeDose": {
+    "en": "Take",
+    "pl": "Weź"
+  },
   "medicationList.pageTitle": {
     "en": "Medication",
     "pl": "Leki"
-  },
-  "medicationList.pills": {
-    "en": "pills",
-    "pl": "tabletki"
-  },
-  "medicationList.takeDose": {
-    "en": "Take",
-    "pl": "Weź"
   },
   "medicationList.history": {
     "en": "History",
@@ -513,6 +513,58 @@
   "medicationList.deactivateReminder": {
     "en": "Deactivate reminder",
     "pl": "Wyłącz przypomnienie"
+  },
+  "medicationDetails.unnamedReminder": {
+    "en": "Unnamed reminder",
+    "pl": "Nienazwane przypomnienie"
+  },
+  "medicationDetails.editReminder": {
+    "en": "Edit",
+    "pl": "Edytuj"
+  },
+  "medicationDetails.deactivateReminder": {
+    "en": "Deactivate",
+    "pl": "Wyłącz"
+  },
+  "medicationDetails.detailsTab": {
+    "en": "Details",
+    "pl": "Szczegóły"
+  },
+  "medicationDetails.historyTab": {
+    "en": "History",
+    "pl": "Historia"
+  },
+  "medicationDetails.medicationName": {
+    "en": "Medication",
+    "pl": "Lek"
+  },
+  "medicationDetails.nextReminders": {
+    "en": "Next reminders",
+    "pl": "Następne przypomnienia"
+  },
+  "medicationDetails.description": {
+    "en": "Description",
+    "pl": "Opis"
+  },
+  "medicationDetails.amountPerIntake": {
+    "en": "Intake",
+    "pl": "Dawka"
+  },
+  "medicationDetails.amountOwned": {
+    "en": "Amount owned",
+    "pl": "Ilość posiadana"
+  },
+  "medicationDetails.inPackage": {
+    "en": "in package",
+    "pl": "w opakowaniu"
+  },
+  "medication.deactivateDialog.title": {
+    "en": "Deactivate reminder",
+    "pl": "Wyłącz przypomnienie"
+  },
+  "medication.deactivateDialog.description": {
+    "en": "Are you sure you want to deactivate this reminder?",
+    "pl": "Czy na pewno chcesz wyłączyć to przypomnienie?"
   },
   "dialog.cancel": {
     "en": "Cancel",

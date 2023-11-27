@@ -27,6 +27,15 @@ export const formatDateOffset = (date: Date, now: Date, t: Translator) => {
   }
 };
 
+export const nextOccurences = (cron: string, count: number): Date[] => {
+  const expression = parseExpression(cron);
+  const result = [];
+  for (let i = 0; i < count && expression.hasNext(); i++) {
+    result.push(expression.next().toDate());
+  }
+  return result;
+};
+
 const formatDuration = (diffMs: number, t: Translator): string => {
   const diffMins = Math.ceil(diffMs / 1000 / 60);
 
