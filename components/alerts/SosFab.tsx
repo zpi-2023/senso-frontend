@@ -37,7 +37,7 @@ export const SosFab = () => {
           contentContainerStyle={styles.contentContainerStyle}
         >
           <Text variant="headlineSmall" style={{ textAlign: "center" }}>
-            {t("sosSlider.description")}
+            {t("alerts.sosSlider.description")}
           </Text>
           <SosSlider />
         </Modal>

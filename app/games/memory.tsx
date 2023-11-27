@@ -182,8 +182,8 @@ const Page = () => {
         },
       });
       Alert.alert(
-        t("memoryGame.alertTitle"),
-        t("memoryGame.alertDescription", {
+        t("games.memory.alertTitle"),
+        t("games.memory.alertDescription", {
           moves,
           time: toMinutesAndSeconds(seconds),
         }),
@@ -199,31 +199,31 @@ const Page = () => {
 
   return (
     <View style={styles.componentWrapper}>
-      <Header left={actions.goBack} title={t("memoryGame.pageTitle")} />
+      <Header left={actions.goBack} title={t("games.memory.pageTitle")} />
       <View style={styles.optionsWrapper}>
         <Button
           mode="contained"
           onPress={handleStartGame}
           disabled={gameStarted}
         >
-          {t("memoryGame.startButton")}
+          {t("games.memory.startButton")}
         </Button>
         <Button
           mode="contained"
           onPress={handleResetGame}
           disabled={!gameStarted}
         >
-          {t("memoryGame.restartButton")}
+          {t("games.memory.restartButton")}
         </Button>
       </View>
       <View style={styles.optionsWrapper}>
         <Text style={styles.statsLabel}>
-          {t("memoryGame.movesCounter", {
+          {t("games.memory.movesCounter", {
             moves,
           })}
         </Text>
         <Text style={styles.statsLabel}>
-          {t("memoryGame.timeCounter", {
+          {t("games.memory.timeCounter", {
             time: toMinutesAndSeconds(seconds),
           })}
         </Text>

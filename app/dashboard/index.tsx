@@ -19,12 +19,12 @@ const Page = () => {
   }
 
   if (!gadgets) {
-    return <LoadingScreen title={t("dashboard.pageTitle")} />;
+    return <LoadingScreen title={t("dashboard.view.pageTitle")} />;
   }
 
   return (
     <View style={sty.full}>
-      <Header left={actions.openMenu} title={t("dashboard.pageTitle")} />
+      <Header left={actions.openMenu} title={t("dashboard.view.pageTitle")} />
       <CaretakerBanner />
       <FlatList
         data={gadgets}

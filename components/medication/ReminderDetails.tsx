@@ -39,12 +39,12 @@ export const ReminderDetails = ({
   return (
     <View style={styles.view}>
       <Segment
-        label={t("medicationDetails.medicationName")}
+        label={t("medication.details.medicationName")}
         value={reminder.medicationName}
       />
       {reminder.cron ? (
         <Segment
-          label={t("medicationDetails.nextReminders")}
+          label={t("medication.details.nextReminders")}
           value={nextOccurences(reminder.cron, 3)
             .map(
               (date) =>
@@ -60,26 +60,26 @@ export const ReminderDetails = ({
       ) : null}
       {reminder.description ? (
         <Segment
-          label={t("medicationDetails.description")}
+          label={t("medication.details.description")}
           value={reminder.description}
         />
       ) : null}
       <View style={styles.row}>
         <Segment
-          label={t("medicationDetails.amountPerIntake")}
+          label={t("medication.details.amountPerIntake")}
           value={`${reminder.amountPerIntake} ${
             reminder.amountUnit ?? t("medication.pills")
           }`}
         />
         <Segment
           right
-          label={t("medicationDetails.amountOwned")}
+          label={t("medication.details.amountOwned")}
           value={`${reminder.amountOwned} ${
             reminder.amountUnit ?? t("medication.pills")
           }${
             reminder.medicationAmountInPackage
               ? `\n(${reminder.medicationAmountInPackage} ${t(
-                  "medicationDetails.inPackage",
+                  "medication.details.inPackage",
                 )})`
               : ""
           }`}

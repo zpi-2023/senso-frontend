@@ -40,11 +40,11 @@ const Page = () => {
 
   return (
     <View style={sty.full}>
-      <Header left={actions.goBack} title={t("createNote.pageTitle")} />
+      <Header left={actions.goBack} title={t("notes.create.pageTitle")} />
       <NoteForm
         initialValues={{ content: "", isPrivate: false }}
         onSubmit={handleSubmit}
-        submitText={t("createNote.submit")}
+        submitText={t("notes.create.submit")}
       />
     </View>
   );

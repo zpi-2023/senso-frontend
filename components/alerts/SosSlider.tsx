@@ -54,7 +54,7 @@ export const SosSlider = () => {
         {calledForHelp ? (
           <View style={sty.center}>
             <Text variant="titleLarge" style={styles.sosText}>
-              {t("sosSlider.slider")}
+              {t("alerts.sosSlider.slider")}
             </Text>
           </View>
         ) : (

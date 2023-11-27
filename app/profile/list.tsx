@@ -79,7 +79,7 @@ const ProfilesList = () => {
   }
 
   if (!profileData) {
-    return <LoadingScreen title={t("profileList.pageTitle")} />;
+    return <LoadingScreen title={t("profiles.list.pageTitle")} />;
   }
 
   const { profiles } = profileData as { profiles: Profile[] };
@@ -109,11 +109,11 @@ const ProfilesList = () => {
 
   return (
     <View style={styles.container}>
-      <Header left={actions.goBack} title={t("profileList.pageTitle")} />
+      <Header left={actions.goBack} title={t("profiles.list.pageTitle")} />
       <List.Section>
         {caretakerProfiles.length > 0 && (
           <List.Subheader style={styles.listSubheader}>
-            {t("profileList.caretakersHeader")}
+            {t("profiles.list.caretakersHeader")}
           </List.Subheader>
         )}
         <ScrollView style={styles.scrollView}>
@@ -121,7 +121,7 @@ const ProfilesList = () => {
             return (
               <ProfileEntry
                 key={p.seniorId}
-                title={t("profileList.caretakerNameFallback")}
+                title={t("profiles.list.caretakerNameFallback")}
                 description={`Senior: ${p.seniorAlias}`}
                 avatar={caretakerAvatar}
                 onPress={() => handleItemPress(p)}
@@ -134,11 +134,11 @@ const ProfilesList = () => {
         {seniorProfile && (
           <>
             <List.Subheader style={styles.listSubheader}>
-              {t("profileList.seniorHeader")}
+              {t("profiles.list.seniorHeader")}
             </List.Subheader>
             <ProfileEntry
-              title={t("profileList.seniorNameFallback")}
-              description={t("profileList.seniorDescription")}
+              title={t("profiles.list.seniorNameFallback")}
+              description={t("profiles.list.seniorDescription")}
               avatar={seniorAvatar}
               onPress={() => handleItemPress(seniorProfile)}
               onProfileEdit={null}
@@ -151,13 +151,13 @@ const ProfilesList = () => {
       </List.Section>
       {profiles.length === 0 && (
         <List.Subheader style={styles.listSubheader}>
-          {t("profileList.noProfiles")}
+          {t("profiles.list.noProfiles")}
         </List.Subheader>
       )}
       <View style={styles.newProfileButtonWrapper}>
         <Link href={AppRoutes.AddCaretakerProfile}>
           <Button icon="account-eye-outline" mode="outlined" uppercase>
-            {t("profileList.newCaretakerProfileButton")}
+            {t("profiles.list.newCaretakerProfileButton")}
           </Button>
         </Link>
         {!seniorProfile && (
@@ -170,7 +170,7 @@ const ProfilesList = () => {
               loading={isCreatingSeniorProfile}
               onPress={handleCreateSeniorProfile}
             >
-              {t("profileList.newSeniorProfileButton")}
+              {t("profiles.list.newSeniorProfileButton")}
             </Button>
           </Link>
         )}
@@ -182,11 +182,11 @@ const ProfilesList = () => {
         >
           {dialogState.type === "edit-prompt" ? (
             <>
-              <Dialog.Title>{t("profileList.editProfile")}</Dialog.Title>
+              <Dialog.Title>{t("profiles.list.editProfile")}</Dialog.Title>
               <Dialog.Content>
                 <TextInput
                   mode="outlined"
-                  label={t("createCaretakerProfile.seniorAliasInputLabel")}
+                  label={t("profiles.create.caretaker.seniorAliasInputLabel")}
                   onChangeText={dialogState.changeText}
                   value={dialogState.text}
                 />
@@ -214,10 +214,10 @@ const ProfilesList = () => {
           ) : null}
           {dialogState.type === "delete-alert" ? (
             <>
-              <Dialog.Title>{t("profileList.deleteProfile")}</Dialog.Title>
+              <Dialog.Title>{t("profiles.list.deleteProfile")}</Dialog.Title>
               <Dialog.Content>
                 <Text variant="bodyLarge">
-                  {t("profileList.deleteProfileDescription")}
+                  {t("profiles.list.deleteProfileDescription")}
                 </Text>
               </Dialog.Content>
               <Dialog.Actions>

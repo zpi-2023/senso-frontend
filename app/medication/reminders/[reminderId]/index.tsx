@@ -40,7 +40,7 @@ const Page = () => {
   }
 
   if (!reminder) {
-    return <LoadingScreen title={t("medicationDetails.unnamedReminder")} />;
+    return <LoadingScreen title={t("medication.details.unnamedReminder")} />;
   }
 
   return (
@@ -60,12 +60,12 @@ const Page = () => {
           {
             value: "details",
             icon: "information-outline",
-            label: t("medicationDetails.detailsTab"),
+            label: t("medication.details.tabs.details"),
           },
           {
             value: "history",
             icon: "history",
-            label: t("medicationDetails.historyTab"),
+            label: t("medication.details.tabs.history"),
           },
         ]}
       />
@@ -82,14 +82,14 @@ const Page = () => {
       {reminder.isActive ? (
         <View style={styles.bar}>
           <Button mode="outlined" icon="pencil" onPress={() => {}}>
-            {t("medicationDetails.editReminder")}
+            {t("medication.details.editReminder")}
           </Button>
           <Button
             mode="outlined"
             icon="bell-off-outline"
             onPress={showDeactivateDialog}
           >
-            {t("medicationDetails.deactivateReminder")}
+            {t("medication.details.deactivateReminder")}
           </Button>
         </View>
       ) : null}

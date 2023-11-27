@@ -55,7 +55,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
               <Menu.Item
                 onPress={() => setMenuVisible(false)}
                 leadingIcon="pencil"
-                title={t("medicationList.editReminder")}
+                title={t("medication.list.editReminder")}
               />
               <Menu.Item
                 onPress={() => {
@@ -63,7 +63,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
                   showDeactivateDialog();
                 }}
                 leadingIcon="bell-off-outline"
-                title={t("medicationList.deactivateReminder")}
+                title={t("medication.list.deactivateReminder")}
               />
             </Menu>
           ) : null
@@ -95,7 +95,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
           }
           icon="history"
         >
-          {t("medicationList.history")}
+          {t("medication.list.history")}
         </Button>
       </Card.Actions>
       {deactivateDialog}

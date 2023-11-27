@@ -63,9 +63,9 @@ const Page = () => {
       }) => (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={sty.center}>
-            <Header title={t("login.pageTitle")} />
+            <Header title={t("auth.login.pageTitle")} />
             <Text variant="titleLarge" style={styles.title}>
-              {t("login.description")}
+              {t("auth.login.description")}
             </Text>
             <TextInput
               mode="outlined"
@@ -100,7 +100,7 @@ const Page = () => {
             )}
             {status === "error" ? (
               <HelperText type="error" style={styles.errorMessage}>
-                {t("login.badCredentials")}
+                {t("auth.login.badCredentials")}
               </HelperText>
             ) : null}
             <Button
@@ -110,13 +110,13 @@ const Page = () => {
               style={styles.submit}
               loading={status === "pending"}
             >
-              {t("login.continueButton")}
+              {t("auth.login.continueButton")}
             </Button>
             <Text style={styles.submit}>
-              {t("login.registerPrompt")}{" "}
+              {t("auth.login.registerPrompt")}{" "}
               <Link href={AppRoutes.Register} replace>
                 <Text style={{ color: theme.colors.primary }}>
-                  {t("login.registerButton")}
+                  {t("auth.login.registerButton")}
                 </Text>
               </Link>
             </Text>

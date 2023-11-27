@@ -56,7 +56,7 @@ export const ProfileEntry = ({
                   onProfileEdit();
                 }}
                 leadingIcon="account-edit"
-                title={t("profileList.editProfile")}
+                title={t("profiles.list.editProfile")}
               />
             ) : null}
             {onProfileDelete ? (
@@ -66,7 +66,7 @@ export const ProfileEntry = ({
                   onProfileDelete();
                 }}
                 leadingIcon="account-remove"
-                title={t("profileList.deleteProfile")}
+                title={t("profiles.list.deleteProfile")}
               />
             ) : null}
           </Menu>
