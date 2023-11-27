@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
 
-import { defaultLanguage } from "./consts";
+import { pluralizationSubstitution } from "./consts";
 import { I18nContext } from "./context";
 import type { I18n, Language, Translator } from "./types";
 
@@ -26,13 +26,33 @@ export const useI18n = (): I18n => {
 
   const t: Translator = useCallback(
     (key, substitutions = {}) => {
+      // Lookup
       const prop = (data[key] ?? {}) as Record<Language, string | undefined>;
-      let value = prop[language] ?? prop[defaultLanguage] ?? null;
-
+      let value = prop[language] ?? null;
       if (!value) {
         return `t('${key}')`;
       }
 
+      // Pluralization
+      if (pluralizationSubstitution in substitutions) {
+        const count = Number(substitutions[pluralizationSubstitution]);
+        const variants = Object.fromEntries(
+          Object.keys(prop)
+            .filter((k) => k.startsWith(`${language}_`))
+            .flatMap((k) =>
+              (k.split("_")[1] ?? "")
+                .split(",")
+                .map((n) => [Number(n), prop[k as keyof typeof prop]]),
+            ),
+        );
+
+        const pluralized = variants[count];
+        if (pluralized) {
+          value = pluralized;
+        }
+      }
+
+      // Substitution
       for (const [k, v] of Object.entries(substitutions)) {
         value = value?.replaceAll(`{${k}}`, String(v));
       }
