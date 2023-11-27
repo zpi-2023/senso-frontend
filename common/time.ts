@@ -35,3 +35,27 @@ export const nextOccurences = (cron: string, count: number): Date[] => {
   }
   return result;
 };
+
+const formatDuration = (diffMs: number, t: Translator): string => {
+  const diffMins = Math.ceil(diffMs / 1000 / 60);
+
+  if (diffMins >= 60) {
+    return `${Math.round(diffMins / 60)} ${t("time.hours")}`;
+  } else {
+    return `${diffMins} ${t("time.minutes")}`;
+  }
+};
+
+export const formatCron = (cron: string, now: Date, t: Translator): string => {
+  const expr = parseExpression(cron);
+  const prevDate = expr.prev().toDate();
+  const nextDate = expr.next().toDate();
+  const tillPrev = now.getTime() - prevDate.getTime();
+  const tillNext = nextDate.getTime() - now.getTime();
+
+  if (tillPrev < tillNext) {
+    return `${formatDuration(tillPrev, t)} ${t("time.ago")}`;
+  } else {
+    return `${t("time.in")} ${formatDuration(tillNext, t)}`;
+  }
+};

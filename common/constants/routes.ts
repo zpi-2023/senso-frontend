@@ -11,6 +11,7 @@ export const enum AppRoutes {
   AlertHistory = "/alert/history",
   MedicationList = "/medication",
   ReminderDetails = "/medication/[reminderId]",
+  IntakeHistory = "/medication/history",
   Games = "/games",
   MemoryGame = "/games/memory",
   WordleGame = "/games/wordle",

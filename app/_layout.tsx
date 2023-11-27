@@ -1,4 +1,5 @@
 import { SplashScreen, Stack } from "expo-router";
+import "react-native-url-polyfill/auto";
 
 import { I18nProvider } from "@/common/i18n";
 import { IdentityProvider } from "@/common/identity";

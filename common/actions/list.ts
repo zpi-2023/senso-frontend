@@ -70,6 +70,12 @@ export const actions = {
     handler: ({ router }) => router.push(AppRoutes.MedicationList),
     managed: true,
   },
+  intakeHistory: {
+    displayName: (t) => t("actions.intakeHistory"),
+    icon: "history",
+    handler: ({ router }) => router.push(AppRoutes.IntakeHistory),
+    managed: true,
+  },
   playGames: {
     displayName: (t) => t("actions.playGames"),
     icon: "gamepad-variant",
