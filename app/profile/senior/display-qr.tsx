@@ -28,7 +28,7 @@ const CreateSeniorProfile = () => {
   }, [isLoading]);
 
   if (!data) {
-    return <LoadingScreen title={t("createSeniorProfile.pageTitle")} />;
+    return <LoadingScreen title={t("profiles.create.senior.pageTitle")} />;
   }
 
   const isCodeValid = secondsLeft > 0;
@@ -43,12 +43,12 @@ const CreateSeniorProfile = () => {
     <View style={styles.container}>
       <Header
         left={actions.goBack}
-        title={t("createSeniorProfile.pageTitle")}
+        title={t("profiles.create.senior.pageTitle")}
       />
       <Text variant="titleLarge" style={styles.description}>
         {isCodeValid
-          ? t("createSeniorProfile.description")
-          : t("createSeniorProfile.codeExpired")}
+          ? t("profiles.create.senior.description")
+          : t("profiles.create.senior.codeExpired")}
       </Text>
       {!data && (
         <View
@@ -76,7 +76,7 @@ const CreateSeniorProfile = () => {
       )}
       {isCodeValid ? (
         <Text variant="titleLarge">
-          {`${t("createSeniorProfile.codeValidFor")} ${timer}`}
+          {`${t("profiles.create.senior.codeValidFor")} ${timer}`}
         </Text>
       ) : (
         <Button
@@ -84,12 +84,12 @@ const CreateSeniorProfile = () => {
           labelStyle={styles.skipButton}
           onPress={handleReset}
         >
-          {t("createSeniorProfile.generateCode")}
+          {t("profiles.create.senior.generateCode")}
         </Button>
       )}
       <Link href={AppRoutes.Dashboard} replace>
         <Button labelStyle={styles.skipButton}>
-          {t("createSeniorProfile.skipButton")}
+          {t("profiles.create.senior.skipButton")}
         </Button>
       </Link>
     </View>

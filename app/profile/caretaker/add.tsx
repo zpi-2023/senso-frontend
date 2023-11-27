@@ -15,14 +15,14 @@ const AddCaretakerProfile = () => {
     <View style={styles.container}>
       <Header
         left={actions.goBack}
-        title={t("createCaretakerProfile.pageTitle")}
+        title={t("profiles.create.caretaker.pageTitle")}
       />
       <Text variant="titleLarge" style={styles.description}>
-        {t("createCaretakerProfile.description")}
+        {t("profiles.create.caretaker.description")}
       </Text>
       <Link href={AppRoutes.ScanSeniorQR}>
         <Button labelStyle={styles.skipButton}>
-          {t("createCaretakerProfile.scanQR")}
+          {t("profiles.create.caretaker.scanQR")}
         </Button>
       </Link>
     </View>

@@ -36,13 +36,13 @@ export const nextOccurences = (cron: string, count: number): Date[] => {
   return result;
 };
 
-const formatDuration = (diffMs: number, t: Translator): string => {
+const summarizeDuration = (diffMs: number): [number, "hours" | "minutes"] => {
   const diffMins = Math.ceil(diffMs / 1000 / 60);
 
   if (diffMins >= 60) {
-    return `${Math.round(diffMins / 60)} ${t("time.hours")}`;
+    return [Math.round(diffMins / 60), "hours"];
   } else {
-    return `${diffMins} ${t("time.minutes")}`;
+    return [diffMins, "minutes"];
   }
 };
 
@@ -54,8 +54,14 @@ export const formatCron = (cron: string, now: Date, t: Translator): string => {
   const tillNext = nextDate.getTime() - now.getTime();
 
   if (tillPrev < tillNext) {
-    return `${formatDuration(tillPrev, t)} ${t("time.ago")}`;
+    const [count, unit] = summarizeDuration(tillPrev);
+    return unit === "hours"
+      ? t("time.hoursAgo", { count })
+      : t("time.minutesAgo", { count });
   } else {
-    return `${t("time.in")} ${formatDuration(tillNext, t)}`;
+    const [count, unit] = summarizeDuration(tillNext);
+    return unit === "hours"
+      ? t("time.inHours", { count })
+      : t("time.inMinutes", { count });
   }
 };

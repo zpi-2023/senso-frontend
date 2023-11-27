@@ -21,7 +21,7 @@ const Page = () => {
     <View style={sty.full}>
       <Header
         left={actions.goBack}
-        title={t("medicationList.pageTitle")}
+        title={t("medication.list.pageTitle")}
         right={actions.intakeHistory}
       />
       <CaretakerBanner />

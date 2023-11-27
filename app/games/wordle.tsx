@@ -98,14 +98,14 @@ const Page = () => {
           },
         });
         Alert.alert(
-          t("wordle.alertTitle"),
-          t("wordle.alertDescription", {
-            guesses: previousGuesses.length,
+          t("games.wordle.alertTitle"),
+          t("games.wordle.alertDescription", {
+            count: previousGuesses.length,
             time: toMinutesAndSeconds(seconds),
           }),
           [
             {
-              text: t("wordle.alertButton"),
+              text: t("games.wordle.alertButton"),
               onPress: () => handleResetGame(),
             },
           ],
@@ -155,13 +155,13 @@ const Page = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
-        <Header left={actions.goBack} title={t("wordle.pageTitle")} />
+        <Header left={actions.goBack} title={t("games.wordle.pageTitle")} />
         <View style={styles.optionsWrapper}>
           <Text style={styles.statsLabel}>
-            {t("wordle.timer", { time: seconds })}
+            {t("games.wordle.timer", { time: seconds })}
           </Text>
           <Text style={styles.statsLabel}>
-            {t("wordle.guesses", {
+            {t("games.wordle.guesses", {
               guesses: previousGuesses.length,
             })}
           </Text>

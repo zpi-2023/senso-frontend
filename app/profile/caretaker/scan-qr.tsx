@@ -44,8 +44,8 @@ export default function Page() {
     setScanned(true);
 
     Alert.alert(
-      t("scanQR.alertTitle"),
-      t("scanQR.alertDescription", { name: seniorDisplayName }),
+      t("profiles.scanQR.alertTitle"),
+      t("profiles.scanQR.alertDescription", { name: seniorDisplayName }),
       [
         {
           text: t("dialog.cancel"),
@@ -53,7 +53,7 @@ export default function Page() {
           onPress: () => setScanned(false),
         },
         {
-          text: t("scanQR.alertAdd"),
+          text: t("profiles.scanQR.alertAdd"),
           onPress: async () => {
             router.back();
             setScanned(false);
@@ -77,17 +77,17 @@ export default function Page() {
   };
 
   if (hasPermission === null) {
-    return <Text>{t("scanQR.requestingPermission")}</Text>;
+    return <Text>{t("profiles.scanQR.requestingPermission")}</Text>;
   }
   if (hasPermission === false) {
-    return <Text>{t("scanQR.noPermission")}</Text>;
+    return <Text>{t("profiles.scanQR.noPermission")}</Text>;
   }
 
   return (
     <View style={styles.container}>
       <Header
         left={actions.goBack}
-        title={t("createSeniorProfile.pageTitle")}
+        title={t("profiles.create.senior.pageTitle")}
       />
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}

@@ -25,12 +25,12 @@ const Page = () => {
   }
 
   if (!notes) {
-    return <LoadingScreen title={t("noteList.pageTitle")} />;
+    return <LoadingScreen title={t("notes.list.pageTitle")} />;
   }
 
   return (
     <View style={sty.full}>
-      <Header left={actions.goBack} title={t("noteList.pageTitle")} />
+      <Header left={actions.goBack} title={t("notes.list.pageTitle")} />
       <CaretakerBanner />
       <ScrollView refreshControl={refreshControl}>
         {notes.map((note) => (
@@ -44,7 +44,7 @@ const Page = () => {
             icon="pencil-plus"
             onPress={() => router.push(AppRoutes.CreateNote)}
           >
-            {t("noteList.createNote")}
+            {t("notes.list.createNote")}
           </Button>
         </View>
       ) : null}

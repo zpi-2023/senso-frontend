@@ -31,7 +31,7 @@ const Page = () => {
   }
 
   if (!note) {
-    return <LoadingScreen title={t("noteDetails.unnamedNote")} />;
+    return <LoadingScreen title={t("notes.details.unnamedNote")} />;
   }
 
   return (
@@ -60,26 +60,26 @@ const Page = () => {
               })
             }
           >
-            {t("noteDetails.edit")}
+            {t("notes.details.edit")}
           </Button>
           <Button
             mode="outlined"
             icon="note-remove"
             onPress={() =>
               Alert.alert(
-                t("noteDetails.deleteTitle"),
-                t("noteDetails.deleteDescription"),
+                t("notes.details.deleteTitle"),
+                t("notes.details.deleteDescription"),
                 [
-                  { text: t("noteDetails.deleteCancel"), style: "cancel" },
+                  { text: t("notes.details.deleteCancel"), style: "cancel" },
                   {
-                    text: t("noteDetails.deleteConfirm"),
+                    text: t("notes.details.deleteConfirm"),
                     onPress: () => deleteNote().then(router.back),
                   },
                 ],
               )
             }
           >
-            {t("noteDetails.delete")}
+            {t("notes.details.delete")}
           </Button>
         </View>
       ) : null}

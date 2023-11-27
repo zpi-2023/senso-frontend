@@ -8,7 +8,11 @@ import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
 import { formatCron } from "@/common/time";
-import { canMakeQuickIntake, type Reminder } from "@/logic/medication";
+import {
+  canMakeQuickIntake,
+  formatAmount,
+  type Reminder,
+} from "@/logic/medication";
 
 type ReminderCardProps = {
   reminder: Reminder;
@@ -36,9 +40,11 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
       }
     >
       <Card.Title
-        title={`${reminder.medicationName} - ${reminder.amountPerIntake} ${
-          reminder.amountUnit ?? t("medication.pills")
-        }`}
+        title={`${reminder.medicationName} - ${formatAmount(
+          reminder.amountPerIntake,
+          reminder.amountUnit,
+          t,
+        )}`}
         right={(props) =>
           reminder.isActive ? (
             <Menu
@@ -55,7 +61,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
               <Menu.Item
                 onPress={() => setMenuVisible(false)}
                 leadingIcon="pencil"
-                title={t("medicationList.editReminder")}
+                title={t("medication.list.editReminder")}
               />
               <Menu.Item
                 onPress={() => {
@@ -63,7 +69,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
                   showDeactivateDialog();
                 }}
                 leadingIcon="bell-off-outline"
-                title={t("medicationList.deactivateReminder")}
+                title={t("medication.list.deactivateReminder")}
               />
             </Menu>
           ) : null
@@ -95,7 +101,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
           }
           icon="history"
         >
-          {t("medicationList.history")}
+          {t("medication.list.history")}
         </Button>
       </Card.Actions>
       {deactivateDialog}

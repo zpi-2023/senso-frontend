@@ -21,16 +21,6 @@ describe(useI18n, () => {
     expect(screen.getByText("English mock value")).toBeVisible();
   });
 
-  it("falls back to English translation when others are unavailable", () => {
-    render(
-      <MockI18nProvider language="pl">
-        <I18nConsumer args={["__MOCK_DEFAULT"]} />
-      </MockI18nProvider>,
-    );
-
-    expect(screen.getByText("Only English value")).toBeVisible();
-  });
-
   it.each([
     ["en" as const, "English mock value"],
     ["pl" as const, "Polish mock value"],
@@ -55,5 +45,34 @@ describe(useI18n, () => {
     );
 
     expect(screen.getByText(result)).toBeVisible();
+  });
+
+  it.each([
+    // EN
+    ["STRING", "en" as const, "STRING examples"],
+    [0, "en" as const, "0 examples"],
+    [1, "en" as const, "1 example"],
+    [2, "en" as const, "2 examples"],
+    [3, "en" as const, "3 examples"],
+    [4, "en" as const, "4 examples"],
+    [5, "en" as const, "5 examples"],
+    [100, "en" as const, "100 examples"],
+    // PL
+    ["STRING", "pl" as const, "STRING przykładów"],
+    [0, "pl" as const, "0 przykładów"],
+    [1, "pl" as const, "1 przykład"],
+    [2, "pl" as const, "2 przykłady"],
+    [3, "pl" as const, "3 przykłady"],
+    [4, "pl" as const, "4 przykłady"],
+    [5, "pl" as const, "5 przykładów"],
+    [100, "pl" as const, "100 przykładów"],
+  ])("correctly pluralizes count %d in %p", (count, language, expected) => {
+    render(
+      <MockI18nProvider language={language}>
+        <I18nConsumer args={["__MOCK_COUNT", { count }]} />
+      </MockI18nProvider>,
+    );
+
+    expect(screen.getByText(expected)).toBeVisible();
   });
 });

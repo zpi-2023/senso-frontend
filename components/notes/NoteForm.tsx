@@ -56,7 +56,7 @@ export const NoteForm = ({
           <View style={styles.container}>
             <TextInput
               mode="outlined"
-              label={t("noteForm.title")}
+              label={t("notes.form.title")}
               onChangeText={handleChange("title")}
               onBlur={handleBlur("title")}
               value={values.title}
@@ -67,7 +67,7 @@ export const NoteForm = ({
             ) : null}
             <TextInput
               mode="outlined"
-              label={t("noteForm.content")}
+              label={t("notes.form.content")}
               onChangeText={handleChange("content")}
               onBlur={handleBlur("content")}
               value={values.content}
@@ -80,7 +80,7 @@ export const NoteForm = ({
             ) : null}
             <View style={styles.switchWrapper}>
               <Icon icon="shield-lock" />
-              <Text>{t("noteForm.isPrivate")}</Text>
+              <Text>{t("notes.form.isPrivate")}</Text>
               <Switch
                 value={values.isPrivate}
                 onValueChange={(v) => {
@@ -142,10 +142,10 @@ const validate = (
 ): FormikErrors<NoteFormValues> => {
   const errors: FormikErrors<NoteFormValues> = {};
   if (values.content.length === 0) {
-    errors.content = t("noteForm.contentRequired");
+    errors.content = t("notes.form.contentRequired");
   }
   if (values.title.length > 255) {
-    errors.title = t("noteForm.titleTooLong");
+    errors.title = t("notes.form.titleTooLong");
   }
   return errors;
 };

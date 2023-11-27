@@ -34,7 +34,7 @@ const Page = () => {
   }
 
   if (!note) {
-    return <LoadingScreen title={t("noteDetails.unnamedNote")} />;
+    return <LoadingScreen title={t("notes.details.unnamedNote")} />;
   }
 
   const handleSubmit = (values: NoteEdit) => editNote(values).then(router.back);
@@ -45,7 +45,7 @@ const Page = () => {
       <NoteForm
         initialValues={note}
         onSubmit={handleSubmit}
-        submitText={t("editNote.submit")}
+        submitText={t("notes.edit.submit")}
       />
     </View>
   );

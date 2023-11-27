@@ -22,17 +22,17 @@ const Page = () => {
   }
 
   if (!gadgets) {
-    return <LoadingScreen title={t("editDashboard.pageTitle")} />;
+    return <LoadingScreen title={t("dashboard.edit.pageTitle")} />;
   }
 
   return (
     <View>
-      <Header left={actions.goBack} title={t("editDashboard.pageTitle")} />
+      <Header left={actions.goBack} title={t("dashboard.edit.pageTitle")} />
       <CaretakerBanner />
       <ScrollView>
         <List.Section>
           <List.Subheader>
-            {t("editDashboard.selectedGadgets", {
+            {t("dashboard.edit.selectedGadgets", {
               current: gadgets.length,
               max: maxGadgets,
             })}
@@ -65,7 +65,9 @@ const Page = () => {
         </List.Section>
         <Divider />
         <List.Section>
-          <List.Subheader>{t("editDashboard.availableGadgets")}</List.Subheader>
+          <List.Subheader>
+            {t("dashboard.edit.availableGadgets")}
+          </List.Subheader>
           {availableGadgets
             .filter((gadget) => !gadgets.includes(gadget))
             .map((gadget) => (

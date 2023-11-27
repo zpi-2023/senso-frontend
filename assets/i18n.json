@@ -10,6 +10,13 @@
   "__MOCK_DEFAULT": {
     "en": "Only English value"
   },
+  "__MOCK_COUNT": {
+    "en": "{count} examples",
+    "en_1": "{count} example",
+    "pl": "{count} przykładów",
+    "pl_1": "{count} przykład",
+    "pl_2,3,4": "{count} przykłady"
+  },
   "appName": {
     "en": "Senso",
     "pl": "Senso"
@@ -38,75 +45,75 @@
     "en": "Invalid email address",
     "pl": "Błędny adres email"
   },
-  "login.pageTitle": {
+  "auth.login.pageTitle": {
     "en": "Login",
     "pl": "Logowanie"
   },
-  "login.description": {
+  "auth.login.description": {
     "en": "Login to your Senso account",
     "pl": "Zaloguj się na konto Senso"
   },
-  "login.continueButton": {
+  "auth.login.continueButton": {
     "en": "Continue",
     "pl": "Kontynuuj"
   },
-  "login.registerPrompt": {
+  "auth.login.registerPrompt": {
     "en": "Don't have an account?",
     "pl": "Brak konta?"
   },
-  "login.registerButton": {
+  "auth.login.registerButton": {
     "en": "Register",
     "pl": "Zarejestruj się"
   },
-  "login.badCredentials": {
+  "auth.login.badCredentials": {
     "en": "The credentials are incorrect",
     "pl": "Podane dane są nieprawidłowe"
   },
-  "register.pageTitle": {
+  "auth.register.pageTitle": {
     "en": "Register",
     "pl": "Rejestracja"
   },
-  "register.description": {
+  "auth.register.description": {
     "en": "Create your Senso account",
     "pl": "Utwórz konto Senso"
   },
-  "register.confirmPassword": {
+  "auth.register.confirmPassword": {
     "en": "Confirm password",
     "pl": "Powtórz hasło"
   },
-  "register.phoneNumber": {
+  "auth.register.phoneNumber": {
     "en": "Phone number (optional)",
     "pl": "Numer telefonu (opcjonalnie)"
   },
-  "register.registerButton": {
+  "auth.register.registerButton": {
     "en": "Register",
     "pl": "Zarejestruj się"
   },
-  "register.loginPrompt": {
+  "auth.register.loginPrompt": {
     "en": "Already have an account?",
     "pl": "Masz już konto?"
   },
-  "register.loginButton": {
+  "auth.register.loginButton": {
     "en": "Sign in",
     "pl": "Zaloguj się"
   },
-  "register.badDisplayNameLength": {
+  "auth.register.badDisplayNameLength": {
     "en": "Display name must have at least {length} characters",
     "pl": "Nazwa wyświetlana musi mieć co najmniej {length} znaków"
   },
-  "register.badPasswordLength": {
+  "auth.register.badPasswordLength": {
     "en": "Password must have at least {length} characters",
     "pl": "Hasło musi mieć co najmniej {length} znaków"
   },
-  "register.passwordMismatch": {
+  "auth.register.passwordMismatch": {
     "en": "Passwords do not match",
     "pl": "Hasła się nie zgadzają"
   },
-  "register.badPhoneNumber": {
+  "auth.register.badPhoneNumber": {
     "en": "Invalid phone number",
     "pl": "Błędny numer telefonu"
   },
-  "register.serverError": {
+  "auth.register.serverError": {
     "en": "Could not create the account",
     "pl": "Nie udało się utworzyć konta"
   },
@@ -130,55 +137,55 @@
     "en": "Try again",
     "pl": "Spróbuj ponownie"
   },
-  "profileList.pageTitle": {
+  "profiles.list.pageTitle": {
     "en": "Profiles",
     "pl": "Profile"
   },
-  "profileList.caretakersHeader": {
+  "profiles.list.caretakersHeader": {
     "en": "Caretaker profiles",
     "pl": "Profile opiekunów"
   },
-  "profileList.caretakerNameFallback": {
+  "profiles.list.caretakerNameFallback": {
     "en": "Caretaker",
     "pl": "Opiekun"
   },
-  "profileList.seniorHeader": {
+  "profiles.list.seniorHeader": {
     "en": "Your senior profile",
     "pl": "Twój profil seniora"
   },
-  "profileList.seniorNameFallback": {
+  "profiles.list.seniorNameFallback": {
     "en": "You",
     "pl": "Ty"
   },
-  "profileList.seniorDescription": {
+  "profiles.list.seniorDescription": {
     "en": "Click to log in to your profile",
     "pl": "Kliknij, aby zalogować się do profilu"
   },
-  "profileList.newCaretakerProfileButton": {
+  "profiles.list.newCaretakerProfileButton": {
     "en": "Create caretaker profile",
     "pl": "Utwórz profil opiekuna"
   },
-  "profileList.newSeniorProfileButton": {
+  "profiles.list.newSeniorProfileButton": {
     "en": "Create senior profile",
     "pl": "Utwórz profil seniora"
   },
-  "profileList.noProfiles": {
+  "profiles.list.noProfiles": {
     "en": "You don't have any profiles yet.",
     "pl": "Nie masz jeszcze żadnych profili."
   },
-  "profileList.editProfile": {
+  "profiles.list.editProfile": {
     "en": "Edit profile",
     "pl": "Edytuj profil"
   },
-  "profileList.deleteProfile": {
+  "profiles.list.deleteProfile": {
     "en": "Delete profile",
     "pl": "Usuń profil"
   },
-  "profileList.deleteProfileDescription": {
+  "profiles.list.deleteProfileDescription": {
     "en": "Are you sure you want to delete this profile?",
     "pl": "Czy na pewno chcesz usunąć ten profil?"
   },
-  "dashboard.pageTitle": {
+  "dashboard.view.pageTitle": {
     "en": "Dashboard",
     "pl": "Panel"
   },
@@ -266,151 +273,151 @@
     "en": "Quick note",
     "pl": "Szybka notatka"
   },
-  "createSeniorProfile.pageTitle": {
+  "profiles.create.senior.pageTitle": {
     "en": "Scan senior QR code",
     "pl": "Zeskanuj kod QR seniora"
   },
-  "createSeniorProfile.description": {
+  "profiles.create.senior.description": {
     "en": "Scan this QR code with your caretaker's app to connect your profiles.",
     "pl": "Zeskanuj ten kod QR za pomocą aplikacji opiekuna, aby połączyć profile."
   },
-  "createSeniorProfile.skipButton": {
+  "profiles.create.senior.skipButton": {
     "en": "I'll do it later",
     "pl": "Zrobię to później"
   },
-  "createSeniorProfile.codeExpired": {
+  "profiles.create.senior.codeExpired": {
     "en": "The QR code has expired.\n Generate a new one.",
     "pl": "Kod QR wygasł.\n Wygeneruj nowy."
   },
-  "createSeniorProfile.codeValidFor": {
+  "profiles.create.senior.codeValidFor": {
     "en": "The code is valid for",
     "pl": "Kod jest ważny przez"
   },
-  "createSeniorProfile.generateCode": {
+  "profiles.create.senior.generateCode": {
     "en": "Generate code",
     "pl": "Wygeneruj kod"
   },
-  "createCaretakerProfile.pageTitle": {
+  "profiles.create.caretaker.pageTitle": {
     "en": "Create caretaker profile",
     "pl": "Utwórz profil opiekuna"
   },
-  "createCaretakerProfile.seniorAliasInputLabel": {
+  "profiles.create.caretaker.seniorAliasInputLabel": {
     "en": "Senior alias",
     "pl": "Alias seniora"
   },
-  "createCaretakerProfile.description": {
+  "profiles.create.caretaker.description": {
     "en": "Enter alias for your senior. You can change it later. Then scan the QR code with your senior's app to connect your profiles.",
     "pl": "Wpisz alias dla swojego seniora. Możesz go później zmienić. Następnie zeskanuj kod QR za pomocą aplikacji seniora, aby połączyć profile."
   },
-  "createCaretakerProfile.scanQR": {
+  "profiles.create.caretaker.scanQR": {
     "en": "Scan QR code",
     "pl": "Zeskanuj kod QR"
   },
-  "scanQR.alertTitle": {
+  "profiles.scanQR.alertTitle": {
     "en": "Senior code scanned",
     "pl": "Zeskanowano kod seniora"
   },
-  "scanQR.alertDescription": {
+  "profiles.scanQR.alertDescription": {
     "en": "Do you want to add \"{name}\" as your senior?",
     "pl": "Czy chcesz dodać \"{name}\" jako swojego seniora?"
   },
-  "scanQR.alertAdd": {
+  "profiles.scanQR.alertAdd": {
     "en": "Add",
     "pl": "Dodaj"
   },
-  "scanQR.requestingPermission": {
+  "profiles.scanQR.requestingPermission": {
     "en": "Requesting for camera permission",
     "pl": "Prośba o dostęp do kamery"
   },
-  "scanQR.noPermission": {
+  "profiles.scanQR.noPermission": {
     "en": "You have not granted camera permission",
     "pl": "Nie udzieliłeś dostępu do kamery"
   },
-  "editDashboard.pageTitle": {
+  "dashboard.edit.pageTitle": {
     "en": "Edit dashboard",
     "pl": "Edytuj panel"
   },
-  "editDashboard.selectedGadgets": {
+  "dashboard.edit.selectedGadgets": {
     "en": "Selected gadgets ({current}/{max})",
     "pl": "Wybrane gadżety ({current}/{max})"
   },
-  "editDashboard.availableGadgets": {
+  "dashboard.edit.availableGadgets": {
     "en": "Available gadgets",
     "pl": "Dostępne gadżety"
   },
-  "sosSlider.description": {
+  "alerts.sosSlider.description": {
     "en": "Slide to activate SOS",
     "pl": "Przesuń, aby aktywować SOS"
   },
-  "sosSlider.slider": {
+  "alerts.sosSlider.slider": {
     "en": "Caretaker notified",
     "pl": "Powiadomiono opiekuna"
   },
-  "noteList.pageTitle": {
+  "notes.list.pageTitle": {
     "en": "Notes",
     "pl": "Notatki"
   },
-  "noteList.createNote": {
+  "notes.list.createNote": {
     "en": "Add new",
     "pl": "Dodaj nową"
   },
-  "noteDetails.unnamedNote": {
+  "notes.details.unnamedNote": {
     "en": "Unnamed note",
     "pl": "Nienazwana notatka"
   },
-  "noteDetails.edit": {
+  "notes.details.edit": {
     "en": "Edit",
     "pl": "Edytuj"
   },
-  "noteDetails.delete": {
+  "notes.details.delete": {
     "en": "Delete",
     "pl": "Usuń"
   },
-  "noteDetails.deleteTitle": {
+  "notes.details.deleteTitle": {
     "en": "Delete note",
     "pl": "Usuń notatkę"
   },
-  "noteDetails.deleteDescription": {
+  "notes.details.deleteDescription": {
     "en": "Are you sure you want to delete this note?",
     "pl": "Czy na pewno chcesz usunąć tę notatkę?"
   },
-  "noteDetails.deleteCancel": {
+  "notes.details.deleteCancel": {
     "en": "Cancel",
     "pl": "Anuluj"
   },
-  "noteDetails.deleteConfirm": {
+  "notes.details.deleteConfirm": {
     "en": "Delete",
     "pl": "Usuń"
   },
-  "createNote.pageTitle": {
+  "notes.create.pageTitle": {
     "en": "New note",
     "pl": "Nowa notatka"
   },
-  "createNote.submit": {
+  "notes.create.submit": {
     "en": "Save",
     "pl": "Zapisz"
   },
-  "editNote.submit": {
+  "notes.edit.submit": {
     "en": "Save",
     "pl": "Zapisz"
   },
-  "noteForm.title": {
+  "notes.form.title": {
     "en": "Title",
     "pl": "Tytuł"
   },
-  "noteForm.content": {
+  "notes.form.content": {
     "en": "Content",
     "pl": "Treść"
   },
-  "noteForm.isPrivate": {
+  "notes.form.isPrivate": {
     "en": "Is private?",
     "pl": "Prywatna?"
   },
-  "noteForm.contentRequired": {
+  "notes.form.contentRequired": {
     "en": "Content is required",
     "pl": "Treść jest wymagana"
   },
-  "noteForm.titleTooLong": {
+  "notes.form.titleTooLong": {
     "en": "Title is too long",
     "pl": "Tytuł jest za długi"
   },
@@ -422,139 +429,158 @@
     "en": "Yesterday",
     "pl": "Wczoraj"
   },
-  "time.hours": {
-    "en": "hours",
-    "pl": "godzin"
+  "time.inHours": {
+    "en": "in {count} hours",
+    "en_1": "in {count} hour",
+    "pl": "za {count} godzin",
+    "pl_1": "za {count} godzinę",
+    "pl_2,3,4": "za {count} godziny"
   },
-  "time.minutes": {
-    "en": "minutes",
-    "pl": "minuty"
+  "time.inMinutes": {
+    "en": "in {count} minutes",
+    "en_1": "in {count} minute",
+    "pl": "za {count} minut",
+    "pl_1": "za {count} minutę",
+    "pl_2,3,4": "za {count} minuty"
   },
-  "time.in": {
-    "en": "in",
-    "pl": "za"
+  "time.hoursAgo": {
+    "en": "{count} hours ago",
+    "en_1": "{count} hour ago",
+    "pl": "{count} godzin temu",
+    "pl_1": "{count} godzina temu",
+    "pl_2,3,4": "{count} godziny temu"
   },
-  "time.ago": {
-    "en": "ago",
-    "pl": "temu"
+  "time.minutesAgo": {
+    "en": "{count} minutes ago",
+    "en_1": "{count} minute ago",
+    "pl": "{count} minut temu",
+    "pl_1": "{count} minuta temu",
+    "pl_2,3,4": "{count} minuty temu"
   },
-  "memoryGame.pageTitle": {
+  "games.memory.pageTitle": {
     "en": "Memory game",
     "pl": "Gra Memory"
   },
-  "memoryGame.startButton": {
+  "games.memory.startButton": {
     "en": "Start game",
     "pl": "Rozpocznij grę"
   },
-  "memoryGame.restartButton": {
+  "games.memory.restartButton": {
     "en": "Restart",
     "pl": "Zrestartuj"
   },
-  "memoryGame.movesCounter": {
+  "games.memory.movesCounter": {
     "en": "Moves: {moves}",
     "pl": "Ruchy: {moves}"
   },
-  "memoryGame.timeCounter": {
+  "games.memory.timeCounter": {
     "en": "Time {time}",
     "pl": "Czas {time}"
   },
-  "memoryGame.alertTitle": {
+  "games.memory.alertTitle": {
     "en": "Congratulations!",
     "pl": "Gratulacje!"
   },
-  "memoryGame.alertDescription": {
-    "en": "You have completed the game in {moves} moves and time {time}.",
-    "pl": "Ukończyłeś grę w {moves} ruchach i czasie {time}."
+  "games.memory.alertDescription": {
+    "en": "You have completed the game in {count} moves and time {time}.",
+    "en_1": "You have completed the game in {count} move and time {time}.",
+    "pl": "Ukończyłeś grę w {count} ruchach i czasie {time}.",
+    "pl_1": "Ukończyłeś grę w {count} ruchu i czasie {time}."
   },
-  "wordle.pageTitle": {
+  "games.wordle.pageTitle": {
     "en": "Graydle",
     "pl": "Graydle"
   },
-  "wordle.timer": {
+  "games.wordle.timer": {
     "en": "Time: {time}",
     "pl": "Czas: {time}"
   },
-  "wordle.guesses": {
+  "games.wordle.guesses": {
     "en": "Guesses: {guesses}",
     "pl": "Próby: {guesses}"
   },
-  "wordle.alertTitle": {
+  "games.wordle.alertTitle": {
     "en": "Congratulations!",
     "pl": "Gratulacje!"
   },
-  "wordle.alertDescription": {
-    "en": "You have completed the game in {guesses} guesses and time {time}.",
-    "pl": "Ukończyłeś grę w {guesses} próbach i czasie {time}."
+  "games.wordle.alertDescription": {
+    "en": "You have completed the game in {count} guesses and time {time}.",
+    "en_1": "You have completed the game in {count} guess and time {time}.",
+    "pl": "Ukończyłeś grę w {count} próbach i czasie {time}.",
+    "pl_1": "Ukończyłeś grę w {count} próbie i czasie {time}."
   },
-  "wordle.alertButton": {
+  "games.wordle.alertButton": {
     "en": "Play again",
     "pl": "Zagraj ponownie"
   },
   "medication.pills": {
-    "en": "pills",
-    "pl": "tabletek"
+    "en": "{count} pills",
+    "en_1": "{count} pill",
+    "pl": "{count} tabletek",
+    "pl_1": "{count} tabletka",
+    "pl_2,3,4": "{count} tabletki"
   },
   "medication.takeDose": {
     "en": "Take",
     "pl": "Weź"
   },
-  "medicationList.pageTitle": {
+  "medication.list.pageTitle": {
     "en": "Medication",
     "pl": "Leki"
   },
-  "medicationList.history": {
+  "medication.list.history": {
     "en": "History",
     "pl": "Historia"
   },
-  "medicationList.editReminder": {
+  "medication.list.editReminder": {
     "en": "Edit reminder",
     "pl": "Edytuj przypomnienie"
   },
-  "medicationList.deactivateReminder": {
+  "medication.list.deactivateReminder": {
     "en": "Deactivate reminder",
     "pl": "Wyłącz przypomnienie"
   },
-  "medicationDetails.unnamedReminder": {
+  "medication.details.unnamedReminder": {
     "en": "Unnamed reminder",
     "pl": "Nienazwane przypomnienie"
   },
-  "medicationDetails.editReminder": {
+  "medication.details.editReminder": {
     "en": "Edit",
     "pl": "Edytuj"
   },
-  "medicationDetails.deactivateReminder": {
+  "medication.details.deactivateReminder": {
     "en": "Deactivate",
     "pl": "Wyłącz"
   },
-  "medicationDetails.detailsTab": {
+  "medication.details.tabs.details": {
     "en": "Details",
     "pl": "Szczegóły"
   },
-  "medicationDetails.historyTab": {
+  "medication.details.tabs.history": {
     "en": "History",
     "pl": "Historia"
   },
-  "medicationDetails.medicationName": {
+  "medication.details.medicationName": {
     "en": "Medication",
     "pl": "Lek"
   },
-  "medicationDetails.nextReminders": {
+  "medication.details.nextReminders": {
     "en": "Next reminders",
     "pl": "Następne przypomnienia"
   },
-  "medicationDetails.description": {
+  "medication.details.description": {
     "en": "Description",
     "pl": "Opis"
   },
-  "medicationDetails.amountPerIntake": {
+  "medication.details.amountPerIntake": {
     "en": "Intake",
     "pl": "Dawka"
   },
-  "medicationDetails.amountOwned": {
+  "medication.details.amountOwned": {
     "en": "Amount owned",
     "pl": "Ilość posiadana"
   },
-  "medicationDetails.inPackage": {
+  "medication.details.inPackage": {
     "en": "in package",
     "pl": "w opakowaniu"
   },

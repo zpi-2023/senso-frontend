@@ -78,7 +78,7 @@ const Page = () => {
         if (!values.displayName) {
           errors.displayName = t("auth.required");
         } else if (values.displayName.length < minDisplayNameLength) {
-          errors.displayName = t("register.badDisplayNameLength", {
+          errors.displayName = t("auth.register.badDisplayNameLength", {
             length: minDisplayNameLength,
           });
         }
@@ -90,15 +90,15 @@ const Page = () => {
         if (!values.password) {
           errors.password = t("auth.required");
         } else if (values.password.length < 8) {
-          errors.password = t("register.badPasswordLength", { length: 8 });
+          errors.password = t("auth.register.badPasswordLength", { length: 8 });
         }
         if (!values.confirmPassword) {
           errors.confirmPassword = t("auth.required");
         } else if (values.confirmPassword !== values.password) {
-          errors.confirmPassword = t("register.passwordMismatch");
+          errors.confirmPassword = t("auth.register.passwordMismatch");
         }
         if (values.phoneNumber && !/^[0-9]{9}$/.test(values.phoneNumber)) {
-          errors.phoneNumber = t("register.badPhoneNumber");
+          errors.phoneNumber = t("auth.register.badPhoneNumber");
         }
         return errors;
       }}
@@ -119,9 +119,9 @@ const Page = () => {
         >
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={sty.center}>
-              <Header title={t("register.pageTitle")} />
+              <Header title={t("auth.register.pageTitle")} />
               <Text variant="titleLarge" style={styles.title}>
-                {t("register.description")}
+                {t("auth.register.description")}
               </Text>
               <TextInput
                 mode="outlined"
@@ -167,7 +167,7 @@ const Page = () => {
               )}
               <TextInput
                 mode="outlined"
-                label={t("register.confirmPassword")}
+                label={t("auth.register.confirmPassword")}
                 onChangeText={handleChange("confirmPassword")}
                 onBlur={handleBlur("confirmPassword")}
                 value={values.confirmPassword}
@@ -185,7 +185,7 @@ const Page = () => {
               )}
               <TextInput
                 mode="outlined"
-                label={t("register.phoneNumber")}
+                label={t("auth.register.phoneNumber")}
                 onChangeText={handleChange("phoneNumber")}
                 onBlur={handleBlur("phoneNumber")}
                 value={values.phoneNumber}
@@ -200,7 +200,7 @@ const Page = () => {
               )}
               {status === "error" ? (
                 <HelperText type="error" style={styles.errorMessage}>
-                  {t("register.serverError")}
+                  {t("auth.register.serverError")}
                 </HelperText>
               ) : null}
               <Button
@@ -210,13 +210,13 @@ const Page = () => {
                 style={styles.submit}
                 loading={status === "pending"}
               >
-                {t("register.registerButton")}
+                {t("auth.register.registerButton")}
               </Button>
               <Text style={styles.submit}>
-                {t("register.loginPrompt")}{" "}
+                {t("auth.register.loginPrompt")}{" "}
                 <Link href={AppRoutes.Login} replace>
                   <Text style={{ color: theme.colors.primary }}>
-                    {t("register.loginButton")}
+                    {t("auth.register.loginButton")}
                   </Text>
                 </Link>
               </Text>
