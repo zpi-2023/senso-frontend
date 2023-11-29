@@ -3,7 +3,7 @@ import { FAB, Text } from "react-native-paper";
 
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
-import type { Reminder } from "@/logic/medication";
+import { useCreateIntake, type Reminder } from "@/logic/medication";
 
 type SegmentProps = {
   label: string;
@@ -35,6 +35,7 @@ export const ReminderDetails = ({
   canTake,
 }: ReminderDetailsProps) => {
   const { t, language } = useI18n();
+  const { create, loading } = useCreateIntake({ reminder });
   return (
     <View style={styles.view}>
       <Segment
@@ -85,7 +86,9 @@ export const ReminderDetails = ({
         <FAB
           style={styles.fab}
           icon="pill"
-          onPress={() => {}}
+          onPress={create}
+          loading={loading}
+          disabled={loading}
           label={t("medication.takeDose")}
         />
       ) : null}

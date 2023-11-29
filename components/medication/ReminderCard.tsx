@@ -7,7 +7,7 @@ import { useReminderDeactivateDialog } from "./ReminderDeactivateDialog";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
-import { type Reminder } from "@/logic/medication";
+import { useCreateIntake, type Reminder } from "@/logic/medication";
 
 type ReminderCardProps = {
   reminder: Reminder;
@@ -18,6 +18,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const { showDialog: showDeactivateDialog, dialog: deactivateDialog } =
     useReminderDeactivateDialog(reminder.id);
+  const { create, loading } = useCreateIntake({ reminder });
 
   return (
     <Card
@@ -78,7 +79,13 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
       </Card.Content>
       <Card.Actions>
         {reminder.canMakeQuickIntake() ? (
-          <Button mode="contained" onPress={() => {}} icon="pill">
+          <Button
+            mode="contained"
+            onPress={create}
+            loading={loading}
+            disabled={loading}
+            icon="pill"
+          >
             {t("medication.takeDose")}
           </Button>
         ) : null}
