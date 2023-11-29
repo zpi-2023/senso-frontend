@@ -7,7 +7,7 @@ import { useReminderDeactivateDialog } from "./ReminderDeactivateDialog";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
-import { formatCron } from "@/common/time";
+import { Cron } from "@/common/time";
 import {
   canMakeQuickIntake,
   formatAmount,
@@ -23,6 +23,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const { showDialog: showDeactivateDialog, dialog: deactivateDialog } =
     useReminderDeactivateDialog(reminder.id);
+  const cron = reminder.cron ? new Cron(reminder.cron) : null;
 
   return (
     <Card
@@ -74,9 +75,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
             </Menu>
           ) : null
         }
-        subtitle={
-          reminder.cron ? formatCron(reminder.cron, new Date(), t) : null
-        }
+        subtitle={cron?.formatNearestEvent(t)}
         titleVariant="titleLarge"
         subtitleVariant="titleMedium"
       />

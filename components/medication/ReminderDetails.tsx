@@ -3,7 +3,7 @@ import { FAB, Text } from "react-native-paper";
 
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
-import { nextOccurences } from "@/common/time";
+import { Cron } from "@/common/time";
 import { formatAmount, type Reminder } from "@/logic/medication";
 
 type SegmentProps = {
@@ -36,16 +36,18 @@ export const ReminderDetails = ({
   canTake,
 }: ReminderDetailsProps) => {
   const { t, language } = useI18n();
+  const cron = reminder.cron ? new Cron(reminder.cron) : null;
   return (
     <View style={styles.view}>
       <Segment
         label={t("medication.details.medicationName")}
         value={reminder.medicationName}
       />
-      {reminder.cron ? (
+      {cron ? (
         <Segment
           label={t("medication.details.nextReminders")}
-          value={nextOccurences(reminder.cron, 3)
+          value={cron
+            .incomingEvents(3)
             .map(
               (date) =>
                 `• ${date.toLocaleString([language], {

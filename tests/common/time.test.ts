@@ -1,14 +1,55 @@
 import type { Translator } from "@/common/i18n";
-import { formatPastDayOffset, toMinutesAndSeconds } from "@/common/time";
+import {
+  formatLongOffset,
+  formatShortOffset,
+  toMinutesAndSeconds,
+} from "@/common/time";
 
 const mockDate = new Date("2022-04-12T13:18:30.000Z");
+// "time.inHours": {
+//   "en": "in {count} hours",
+//   "en_1": "in {count} hour",
+//   "pl": "za {count} godzin",
+//   "pl_1": "za {count} godzinę",
+//   "pl_2,3,4": "za {count} godziny"
+// },
+// "time.inMinutes": {
+//   "en": "in {count} minutes",
+//   "en_1": "in {count} minute",
+//   "pl": "za {count} minut",
+//   "pl_1": "za {count} minutę",
+//   "pl_2,3,4": "za {count} minuty"
+// },
+// "time.hoursAgo": {
+//   "en": "{count} hours ago",
+//   "en_1": "{count} hour ago",
+//   "pl": "{count} godzin temu",
+//   "pl_1": "{count} godzina temu",
+//   "pl_2,3,4": "{count} godziny temu"
+// },
+// "time.minutesAgo": {
+//   "en": "{count} minutes ago",
+//   "en_1": "{count} minute ago",
+//   "pl": "{count} minut temu",
+//   "pl_1": "{count} minuta temu",
+//   "pl_2,3,4": "{count} minuty temu"
+// },
 
-const mockTranslator: Translator = (key) => {
+const mockTranslator: Translator = (key, substs?: { count?: number }) => {
+  const s = substs?.count === 1 ? "" : "s";
   switch (key) {
     case "time.today":
       return "Today";
     case "time.yesterday":
       return "Yesterday";
+    case "time.inHours":
+      return `in ${substs?.count} hour${s}`;
+    case "time.inMinutes":
+      return `in ${substs?.count} minute${s}`;
+    case "time.hoursAgo":
+      return `${substs?.count} hour${s} ago`;
+    case "time.minutesAgo":
+      return `${substs?.count} minute${s} ago`;
     default:
       throw new Error(`Unexpected key: ${key}`);
   }
@@ -30,47 +71,89 @@ describe("Time", () => {
     });
   });
 
-  describe(formatPastDayOffset, () => {
+  describe(formatShortOffset, () => {
+    it("returns past time in hours", () => {
+      expect(
+        formatShortOffset(
+          new Date("2022-04-12T12:00:00.000Z"),
+          mockTranslator,
+          mockDate,
+        ),
+      ).toBe("1 hour ago");
+    });
+
+    it("returns past time in minutes", () => {
+      expect(
+        formatShortOffset(
+          new Date("2022-04-12T13:15:00.000Z"),
+          mockTranslator,
+          mockDate,
+        ),
+      ).toBe("4 minutes ago");
+    });
+
+    it("returns future time in hours", () => {
+      expect(
+        formatShortOffset(
+          new Date("2022-04-12T15:30:00.000Z"),
+          mockTranslator,
+          mockDate,
+        ),
+      ).toBe("in 2 hours");
+    });
+
+    it("returns future time in minutes", () => {
+      expect(
+        formatShortOffset(
+          new Date("2022-04-12T13:23:00.000Z"),
+          mockTranslator,
+          mockDate,
+        ),
+      ).toBe("in 5 minutes");
+    });
+  });
+
+  describe(formatLongOffset, () => {
     it("returns special text for today", () => {
       expect(
-        formatPastDayOffset(
+        formatLongOffset(
           new Date("2022-04-12T10:12:00.000Z"),
-          mockDate,
           mockTranslator,
+          mockDate,
         ),
       ).toBe("Today");
       expect(
-        formatPastDayOffset(
+        formatLongOffset(
           new Date("2022-04-12T01:50:00.000Z"),
-          mockDate,
           mockTranslator,
+          mockDate,
         ),
       ).toBe("Today");
     });
 
     it("returns special text for yesterday", () => {
       expect(
-        formatPastDayOffset(
+        formatLongOffset(
           new Date("2022-04-11T11:21:37.000Z"),
-          mockDate,
           mockTranslator,
+          mockDate,
         ),
       ).toBe("Yesterday");
       expect(
-        formatPastDayOffset(
+        formatLongOffset(
           new Date("2022-04-11T01:13:22.000Z"),
-          mockDate,
           mockTranslator,
+          mockDate,
         ),
       ).toBe("Yesterday");
     });
 
     it("returns an ISO date for old dates", () => {
       expect(
-        formatPastDayOffset(
+        formatLongOffset(
           new Date("2022-04-03T15:05:10.000Z"),
-          mockDate,
           mockTranslator,
+          mockDate,
         ),
       ).toBe("2022-04-03");
     });
