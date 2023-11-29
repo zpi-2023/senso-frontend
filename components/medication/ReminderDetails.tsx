@@ -3,8 +3,7 @@ import { FAB, Text } from "react-native-paper";
 
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
-import { Cron } from "@/common/time";
-import { formatAmount, type Reminder } from "@/logic/medication";
+import type { Reminder } from "@/logic/medication";
 
 type SegmentProps = {
   label: string;
@@ -36,17 +35,16 @@ export const ReminderDetails = ({
   canTake,
 }: ReminderDetailsProps) => {
   const { t, language } = useI18n();
-  const cron = reminder.cron ? new Cron(reminder.cron) : null;
   return (
     <View style={styles.view}>
       <Segment
         label={t("medication.details.medicationName")}
         value={reminder.medicationName}
       />
-      {cron ? (
+      {reminder.cron ? (
         <Segment
           label={t("medication.details.nextReminders")}
-          value={cron
+          value={reminder.cron
             .incomingEvents(3)
             .map(
               (date) =>
@@ -69,16 +67,12 @@ export const ReminderDetails = ({
       <View style={styles.row}>
         <Segment
           label={t("medication.details.amountPerIntake")}
-          value={formatAmount(reminder.amountPerIntake, reminder.amountUnit, t)}
+          value={reminder.formatAmountPerIntake(t)}
         />
         <Segment
           right
           label={t("medication.details.amountOwned")}
-          value={`${formatAmount(
-            reminder.amountOwned ?? 0,
-            reminder.amountUnit,
-            t,
-          )}${
+          value={`${reminder.formatAmountOwned(t)}${
             reminder.medicationAmountInPackage
               ? `\n(${reminder.medicationAmountInPackage} ${t(
                   "medication.details.inPackage",

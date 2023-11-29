@@ -5,6 +5,7 @@ import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
 import { CaretakerBanner, Header, PaginatedScrollView } from "@/components";
 import { IntakeEntry } from "@/components/medication";
+import { Intake } from "@/logic/medication";
 
 const Page = () => {
   const { t } = useI18n();
@@ -21,11 +22,7 @@ const Page = () => {
       <Header left={actions.goBack} title={t("medication.intakes.pageTitle")} />
       <CaretakerBanner />
       <PaginatedScrollView
-        renderer={(intake) => (
-          <IntakeEntry
-            intake={{ ...intake, takenAt: new Date(intake.takenAt) }}
-          />
-        )}
+        renderer={(data) => <IntakeEntry intake={Intake.fromData(data)} />}
         query={{
           url: "/api/v1/reminders/senior/{seniorId}/intakes",
           params: { path: { seniorId } },
