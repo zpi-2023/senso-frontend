@@ -1,9 +1,11 @@
+import { Redirect } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 import { Button, SegmentedButtons } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useQuery } from "@/common/api";
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
 import { sty } from "@/common/styles";
@@ -37,6 +39,10 @@ const Page = () => {
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
+  }
+
+  if (!reminderId) {
+    return <Redirect href={AppRoutes.MedicationList} />;
   }
 
   if (!reminder) {

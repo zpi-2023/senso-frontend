@@ -18,6 +18,15 @@ export type Reminder = {
   description?: string | null;
 };
 
+export type Intake = {
+  id: number;
+  reminderId: number;
+  medicationName: string;
+  takenAt: Date;
+  amountTaken: number;
+  amountUnit?: string | null;
+};
+
 export const canMakeQuickIntake = (reminder: Reminder, now: Date) => {
   if (!reminder.isActive) {
     return false;

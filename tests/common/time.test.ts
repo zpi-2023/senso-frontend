@@ -1,5 +1,5 @@
 import type { Translator } from "@/common/i18n";
-import { formatDateOffset, toMinutesAndSeconds } from "@/common/time";
+import { formatPastDayOffset, toMinutesAndSeconds } from "@/common/time";
 
 const mockDate = new Date("2022-04-12T13:18:30.000Z");
 
@@ -30,17 +30,17 @@ describe("Time", () => {
     });
   });
 
-  describe(formatDateOffset, () => {
+  describe(formatPastDayOffset, () => {
     it("returns special text for today", () => {
       expect(
-        formatDateOffset(
+        formatPastDayOffset(
           new Date("2022-04-12T10:12:00.000Z"),
           mockDate,
           mockTranslator,
         ),
       ).toBe("Today");
       expect(
-        formatDateOffset(
+        formatPastDayOffset(
           new Date("2022-04-12T01:50:00.000Z"),
           mockDate,
           mockTranslator,
@@ -50,14 +50,14 @@ describe("Time", () => {
 
     it("returns special text for yesterday", () => {
       expect(
-        formatDateOffset(
+        formatPastDayOffset(
           new Date("2022-04-11T11:21:37.000Z"),
           mockDate,
           mockTranslator,
         ),
       ).toBe("Yesterday");
       expect(
-        formatDateOffset(
+        formatPastDayOffset(
           new Date("2022-04-11T01:13:22.000Z"),
           mockDate,
           mockTranslator,
@@ -67,7 +67,7 @@ describe("Time", () => {
 
     it("returns an ISO date for old dates", () => {
       expect(
-        formatDateOffset(
+        formatPastDayOffset(
           new Date("2022-04-03T15:05:10.000Z"),
           mockDate,
           mockTranslator,

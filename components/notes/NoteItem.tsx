@@ -6,7 +6,7 @@ import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
 import { useTheme } from "@/common/theme";
-import { formatDateOffset } from "@/common/time";
+import { formatPastDayOffset } from "@/common/time";
 import { Icon } from "@/components";
 import { type Note, summarizeNote } from "@/logic/notes";
 
@@ -20,7 +20,11 @@ export const NoteItem = ({ note }: NoteItemProps) => {
   const styles = useStyles();
 
   const { title, summary } = summarizeNote(note);
-  const createdAt = formatDateOffset(new Date(note.createdAt), new Date(), t);
+  const createdAt = formatPastDayOffset(
+    new Date(note.createdAt),
+    new Date(),
+    t,
+  );
 
   return (
     <TouchableRipple

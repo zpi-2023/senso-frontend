@@ -14,7 +14,7 @@ export const toMinutesAndSeconds = (totalSeconds: number) => {
   return `${minutesStr}:${secondsStr}`;
 };
 
-export const formatDateOffset = (date: Date, now: Date, t: Translator) => {
+export const formatPastDayOffset = (date: Date, now: Date, t: Translator) => {
   const daysAgo = Math.trunc((now.getTime() - date.getTime()) / dayInMs);
 
   switch (daysAgo) {
@@ -46,6 +46,22 @@ const summarizeDuration = (diffMs: number): [number, "hours" | "minutes"] => {
   }
 };
 
+export const formatTimeOffset = (target: Date, now: Date, t: Translator) => {
+  const diffMs = target.getTime() - now.getTime();
+
+  if (diffMs < 0) {
+    const [count, unit] = summarizeDuration(-diffMs);
+    return unit === "hours"
+      ? t("time.hoursAgo", { count })
+      : t("time.minutesAgo", { count });
+  } else {
+    const [count, unit] = summarizeDuration(diffMs);
+    return unit === "hours"
+      ? t("time.inHours", { count })
+      : t("time.inMinutes", { count });
+  }
+};
+
 export const formatCron = (cron: string, now: Date, t: Translator): string => {
   const expr = parseExpression(cron);
   const prevDate = expr.prev().toDate();
@@ -53,15 +69,5 @@ export const formatCron = (cron: string, now: Date, t: Translator): string => {
   const tillPrev = now.getTime() - prevDate.getTime();
   const tillNext = nextDate.getTime() - now.getTime();
 
-  if (tillPrev < tillNext) {
-    const [count, unit] = summarizeDuration(tillPrev);
-    return unit === "hours"
-      ? t("time.hoursAgo", { count })
-      : t("time.minutesAgo", { count });
-  } else {
-    const [count, unit] = summarizeDuration(tillNext);
-    return unit === "hours"
-      ? t("time.inHours", { count })
-      : t("time.inMinutes", { count });
-  }
+  return formatTimeOffset(tillPrev < tillNext ? prevDate : nextDate, now, t);
 };
