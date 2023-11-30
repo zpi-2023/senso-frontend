@@ -61,10 +61,10 @@ const ProfilesList = () => {
     "put",
     "/api/v1/account/profiles/caretaker/{seniorId}",
   );
-  const deleteCaretakerProfile = useMutation(
-    "delete",
-    "/api/v1/account/profiles/caretaker/{seniorId}",
-  );
+  // const deleteCaretakerProfile = useMutation(
+  //   "delete",
+  //   "/api/v1/account/profiles/caretaker/{seniorId}/{caretakerId}",
+  // );
   const deleteSeniorProfile = useMutation(
     "delete",
     "/api/v1/account/profiles/senior",
@@ -228,11 +228,7 @@ const ProfilesList = () => {
                     if (dialogState.profile.type === "senior") {
                       await deleteSeniorProfile({});
                     } else if (dialogState.profile.type === "caretaker") {
-                      await deleteCaretakerProfile({
-                        params: {
-                          path: { seniorId: dialogState.profile.seniorId },
-                        },
-                      });
+                      // TODO: Fix after backend changes
                     }
                     await mutate();
                   }}
