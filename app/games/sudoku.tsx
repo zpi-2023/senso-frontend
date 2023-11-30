@@ -11,19 +11,17 @@ const calculateBorder = (rowIndex: number, colIndex: number) => {
   let borderStyle = {};
 
   if (rowIndex >= 0 && rowIndex <= 7) {
-    borderStyle = { ...borderStyle, borderBottomWidth: 1 };
-  }
-
-  if (rowIndex === 2 || rowIndex === 5) {
-    borderStyle = { ...borderStyle, borderBottomWidth: 2 };
+    borderStyle = {
+      ...borderStyle,
+      borderBottomWidth: rowIndex === 2 || rowIndex === 5 ? 2 : 1,
+    };
   }
 
   if (colIndex >= 0 && colIndex <= 7) {
-    borderStyle = { ...borderStyle, borderRightWidth: 1 };
-  }
-
-  if (colIndex === 2 || colIndex === 5) {
-    borderStyle = { ...borderStyle, borderRightWidth: 3 };
+    borderStyle = {
+      ...borderStyle,
+      borderRightWidth: colIndex === 2 || colIndex === 5 ? 2 : 1,
+    };
   }
 
   return borderStyle;
@@ -33,20 +31,81 @@ const SudokuGame = () => {
   const [board, setBoard] = useState<number[][]>([]);
 
   const generateBoard = () => {
-    // Logic to generate a new Sudoku board
-    // ...
-    // Set the generated board to the states
-    const newBoard = [
-      [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      [4, 5, 6, 7, 8, 9, 1, 2, 3],
-      [7, 8, 0, 1, 2, 3, 4, 5, 0],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      [4, 5, 6, 7, 8, 9, 1, 2, 3],
-      [7, 8, 9, 1, 2, 3, 4, 5, 6],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      [4, 5, 6, 7, 8, 9, 0, 2, 3],
-      [7, 8, 9, 1, 2, 3, 4, 5, 6],
-    ];
+    const newBoard: number[][] = [];
+
+    // Helper function to shuffle an array
+    const shuffleArray = (array: number[]) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i]!, array[j]!] = [array[j]!, array[i]!];
+      }
+      return array;
+    };
+
+    // Helper function to check if a digit is valid in a specific position
+    const isValidDigit = (
+      board: number[][],
+      row: number,
+      col: number,
+      digit: number,
+    ) => {
+      // Check row
+      for (let i = 0; i < 9; i++) {
+        if (board[row]![i] === digit) {
+          return false;
+        }
+      }
+
+      // Check column
+      for (let i = 0; i < 9; i++) {
+        if (board[i]![col] === digit) {
+          return false;
+        }
+      }
+
+      // Check 3x3 grid
+      const gridRow = Math.floor(row / 3) * 3;
+      const gridCol = Math.floor(col / 3) * 3;
+      for (let i = gridRow; i < gridRow + 3; i++) {
+        for (let j = gridCol; j < gridCol + 3; j++) {
+          if (board[i]![j] === digit) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    };
+
+    // Helper function to solve the Sudoku board using backtracking
+    const solveBoard = (board: number[][]) => {
+      for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+          if (board[row]![col] === 0) {
+            const digits = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+            for (const digit of digits) {
+              if (isValidDigit(board, row, col, digit)) {
+                board[row]![col] = digit;
+                if (solveBoard(board)) {
+                  return true;
+                }
+                board[row]![col] = 0;
+              }
+            }
+            return false;
+          }
+        }
+      }
+      return true;
+    };
+
+    // Initialize the board with empty places
+    for (let i = 0; i < 9; i++) {
+      newBoard.push(Array<number>(9).fill(0));
+    }
+
+    // Solve the board
+    solveBoard(newBoard);
 
     setBoard(newBoard);
   };
@@ -120,6 +179,8 @@ const SudokuGame = () => {
         }
       }
     }
+
+    return true;
   };
 
   const showResult = () => {
