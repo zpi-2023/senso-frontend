@@ -1,14 +1,20 @@
 import { useLocalSearchParams } from "expo-router";
 import { useCallback } from "react";
 
-import { useMutation, useQuery, useQueryInvalidation } from "@/common/api";
+import {
+  type MethodPath,
+  useMutation,
+  useQuery,
+  useQueryInvalidation,
+} from "@/common/api";
 import { useIdentity } from "@/common/identity";
 
 const extractedTitleLength = 20;
 
-const seniorNotesUrl = "/api/v1/notes/senior/{seniorId}";
-const noteDetailsUrl = "/api/v1/notes/{noteId}";
-const createNoteUrl = "/api/v1/notes";
+const seniorNotesUrl =
+  "/api/v1/notes/senior/{seniorId}" satisfies MethodPath<"get">;
+const noteDetailsUrl = "/api/v1/notes/{noteId}" satisfies MethodPath<"get">;
+const createNoteUrl = "/api/v1/notes" satisfies MethodPath<"post">;
 
 export type Note = {
   id: number;

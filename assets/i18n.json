@@ -262,8 +262,8 @@
     "pl": "Gry"
   },
   "actions.playMemoryGame": {
-    "en": "Memory game",
-    "pl": "Gra Memory"
+    "en": "Memory",
+    "pl": "Memory"
   },
   "actions.playWordleGame": {
     "en": "Graydle",
@@ -470,8 +470,8 @@
     "pl_2,3,4": "{count} minuty temu"
   },
   "games.memory.pageTitle": {
-    "en": "Memory game",
-    "pl": "Gra Memory"
+    "en": "Memory",
+    "pl": "Memory"
   },
   "games.memory.startButton": {
     "en": "Start game",

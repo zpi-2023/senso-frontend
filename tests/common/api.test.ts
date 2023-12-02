@@ -55,9 +55,13 @@ describe("API", () => {
 
   describe(useMutation, () => {
     it("sends correct requests", async () => {
-      mockApi("post", "/api/v1/token", (ctx) => ctx.json({ token: "123" }));
+      mockApi("post", "/api/v1/account/token", (ctx) =>
+        ctx.json({ token: "123" }),
+      );
 
-      const { result } = renderHook(() => useMutation("post", "/api/v1/token"));
+      const { result } = renderHook(() =>
+        useMutation("post", "/api/v1/account/token"),
+      );
 
       const response = await result.current({
         body: { email: "john@paul.pl", password: "12345678" },

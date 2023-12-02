@@ -24,7 +24,7 @@ const Page = () => {
       <PaginatedScrollView
         renderer={(data) => <IntakeEntry intake={Intake.fromData(data)} />}
         query={{
-          url: "/api/v1/reminders/senior/{seniorId}/intakes",
+          url: "/api/v1/intakes/senior/{seniorId}",
           params: { path: { seniorId } },
         }}
         itemsPerPage={5}

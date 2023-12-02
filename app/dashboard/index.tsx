@@ -1,6 +1,8 @@
+import { Redirect } from "expo-router";
 import { FlatList, View } from "react-native";
 
 import { actions } from "@/common/actions";
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
 import { sty } from "@/common/styles";
@@ -20,6 +22,11 @@ const Page = () => {
 
   if (!gadgets) {
     return <LoadingScreen title={t("dashboard.view.pageTitle")} />;
+  }
+
+  // Ensure backend's enum changes don't break the app
+  if (gadgets.some((action) => !(action in actions))) {
+    return <Redirect href={AppRoutes.EditDashboard} />;
   }
 
   return (

@@ -48,27 +48,21 @@ const ProfilesList = () => {
   const identity = useIdentity();
 
   const { data: profileData, mutate } = useQuery({
-    url: "/api/v1/account/profiles",
+    url: "/api/v1/profiles",
   });
   const { data: caretakersData, isLoading: caretakersLoading } = useQuery({
-    url: "/api/v1/account/profiles/senior/caretakers",
+    url: "/api/v1/profiles/senior/caretakers",
   });
-  const createSeniorProfile = useMutation(
-    "post",
-    "/api/v1/account/profiles/senior",
-  );
+  const createSeniorProfile = useMutation("post", "/api/v1/profiles/senior");
   const editCaretakerProfile = useMutation(
     "put",
-    "/api/v1/account/profiles/caretaker/{seniorId}",
+    "/api/v1/profiles/caretaker/{seniorId}",
   );
-  // const deleteCaretakerProfile = useMutation(
-  //   "delete",
-  //   "/api/v1/account/profiles/caretaker/{seniorId}/{caretakerId}",
-  // );
-  const deleteSeniorProfile = useMutation(
+  const deleteCaretakerProfile = useMutation(
     "delete",
-    "/api/v1/account/profiles/senior",
+    "/api/v1/profiles/caretaker/{seniorId}/{caretakerId}",
   );
+  const deleteSeniorProfile = useMutation("delete", "/api/v1/profiles/senior");
 
   const [isCreatingSeniorProfile, setIsCreatingSeniorProfile] = useState(false);
   const { dialogState, dismissDialog, showEditPrompt, showDeleteAlert } =
@@ -228,7 +222,11 @@ const ProfilesList = () => {
                     if (dialogState.profile.type === "senior") {
                       await deleteSeniorProfile({});
                     } else if (dialogState.profile.type === "caretaker") {
-                      // TODO: Fix after backend changes
+                      const seniorId = identity.accountId;
+                      const caretakerId = dialogState.profile.seniorId;
+                      await deleteCaretakerProfile({
+                        params: { path: { seniorId, caretakerId } },
+                      });
                     }
                     await mutate();
                   }}

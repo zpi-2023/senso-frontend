@@ -36,13 +36,14 @@ export const mockIdentityLoggedOut = buildIdentity(
 ) as IdentityNothingKnown;
 
 export const mockIdentityLoggedIn = buildIdentity(
-  { known: "account", token: "TOKEN" },
+  { known: "account", accountId: 1, token: "TOKEN" },
   mockActions,
 ) as IdentityAccountKnown;
 
 export const mockIdentityWithProfile = buildIdentity(
   {
     known: "profile",
+    accountId: 1,
     token: "TOKEN",
     profile: { type: "senior", seniorId: 1 },
   },
