@@ -20,10 +20,11 @@ const Page = () => {
     return <RedirectIfNoProfile identity={identity} />;
   }
 
-  if (!gadgets || gadgets.some((action) => !(action in actions))) {
+  if (!gadgets) {
     return <LoadingScreen title={t("dashboard.view.pageTitle")} />;
   }
 
+  // Ensure backend's enum changes don't break the app
   if (gadgets.some((action) => !(action in actions))) {
     return <Redirect href={AppRoutes.EditDashboard} />;
   }
