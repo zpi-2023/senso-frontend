@@ -6,34 +6,6 @@ import {
 } from "@/common/time";
 
 const mockDate = new Date("2022-04-12T13:18:30.000Z");
-// "time.inHours": {
-//   "en": "in {count} hours",
-//   "en_1": "in {count} hour",
-//   "pl": "za {count} godzin",
-//   "pl_1": "za {count} godzinę",
-//   "pl_2,3,4": "za {count} godziny"
-// },
-// "time.inMinutes": {
-//   "en": "in {count} minutes",
-//   "en_1": "in {count} minute",
-//   "pl": "za {count} minut",
-//   "pl_1": "za {count} minutę",
-//   "pl_2,3,4": "za {count} minuty"
-// },
-// "time.hoursAgo": {
-//   "en": "{count} hours ago",
-//   "en_1": "{count} hour ago",
-//   "pl": "{count} godzin temu",
-//   "pl_1": "{count} godzina temu",
-//   "pl_2,3,4": "{count} godziny temu"
-// },
-// "time.minutesAgo": {
-//   "en": "{count} minutes ago",
-//   "en_1": "{count} minute ago",
-//   "pl": "{count} minut temu",
-//   "pl_1": "{count} minuta temu",
-//   "pl_2,3,4": "{count} minuty temu"
-// },
 
 const mockTranslator: Translator = (key, substs?: { count?: number }) => {
   const s = substs?.count === 1 ? "" : "s";
