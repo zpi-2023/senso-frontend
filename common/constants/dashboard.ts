@@ -7,6 +7,7 @@ export const availableGadgets = [
   "trackMedication",
   "playGames",
   "playMemoryGame",
+  "playWordleGame",
   "manageNotes",
   "quickCreateNote",
   "switchProfile",

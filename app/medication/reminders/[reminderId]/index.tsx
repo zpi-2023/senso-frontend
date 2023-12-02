@@ -1,9 +1,11 @@
+import { Redirect } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 import { Button, SegmentedButtons } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { useQuery } from "@/common/api";
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
 import { sty } from "@/common/styles";
@@ -13,7 +15,7 @@ import {
   ReminderHistory,
   useReminderDeactivateDialog,
 } from "@/components/medication";
-import { formatAmount, useReminderParams } from "@/logic/medication";
+import { Reminder, useReminderParams } from "@/logic/medication";
 
 const Page = () => {
   const { t } = useI18n();
@@ -21,7 +23,7 @@ const Page = () => {
   const identity = useIdentity();
 
   const { reminderId, tab: defaultTab } = useReminderParams();
-  const { data: reminder } = useQuery(
+  const { data } = useQuery(
     reminderId
       ? {
           url: "/api/v1/reminders/{reminderId}",
@@ -31,7 +33,7 @@ const Page = () => {
   );
 
   const { dialog: deactivateDialog, showDialog: showDeactivateDialog } =
-    useReminderDeactivateDialog(reminder?.id ?? null);
+    useReminderDeactivateDialog(data?.id ?? null);
 
   const [tab, setTab] = useState<"details" | "history">(defaultTab);
 
@@ -39,17 +41,21 @@ const Page = () => {
     return <RedirectIfNoProfile identity={identity} />;
   }
 
-  if (!reminder) {
+  if (!reminderId) {
+    return <Redirect href={AppRoutes.MedicationList} />;
+  }
+
+  if (!data) {
     return <LoadingScreen title={t("medication.details.unnamedReminder")} />;
   }
+
+  const reminder = Reminder.fromData(data);
 
   return (
     <View style={sty.full}>
       <Header
         left={actions.goBack}
-        title={`${reminder.medicationName} - ${formatAmount(
-          reminder.amountPerIntake,
-          reminder.amountUnit,
+        title={`${reminder.medicationName} - ${reminder.formatAmountPerIntake(
           t,
         )}`}
       />
