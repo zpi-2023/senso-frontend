@@ -8,6 +8,7 @@ export const enum AppRoutes {
   AddCaretakerProfile = "/profile/caretaker/add",
   ScanSeniorQR = "/profile/caretaker/scan-qr",
   DisplaySeniorQR = "/profile/senior/display-qr",
+  SeniorCaretakerList = "/profile/senior/caretakers",
   AlertHistory = "/alert/history",
   MedicationList = "/medication",
   ReminderDetails = "/medication/reminders/[reminderId]",

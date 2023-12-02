@@ -47,6 +47,12 @@ export const actions = {
     hidden: ({ identity }) => isSenior(identity.profile),
     managed: true,
   },
+  viewCaretakerList: {
+    displayName: (t) => t("actions.viewCaretakerList"),
+    icon: "account-details",
+    handler: ({ router }) => router.push(AppRoutes.SeniorCaretakerList),
+    managed: true,
+  },
   pairCaretaker: {
     displayName: (t) => t("actions.pairCaretaker"),
     icon: "link-variant-plus",

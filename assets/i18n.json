@@ -233,6 +233,10 @@
     "en": "Alert history",
     "pl": "Historia zgłoszeń"
   },
+  "actions.viewCaretakerList": {
+    "en": "Caretaker list",
+    "pl": "Lista opiekunów"
+  },
   "actions.pairCaretaker": {
     "en": "Pair with caretaker",
     "pl": "Paruj z opiekunem"
@@ -332,6 +336,14 @@
   "profiles.scanQR.noPermission": {
     "en": "You have not granted camera permission",
     "pl": "Nie udzieliłeś dostępu do kamery"
+  },
+  "profiles.caretakerList.pageTitle": {
+    "en": "Caretaker list",
+    "pl": "Lista opiekunów"
+  },
+  "profiles.caretakerList.unlink": {
+    "en": "Unlink",
+    "pl": "Odłącz"
   },
   "dashboard.edit.pageTitle": {
     "en": "Edit dashboard",

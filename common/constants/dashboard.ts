@@ -12,6 +12,7 @@ export const availableGadgets = [
   "switchProfile",
   "logOut",
   "pairCaretaker",
+  "viewCaretakerList",
   "editDashboard",
   "toggleLanguage",
 ] satisfies ActionKey[];
