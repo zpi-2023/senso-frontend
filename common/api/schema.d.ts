@@ -27,6 +27,14 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
+        /** @description Conflict */
+        409: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
       };
     };
   };
@@ -209,28 +217,18 @@ export interface paths {
       };
     };
   };
-  "/api/v1/account/profiles/caretaker/{seniorId}": {
-    put: {
+  "/api/v1/account/profiles/caretaker/{seniorId}/{caretakerId}": {
+    delete: {
       parameters: {
         path: {
           seniorId: number;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["EditCaretakerProfileDto"];
-          "text/json": components["schemas"]["EditCaretakerProfileDto"];
-          "application/*+json": components["schemas"]["EditCaretakerProfileDto"];
+          caretakerId: number;
         };
       };
       responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["ProfileDisplayDto"];
-            "application/json": components["schemas"]["ProfileDisplayDto"];
-            "text/json": components["schemas"]["ProfileDisplayDto"];
-          };
+        /** @description No Content */
+        204: {
+          content: never;
         };
         /** @description Bad Request */
         400: {
@@ -258,16 +256,29 @@ export interface paths {
         };
       };
     };
-    delete: {
+  };
+  "/api/v1/account/profiles/caretaker/{seniorId}": {
+    put: {
       parameters: {
         path: {
           seniorId: number;
         };
       };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["EditCaretakerProfileDto"];
+          "text/json": components["schemas"]["EditCaretakerProfileDto"];
+          "application/*+json": components["schemas"]["EditCaretakerProfileDto"];
+        };
+      };
       responses: {
-        /** @description No Content */
-        204: {
-          content: never;
+        /** @description Success */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ProfileDisplayDto"];
+            "application/json": components["schemas"]["ProfileDisplayDto"];
+            "text/json": components["schemas"]["ProfileDisplayDto"];
+          };
         };
         /** @description Bad Request */
         400: {
@@ -569,14 +580,6 @@ export interface paths {
             "text/plain": components["schemas"]["NoteListDto"];
             "application/json": components["schemas"]["NoteListDto"];
             "text/json": components["schemas"]["NoteListDto"];
-          };
-        };
-        /** @description Bad Request */
-        400: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
           };
         };
         /** @description Unauthorized */
@@ -1223,7 +1226,7 @@ export interface components {
       amountUnit?: string | null;
     };
     IntakeDtoPaginatedDto: {
-      items?: components["schemas"]["IntakeDto"][];
+      items: components["schemas"]["IntakeDto"][];
     };
     LeaderboardEntryDto: {
       displayName: string;
@@ -1233,7 +1236,7 @@ export interface components {
       score: number;
     };
     LeaderboardEntryDtoPaginatedDto: {
-      items?: components["schemas"]["LeaderboardEntryDto"][];
+      items: components["schemas"]["LeaderboardEntryDto"][];
     };
     MedicationDto: {
       name: string;
@@ -1242,7 +1245,7 @@ export interface components {
       amountUnit?: string | null;
     };
     MedicationDtoPaginatedDto: {
-      items?: components["schemas"]["MedicationDto"][];
+      items: components["schemas"]["MedicationDto"][];
     };
     NoteDto: {
       /** Format: int32 */
@@ -1292,7 +1295,7 @@ export interface components {
       description?: string | null;
     };
     ReminderDtoPaginatedDto: {
-      items?: components["schemas"]["ReminderDto"][];
+      items: components["schemas"]["ReminderDto"][];
     };
     ScoreDto: {
       /** Format: int32 */
