@@ -4,8 +4,7 @@ import { ActivityIndicator } from "react-native-paper";
 
 import { OnViewEnter } from "./OnViewEnter";
 
-import { useQuery, useQueryInvalidation } from "@/common/api";
-import type { MethodPath } from "@/common/api/client";
+import { useQuery, useQueryInvalidation, type MethodPath } from "@/common/api";
 import { useRefreshControl } from "@/common/refresh";
 
 // 🙏

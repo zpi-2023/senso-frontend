@@ -15,7 +15,7 @@ import { Header, LoadingScreen } from "@/components";
 const CreateSeniorProfile = () => {
   const { t } = useI18n();
   const { data, isLoading, mutate } = useQuery({
-    url: "/api/v1/account/profiles/senior",
+    url: "/api/v1/profiles/senior/pairing",
   });
   const [secondsLeft, setSecondsLeft] = useState<number>(data?.validFor || 10);
 

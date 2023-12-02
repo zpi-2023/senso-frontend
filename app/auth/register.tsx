@@ -31,7 +31,7 @@ const Page = () => {
   const theme = useTheme();
   const { t } = useI18n();
   const createAccount = useMutation("post", "/api/v1/account");
-  const obtainToken = useMutation("post", "/api/v1/token");
+  const obtainToken = useMutation("post", "/api/v1/account/token");
 
   const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
 
@@ -51,7 +51,7 @@ const Page = () => {
     if (accountRes.error || tokenRes.error) {
       setStatus("error");
     } else {
-      identity.logIn(tokenRes.data.token);
+      identity.logIn(tokenRes.data);
     }
   };
 

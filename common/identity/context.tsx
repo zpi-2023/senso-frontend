@@ -31,9 +31,9 @@ export const useIdentity = (): Identity => {
   const { data, setData } = useContext(IdentityContext);
 
   const logIn = useCallback(
-    (token: string) => {
+    (data: { accountId: number; token: string }) => {
       clearHistory(router, AppRoutes.ProfileList);
-      setData({ known: "account", token });
+      setData({ known: "account", ...data });
     },
     [router, setData],
   );
@@ -55,6 +55,7 @@ export const useIdentity = (): Identity => {
         data.known !== "nothing"
           ? {
               known: "profile",
+              accountId: data.accountId,
               token: data.token,
               profile,
             }

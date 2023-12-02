@@ -1,6 +1,8 @@
+import { Redirect } from "expo-router";
 import { FlatList, View } from "react-native";
 
 import { actions } from "@/common/actions";
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfNoProfile } from "@/common/identity";
 import { sty } from "@/common/styles";
@@ -18,8 +20,12 @@ const Page = () => {
     return <RedirectIfNoProfile identity={identity} />;
   }
 
-  if (!gadgets) {
+  if (!gadgets || gadgets.some((action) => !(action in actions))) {
     return <LoadingScreen title={t("dashboard.view.pageTitle")} />;
+  }
+
+  if (gadgets.some((action) => !(action in actions))) {
+    return <Redirect href={AppRoutes.EditDashboard} />;
   }
 
   return (

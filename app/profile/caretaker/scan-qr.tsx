@@ -16,7 +16,7 @@ export default function Page() {
   const identity = useIdentity();
   const createCaretakerProfile = useMutation(
     "post",
-    "/api/v1/account/profiles/caretaker",
+    "/api/v1/profiles/caretaker",
   );
 
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);

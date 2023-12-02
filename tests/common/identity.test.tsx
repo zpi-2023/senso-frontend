@@ -57,7 +57,11 @@ describe("Identity", () => {
     });
 
     it("correctly reads logged in identity", () => {
-      const identity = renderUseIdentity({ known: "account", token: "TOKEN" });
+      const identity = renderUseIdentity({
+        known: "account",
+        accountId: 1,
+        token: "TOKEN",
+      });
 
       expect(identity.isLoggedIn).toBe(true);
       expect(identity.hasProfile).toBe(false);
@@ -70,6 +74,7 @@ describe("Identity", () => {
     it("correctly reads identity with profile", () => {
       const identity = renderUseIdentity({
         known: "profile",
+        accountId: 1,
         token: "TOKEN",
         profile: { type: "senior", seniorId: 3 },
       });

@@ -3,14 +3,20 @@ import { ScrollView, View } from "react-native";
 import { IconButton, List, Menu } from "react-native-paper";
 
 import { actions } from "@/common/actions";
-import { useMutation, useQuery, useQueryInvalidation } from "@/common/api";
+import {
+  useMutation,
+  useQuery,
+  useQueryInvalidation,
+  type MethodPath,
+} from "@/common/api";
 import { type Translator, useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, isSenior, useIdentity } from "@/common/identity";
 import type { IdentityProfileKnown } from "@/common/identity/types";
 import { useRefreshControl } from "@/common/refresh";
 import { CaretakerBanner, Header, LoadingScreen } from "@/components";
 
-const endpoint = "/api/v1/account/profiles/senior/caretakers";
+const endpoint =
+  "/api/v1/profiles/senior/caretakers" satisfies MethodPath<"get">;
 
 type ItemProps = {
   profile: {
@@ -29,7 +35,7 @@ const Item = ({ profile, invalidateProfiles, identity, t }: ItemProps) => {
 
   const unlink = useMutation(
     "delete",
-    "/api/v1/account/profiles/caretaker/{seniorId}/{caretakerId}",
+    "/api/v1/profiles/caretaker/{seniorId}/{caretakerId}",
   );
 
   return (

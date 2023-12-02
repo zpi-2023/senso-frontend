@@ -1,13 +1,13 @@
 import { Link } from "expo-router";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 
-import { baseUrl, useQuery } from "@/common/api";
+import { type MethodPath, baseUrl, useQuery } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
 import { sty } from "@/common/styles";
 
-const healthzPath = "/api/v1/healthz";
+const healthzPath = "/api/v1/healthz" satisfies MethodPath<"get">;
 
 export const Landing = ({ debug = false }: { debug?: boolean }) => {
   const { data, isLoading, error, mutate } = useQuery({

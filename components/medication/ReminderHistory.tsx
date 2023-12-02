@@ -12,7 +12,7 @@ export const ReminderHistory = ({ reminderId }: ReminderHistoryProps) => {
     <PaginatedScrollView
       renderer={(data) => <IntakeEntry intake={Intake.fromData(data)} />}
       query={{
-        url: "/api/v1/reminders/{reminderId}/intakes",
+        url: "/api/v1/intakes/reminder/{reminderId}",
         params: { path: { reminderId } },
       }}
       itemsPerPage={5}

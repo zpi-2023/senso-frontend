@@ -24,10 +24,10 @@ export type Profile = SeniorProfile | CaretakerProfile;
  */
 export type IdentityData =
   | { known: "nothing" }
-  | { known: "account"; token: string }
-  | { known: "profile"; token: string; profile: Profile };
+  | { known: "account"; accountId: number; token: string }
+  | { known: "profile"; accountId: number; token: string; profile: Profile };
 
-export type LogIn = (token: string) => void;
+export type LogIn = (data: { accountId: number; token: string }) => void;
 export type LogOut = () => void;
 export type SelectProfile = (profile: Profile, redirectTo?: AppRoutes) => void;
 
@@ -37,6 +37,7 @@ export type IdentityNothingKnown = {
   logIn: LogIn;
 };
 export type IdentityAccountKnown = {
+  accountId: number;
   token: string;
   hasProfile: false;
   isLoggedIn: true;
@@ -44,6 +45,7 @@ export type IdentityAccountKnown = {
   selectProfile: SelectProfile;
 };
 export type IdentityProfileKnown = {
+  accountId: number;
   token: string;
   profile: Profile;
   hasProfile: true;
