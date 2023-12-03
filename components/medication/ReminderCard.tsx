@@ -36,9 +36,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
       }
     >
       <Card.Title
-        title={`${reminder.medicationName} - ${reminder.formatAmountPerIntake(
-          t,
-        )}`}
+        title={reminder.title(t)}
         right={(props) =>
           reminder.isActive ? (
             <Menu
@@ -53,7 +51,13 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
               }
             >
               <Menu.Item
-                onPress={() => setMenuVisible(false)}
+                onPress={() => {
+                  setMenuVisible(false);
+                  router.push({
+                    pathname: AppRoutes.EditReminder,
+                    params: { reminderId: reminder.id },
+                  });
+                }}
                 leadingIcon="pencil"
                 title={t("medication.list.editReminder")}
               />

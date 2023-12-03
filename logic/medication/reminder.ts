@@ -63,6 +63,10 @@ export class Reminder {
     return Reminder.formatAmount(this.amountOwned ?? 0, this.amountUnit, t);
   }
 
+  public title(t: Translator): string {
+    return `${this.medicationName} - ${this.formatAmountPerIntake(t)}`;
+  }
+
   public canMakeQuickIntake(): boolean {
     if (!this.isActive) {
       return false;
