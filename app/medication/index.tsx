@@ -6,6 +6,7 @@ import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
 import { sty } from "@/common/styles";
 import { CaretakerBanner, Header, PaginatedScrollView } from "@/components";
 import { ReminderCard } from "@/components/medication";
+import { Reminder } from "@/logic/medication";
 
 const Page = () => {
   const { t } = useI18n();
@@ -27,8 +28,11 @@ const Page = () => {
       <CaretakerBanner />
       <PaginatedScrollView
         style={styles.view}
-        renderer={(item) => (
-          <ReminderCard reminder={item} style={styles.card} />
+        renderer={(data) => (
+          <ReminderCard
+            reminder={Reminder.fromData(data)}
+            style={styles.card}
+          />
         )}
         query={{
           url: "/api/v1/reminders/senior/{seniorId}",

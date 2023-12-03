@@ -7,12 +7,7 @@ import { useReminderDeactivateDialog } from "./ReminderDeactivateDialog";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
-import { formatCron } from "@/common/time";
-import {
-  canMakeQuickIntake,
-  formatAmount,
-  type Reminder,
-} from "@/logic/medication";
+import { useCreateIntake, type Reminder } from "@/logic/medication";
 
 type ReminderCardProps = {
   reminder: Reminder;
@@ -23,6 +18,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const { showDialog: showDeactivateDialog, dialog: deactivateDialog } =
     useReminderDeactivateDialog(reminder.id);
+  const { create, loading } = useCreateIntake({ reminder });
 
   return (
     <Card
@@ -40,9 +36,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
       }
     >
       <Card.Title
-        title={`${reminder.medicationName} - ${formatAmount(
-          reminder.amountPerIntake,
-          reminder.amountUnit,
+        title={`${reminder.medicationName} - ${reminder.formatAmountPerIntake(
           t,
         )}`}
         right={(props) =>
@@ -74,9 +68,7 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
             </Menu>
           ) : null
         }
-        subtitle={
-          reminder.cron ? formatCron(reminder.cron, new Date(), t) : null
-        }
+        subtitle={reminder.cron?.formatNearestEvent(t)}
         titleVariant="titleLarge"
         subtitleVariant="titleMedium"
       />
@@ -86,8 +78,14 @@ export const ReminderCard = ({ reminder, ...props }: ReminderCardProps) => {
         ) : null}
       </Card.Content>
       <Card.Actions>
-        {canMakeQuickIntake(reminder, new Date()) ? (
-          <Button mode="contained" onPress={() => {}} icon="pill">
+        {reminder.canMakeQuickIntake() ? (
+          <Button
+            mode="contained"
+            onPress={create}
+            loading={loading}
+            disabled={loading}
+            icon="pill"
+          >
             {t("medication.takeDose")}
           </Button>
         ) : null}

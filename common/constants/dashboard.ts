@@ -7,11 +7,13 @@ export const availableGadgets = [
   "trackMedication",
   "playGames",
   "playMemoryGame",
+  "playWordleGame",
   "manageNotes",
   "quickCreateNote",
   "switchProfile",
   "logOut",
   "pairCaretaker",
+  "viewCaretakerList",
   "editDashboard",
   "toggleLanguage",
 ] satisfies ActionKey[];

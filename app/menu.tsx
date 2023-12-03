@@ -31,6 +31,7 @@ const Page = () => {
         </List.Section>
         <List.Section>
           <List.Subheader>{t("menu.account")}</List.Subheader>
+          <MenuItem action={actions.viewCaretakerList} />
           <MenuItem action={actions.pairCaretaker} />
           <MenuItem action={actions.switchProfile} />
           <MenuItem action={actions.logOut} />

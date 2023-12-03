@@ -19,6 +19,7 @@ export const buildIdentity = (
   }
 
   const common = {
+    accountId: data.accountId,
     token: data.token,
     isLoggedIn: true as const,
     logOut,

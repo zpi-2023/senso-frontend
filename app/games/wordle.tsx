@@ -273,6 +273,7 @@ const useStyles = sty.themedHook(({ colors }) => ({
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
+    padding: 16,
   },
 }));
 

@@ -6,7 +6,30 @@
 
 export interface paths {
   "/api/v1/account": {
+    /** Returns the id of user's account */
+    get: {
+      responses: {
+        /** @description Returns the id of user's account */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["GetAccountDto"];
+            "application/json": components["schemas"]["GetAccountDto"];
+            "text/json": components["schemas"]["GetAccountDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    /** Creates a new account */
     post: {
+      /** @description Data needed to create an account */
       requestBody?: {
         content: {
           "application/json": components["schemas"]["CreateAccountDto"];
@@ -15,11 +38,11 @@ export interface paths {
         };
       };
       responses: {
-        /** @description No Content */
+        /** @description Account successfully created */
         204: {
           content: never;
         };
-        /** @description Bad Request */
+        /** @description If DTO validation failed */
         400: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -27,79 +50,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-      };
-    };
-  };
-  "/api/v1/account/profiles": {
-    get: {
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["ProfilesDto"];
-            "application/json": components["schemas"]["ProfilesDto"];
-            "text/json": components["schemas"]["ProfilesDto"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/account/profiles/senior": {
-    get: {
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["EncodedSeniorDto"];
-            "application/json": components["schemas"]["EncodedSeniorDto"];
-            "text/json": components["schemas"]["EncodedSeniorDto"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-    post: {
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["ProfileDisplayDto"];
-            "application/json": components["schemas"]["ProfileDisplayDto"];
-            "text/json": components["schemas"]["ProfileDisplayDto"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Conflict */
+        /** @description If an email is already taken */
         409: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -109,13 +60,28 @@ export interface paths {
         };
       };
     };
-    delete: {
-      responses: {
-        /** @description No Content */
-        204: {
-          content: never;
+  };
+  "/api/v1/account/token": {
+    /** Creates a token for an account to log in */
+    post: {
+      /** @description Credentials */
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["GetAccountByCredentialsDto"];
+          "text/json": components["schemas"]["GetAccountByCredentialsDto"];
+          "application/*+json": components["schemas"]["GetAccountByCredentialsDto"];
         };
-        /** @description Unauthorized */
+      };
+      responses: {
+        /** @description Returns token */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["TokenDto"];
+            "application/json": components["schemas"]["TokenDto"];
+            "text/json": components["schemas"]["TokenDto"];
+          };
+        };
+        /** @description Credentials are invalid */
         401: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -123,7 +89,252 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Forbidden */
+      };
+    };
+  };
+  "/api/v1/dashboard/{seniorId}": {
+    /** Returns dashboard for a given senior */
+    get: {
+      parameters: {
+        path: {
+          /** @description Id of a senior */
+          seniorId: number;
+        };
+      };
+      responses: {
+        /** @description Returns dashboard for a given senior */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["DashboardDto"];
+            "application/json": components["schemas"]["DashboardDto"];
+            "text/json": components["schemas"]["DashboardDto"];
+          };
+        };
+        /** @description If validation failed */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    /** Updates dashboard for a given senior */
+    put: {
+      parameters: {
+        path: {
+          /** @description Id of a senior */
+          seniorId: number;
+        };
+      };
+      /** @description Updated dashboard */
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["DashboardDto"];
+          "text/json": components["schemas"]["DashboardDto"];
+          "application/*+json": components["schemas"]["DashboardDto"];
+        };
+      };
+      responses: {
+        /** @description Dashboard successfully updated */
+        204: {
+          content: never;
+        };
+        /** @description If validation failed */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/games/{gameName}/score": {
+    /** Returns user's best score in a given game */
+    get: {
+      parameters: {
+        path: {
+          /** @description The name of a game */
+          gameName: string;
+        };
+      };
+      responses: {
+        /** @description Returns dashboard for a given senior */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ScoreDto"];
+            "application/json": components["schemas"]["ScoreDto"];
+            "text/json": components["schemas"]["ScoreDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If the name of a game was not found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    /** Updates user's best score in the given game if the new score is better */
+    post: {
+      parameters: {
+        path: {
+          /** @description The name of a game */
+          gameName: string;
+        };
+      };
+      /** @description Achieved score */
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["ScoreDto"];
+          "text/json": components["schemas"]["ScoreDto"];
+          "application/*+json": components["schemas"]["ScoreDto"];
+        };
+      };
+      responses: {
+        /** @description Returns dashboard for a given senior */
+        200: {
+          content: never;
+        };
+        /** @description No Content */
+        204: {
+          content: never;
+        };
+        /** @description If validation failed */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If the name of a game was not found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/games/{gameName}/leaderboard": {
+    /** Returns leaderbord */
+    get: {
+      parameters: {
+        query?: {
+          offset?: number;
+          limit?: number;
+        };
+        path: {
+          /** @description The name of a game */
+          gameName: string;
+        };
+      };
+      responses: {
+        /** @description Returns part of the leaderboard */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["LeaderboardEntryDtoPaginatedDto"];
+            "application/json": components["schemas"]["LeaderboardEntryDtoPaginatedDto"];
+            "text/json": components["schemas"]["LeaderboardEntryDtoPaginatedDto"];
+          };
+        };
+        /** @description If the name of a game was not found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/healthz": {
+    /** Returns the status of the services */
+    get: {
+      responses: {
+        /** @description Returns status of the services */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["HealthcheckDto"];
+            "application/json": components["schemas"]["HealthcheckDto"];
+            "text/json": components["schemas"]["HealthcheckDto"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/intakes/senior/{seniorId}": {
+    /** Returns intakes for a senior with a given id */
+    get: {
+      parameters: {
+        query?: {
+          offset?: number;
+          limit?: number;
+        };
+        path: {
+          /** @description Id of a senior whose reminders are to be returned */
+          seniorId: number;
+        };
+      };
+      responses: {
+        /** @description Returns intakes for a senior with a given id */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["IntakeDtoPaginatedDto"];
+            "application/json": components["schemas"]["IntakeDtoPaginatedDto"];
+            "text/json": components["schemas"]["IntakeDtoPaginatedDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user does not have a profile needed to access this senior's reminders and their intakes */
         403: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -131,29 +342,32 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
       };
     };
   };
-  "/api/v1/account/profiles/senior/caretakers": {
+  "/api/v1/intakes/reminder/{reminderId}": {
+    /** Returns intakes for a reminer with a given id */
     get: {
+      parameters: {
+        query?: {
+          offset?: number;
+          limit?: number;
+        };
+        path: {
+          /** @description Id of a reminder */
+          reminderId: number;
+        };
+      };
       responses: {
-        /** @description Success */
+        /** @description Returns paginated intakes for a reminder with a given id */
         200: {
           content: {
-            "text/plain": components["schemas"]["ExtendedProfilesDto"];
-            "application/json": components["schemas"]["ExtendedProfilesDto"];
-            "text/json": components["schemas"]["ExtendedProfilesDto"];
+            "text/plain": components["schemas"]["IntakeDtoPaginatedDto"];
+            "application/json": components["schemas"]["IntakeDtoPaginatedDto"];
+            "text/json": components["schemas"]["IntakeDtoPaginatedDto"];
           };
         };
-        /** @description Unauthorized */
+        /** @description If user is not logged in */
         401: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -161,7 +375,74 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Not Found */
+        /** @description If user does not have a profile needed to access this reminder */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If reminder with given id does not exist in the database */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    /** Creates a new intake record for a reminder with a given id */
+    post: {
+      parameters: {
+        path: {
+          /** @description Id of a reminder */
+          reminderId: number;
+        };
+      };
+      /** @description Information about intake */
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["CreateIntakeDto"];
+          "text/json": components["schemas"]["CreateIntakeDto"];
+          "application/*+json": components["schemas"]["CreateIntakeDto"];
+        };
+      };
+      responses: {
+        /** @description Returns newly created intake record */
+        201: {
+          content: {
+            "text/plain": components["schemas"]["IntakeDto"];
+            "application/json": components["schemas"]["IntakeDto"];
+            "text/json": components["schemas"]["IntakeDto"];
+          };
+        };
+        /** @description If validation failed */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user does not have a profile needed to access this reminder */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If reminder with given id does not exist in the database */
         404: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -172,8 +453,423 @@ export interface paths {
       };
     };
   };
-  "/api/v1/account/profiles/caretaker": {
+  "/api/v1/intakes/{intakeId}": {
+    /** Returns intake with a given id */
+    get: {
+      parameters: {
+        path: {
+          /** @description Id of an intake */
+          intakeId: number;
+        };
+      };
+      responses: {
+        /** @description Returns intake with a given id */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["IntakeDto"];
+            "application/json": components["schemas"]["IntakeDto"];
+            "text/json": components["schemas"]["IntakeDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user does not have a profile needed to access this intake */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If intake with given id does not exist in the database */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/notes": {
+    /** Creates a new note */
     post: {
+      /** @description Data needed to create note */
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["UpsertNoteDto"];
+          "text/json": components["schemas"]["UpsertNoteDto"];
+          "application/*+json": components["schemas"]["UpsertNoteDto"];
+        };
+      };
+      responses: {
+        /** @description Returns newly created note */
+        201: {
+          content: {
+            "text/plain": components["schemas"]["NoteDto"];
+            "application/json": components["schemas"]["NoteDto"];
+            "text/json": components["schemas"]["NoteDto"];
+          };
+        };
+        /** @description If validation failed */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user does not have a senior profile */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/notes/senior/{seniorId}": {
+    /** Returns all senior's notes */
+    get: {
+      parameters: {
+        path: {
+          /** @description Id of a senior */
+          seniorId: number;
+        };
+      };
+      responses: {
+        /** @description Returns list of notes */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["NoteListDto"];
+            "application/json": components["schemas"]["NoteListDto"];
+            "text/json": components["schemas"]["NoteListDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/notes/{noteId}": {
+    /** Returns note with a given id */
+    get: {
+      parameters: {
+        path: {
+          /** @description Id of a note */
+          noteId: number;
+        };
+      };
+      responses: {
+        /** @description Returns note with a given id */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["NoteDto"];
+            "application/json": components["schemas"]["NoteDto"];
+            "text/json": components["schemas"]["NoteDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not allowed to access the note with a given id */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If note with a given id was not found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    /** Updates note with a given id */
+    put: {
+      parameters: {
+        path: {
+          /** @description Id of a note */
+          noteId: number;
+        };
+      };
+      /** @description Data needed to update the note */
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["UpsertNoteDto"];
+          "text/json": components["schemas"]["UpsertNoteDto"];
+          "application/*+json": components["schemas"]["UpsertNoteDto"];
+        };
+      };
+      responses: {
+        /** @description Returns updated note */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["NoteDto"];
+            "application/json": components["schemas"]["NoteDto"];
+            "text/json": components["schemas"]["NoteDto"];
+          };
+        };
+        /** @description If validation failed */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not allowed to access the note with a given id */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If note with a given id was not found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    /** Deletes note with a given id */
+    delete: {
+      parameters: {
+        path: {
+          /** @description Id of a note */
+          noteId: number;
+        };
+      };
+      responses: {
+        /** @description Returns updated note */
+        204: {
+          content: never;
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not allowed to access the note with a given id */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If note with a given id was not found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/profiles": {
+    /** Returns all the profiles for user account */
+    get: {
+      responses: {
+        /** @description Returns profiles for user's account */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ProfilesDto"];
+            "application/json": components["schemas"]["ProfilesDto"];
+            "text/json": components["schemas"]["ProfilesDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/profiles/senior": {
+    /** Creates a new senior profile */
+    post: {
+      responses: {
+        /** @description Returns newly created senior profile */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ProfileDisplayDto"];
+            "application/json": components["schemas"]["ProfileDisplayDto"];
+            "text/json": components["schemas"]["ProfileDisplayDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user's account already has a senior profile */
+        409: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+    /** Deletes senior profile */
+    delete: {
+      responses: {
+        /** @description Profile was successfully deleted */
+        204: {
+          content: never;
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If this senior has any caretaker linked to them */
+        403: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user's account does not have a senior profile */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/profiles/senior/pairing": {
+    /** Returns data needed to pair senior with their caretaker */
+    get: {
+      responses: {
+        /** @description Returns encoded senior data */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["EncodedSeniorDto"];
+            "application/json": components["schemas"]["EncodedSeniorDto"];
+            "text/json": components["schemas"]["EncodedSeniorDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user's account does not have a senior profile */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/profiles/senior/caretakers": {
+    /** Returns all the caretakers for the senior */
+    get: {
+      responses: {
+        /** @description Returns all of the senior's caretakers */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["ExtendedProfilesDto"];
+            "application/json": components["schemas"]["ExtendedProfilesDto"];
+            "text/json": components["schemas"]["ExtendedProfilesDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user's account does not have a senior profile */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/profiles/caretaker": {
+    /** Creates a new caretaker profile for the user */
+    post: {
+      /** @description Data needed to pair caretaker with the senior */
       requestBody?: {
         content: {
           "application/json": components["schemas"]["CreateCaretakerProfileDto"];
@@ -182,7 +878,7 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Success */
+        /** @description Returns newly created caretaker profile */
         200: {
           content: {
             "text/plain": components["schemas"]["ProfileDisplayDto"];
@@ -190,7 +886,15 @@ export interface paths {
             "text/json": components["schemas"]["ProfileDisplayDto"];
           };
         };
-        /** @description Unauthorized */
+        /** @description If user tried to create caretaker profile for themself */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
         401: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -198,8 +902,16 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Forbidden */
-        403: {
+        /** @description If senior profile user wanted to pair with does not exist */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user already has a caretaker profile for this senior */
+        409: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
             "application/json": components["schemas"]["ProblemDetails"];
@@ -209,7 +921,55 @@ export interface paths {
       };
     };
   };
-  "/api/v1/account/profiles/caretaker/{seniorId}": {
+  "/api/v1/profiles/caretaker/{seniorId}/{caretakerId}": {
+    /** Deletes given caretaker profile */
+    delete: {
+      parameters: {
+        path: {
+          /** @description Id of a senior */
+          seniorId: number;
+          /** @description Id of a caretaker */
+          caretakerId: number;
+        };
+      };
+      responses: {
+        /** @description Returns newly created caretaker profile */
+        200: {
+          content: never;
+        };
+        /** @description No Content */
+        204: {
+          content: never;
+        };
+        /** @description If validation failed */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If given profile was not found */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/profiles/caretaker/{seniorId}": {
+    /** Updates senior alias in caretaker profile */
     put: {
       parameters: {
         path: {
@@ -224,7 +984,7 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Success */
+        /** @description Returns updated caretaker profile */
         200: {
           content: {
             "text/plain": components["schemas"]["ProfileDisplayDto"];
@@ -232,7 +992,7 @@ export interface paths {
             "text/json": components["schemas"]["ProfileDisplayDto"];
           };
         };
-        /** @description Bad Request */
+        /** @description If validation failed */
         400: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -240,7 +1000,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Unauthorized */
+        /** @description If user is not logged in */
         401: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -248,474 +1008,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-    delete: {
-      parameters: {
-        path: {
-          seniorId: number;
-        };
-      };
-      responses: {
-        /** @description No Content */
-        204: {
-          content: never;
-        };
-        /** @description Bad Request */
-        400: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/dashboard/{seniorId}": {
-    get: {
-      parameters: {
-        path: {
-          seniorId: number;
-        };
-      };
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["DashboardDto"];
-            "application/json": components["schemas"]["DashboardDto"];
-            "text/json": components["schemas"]["DashboardDto"];
-          };
-        };
-        /** @description Bad Request */
-        400: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-    put: {
-      parameters: {
-        path: {
-          seniorId: number;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["DashboardDto"];
-          "text/json": components["schemas"]["DashboardDto"];
-          "application/*+json": components["schemas"]["DashboardDto"];
-        };
-      };
-      responses: {
-        /** @description No Content */
-        204: {
-          content: never;
-        };
-        /** @description Bad Request */
-        400: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/games/{gameName}/score": {
-    get: {
-      parameters: {
-        path: {
-          gameName: string;
-        };
-      };
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["ScoreDto"];
-            "application/json": components["schemas"]["ScoreDto"];
-            "text/json": components["schemas"]["ScoreDto"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-    post: {
-      parameters: {
-        path: {
-          gameName: string;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["ScoreDto"];
-          "text/json": components["schemas"]["ScoreDto"];
-          "application/*+json": components["schemas"]["ScoreDto"];
-        };
-      };
-      responses: {
-        /** @description No Content */
-        204: {
-          content: never;
-        };
-        /** @description Bad Request */
-        400: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/games/{gameName}/leaderboard": {
-    get: {
-      parameters: {
-        query?: {
-          offset?: number;
-          limit?: number;
-        };
-        path: {
-          gameName: string;
-        };
-      };
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["LeaderboardEntryDtoPaginatedDto"];
-            "application/json": components["schemas"]["LeaderboardEntryDtoPaginatedDto"];
-            "text/json": components["schemas"]["LeaderboardEntryDtoPaginatedDto"];
-          };
-        };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/healthz": {
-    get: {
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["HealthcheckDto"];
-            "application/json": components["schemas"]["HealthcheckDto"];
-            "text/json": components["schemas"]["HealthcheckDto"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/medication": {
-    get: {
-      parameters: {
-        query?: {
-          search?: string;
-        };
-      };
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["MedicationDtoPaginatedDto"];
-            "application/json": components["schemas"]["MedicationDtoPaginatedDto"];
-            "text/json": components["schemas"]["MedicationDtoPaginatedDto"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/notes": {
-    post: {
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["UpsertNoteDto"];
-          "text/json": components["schemas"]["UpsertNoteDto"];
-          "application/*+json": components["schemas"]["UpsertNoteDto"];
-        };
-      };
-      responses: {
-        /** @description Created */
-        201: {
-          content: {
-            "text/plain": components["schemas"]["NoteDto"];
-            "application/json": components["schemas"]["NoteDto"];
-            "text/json": components["schemas"]["NoteDto"];
-          };
-        };
-        /** @description Bad Request */
-        400: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/notes/senior/{seniorId}": {
-    get: {
-      parameters: {
-        path: {
-          seniorId: number;
-        };
-      };
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["NoteListDto"];
-            "application/json": components["schemas"]["NoteListDto"];
-            "text/json": components["schemas"]["NoteListDto"];
-          };
-        };
-        /** @description Bad Request */
-        400: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/notes/{noteId}": {
-    get: {
-      parameters: {
-        path: {
-          noteId: number;
-        };
-      };
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["NoteDto"];
-            "application/json": components["schemas"]["NoteDto"];
-            "text/json": components["schemas"]["NoteDto"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Forbidden */
-        403: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-    put: {
-      parameters: {
-        path: {
-          noteId: number;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["UpsertNoteDto"];
-          "text/json": components["schemas"]["UpsertNoteDto"];
-          "application/*+json": components["schemas"]["UpsertNoteDto"];
-        };
-      };
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["NoteDto"];
-            "application/json": components["schemas"]["NoteDto"];
-            "text/json": components["schemas"]["NoteDto"];
-          };
-        };
-        /** @description Bad Request */
-        400: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Forbidden */
-        403: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-    delete: {
-      parameters: {
-        path: {
-          noteId: number;
-        };
-      };
-      responses: {
-        /** @description No Content */
-        204: {
-          content: never;
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Forbidden */
-        403: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
+        /** @description If user's account doesn't have specified caretaker profile */
         404: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -727,14 +1020,16 @@ export interface paths {
     };
   };
   "/api/v1/reminders/{reminderId}": {
+    /** Returns reminder with a given id */
     get: {
       parameters: {
         path: {
+          /** @description Id of a reminder to be returned */
           reminderId: number;
         };
       };
       responses: {
-        /** @description Success */
+        /** @description Returns reminder with given id */
         200: {
           content: {
             "text/plain": components["schemas"]["ReminderDto"];
@@ -742,7 +1037,7 @@ export interface paths {
             "text/json": components["schemas"]["ReminderDto"];
           };
         };
-        /** @description Unauthorized */
+        /** @description If user is not logged in */
         401: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -750,7 +1045,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Forbidden */
+        /** @description If user does not have a profile needed to access this reminder */
         403: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -758,7 +1053,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Not Found */
+        /** @description If reminder with given id does not exist in the database */
         404: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -768,12 +1063,15 @@ export interface paths {
         };
       };
     };
+    /** Updates reminder with a given id */
     put: {
       parameters: {
         path: {
+          /** @description Id of a reminder to be returned */
           reminderId: number;
         };
       };
+      /** @description Data to be updated */
       requestBody?: {
         content: {
           "application/json": components["schemas"]["UpdateReminderDto"];
@@ -782,7 +1080,7 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Success */
+        /** @description Returns updated reminder */
         200: {
           content: {
             "text/plain": components["schemas"]["ReminderDto"];
@@ -790,7 +1088,15 @@ export interface paths {
             "text/json": components["schemas"]["ReminderDto"];
           };
         };
-        /** @description Unauthorized */
+        /** @description If validation failed */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
         401: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -798,7 +1104,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Forbidden */
+        /** @description If user does not have a profile needed to access this reminder */
         403: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -806,7 +1112,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Not Found */
+        /** @description If reminder with given id does not exist in the database */
         404: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -816,18 +1122,20 @@ export interface paths {
         };
       };
     };
+    /** Deletes reminder with a given id */
     delete: {
       parameters: {
         path: {
+          /** @description Id of a reminder */
           reminderId: number;
         };
       };
       responses: {
-        /** @description No Content */
+        /** @description If operation was successful */
         204: {
           content: never;
         };
-        /** @description Unauthorized */
+        /** @description If user is not logged in */
         401: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -835,7 +1143,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Forbidden */
+        /** @description If user does not have a profile needed to access this reminder */
         403: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -843,145 +1151,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/reminders/{reminderId}/intakes": {
-    get: {
-      parameters: {
-        query?: {
-          offset?: number;
-          limit?: number;
-        };
-        path: {
-          reminderId: number;
-        };
-      };
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["IntakeDtoPaginatedDto"];
-            "application/json": components["schemas"]["IntakeDtoPaginatedDto"];
-            "text/json": components["schemas"]["IntakeDtoPaginatedDto"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Forbidden */
-        403: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-    post: {
-      parameters: {
-        path: {
-          reminderId: number;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["CreateIntakeDto"];
-          "text/json": components["schemas"]["CreateIntakeDto"];
-          "application/*+json": components["schemas"]["CreateIntakeDto"];
-        };
-      };
-      responses: {
-        /** @description Created */
-        201: {
-          content: {
-            "text/plain": components["schemas"]["IntakeDto"];
-            "application/json": components["schemas"]["IntakeDto"];
-            "text/json": components["schemas"]["IntakeDto"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Forbidden */
-        403: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
-        404: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/reminders/intakes/{intakeId}": {
-    get: {
-      parameters: {
-        path: {
-          intakeId: number;
-        };
-      };
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["IntakeDto"];
-            "application/json": components["schemas"]["IntakeDto"];
-            "text/json": components["schemas"]["IntakeDto"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Forbidden */
-        403: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Not Found */
+        /** @description If reminder with given id does not exist in the database */
         404: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -993,6 +1163,7 @@ export interface paths {
     };
   };
   "/api/v1/reminders/senior/{seniorId}": {
+    /** Returns reminders for a senior with a given id */
     get: {
       parameters: {
         query?: {
@@ -1000,11 +1171,12 @@ export interface paths {
           limit?: number;
         };
         path: {
+          /** @description Id of a senior whose reminders are to be returned */
           seniorId: number;
         };
       };
       responses: {
-        /** @description Success */
+        /** @description Returns reminders for a senior with a given id */
         200: {
           content: {
             "text/plain": components["schemas"]["ReminderDtoPaginatedDto"];
@@ -1012,7 +1184,7 @@ export interface paths {
             "text/json": components["schemas"]["ReminderDtoPaginatedDto"];
           };
         };
-        /** @description Unauthorized */
+        /** @description If user is not logged in */
         401: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -1020,7 +1192,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Forbidden */
+        /** @description If user does not have a profile needed to access this senior's reminders */
         403: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -1030,12 +1202,15 @@ export interface paths {
         };
       };
     };
+    /** Creates a new reminder for a senior with a given id */
     post: {
       parameters: {
         path: {
+          /** @description Id of a senior */
           seniorId: number;
         };
       };
+      /** @description Data used to create a new reminder */
       requestBody?: {
         content: {
           "application/json": components["schemas"]["CreateReminderDto"];
@@ -1044,7 +1219,7 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Created */
+        /** @description Returns newly created reminder */
         201: {
           content: {
             "text/plain": components["schemas"]["ReminderDto"];
@@ -1052,7 +1227,15 @@ export interface paths {
             "text/json": components["schemas"]["ReminderDto"];
           };
         };
-        /** @description Unauthorized */
+        /** @description Bad Request */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
         401: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -1060,7 +1243,7 @@ export interface paths {
             "text/json": components["schemas"]["ProblemDetails"];
           };
         };
-        /** @description Forbidden */
+        /** @description If user does not have a profile needed to access this senior's reminders */
         403: {
           content: {
             "text/plain": components["schemas"]["ProblemDetails"];
@@ -1071,69 +1254,22 @@ export interface paths {
       };
     };
   };
-  "/api/v1/reminders/senior/{seniorId}/intakes": {
+  "/api/v1/reminders/medications": {
+    /** Returns all medications that fit the search criteria */
     get: {
       parameters: {
         query?: {
-          offset?: number;
-          limit?: number;
-        };
-        path: {
-          seniorId: number;
+          /** @description Search criteria (not case-sensitive) */
+          search?: string;
         };
       };
       responses: {
-        /** @description Success */
+        /** @description Medications that fit the search criteria */
         200: {
           content: {
-            "text/plain": components["schemas"]["IntakeDtoPaginatedDto"];
-            "application/json": components["schemas"]["IntakeDtoPaginatedDto"];
-            "text/json": components["schemas"]["IntakeDtoPaginatedDto"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-        /** @description Forbidden */
-        403: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
-    };
-  };
-  "/api/v1/token": {
-    post: {
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["GetAccountByCredentialsDto"];
-          "text/json": components["schemas"]["GetAccountByCredentialsDto"];
-          "application/*+json": components["schemas"]["GetAccountByCredentialsDto"];
-        };
-      };
-      responses: {
-        /** @description Success */
-        200: {
-          content: {
-            "text/plain": components["schemas"]["TokenDto"];
-            "application/json": components["schemas"]["TokenDto"];
-            "text/json": components["schemas"]["TokenDto"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
+            "text/plain": components["schemas"]["MedicationDtoPaginatedDto"];
+            "application/json": components["schemas"]["MedicationDtoPaginatedDto"];
+            "text/json": components["schemas"]["MedicationDtoPaginatedDto"];
           };
         };
       };
@@ -1204,6 +1340,13 @@ export interface components {
       email: string;
       password: string;
     };
+    GetAccountDto: {
+      /** Format: int32 */
+      id: number;
+      email: string;
+      displayName: string;
+      phoneNumber?: string | null;
+    };
     HealthcheckDto: {
       server?: components["schemas"]["HealthcheckStatus"];
       database?: components["schemas"]["HealthcheckStatus"];
@@ -1223,7 +1366,7 @@ export interface components {
       amountUnit?: string | null;
     };
     IntakeDtoPaginatedDto: {
-      items?: components["schemas"]["IntakeDto"][];
+      items: components["schemas"]["IntakeDto"][];
     };
     LeaderboardEntryDto: {
       displayName: string;
@@ -1233,7 +1376,7 @@ export interface components {
       score: number;
     };
     LeaderboardEntryDtoPaginatedDto: {
-      items?: components["schemas"]["LeaderboardEntryDto"][];
+      items: components["schemas"]["LeaderboardEntryDto"][];
     };
     MedicationDto: {
       name: string;
@@ -1242,7 +1385,7 @@ export interface components {
       amountUnit?: string | null;
     };
     MedicationDtoPaginatedDto: {
-      items?: components["schemas"]["MedicationDto"][];
+      items: components["schemas"]["MedicationDto"][];
     };
     NoteDto: {
       /** Format: int32 */
@@ -1292,7 +1435,7 @@ export interface components {
       description?: string | null;
     };
     ReminderDtoPaginatedDto: {
-      items?: components["schemas"]["ReminderDto"][];
+      items: components["schemas"]["ReminderDto"][];
     };
     ScoreDto: {
       /** Format: int32 */
@@ -1300,6 +1443,8 @@ export interface components {
     };
     TokenDto: {
       token: string;
+      /** Format: int32 */
+      accountId: number;
     };
     UpdateReminderDto: {
       /** Format: float */
