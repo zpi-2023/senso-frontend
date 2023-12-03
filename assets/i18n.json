@@ -526,11 +526,11 @@
     "pl": "Zagraj ponownie"
   },
   "medication.pills": {
-    "en": "{count} pills",
-    "en_1": "{count} pill",
-    "pl": "{count} tabletek",
-    "pl_1": "{count} tabletka",
-    "pl_2,3,4": "{count} tabletki"
+    "en": "pills",
+    "en_1": "pill",
+    "pl": "tabletek",
+    "pl_1": "tabletka",
+    "pl_2,3,4": "tabletki"
   },
   "medication.takeDose": {
     "en": "Take",
@@ -596,9 +596,21 @@
     "en": "Amount owned",
     "pl": "Ilość posiadana"
   },
+  "medication.details.amountUnit": {
+    "en": "Unit",
+    "pl": "Jednostka"
+  },
+  "medication.details.medicationAmountInPackage": {
+    "en": "Amount in package",
+    "pl": "Ilość w opakowaniu"
+  },
   "medication.details.inPackage": {
     "en": "in package",
     "pl": "w opakowaniu"
+  },
+  "medication.details.cron": {
+    "en": "Schedule",
+    "pl": "Harmonogram"
   },
   "medication.create.pageTitle": {
     "en": "New reminder",

@@ -1,25 +1,87 @@
-import { Formik, type FormikErrors } from "formik";
-import { useState } from "react";
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
-import { Button } from "react-native-paper";
+import {
+  Formik,
+  type FormikTouched,
+  type FormikErrors,
+  type FormikHandlers,
+} from "formik";
+import { type ComponentProps, useState } from "react";
+import {
+  Keyboard,
+  ScrollView,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import { Button, HelperText, TextInput } from "react-native-paper";
 
-import { useI18n, type Translator } from "@/common/i18n";
+import { useI18n, type Translator, type TranslationKey } from "@/common/i18n";
 import { sty } from "@/common/styles";
-import type { ReminderCreateData, ReminderEditData } from "@/logic/medication";
+import {
+  type ReminderCreateData,
+  type ReminderEditData,
+} from "@/logic/medication";
 
 type ReminderFormValues = {
   medicationName: string;
-  medicationAmountInPackage: number;
-  amountPerIntake: number;
-  amountOwned: number;
+  medicationAmountInPackage: string;
+  amountPerIntake: string;
+  amountOwned: string;
   amountUnit: string;
   cron: string;
   description: string;
 };
 
+type FormInputProps = {
+  field: keyof ReminderFormValues;
+  form: {
+    values: ReminderFormValues;
+    touched: FormikTouched<ReminderFormValues>;
+    errors: FormikErrors<ReminderFormValues>;
+    handleChange: FormikHandlers["handleChange"];
+    handleBlur: FormikHandlers["handleBlur"];
+  };
+  amountAffix?: boolean;
+} & Partial<ComponentProps<typeof TextInput>>;
+
+const FormInput = ({
+  field,
+  form: { values, touched, errors, handleChange, handleBlur },
+  amountAffix,
+  ...props
+}: FormInputProps) => {
+  const { t } = useI18n();
+
+  const right = amountAffix ? (
+    <TextInput.Affix
+      text={
+        values.amountUnit.trim().length > 0
+          ? values.amountUnit
+          : t("medication.pills", { count: values[field] })
+      }
+    />
+  ) : undefined;
+
+  return (
+    <View>
+      <TextInput
+        {...props}
+        mode="outlined"
+        label={t(`medication.details.${field}` as TranslationKey)}
+        onChangeText={handleChange(field)}
+        onBlur={handleBlur(field)}
+        value={values[field]}
+        error={field in errors}
+        right={right}
+      />
+      {touched[field] && errors[field] ? (
+        <HelperText type="error">{errors[field]}</HelperText>
+      ) : null}
+    </View>
+  );
+};
+
 type ReminderFormProps = {
   kind: "create" | "edit";
-  initialValues: ReminderCreateData | ReminderEditData;
+  initialValues: ReminderFormValues;
   onCreateSubmit?: (values: ReminderCreateData) => void;
   onEditSubmit?: (values: ReminderEditData) => void;
   submitText: string;
@@ -36,41 +98,79 @@ export const ReminderForm = ({
   const [status, setStatus] = useState<"idle" | "pending">("idle");
 
   return (
-    <Formik
-      initialValues={serialize(initialValues)}
-      validate={(v) => validate(v, t)}
-      validateOnBlur={true}
-      validateOnChange={false}
-      onSubmit={(v) => {
-        setStatus("pending");
-        onCreateSubmit?.(deserializeCreate(v));
-        onEditSubmit?.(deserializeEdit(v));
-      }}
-    >
-      {({
-        values,
-        touched,
-        errors,
-        handleChange,
-        handleBlur,
-        setFieldValue,
-        handleSubmit,
-      }) => (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <View style={styles.container}>
-            <Button
-              disabled={status === "pending"}
-              loading={status === "pending"}
-              mode="contained"
-              onPress={() => handleSubmit()}
-              style={styles.submit}
-            >
-              {submitText}
-            </Button>
-          </View>
-        </TouchableWithoutFeedback>
-      )}
-    </Formik>
+    <ScrollView style={sty.full}>
+      <Formik
+        initialValues={initialValues}
+        validate={(v) => validate(v, t)}
+        validateOnBlur={true}
+        validateOnChange={false}
+        onSubmit={(v) => {
+          setStatus("pending");
+          onCreateSubmit?.(deserializeCreate(v));
+          onEditSubmit?.(deserializeEdit(v));
+        }}
+      >
+        {({
+          values,
+          touched,
+          errors,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => {
+          const form = { values, touched, errors, handleChange, handleBlur };
+          return (
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+              <View style={styles.container}>
+                <FormInput
+                  field="medicationName"
+                  form={form}
+                  disabled={kind === "edit"}
+                />
+                <FormInput
+                  field="amountPerIntake"
+                  form={form}
+                  keyboardType="numeric"
+                  amountAffix
+                />
+                <FormInput
+                  field="amountOwned"
+                  form={form}
+                  keyboardType="numeric"
+                  amountAffix
+                />
+                <FormInput
+                  field="medicationAmountInPackage"
+                  form={form}
+                  keyboardType="numeric"
+                  disabled={kind === "edit"}
+                  amountAffix
+                />
+                {kind === "create" ? (
+                  <FormInput field="amountUnit" form={form} />
+                ) : null}
+                <FormInput field="cron" form={form} />
+                <FormInput
+                  field="description"
+                  form={form}
+                  multiline
+                  style={styles.description}
+                />
+                <Button
+                  disabled={status === "pending"}
+                  loading={status === "pending"}
+                  mode="contained"
+                  onPress={() => handleSubmit()}
+                  style={styles.submit}
+                >
+                  {submitText}
+                </Button>
+              </View>
+            </TouchableWithoutFeedback>
+          );
+        }}
+      </Formik>
+    </ScrollView>
   );
 };
 
@@ -84,42 +184,27 @@ const styles = sty.create({
     minHeight: 100,
   },
   submit: {
-    marginTop: "auto",
+    marginTop: 32,
   },
 });
 
-const serialize = (
-  values: ReminderCreateData | ReminderEditData,
-): ReminderFormValues => {
-  const extract = <T, K extends keyof ReminderFormValues>(key: K) =>
-    key in values ? (values[key as keyof typeof values] as T) : null;
-
-  return {
-    medicationName: extract("medicationName") ?? "",
-    medicationAmountInPackage: extract("medicationAmountInPackage") ?? 0,
-    amountPerIntake: values.amountPerIntake,
-    amountOwned: values.amountOwned ?? 0,
-    amountUnit: extract("amountUnit") ?? "",
-    cron: values.cron ?? "",
-    description: values.description ?? "",
-  };
+const parseNum = (value: string): number | null => {
+  const num = parseInt(value, 10);
+  return isNaN(num) ? null : num;
 };
 
 const deserializeCreate = (values: ReminderFormValues): ReminderCreateData => ({
   ...deserializeEdit(values),
   medicationName: values.medicationName,
-  medicationAmountInPackage:
-    values.medicationAmountInPackage > 0
-      ? values.medicationAmountInPackage
-      : null,
+  medicationAmountInPackage: parseNum(values.medicationAmountInPackage),
   amountUnit: values.amountUnit.trim().length > 0 ? values.amountUnit : null,
   cron: values.cron.trim().length > 0 ? values.cron : null,
   description: values.description.trim().length > 0 ? values.description : null,
 });
 
 const deserializeEdit = (values: ReminderFormValues): ReminderEditData => ({
-  amountPerIntake: values.amountPerIntake,
-  amountOwned: values.amountOwned > 0 ? values.amountOwned : null,
+  amountPerIntake: parseNum(values.amountPerIntake) ?? 0,
+  amountOwned: parseNum(values.amountOwned),
   cron: values.cron.trim().length > 0 ? values.cron : null,
   description: values.description.trim().length > 0 ? values.description : null,
 });
@@ -133,17 +218,26 @@ const validate = (
     errors.medicationName = t("medication.form.medicationNameRequired");
   }
 
-  if (values.medicationAmountInPackage < 0) {
+  const medicationAmountInPackage = parseNum(values.medicationAmountInPackage);
+  if (
+    values.medicationAmountInPackage.trim().length > 0 &&
+    (!medicationAmountInPackage || medicationAmountInPackage < 0)
+  ) {
     errors.medicationAmountInPackage = t(
       "medication.form.medicationAmountInPackageNonnegative",
     );
   }
 
-  if (values.amountPerIntake <= 0) {
+  const amountPerIntake = parseNum(values.amountPerIntake);
+  if (!amountPerIntake || amountPerIntake <= 0) {
     errors.amountPerIntake = t("medication.form.amountPerIntakeRequired");
   }
 
-  if (values.amountOwned < 0) {
+  const amountOwned = parseNum(values.amountOwned);
+  if (
+    values.amountOwned.trim().length > 0 &&
+    (!amountOwned || amountOwned < 0)
+  ) {
     errors.amountOwned = t("medication.form.amountOwnedNonnegative");
   }
 

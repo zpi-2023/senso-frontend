@@ -47,9 +47,7 @@ export class Reminder {
     unit: string | null,
     t: Translator,
   ): string {
-    return unit
-      ? `${amount} ${unit}`
-      : t("medication.pills", { count: amount });
+    return `${amount} ${unit ?? t("medication.pills", { count: amount })}`;
   }
 
   private constructor(

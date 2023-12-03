@@ -45,7 +45,16 @@ const Page = () => {
       <CaretakerBanner />
       <ReminderForm
         kind="edit"
-        initialValues={data}
+        initialValues={{
+          medicationName: data.medicationName,
+          medicationAmountInPackage:
+            data.medicationAmountInPackage?.toString() ?? "",
+          amountPerIntake: data.amountPerIntake.toString(),
+          amountOwned: data.amountOwned?.toString() ?? "",
+          amountUnit: data.amountUnit ?? "",
+          cron: data.cron ?? "",
+          description: data.description ?? "",
+        }}
         submitText={t("medication.edit.submit")}
       />
     </View>

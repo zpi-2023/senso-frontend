@@ -23,12 +23,12 @@ const Page = () => {
         kind="create"
         initialValues={{
           medicationName: "",
-          medicationAmountInPackage: null,
-          amountPerIntake: 0,
-          amountOwned: null,
-          amountUnit: null,
-          cron: null,
-          description: null,
+          medicationAmountInPackage: "",
+          amountPerIntake: "",
+          amountOwned: "",
+          amountUnit: "",
+          cron: "",
+          description: "",
         }}
         submitText={t("medication.create.submit")}
       />
