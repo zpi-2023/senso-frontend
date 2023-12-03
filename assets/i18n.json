@@ -612,6 +612,22 @@
     "en": "Save",
     "pl": "Zapisz"
   },
+  "medication.form.medicationNameRequired": {
+    "en": "Medication name is required",
+    "pl": "Nazwa leku jest wymagana"
+  },
+  "medication.form.medicationAmountInPackageNonnegative": {
+    "en": "Amount in package must be non-negative",
+    "pl": "Ilość w opakowaniu nie może być ujemna"
+  },
+  "medication.form.amountPerIntakeRequired": {
+    "en": "Amount per intake is required",
+    "pl": "Dawka jest wymagana"
+  },
+  "medication.form.amountOwnedNonnegative": {
+    "en": "Amount owned must be non-negative",
+    "pl": "Ilość posiadana nie może być ujemna"
+  },
   "medication.deactivateDialog.title": {
     "en": "Deactivate reminder",
     "pl": "Wyłącz przypomnienie"

@@ -3,7 +3,7 @@ import { quickIntakeThresholdMs } from "./consts";
 import type { Translator } from "@/common/i18n";
 import { Cron } from "@/common/time";
 
-type ReminderData = {
+export type ReminderData = {
   id: number;
   seniorId: number;
   medicationName: string;
@@ -15,6 +15,16 @@ type ReminderData = {
   cron?: string | null | undefined;
   description?: string | null | undefined;
 };
+
+export type ReminderCreateData = Omit<
+  ReminderData,
+  "id" | "seniorId" | "isActive"
+>;
+
+export type ReminderEditData = Omit<
+  ReminderCreateData,
+  "medicationName" | "medicationAmountInPackage" | "amountUnit"
+>;
 
 export class Reminder {
   public static fromData(data: ReminderData): Reminder {

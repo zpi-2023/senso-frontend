@@ -7,7 +7,8 @@ import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
 import { sty } from "@/common/styles";
-import { Header, LoadingScreen } from "@/components";
+import { CaretakerBanner, Header, LoadingScreen } from "@/components";
+import { ReminderForm } from "@/components/medication";
 import { Reminder, useReminderParams } from "@/logic/medication";
 
 const Page = () => {
@@ -41,6 +42,12 @@ const Page = () => {
   return (
     <View style={sty.full}>
       <Header left={actions.goBack} title={reminder.title(t)} />
+      <CaretakerBanner />
+      <ReminderForm
+        kind="edit"
+        initialValues={data}
+        submitText={t("medication.edit.submit")}
+      />
     </View>
   );
 };
