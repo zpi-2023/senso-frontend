@@ -8,6 +8,7 @@ export const availableGadgets = [
   "playGames",
   "playMemoryGame",
   "playWordleGame",
+  "playSudokuGame",
   "manageNotes",
   "quickCreateNote",
   "switchProfile",
