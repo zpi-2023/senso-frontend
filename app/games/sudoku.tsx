@@ -7,6 +7,94 @@ const screen = {
   height: Dimensions.get("window").height,
 };
 
+// Function to check if a value can be placed in a given cell
+const isValid = (
+  board: number[][],
+  row: number,
+  col: number,
+  num: number,
+): boolean => {
+  // Check if the number is already in the same row or column
+  for (let i = 0; i < 9; i++) {
+    if (board[row]![i] === num || board[i]![col] === num) {
+      return false;
+    }
+  }
+
+  // Check if the number is already in the 3x3 subgrid
+  const startRow = Math.floor(row / 3) * 3;
+  const startCol = Math.floor(col / 3) * 3;
+  for (let i = startRow; i < startRow + 3; i++) {
+    for (let j = startCol; j < startCol + 3; j++) {
+      if (board[i]![j] === num) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+};
+
+// Function to solve the Sudoku puzzle using backtracking
+const solveSudoku = (board: number[][]): boolean => {
+  for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+      if (board[row]![col] === 0) {
+        for (let num = 1; num <= 9; num++) {
+          if (isValid(board, row, col, num)) {
+            board[row]![col] = num;
+
+            if (solveSudoku(board)) {
+              return true;
+            }
+
+            board[row]![col] = 0;
+          }
+        }
+
+        return false;
+      }
+    }
+  }
+
+  return true; // All cells filled
+};
+
+const generateSolvedSudoku = (): number[][] => {
+  const board: number[][] = [];
+
+  // Initialize the board with empty places
+  for (let i = 0; i < 9; i++) {
+    board.push(Array<number>(9).fill(0));
+  }
+
+  // Solve the board
+  solveSudoku(board);
+
+  return board;
+};
+
+const generateSudoku = (
+  emptyCells: number,
+  solvedBoard: number[][],
+): [cellsToFill: { row: number; col: number }[], board: number[][]] => {
+  const cellsToFill: { row: number; col: number }[] = [];
+  // Randomly remove numbers to create the desired number of empty cells
+  for (let i = 0; i < emptyCells; i++) {
+    const row = Math.floor(Math.random() * 9);
+    const col = Math.floor(Math.random() * 9);
+    if (solvedBoard[row]![col] !== 0) {
+      solvedBoard[row]![col] = 0;
+      cellsToFill.push({ row, col });
+    } else {
+      // If the cell is already empty, try again
+      i--;
+    }
+  }
+
+  return [cellsToFill, solvedBoard];
+};
+
 const calculateBorder = (rowIndex: number, colIndex: number) => {
   let borderStyle = {};
 
@@ -27,88 +115,69 @@ const calculateBorder = (rowIndex: number, colIndex: number) => {
   return borderStyle;
 };
 
-const SudokuGame = () => {
-  const [board, setBoard] = useState<number[][]>([]);
-
-  const generateBoard = () => {
-    const newBoard: number[][] = [];
-
-    // Helper function to shuffle an array
-    const shuffleArray = (array: number[]) => {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i]!, array[j]!] = [array[j]!, array[i]!];
+const checkBoard = (sudokuBoard: number[][]): boolean => {
+  // Check if the board is valid
+  for (let row = 0; row < 9; row++) {
+    const rowSet = new Set<number>();
+    for (let col = 0; col < 9; col++) {
+      const digit = sudokuBoard[row]![col] as number;
+      if (digit === 0 || rowSet.has(digit)) {
+        return false;
       }
-      return array;
-    };
-
-    // Helper function to check if a digit is valid in a specific position
-    const isValidDigit = (
-      board: number[][],
-      row: number,
-      col: number,
-      digit: number,
-    ) => {
-      // Check row
-      for (let i = 0; i < 9; i++) {
-        if (board[row]![i] === digit) {
-          return false;
-        }
-      }
-
-      // Check column
-      for (let i = 0; i < 9; i++) {
-        if (board[i]![col] === digit) {
-          return false;
-        }
-      }
-
-      // Check 3x3 grid
-      const gridRow = Math.floor(row / 3) * 3;
-      const gridCol = Math.floor(col / 3) * 3;
-      for (let i = gridRow; i < gridRow + 3; i++) {
-        for (let j = gridCol; j < gridCol + 3; j++) {
-          if (board[i]![j] === digit) {
-            return false;
-          }
-        }
-      }
-
-      return true;
-    };
-
-    // Helper function to solve the Sudoku board using backtracking
-    const solveBoard = (board: number[][]) => {
-      for (let row = 0; row < 9; row++) {
-        for (let col = 0; col < 9; col++) {
-          if (board[row]![col] === 0) {
-            const digits = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-            for (const digit of digits) {
-              if (isValidDigit(board, row, col, digit)) {
-                board[row]![col] = digit;
-                if (solveBoard(board)) {
-                  return true;
-                }
-                board[row]![col] = 0;
-              }
-            }
-            return false;
-          }
-        }
-      }
-      return true;
-    };
-
-    // Initialize the board with empty places
-    for (let i = 0; i < 9; i++) {
-      newBoard.push(Array<number>(9).fill(0));
+      rowSet.add(digit);
     }
+  }
 
-    // Solve the board
-    solveBoard(newBoard);
+  // Check rows
+  for (let row = 0; row < 9; row++) {
+    const rowSet = new Set<number>();
+    for (let col = 0; col < 9; col++) {
+      const digit = sudokuBoard[row]![col] as number;
+      if (digit === 0 || rowSet.has(digit)) {
+        return false;
+      }
+      rowSet.add(digit);
+    }
+  }
 
-    setBoard(newBoard);
-  };
+  // Check columns
+  for (let col = 0; col < 9; col++) {
+    const colSet = new Set<number>();
+    for (let row = 0; row < 9; row++) {
+      const digit = sudokuBoard[row]![col] as number;
+      if (digit === 0 || colSet.has(digit)) {
+        return false;
+      }
+      colSet.add(digit);
+    }
+  }
+
+  // Check 3x3 grids
+  for (let gridRow = 0; gridRow < 3; gridRow++) {
+    for (let gridCol = 0; gridCol < 3; gridCol++) {
+      const gridSet = new Set<number>();
+      for (let row = gridRow * 3; row < gridRow * 3 + 3; row++) {
+        for (let col = gridCol * 3; col < gridCol * 3 + 3; col++) {
+          const digit = sudokuBoard[row]![col] as number;
+          if (digit === 0 || gridSet.has(digit)) {
+            return false;
+          }
+          gridSet.add(digit);
+        }
+      }
+    }
+  }
+
+  return true;
+};
+
+const emptyCellCount = 3;
+
+const SudokuGame = () => {
+  const [solvedBoard] = useState<number[][]>(() => generateSolvedSudoku());
+  const [[cellsToFill, board], setBoard] = useState<
+    [cellsToFill: { row: number; col: number }[], board: number[][]]
+  >(() => generateSudoku(emptyCellCount, solvedBoard));
 
   // Function to handle digit input
   const handleDigitInput = (row: number, col: number, value: number) => {
@@ -116,75 +185,15 @@ const SudokuGame = () => {
       return;
     }
 
-    setBoard(
-      board.map((rowArray, rowIndex) =>
-        rowIndex === row
-          ? rowArray.map((digit, colIndex) =>
-              colIndex === col ? value : digit,
-            )
-          : rowArray,
-      ),
-    );
-  };
-
-  const checkBoard = () => {
-    // Check if the board is valid
-    for (let row = 0; row < 9; row++) {
-      const rowSet = new Set<number>();
-      for (let col = 0; col < 9; col++) {
-        const digit = board[row]![col] as number;
-        if (digit === 0 || rowSet.has(digit)) {
-          return false;
-        }
-        rowSet.add(digit);
-      }
-    }
-
-    // Check rows
-    for (let row = 0; row < 9; row++) {
-      const rowSet = new Set<number>();
-      for (let col = 0; col < 9; col++) {
-        const digit = board[row]![col] as number;
-        if (digit === 0 || rowSet.has(digit)) {
-          return false;
-        }
-        rowSet.add(digit);
-      }
-    }
-
-    // Check columns
-    for (let col = 0; col < 9; col++) {
-      const colSet = new Set<number>();
-      for (let row = 0; row < 9; row++) {
-        const digit = board[row]![col] as number;
-        if (digit === 0 || colSet.has(digit)) {
-          return false;
-        }
-        colSet.add(digit);
-      }
-    }
-
-    // Check 3x3 grids
-    for (let gridRow = 0; gridRow < 3; gridRow++) {
-      for (let gridCol = 0; gridCol < 3; gridCol++) {
-        const gridSet = new Set<number>();
-        for (let row = gridRow * 3; row < gridRow * 3 + 3; row++) {
-          for (let col = gridCol * 3; col < gridCol * 3 + 3; col++) {
-            const digit = board[row]![col] as number;
-            if (digit === 0 || gridSet.has(digit)) {
-              return false;
-            }
-            gridSet.add(digit);
-          }
-        }
-      }
-    }
-
-    return true;
+    setBoard((prevBoard) => {
+      const newBoard = [...prevBoard[1]];
+      newBoard[row]![col] = value;
+      return [prevBoard[0], newBoard];
+    });
   };
 
   const showResult = () => {
-    const result = checkBoard();
+    const result = checkBoard(board);
     Alert.alert(result ? "You solved it!" : "Continue trying!", "", [
       {
         text: "OK",
@@ -195,7 +204,6 @@ const SudokuGame = () => {
 
   return (
     <View>
-      <Button onPress={generateBoard}>New Game</Button>
       <Button onPress={showResult}>Check</Button>
       <View
         style={{
@@ -223,9 +231,9 @@ const SudokuGame = () => {
                   ...calculateBorder(rowIndex, colIndex),
                 }}
               >
-                {digit !== 0 ? (
-                  <Text>{digit}</Text>
-                ) : (
+                {cellsToFill.some(
+                  (cell) => cell.row === rowIndex && cell.col === colIndex,
+                ) ? (
                   <TextInput
                     style={{
                       width: screen.width / 9 - 9,
@@ -246,6 +254,8 @@ const SudokuGame = () => {
                       )
                     }
                   />
+                ) : (
+                  <Text>{digit}</Text>
                 )}
               </View>
             ))}
