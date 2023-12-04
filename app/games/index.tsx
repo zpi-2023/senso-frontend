@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
-import { type FC } from "react";
+import { useState, type FC } from "react";
 import { FlatList, View } from "react-native";
-import { Text } from "react-native-paper";
+import { Menu, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
@@ -19,7 +19,7 @@ const games: IGameItem[] = [
   {
     name: "Graydle",
     icon: "file-word-box",
-    route: AppRoutes.WordleGame,
+    route: AppRoutes.GraydleGame,
     description: "Guess the word!",
   },
   {
@@ -39,15 +39,39 @@ const games: IGameItem[] = [
 const GameItem: FC<IGameItem> = ({ name, icon, route, description }) => {
   const router = useRouter();
   const styles = useStyles();
-  const handlePress = () => router.push(route);
+  const [visible, setVisible] = useState<boolean>(false);
+
+  const handlePressItem = () => {
+    closeMenu();
+    router.push(route);
+  };
+
+  const openMenu = () => setVisible(true);
+
+  const closeMenu = () => setVisible(false);
+
+  const handlePressScoreboard = () => {
+    closeMenu();
+    router.push({
+      pathname: AppRoutes.GameScoreboard,
+      params: { gameName: name.toLowerCase() },
+    });
+  };
 
   return (
-    <View style={styles.gameItemContainer} onTouchStart={handlePress}>
+    <View style={styles.gameItemContainer} onTouchStart={openMenu}>
       <View style={styles.gameItemLabelWrapper}>
         <Text style={styles.gameItemTitle}>{name}</Text>
         <Text style={styles.gameItemDescription}>{description}</Text>
       </View>
-      <Icon icon={icon} size={64} />
+      <Menu
+        visible={visible}
+        onDismiss={closeMenu}
+        anchor={<Icon icon={icon} size={64} />}
+      >
+        <Menu.Item onPress={handlePressItem} title="Play" />
+        <Menu.Item onPress={handlePressScoreboard} title="Scoreboard" />
+      </Menu>
     </View>
   );
 };
