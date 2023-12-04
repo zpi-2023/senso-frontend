@@ -48,7 +48,7 @@ const SudokuGame = () => {
   const timer = useRef<NodeJS.Timeout | null>(null);
   const [seconds, setSeconds] = useState(0);
   const [checks, setChecks] = useState(0);
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(true);
   const [solvedBoard] = useState<number[][]>(() => generateSolvedSudoku());
   const [[cellsToFill, board], setBoard] = useState<
     [cellsToFill: { row: number; col: number }[], board: number[][]]
@@ -58,9 +58,10 @@ const SudokuGame = () => {
   // Function to handle digit input
   const handleDigitInput = (row: number, col: number, value: number) => {
     setBoard((prevBoard) => {
-      const newBoard = [...prevBoard[1]];
+      const [prevCellsToFill, prevSudokuBoard] = prevBoard;
+      const newBoard = [...prevSudokuBoard];
       newBoard[row]![col] = value < 1 || value > 9 ? 0 : value;
-      return [prevBoard[0], newBoard];
+      return [prevCellsToFill, newBoard];
     });
   };
 
@@ -95,10 +96,6 @@ const SudokuGame = () => {
       ],
     );
   };
-
-  useEffect(() => {
-    setGameStarted(true);
-  }, []);
 
   useEffect(() => {
     if (gameStarted) {
