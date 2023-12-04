@@ -1,5 +1,5 @@
 // Cells to fill in the board
-export const emptyCellCount = 30;
+export const emptyCellCount = 20;
 
 // Function to check if a value can be placed in a given cell
 const isValid = (

@@ -4,8 +4,10 @@ import { Alert, Dimensions, TextInput, View } from "react-native"; // eslint-dis
 import { Text, Button } from "react-native-paper";
 
 import { actions } from "@/common/actions";
+import { useMutation } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
+import { calculateScore } from "@/common/score";
 import { sty } from "@/common/styles";
 import { Header } from "@/components";
 import {
@@ -51,6 +53,7 @@ const SudokuGame = () => {
   const [[cellsToFill, board], setBoard] = useState<
     [cellsToFill: { row: number; col: number }[], board: number[][]]
   >(() => generateSudoku(emptyCellCount, solvedBoard));
+  const postNewScore = useMutation("post", "/api/v1/games/{gameName}/score");
 
   // Function to handle digit input
   const handleDigitInput = (row: number, col: number, value: number) => {
@@ -66,6 +69,16 @@ const SudokuGame = () => {
     setChecks((prevChecks) => prevChecks + 1);
     if (result) {
       setGameStarted(false);
+      void postNewScore({
+        params: {
+          path: {
+            gameName: "sudoku",
+          },
+        },
+        body: {
+          score: calculateScore(checks, seconds),
+        },
+      });
     }
     Alert.alert(
       result
@@ -118,29 +131,17 @@ const SudokuGame = () => {
           {t("games.sudoku.check")}
         </Button>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-        }}
-      >
+      <View style={styles.sudokuWrapper}>
         {board.map((row, rowIndex) => (
           <View
             key={rowIndex}
-            style={{
-              flexDirection: "row",
-              borderColor: "black",
-              ...calculateBorder(rowIndex, 0),
-            }}
+            style={{ ...styles.boardRow, ...calculateBorder(rowIndex, 0) }}
           >
             {row.map((digit, colIndex) => (
               <View
                 key={colIndex}
                 style={{
-                  width: screen.width / 9,
-                  aspectRatio: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  ...styles.boardCell,
                   ...calculateBorder(rowIndex, colIndex),
                 }}
               >
@@ -148,7 +149,7 @@ const SudokuGame = () => {
                   (cell) => cell.row === rowIndex && cell.col === colIndex,
                 ) ? (
                   <TextInput
-                    style={[styles.digitInput, styles.digit]}
+                    style={styles.digitInput}
                     keyboardType="numeric"
                     value={
                       digit === 0 ? "" : board[rowIndex]![colIndex]?.toString()
@@ -188,9 +189,26 @@ const useStyles = sty.themedHook(({ colors }) => ({
     textAlign: "center",
     backgroundColor: "lightgray",
     borderRadius: 4,
+    fontSize: 30,
+    color: "black",
   },
   statsText: {
     fontSize: 18,
+  },
+  sudokuWrapper: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  boardRow: {
+    flexDirection: "row",
+    borderColor: colors.tertiary,
+  },
+  boardCell: {
+    width: screen.width / 9,
+    aspectRatio: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: colors.tertiary,
   },
   statsLabel: {
     flexDirection: "row",

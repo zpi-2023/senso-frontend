@@ -85,7 +85,7 @@ export const actions = {
   playGames: {
     displayName: (t) => t("actions.playGames"),
     icon: "gamepad-variant",
-    handler: ({ router }) => router.push(AppRoutes.SudokuGame),
+    handler: ({ router }) => router.push(AppRoutes.Games),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
   playMemoryGame: {
@@ -98,6 +98,12 @@ export const actions = {
     displayName: (t) => t("actions.playWordleGame"),
     icon: "file-word-box",
     handler: ({ router }) => router.push(AppRoutes.WordleGame),
+    hidden: ({ identity }) => isCaretaker(identity.profile),
+  },
+  playSudokuGame: {
+    displayName: (t) => t("actions.playSudokuGame"),
+    icon: "apps",
+    handler: ({ router }) => router.push(AppRoutes.SudokuGame),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
   manageNotes: {
