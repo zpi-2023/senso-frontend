@@ -1267,9 +1267,9 @@ export interface paths {
         /** @description Medications that fit the search criteria */
         200: {
           content: {
-            "text/plain": components["schemas"]["MedicationDtoPaginatedDto"];
-            "application/json": components["schemas"]["MedicationDtoPaginatedDto"];
-            "text/json": components["schemas"]["MedicationDtoPaginatedDto"];
+            "text/plain": components["schemas"]["MedicationListDto"];
+            "application/json": components["schemas"]["MedicationListDto"];
+            "text/json": components["schemas"]["MedicationListDto"];
           };
         };
       };
@@ -1384,8 +1384,8 @@ export interface components {
       amountInPackage?: number | null;
       amountUnit?: string | null;
     };
-    MedicationDtoPaginatedDto: {
-      items: components["schemas"]["MedicationDto"][];
+    MedicationListDto: {
+      medications: components["schemas"]["MedicationDto"][];
     };
     NoteDto: {
       /** Format: int32 */

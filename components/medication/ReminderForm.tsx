@@ -3,6 +3,7 @@ import {
   type FormikTouched,
   type FormikErrors,
   type FormikHandlers,
+  type FormikHelpers,
 } from "formik";
 import { type ComponentProps, useState } from "react";
 import {
@@ -11,8 +12,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { Button, HelperText, TextInput } from "react-native-paper";
+import { Button, HelperText, Menu, TextInput } from "react-native-paper";
 
+import { useDebounce, useQuery } from "@/common/api";
 import { useI18n, type Translator, type TranslationKey } from "@/common/i18n";
 import { sty } from "@/common/styles";
 import {
@@ -30,15 +32,24 @@ type ReminderFormValues = {
   description: string;
 };
 
+type MedicationInfo = {
+  name: string;
+  amountInPackage?: number | null;
+  amountUnit?: string | null;
+};
+
+type FormProp = {
+  values: ReminderFormValues;
+  touched: FormikTouched<ReminderFormValues>;
+  errors: FormikErrors<ReminderFormValues>;
+  handleChange: FormikHandlers["handleChange"];
+  handleBlur: FormikHandlers["handleBlur"];
+  setFieldValue: FormikHelpers<ReminderFormValues>["setFieldValue"];
+};
+
 type FormInputProps = {
   field: keyof ReminderFormValues;
-  form: {
-    values: ReminderFormValues;
-    touched: FormikTouched<ReminderFormValues>;
-    errors: FormikErrors<ReminderFormValues>;
-    handleChange: FormikHandlers["handleChange"];
-    handleBlur: FormikHandlers["handleBlur"];
-  };
+  form: FormProp;
   amountAffix?: boolean;
 } & Partial<ComponentProps<typeof TextInput>>;
 
@@ -79,6 +90,83 @@ const FormInput = ({
   );
 };
 
+type MedicationPickerProps = {
+  selectMedication: (medication: MedicationInfo) => void;
+  form: FormProp;
+  disabled?: boolean;
+};
+
+const MedicationPicker = ({
+  selectMedication,
+  form: { values, touched, errors, handleBlur, setFieldValue },
+  disabled,
+}: MedicationPickerProps) => {
+  const { t } = useI18n();
+
+  const [focused, setFocused] = useState(false);
+  const search = useDebounce(values.medicationName, 200);
+  const { data } = useQuery({
+    url: "/api/v1/reminders/medications",
+    params: { query: { search } },
+  });
+  const suggestions = data?.medications?.length ?? 0;
+
+  return (
+    <View>
+      <Menu
+        visible={focused && suggestions > 0}
+        onDismiss={() => setFocused(false)}
+        anchor={
+          <TextInput
+            mode="outlined"
+            label={t("medication.details.medicationName")}
+            onChangeText={(text) => {
+              void setFieldValue("medicationName", text);
+              setFocused(true);
+            }}
+            onBlur={(e) => {
+              handleBlur("medicationName")(e);
+              setFocused(false);
+            }}
+            value={values.medicationName}
+            error={"medicationName" in errors}
+            disabled={disabled}
+          />
+        }
+        anchorPosition="bottom"
+      >
+        {(data?.medications ?? []).map((item) => {
+          let title = item.name;
+          if (item.amountInPackage) {
+            title += ` - ${item.amountInPackage} `;
+            if (item.amountUnit) {
+              title += item.amountUnit;
+            } else {
+              title += t("medication.pills", {
+                count: item.amountInPackage,
+              });
+            }
+          }
+
+          return (
+            <Menu.Item
+              key={[item.name, item.amountInPackage, item.amountUnit].join("-")}
+              title={title}
+              onPress={() => {
+                selectMedication(item);
+                setFocused(false);
+              }}
+            />
+          );
+        })}
+      </Menu>
+      {touched.medicationName && errors.medicationName ? (
+        <HelperText type="error">{errors.medicationName}</HelperText>
+      ) : null}
+    </View>
+  );
+};
+
 type ReminderFormProps = {
   kind: "create" | "edit";
   initialValues: ReminderFormValues;
@@ -110,65 +198,67 @@ export const ReminderForm = ({
           onEditSubmit?.(deserializeEdit(v));
         }}
       >
-        {({
-          values,
-          touched,
-          errors,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-        }) => {
-          const form = { values, touched, errors, handleChange, handleBlur };
-          return (
-            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-              <View style={styles.container}>
-                <FormInput
-                  field="medicationName"
-                  form={form}
-                  disabled={kind === "edit"}
-                />
-                <FormInput
-                  field="amountPerIntake"
-                  form={form}
-                  keyboardType="numeric"
-                  amountAffix
-                />
-                <FormInput
-                  field="amountOwned"
-                  form={form}
-                  keyboardType="numeric"
-                  amountAffix
-                />
-                <FormInput
-                  field="medicationAmountInPackage"
-                  form={form}
-                  keyboardType="numeric"
-                  disabled={kind === "edit"}
-                  amountAffix
-                />
-                {kind === "create" ? (
-                  <FormInput field="amountUnit" form={form} />
-                ) : null}
-                <FormInput field="cron" form={form} />
-                <FormInput
-                  field="description"
-                  form={form}
-                  multiline
-                  style={styles.description}
-                />
-                <Button
-                  disabled={status === "pending"}
-                  loading={status === "pending"}
-                  mode="contained"
-                  onPress={() => handleSubmit()}
-                  style={styles.submit}
-                >
-                  {submitText}
-                </Button>
-              </View>
-            </TouchableWithoutFeedback>
-          );
-        }}
+        {(form) => (
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View style={styles.container}>
+              <MedicationPicker
+                selectMedication={(medication) => {
+                  void Promise.all([
+                    form.setFieldValue("medicationName", medication.name),
+                    form.setFieldValue(
+                      "medicationAmountInPackage",
+                      medication.amountInPackage?.toString() ?? "",
+                    ),
+                    form.setFieldValue(
+                      "amountUnit",
+                      medication.amountUnit ?? "",
+                    ),
+                  ]);
+                }}
+                form={form}
+                disabled={kind === "edit"}
+              />
+              <FormInput
+                field="amountPerIntake"
+                form={form}
+                keyboardType="numeric"
+                amountAffix
+              />
+              <FormInput
+                field="amountOwned"
+                form={form}
+                keyboardType="numeric"
+                amountAffix
+              />
+              <FormInput
+                field="medicationAmountInPackage"
+                form={form}
+                keyboardType="numeric"
+                disabled={kind === "edit"}
+                amountAffix
+              />
+              {kind === "create" ? (
+                <FormInput field="amountUnit" form={form} />
+              ) : null}
+              <FormInput field="cron" form={form} />
+              <FormInput
+                field="description"
+                form={form}
+                multiline
+                style={styles.description}
+              />
+              <Button
+                disabled={status === "pending"}
+                loading={status === "pending"}
+                mode="contained"
+                onPress={() => form.handleSubmit()}
+                style={styles.submit}
+              >
+                {submitText}
+              </Button>
+            </View>
+          </TouchableWithoutFeedback>
+        )}
       </Formik>
     </ScrollView>
   );
