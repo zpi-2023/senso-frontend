@@ -1,8 +1,8 @@
-import { Redirect } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
 import { View } from "react-native";
 
 import { actions } from "@/common/actions";
-import { useQuery } from "@/common/api";
+import { useMutation, useQuery, useQueryInvalidation } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
@@ -14,6 +14,7 @@ import { Reminder, useReminderParams } from "@/logic/medication";
 const Page = () => {
   const { t } = useI18n();
   const identity = useIdentity();
+  const router = useRouter();
 
   const { reminderId } = useReminderParams();
   const { data } = useQuery(
@@ -24,6 +25,9 @@ const Page = () => {
         }
       : null,
   );
+
+  const editReminder = useMutation("put", "/api/v1/reminders/{reminderId}");
+  const invalidateReminders = useQueryInvalidation("/api/v1/reminders");
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
@@ -56,6 +60,16 @@ const Page = () => {
           description: data.description ?? "",
         }}
         submitText={t("medication.edit.submit")}
+        onEditSubmit={async (values) => {
+          const { data } = await editReminder({
+            params: { path: { reminderId } },
+            body: values,
+          });
+          if (data) {
+            await invalidateReminders();
+            router.back();
+          }
+        }}
       />
     </View>
   );

@@ -22,7 +22,9 @@ const Page = () => {
       <Header left={actions.goBack} title={t("medication.intakes.pageTitle")} />
       <CaretakerBanner />
       <PaginatedScrollView
-        renderer={(data) => <IntakeEntry intake={Intake.fromData(data)} />}
+        renderer={(data) => (
+          <IntakeEntry intake={Intake.fromData(data)} navigable />
+        )}
         query={{
           url: "/api/v1/intakes/senior/{seniorId}",
           params: { path: { seniorId } },

@@ -31,7 +31,7 @@ const Page = () => {
       />
       <CaretakerBanner />
       <PaginatedScrollView
-        style={styles.view}
+        contentContainerStyle={styles.view}
         renderer={(data) => (
           <ReminderCard
             reminder={Reminder.fromData(data)}
@@ -60,7 +60,7 @@ const Page = () => {
 
 const useStyles = sty.themedHook(({ colors }) => ({
   view: {
-    padding: 8,
+    padding: 16,
   },
   card: {
     marginVertical: 8,

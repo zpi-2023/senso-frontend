@@ -30,7 +30,6 @@ export class Reminder {
   public static fromData(data: ReminderData): Reminder {
     return new Reminder(
       data.id,
-      data.seniorId,
       data.medicationName,
       data.medicationAmountInPackage ?? null,
       data.isActive,
@@ -52,7 +51,6 @@ export class Reminder {
 
   private constructor(
     public readonly id: number,
-    private readonly seniorId: number,
     public readonly medicationName: string,
     public readonly medicationAmountInPackage: number | null,
     public readonly isActive: boolean,
