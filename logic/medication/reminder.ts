@@ -3,7 +3,7 @@ import { quickIntakeThresholdMs } from "./consts";
 import type { Translator } from "@/common/i18n";
 import { Cron } from "@/common/time";
 
-type ReminderData = {
+export type ReminderData = {
   id: number;
   seniorId: number;
   medicationName: string;
@@ -16,11 +16,20 @@ type ReminderData = {
   description?: string | null | undefined;
 };
 
+export type ReminderCreateData = Omit<
+  ReminderData,
+  "id" | "seniorId" | "isActive"
+>;
+
+export type ReminderEditData = Omit<
+  ReminderCreateData,
+  "medicationName" | "medicationAmountInPackage" | "amountUnit"
+>;
+
 export class Reminder {
   public static fromData(data: ReminderData): Reminder {
     return new Reminder(
       data.id,
-      data.seniorId,
       data.medicationName,
       data.medicationAmountInPackage ?? null,
       data.isActive,
@@ -37,14 +46,11 @@ export class Reminder {
     unit: string | null,
     t: Translator,
   ): string {
-    return unit
-      ? `${amount} ${unit}`
-      : t("medication.pills", { count: amount });
+    return `${amount} ${unit ?? t("medication.pills", { count: amount })}`;
   }
 
   private constructor(
     public readonly id: number,
-    private readonly seniorId: number,
     public readonly medicationName: string,
     public readonly medicationAmountInPackage: number | null,
     public readonly isActive: boolean,
@@ -61,6 +67,10 @@ export class Reminder {
 
   public formatAmountOwned(t: Translator): string {
     return Reminder.formatAmount(this.amountOwned ?? 0, this.amountUnit, t);
+  }
+
+  public title(t: Translator): string {
+    return `${this.medicationName} - ${this.formatAmountPerIntake(t)}`;
   }
 
   public canMakeQuickIntake(): boolean {

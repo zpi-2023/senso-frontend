@@ -1,4 +1,4 @@
-import { Redirect } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 import { Button, SegmentedButtons } from "react-native-paper";
@@ -53,12 +53,7 @@ const Page = () => {
 
   return (
     <View style={sty.full}>
-      <Header
-        left={actions.goBack}
-        title={`${reminder.medicationName} - ${reminder.formatAmountPerIntake(
-          t,
-        )}`}
-      />
+      <Header left={actions.goBack} title={reminder.title(t)} />
       <CaretakerBanner />
       <SegmentedButtons
         style={styles.selector}
@@ -89,7 +84,16 @@ const Page = () => {
       </View>
       {reminder.isActive ? (
         <View style={styles.bar}>
-          <Button mode="outlined" icon="pencil" onPress={() => {}}>
+          <Button
+            mode="outlined"
+            icon="pencil"
+            onPress={() =>
+              router.push({
+                pathname: AppRoutes.EditReminder,
+                params: { reminderId: reminder.id },
+              })
+            }
+          >
             {t("medication.details.editReminder")}
           </Button>
           <Button

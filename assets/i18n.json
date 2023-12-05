@@ -566,11 +566,11 @@
     "pl": "Sprawdź sudoku"
   },
   "medication.pills": {
-    "en": "{count} pills",
-    "en_1": "{count} pill",
-    "pl": "{count} tabletek",
-    "pl_1": "{count} tabletka",
-    "pl_2,3,4": "{count} tabletki"
+    "en": "pills",
+    "en_1": "pill",
+    "pl": "tabletek",
+    "pl_1": "tabletka",
+    "pl_2,3,4": "tabletki"
   },
   "medication.takeDose": {
     "en": "Take",
@@ -591,6 +591,10 @@
   "medication.list.deactivateReminder": {
     "en": "Deactivate reminder",
     "pl": "Wyłącz przypomnienie"
+  },
+  "medication.list.createReminder": {
+    "en": "Add new",
+    "pl": "Dodaj nowe"
   },
   "medication.details.unnamedReminder": {
     "en": "Unnamed reminder",
@@ -632,9 +636,49 @@
     "en": "Amount owned",
     "pl": "Ilość posiadana"
   },
+  "medication.details.amountUnit": {
+    "en": "Unit",
+    "pl": "Jednostka"
+  },
+  "medication.details.medicationAmountInPackage": {
+    "en": "Amount in package",
+    "pl": "Ilość w opakowaniu"
+  },
   "medication.details.inPackage": {
     "en": "in package",
     "pl": "w opakowaniu"
+  },
+  "medication.details.cron": {
+    "en": "Schedule",
+    "pl": "Harmonogram"
+  },
+  "medication.create.pageTitle": {
+    "en": "New reminder",
+    "pl": "Nowe przypomnienie"
+  },
+  "medication.create.submit": {
+    "en": "Save",
+    "pl": "Zapisz"
+  },
+  "medication.edit.submit": {
+    "en": "Save",
+    "pl": "Zapisz"
+  },
+  "medication.form.medicationNameRequired": {
+    "en": "Medication name is required",
+    "pl": "Nazwa leku jest wymagana"
+  },
+  "medication.form.medicationAmountInPackageNonnegative": {
+    "en": "Amount in package must be non-negative",
+    "pl": "Ilość w opakowaniu nie może być ujemna"
+  },
+  "medication.form.amountPerIntakeRequired": {
+    "en": "Amount per intake is required",
+    "pl": "Dawka jest wymagana"
+  },
+  "medication.form.amountOwnedNonnegative": {
+    "en": "Amount owned must be non-negative",
+    "pl": "Ilość posiadana nie może być ujemna"
   },
   "medication.deactivateDialog.title": {
     "en": "Deactivate reminder",

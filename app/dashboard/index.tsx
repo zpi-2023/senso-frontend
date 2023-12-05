@@ -26,7 +26,7 @@ const Page = () => {
 
   // Ensure backend's enum changes don't break the app
   if (gadgets.some((action) => !(action in actions))) {
-    return <Redirect href={AppRoutes.EditDashboard} />;
+    return <Redirect href={AppRoutes.Menu} />;
   }
 
   return (

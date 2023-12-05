@@ -1,6 +1,6 @@
 import type data from "@/assets/i18n.json";
 
-type TranslationKey = keyof typeof data;
+export type TranslationKey = keyof typeof data;
 
 export type Language = "en" | "pl";
 

@@ -1,6 +1,9 @@
+import { router } from "expo-router";
 import { View } from "react-native";
+import { Button } from "react-native-paper";
 
 import { actions } from "@/common/actions";
+import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { RedirectIfNoProfile, useIdentity } from "@/common/identity";
 import { sty } from "@/common/styles";
@@ -11,6 +14,7 @@ import { Reminder } from "@/logic/medication";
 const Page = () => {
   const { t } = useI18n();
   const identity = useIdentity();
+  const styles = useStyles();
 
   if (!identity.hasProfile) {
     return <RedirectIfNoProfile identity={identity} />;
@@ -27,7 +31,7 @@ const Page = () => {
       />
       <CaretakerBanner />
       <PaginatedScrollView
-        style={styles.view}
+        contentContainerStyle={styles.view}
         renderer={(data) => (
           <ReminderCard
             reminder={Reminder.fromData(data)}
@@ -41,17 +45,33 @@ const Page = () => {
         itemsPerPage={5}
         invalidationUrl="/api/v1/reminders/senior/{seniorId}"
       />
+      <View style={styles.bar}>
+        <Button
+          mode="contained"
+          icon="pencil-plus"
+          onPress={() => router.push(AppRoutes.CreateReminder)}
+        >
+          {t("medication.list.createReminder")}
+        </Button>
+      </View>
     </View>
   );
 };
 
-const styles = sty.create({
+const useStyles = sty.themedHook(({ colors }) => ({
   view: {
-    padding: 8,
+    padding: 16,
   },
   card: {
     marginVertical: 8,
   },
-});
+  bar: {
+    paddingHorizontal: 64,
+    paddingVertical: 16,
+    backgroundColor: colors.surface,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+  },
+}));
 
 export default Page;

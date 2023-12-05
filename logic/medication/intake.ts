@@ -12,7 +12,6 @@ type IntakeData = {
 export class Intake {
   public static fromData(data: IntakeData): Intake {
     return new Intake(
-      data.id,
       data.reminderId,
       data.medicationName,
       new Date(data.takenAt),
@@ -22,8 +21,7 @@ export class Intake {
   }
 
   private constructor(
-    private readonly id: number,
-    private readonly reminderId: number,
+    public readonly reminderId: number,
     public readonly medicationName: string,
     public readonly takenAt: Date,
     private readonly amountTaken: number,
@@ -31,8 +29,8 @@ export class Intake {
   ) {}
 
   public formatAmountTaken(t: Translator): string {
-    return this.amountUnit
-      ? `${this.amountTaken} ${this.amountUnit}`
-      : t("medication.pills", { count: this.amountTaken });
+    return `${this.amountTaken} ${
+      this.amountUnit ?? t("medication.pills", { count: this.amountTaken })
+    }`;
   }
 }
