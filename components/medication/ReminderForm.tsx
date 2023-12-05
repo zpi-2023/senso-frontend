@@ -1,3 +1,4 @@
+import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   Formik,
   type FormikTouched,
@@ -5,7 +6,7 @@ import {
   type FormikHandlers,
   type FormikHelpers,
 } from "formik";
-import { type ComponentProps, useState } from "react";
+import { type ComponentProps, useState, useCallback } from "react";
 import {
   Keyboard,
   ScrollView,
@@ -91,13 +92,11 @@ const FormInput = ({
 };
 
 type MedicationPickerProps = {
-  selectMedication: (medication: MedicationInfo) => void;
   form: FormProp;
   disabled?: boolean;
 };
 
 const MedicationPicker = ({
-  selectMedication,
   form: { values, touched, errors, handleBlur, setFieldValue },
   disabled,
 }: MedicationPickerProps) => {
@@ -110,6 +109,20 @@ const MedicationPicker = ({
     params: { query: { search } },
   });
   const suggestions = data?.medications?.length ?? 0;
+
+  const selectMedication = useCallback(
+    (medication: MedicationInfo) => {
+      void Promise.all([
+        setFieldValue("medicationName", medication.name),
+        setFieldValue(
+          "medicationAmountInPackage",
+          medication.amountInPackage?.toString() ?? "",
+        ),
+        setFieldValue("amountUnit", medication.amountUnit ?? ""),
+      ]);
+    },
+    [setFieldValue],
+  );
 
   return (
     <View>
@@ -167,6 +180,87 @@ const MedicationPicker = ({
   );
 };
 
+const cronToDisplay = (cron: string): string => {
+  if (cron.trim().length === 0) {
+    return "";
+  }
+
+  const [minute, hour] = cron.split(" ");
+  if (!minute || !hour) {
+    return "";
+  }
+
+  return `${hour}:${minute?.padStart(2, "0")}`;
+};
+
+const cronToDate = (cron: string): Date => {
+  if (cron.trim().length === 0) {
+    return new Date(0);
+  }
+
+  const [minute, hour] = cron.split(" ").map((v) => parseInt(v, 10));
+  if (!minute || Number.isNaN(minute) || !hour || Number.isNaN(hour)) {
+    return new Date(0);
+  }
+
+  return new Date((hour * 60 + minute) * 60 * 1000);
+};
+
+type CronPickerProps = {
+  form: FormProp;
+};
+
+export const CronPicker = ({
+  form: { values, setFieldValue },
+}: CronPickerProps) => {
+  const { t } = useI18n();
+
+  const [shown, setShown] = useState(false);
+
+  return (
+    <View>
+      <TextInput
+        mode="outlined"
+        label={t("medication.details.cron")}
+        value={cronToDisplay(values.cron)}
+        showSoftInputOnFocus={false}
+        onFocus={() => setShown(true)}
+        right={
+          values.cron.trim().length > 0 ? (
+            <TextInput.Icon
+              icon="close"
+              onPressOut={() => {
+                setShown(false);
+                Keyboard.dismiss();
+                void setFieldValue("cron", "");
+              }}
+            />
+          ) : null
+        }
+      />
+      {shown ? (
+        <DateTimePicker
+          mode="time"
+          value={cronToDate(values.cron)}
+          timeZoneOffsetInMinutes={0}
+          onChange={(e) => {
+            setShown(false);
+            Keyboard.dismiss();
+            if (e.type === "set" && e.nativeEvent.timestamp !== undefined) {
+              const totalMinutes = Math.floor(
+                e.nativeEvent.timestamp / 1000 / 60,
+              );
+              const hour = Math.floor(totalMinutes / 60);
+              const minute = totalMinutes % 60;
+              void setFieldValue("cron", `${minute} ${hour} * * *`);
+            }
+          }}
+        />
+      ) : null}
+    </View>
+  );
+};
+
 type ReminderFormProps = {
   kind: "create" | "edit";
   initialValues: ReminderFormValues;
@@ -201,23 +295,7 @@ export const ReminderForm = ({
         {(form) => (
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
-              <MedicationPicker
-                selectMedication={(medication) => {
-                  void Promise.all([
-                    form.setFieldValue("medicationName", medication.name),
-                    form.setFieldValue(
-                      "medicationAmountInPackage",
-                      medication.amountInPackage?.toString() ?? "",
-                    ),
-                    form.setFieldValue(
-                      "amountUnit",
-                      medication.amountUnit ?? "",
-                    ),
-                  ]);
-                }}
-                form={form}
-                disabled={kind === "edit"}
-              />
+              <MedicationPicker form={form} disabled={kind === "edit"} />
               <FormInput
                 field="amountPerIntake"
                 form={form}
@@ -240,7 +318,7 @@ export const ReminderForm = ({
               {kind === "create" ? (
                 <FormInput field="amountUnit" form={form} />
               ) : null}
-              <FormInput field="cron" form={form} />
+              <CronPicker form={form} />
               <FormInput
                 field="description"
                 form={form}
