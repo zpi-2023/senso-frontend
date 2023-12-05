@@ -1,10 +1,11 @@
 import { useRouter } from "expo-router";
-import { useState, type FC } from "react";
+import { useState, type FC, useMemo } from "react";
 import { FlatList, View } from "react-native";
 import { Menu, Text } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
+import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
 import { Header, Icon } from "@/components";
 
@@ -15,29 +16,9 @@ interface IGameItem {
   description: string;
 }
 
-const games: IGameItem[] = [
-  {
-    name: "Graydle",
-    icon: "file-word-box",
-    route: AppRoutes.GraydleGame,
-    description: "Guess the word!",
-  },
-  {
-    name: "Memory",
-    icon: "cards",
-    route: AppRoutes.MemoryGame,
-    description: "Match the cards!",
-  },
-  {
-    name: "Sudoku",
-    icon: "apps",
-    route: AppRoutes.SudokuGame,
-    description: "Fill in the numbers!",
-  },
-];
-
 const GameItem: FC<IGameItem> = ({ name, icon, route, description }) => {
   const router = useRouter();
+  const { t } = useI18n();
   const styles = useStyles();
   const [visible, setVisible] = useState<boolean>(false);
 
@@ -69,14 +50,44 @@ const GameItem: FC<IGameItem> = ({ name, icon, route, description }) => {
         onDismiss={closeMenu}
         anchor={<Icon icon={icon} size={64} />}
       >
-        <Menu.Item onPress={handlePressItem} title="Play" />
-        <Menu.Item onPress={handlePressScoreboard} title="Scoreboard" />
+        <Menu.Item
+          onPress={handlePressItem}
+          title={t("games.menu.playButton")}
+        />
+        <Menu.Item
+          onPress={handlePressScoreboard}
+          title={t("games.menu.scoreboardButton")}
+        />
       </Menu>
     </View>
   );
 };
 
 const Page = () => {
+  const { t } = useI18n();
+  const games: IGameItem[] = useMemo(
+    () => [
+      {
+        name: "Graydle",
+        icon: "file-word-box",
+        route: AppRoutes.GraydleGame,
+        description: t("games.menu.graydleDescription"),
+      },
+      {
+        name: "Memory",
+        icon: "cards",
+        route: AppRoutes.MemoryGame,
+        description: t("games.menu.memoryDescription"),
+      },
+      {
+        name: "Sudoku",
+        icon: "apps",
+        route: AppRoutes.SudokuGame,
+        description: t("games.menu.sudokuDescription"),
+      },
+    ],
+    [t],
+  );
   return (
     <View>
       <Header title="Games" left={actions.goBack} />
