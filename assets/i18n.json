@@ -473,6 +473,26 @@
     "pl_1": "{count} minuta temu",
     "pl_2,3,4": "{count} minuty temu"
   },
+  "games.menu.graydleDescription": {
+    "en": "Guess the word!",
+    "pl": "Zgadnij słowo!"
+  },
+  "games.menu.memoryDescription": {
+    "en": "Match the cards!",
+    "pl": "Znajdź pary!"
+  },
+  "games.menu.sudokuDescription": {
+    "en": "Fill in the numbers!",
+    "pl": "Uzupełnij cyfry!"
+  },
+  "games.menu.playButton": {
+    "en": "Play",
+    "pl": "Graj"
+  },
+  "games.menu.scoreboardButton": {
+    "en": "Scoreboard",
+    "pl": "Tablica wyników"
+  },
   "games.memory.pageTitle": {
     "en": "Memory",
     "pl": "Memory"
