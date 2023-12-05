@@ -61,7 +61,7 @@ const Page = () => {
   const lastGuessRef = useRef<View>(null);
   const scrollViewRef = useRef<ScrollView>(null);
   const [seconds, setSeconds] = useState<number>(0);
-  const [gameStarted, setGameStarted] = useState<boolean>(false);
+  const [gameStarted, setGameStarted] = useState<boolean>(true);
   const [previousGuesses, setPreviousGuesses] = useState<string[]>([]);
   const [currentGuess, setCurrentGuess] = useState<string[]>(
     new Array(5).fill(""),
@@ -122,7 +122,6 @@ const Page = () => {
   };
 
   useEffect(() => {
-    setGameStarted(true);
     textInputRefs.current[0]?.focus();
   }, []);
 
