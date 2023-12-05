@@ -269,6 +269,10 @@
     "en": "Graydle",
     "pl": "Graydle"
   },
+  "actions.playSudokuGame": {
+    "en": "Sudoku",
+    "pl": "Sudoku"
+  },
   "actions.manageNotes": {
     "en": "Notes",
     "pl": "Notatki"
@@ -524,6 +528,42 @@
   "games.wordle.alertButton": {
     "en": "Play again",
     "pl": "Zagraj ponownie"
+  },
+  "games.sudoku.pageTitle": {
+    "en": "Sudoku",
+    "pl": "Sudoku"
+  },
+  "games.sudoku.timer": {
+    "en": "Time: {time}",
+    "pl": "Czas: {time}"
+  },
+  "games.sudoku.checkCounter": {
+    "en": "Checks: {checks}",
+    "pl": "Sprawdzenia: {checks}"
+  },
+  "games.sudoku.alertTitlePositive": {
+    "en": "Congratulations!",
+    "pl": "Gratulacje!"
+  },
+  "games.sudoku.alertTitleNegative": {
+    "en": "Solution is incorrect",
+    "pl": "Rozwiązanie jest niepoprawne"
+  },
+  "games.sudoku.alertDescription": {
+    "en": "You have completed the game in time {time}.",
+    "pl": "Ukończyłeś grę w czasie {time}."
+  },
+  "games.sudoku.continue": {
+    "en": "Continue",
+    "pl": "Kontynuuj"
+  },
+  "games.sudoku.backToMenu": {
+    "en": "Back to menu",
+    "pl": "Powrót do menu"
+  },
+  "games.sudoku.check": {
+    "en": "Check sudoku",
+    "pl": "Sprawdź sudoku"
   },
   "medication.pills": {
     "en": "pills",
