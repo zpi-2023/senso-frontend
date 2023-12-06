@@ -18,7 +18,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.sensofrontend"
+      "package": "com.anonymous.sensofrontend",
+      "googleServicesFile": "./assets/google-services.json"
     },
     "ios": {
       "supportsTablet": true,
