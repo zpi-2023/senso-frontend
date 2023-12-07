@@ -27,10 +27,10 @@ const Page = () => {
           <MenuItem action={actions.trackMedication} />
           <MenuItem action={actions.playGames} />
           <MenuItem action={actions.manageNotes} />
-          <MenuItem action={actions.showSosHistory} />
         </List.Section>
         <List.Section>
           <List.Subheader>{t("menu.account")}</List.Subheader>
+          <MenuItem action={actions.showSosHistory} />
           <MenuItem action={actions.viewCaretakerList} />
           <MenuItem action={actions.pairCaretaker} />
           <MenuItem action={actions.switchProfile} />
