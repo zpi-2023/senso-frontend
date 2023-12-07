@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import "react-native-url-polyfill/auto";
 
 import { I18nProvider } from "@/common/i18n";
-import { IdentityProvider } from "@/common/identity";
+import { IdentityProvider, useIdentity } from "@/common/identity";
 import { ProviderList, useFontLoader, MaskingView } from "@/common/internal";
 import {
-  registerForPushNotificationsAsync,
   setExpoNotificationHandler,
+  useDeviceRegistration,
 } from "@/common/notifications";
 import { ThemeProvider } from "@/common/theme";
 
@@ -18,12 +18,17 @@ SplashScreen.preventAutoHideAsync();
 setExpoNotificationHandler();
 
 export default function RootLayout() {
-  useEffect(() => {
-    void registerForPushNotificationsAsync().then((token) =>
-      console.error(token),
-    );
-  });
+  const identity = useIdentity();
   const loaded = useFontLoader();
+  const registerDevice = useDeviceRegistration();
+
+  useEffect(() => {
+    if (loaded && identity.isLoggedIn) {
+      registerDevice(identity.token);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded, identity.isLoggedIn]);
+
   if (!loaded) {
     return null;
   }

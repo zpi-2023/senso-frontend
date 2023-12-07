@@ -8,7 +8,10 @@ import {
   setNotificationChannelAsync,
   setNotificationHandler,
 } from "expo-notifications";
+import { useCallback } from "react";
 import { Platform } from "react-native";
+
+import { useMutation } from "./api";
 
 // Based on: https://docs.expo.dev/push-notifications/push-notifications-setup/#test-using-the-push-notifications-tool
 
@@ -23,7 +26,7 @@ export const setExpoNotificationHandler = () => {
   });
 };
 
-export const registerForPushNotificationsAsync = async () => {
+const getExpoNotificationToken = async () => {
   if (Platform.OS === "android") {
     await setNotificationChannelAsync("default", {
       name: "default",
@@ -53,4 +56,22 @@ export const registerForPushNotificationsAsync = async () => {
     )["projectId"],
   });
   return data;
+};
+
+export const useDeviceRegistration = () => {
+  const registerDevice = useMutation("post", "/api/v1/account/device");
+  return useCallback(
+    (identityToken: string) =>
+      requestIdleCallback(async () => {
+        console.error("Registering device...");
+        const deviceToken = await getExpoNotificationToken();
+        if (deviceToken) {
+          await registerDevice({
+            body: { deviceToken, deviceType: Platform.OS },
+            headers: { Authorization: `Bearer ${identityToken}` },
+          });
+        }
+      }),
+    [registerDevice],
+  );
 };

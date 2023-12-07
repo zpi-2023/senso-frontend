@@ -8,6 +8,7 @@ import { useMutation } from "@/common/api";
 import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
+import { useDeviceRegistration } from "@/common/notifications";
 import { sty } from "@/common/styles";
 import { useTheme } from "@/common/theme";
 import { Header } from "@/components";
@@ -17,6 +18,7 @@ const Page = () => {
   const theme = useTheme();
   const { t } = useI18n();
   const obtainToken = useMutation("post", "/api/v1/account/token");
+  const registerDevice = useDeviceRegistration();
 
   const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
 
@@ -29,9 +31,10 @@ const Page = () => {
     const res = await obtainToken({ body });
     if (res.error) {
       setStatus("error");
-    } else {
-      identity.logIn(res.data);
+      return;
     }
+    identity.logIn(res.data);
+    registerDevice(res.data.token);
   };
 
   return (
