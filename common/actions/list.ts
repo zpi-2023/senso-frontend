@@ -44,13 +44,13 @@ export const actions = {
     displayName: (t) => t("actions.showAlertHistory"),
     icon: "account-alert",
     handler: ({ router }) => router.push(AppRoutes.AlertHistory),
-    hidden: ({ identity }) => isSenior(identity.profile),
     managed: true,
   },
   viewCaretakerList: {
     displayName: (t) => t("actions.viewCaretakerList"),
     icon: "account-details",
     handler: ({ router }) => router.push(AppRoutes.SeniorCaretakerList),
+    hidden: ({ identity }) => isCaretaker(identity.profile),
     managed: true,
   },
   pairCaretaker: {
