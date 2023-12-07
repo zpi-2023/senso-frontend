@@ -92,6 +92,41 @@ export interface paths {
       };
     };
   };
+  "/api/v1/account/device": {
+    /** Adds a device token to an account */
+    post: {
+      /** @description Device token */
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["AddDeviceTokenDto"];
+          "text/json": components["schemas"]["AddDeviceTokenDto"];
+          "application/*+json": components["schemas"]["AddDeviceTokenDto"];
+        };
+      };
+      responses: {
+        /** @description Device token successfully added */
+        204: {
+          content: never;
+        };
+        /** @description If DTO validation failed */
+        400: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
   "/api/v1/alerts/sos": {
     /** Creates an sos alert */
     post: {
@@ -1351,6 +1386,10 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
+    AddDeviceTokenDto: {
+      deviceToken: string;
+      deviceType: string;
+    };
     CreateAccountDto: {
       email: string;
       password: string;
