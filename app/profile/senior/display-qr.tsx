@@ -17,7 +17,9 @@ const CreateSeniorProfile = () => {
   const { data, isLoading, mutate } = useQuery({
     url: "/api/v1/profiles/senior/pairing",
   });
-  const [secondsLeft, setSecondsLeft] = useState<number>(data?.validFor || 10);
+  const [secondsLeft, setSecondsLeft] = useState<number>(
+    data?.validFor || 1200,
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {

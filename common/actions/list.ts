@@ -35,8 +35,8 @@ export const actions = {
   activateSos: {
     displayName: (t) => t("actions.activateSos"),
     icon: "alarm-light",
-    handler: (_) => {
-      /* TODO */
+    handler: () => {
+      throw new Error("This action is handled in the component!");
     },
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
@@ -44,13 +44,13 @@ export const actions = {
     displayName: (t) => t("actions.showAlertHistory"),
     icon: "account-alert",
     handler: ({ router }) => router.push(AppRoutes.AlertHistory),
-    hidden: ({ identity }) => isSenior(identity.profile),
     managed: true,
   },
   viewCaretakerList: {
     displayName: (t) => t("actions.viewCaretakerList"),
     icon: "account-details",
     handler: ({ router }) => router.push(AppRoutes.SeniorCaretakerList),
+    hidden: ({ identity }) => isCaretaker(identity.profile),
     managed: true,
   },
   pairCaretaker: {
