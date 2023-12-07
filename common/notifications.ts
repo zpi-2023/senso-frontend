@@ -1,3 +1,4 @@
+import ExpoConstants from "expo-constants";
 import { isDevice } from "expo-device";
 import {
   AndroidImportance,
@@ -7,10 +8,7 @@ import {
   setNotificationChannelAsync,
   setNotificationHandler,
 } from "expo-notifications";
-import { useEffect } from "react";
 import { Platform } from "react-native";
-
-import { projectId } from "./constants";
 
 // Based on: https://docs.expo.dev/push-notifications/push-notifications-setup/#test-using-the-push-notifications-tool
 
@@ -25,7 +23,7 @@ export const setExpoNotificationHandler = () => {
   });
 };
 
-const registerForPushNotificationsAsync = async () => {
+export const registerForPushNotificationsAsync = async () => {
   if (Platform.OS === "android") {
     await setNotificationChannelAsync("default", {
       name: "default",
@@ -49,15 +47,10 @@ const registerForPushNotificationsAsync = async () => {
     return null;
   }
 
-  const { data } = await getExpoPushTokenAsync({ projectId });
+  const { data } = await getExpoPushTokenAsync({
+    projectId: (
+      ExpoConstants.expoConfig!.extra!["eas"] as { projectId: string }
+    )["projectId"],
+  });
   return data;
-};
-
-export const useExpoNotifications = () => {
-  useEffect(() => {
-    void registerForPushNotificationsAsync().then((token) => {
-      // TODO: send token to server
-      console.error(token);
-    });
-  }, []);
 };
