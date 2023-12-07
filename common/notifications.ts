@@ -63,7 +63,6 @@ export const useDeviceRegistration = () => {
   return useCallback(
     (identityToken: string) =>
       requestIdleCallback(async () => {
-        console.error("Registering device...");
         const deviceToken = await getExpoNotificationToken();
         if (deviceToken) {
           await registerDevice({
