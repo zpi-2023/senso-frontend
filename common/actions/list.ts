@@ -35,8 +35,8 @@ export const actions = {
   activateSos: {
     displayName: (t) => t("actions.activateSos"),
     icon: "alarm-light",
-    handler: (_) => {
-      /* TODO */
+    handler: () => {
+      throw new Error("This action is handled in the component!");
     },
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },

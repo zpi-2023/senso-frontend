@@ -92,6 +92,76 @@ export interface paths {
       };
     };
   };
+  "/api/v1/alerts/sos": {
+    /** Creates an sos alert */
+    post: {
+      responses: {
+        /** @description Returned when succedded */
+        204: {
+          content: never;
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user has no senior profile */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
+  "/api/v1/alerts/history/{seniorId}": {
+    /** Returns alerts history for a given senior */
+    get: {
+      parameters: {
+        query?: {
+          offset?: number;
+          limit?: number;
+          /** @description Type of alerts to return. When null all alerts types are returned. */
+          type?: string;
+        };
+        path: {
+          /** @description The id of a senior */
+          seniorId: number;
+        };
+      };
+      responses: {
+        /** @description Returns alerts history for a given senior */
+        200: {
+          content: {
+            "text/plain": components["schemas"]["GetAlertHistoryDtoPaginatedDto"];
+            "application/json": components["schemas"]["GetAlertHistoryDtoPaginatedDto"];
+            "text/json": components["schemas"]["GetAlertHistoryDtoPaginatedDto"];
+          };
+        };
+        /** @description If user is not logged in */
+        401: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+        /** @description If user has no profile associated with given senior or given alert type does not exists */
+        404: {
+          content: {
+            "text/plain": components["schemas"]["ProblemDetails"];
+            "application/json": components["schemas"]["ProblemDetails"];
+            "text/json": components["schemas"]["ProblemDetails"];
+          };
+        };
+      };
+    };
+  };
   "/api/v1/dashboard/{seniorId}": {
     /** Returns dashboard for a given senior */
     get: {
@@ -1346,6 +1416,14 @@ export interface components {
       email: string;
       displayName: string;
       phoneNumber?: string | null;
+    };
+    GetAlertHistoryDto: {
+      type: string;
+      /** Format: date-time */
+      firedAt: string;
+    };
+    GetAlertHistoryDtoPaginatedDto: {
+      items: components["schemas"]["GetAlertHistoryDto"][];
     };
     HealthcheckDto: {
       server?: components["schemas"]["HealthcheckStatus"];
