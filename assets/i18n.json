@@ -493,6 +493,10 @@
     "en": "Scoreboard",
     "pl": "Tablica wyników"
   },
+  "games.scoreboard.pageTitle": {
+    "en": "{game} scoreboard",
+    "pl": "Tablica wyników {game}"
+  },
   "games.memory.pageTitle": {
     "en": "Memory",
     "pl": "Memory"
