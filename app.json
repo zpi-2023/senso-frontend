@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "senso-frontend",
-    "slug": "senso-frontend",
+    "slug": "senso",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -18,11 +18,17 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.sensofrontend"
+      "package": "com.anonymous.sensofrontend",
+      "googleServicesFile": "./assets/google-services.json",
+      "permissions": ["android.permission.CAMERA"]
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.sensofrontend"
+      "bundleIdentifier": "com.anonymous.sensofrontend",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow Senso to access camera.",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -40,6 +46,15 @@
     ],
     "experiments": {
       "tsconfigPaths": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "2860354b-4e44-43ae-9697-9e144d72eff6"
+      }
+    },
+    "owner": "senso"
   }
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, PanResponder, Animated, Dimensions } from "react-native";
 import { Text } from "react-native-paper";
 
+import { useMutation, useQueryInvalidation } from "@/common/api";
 import { useI18n } from "@/common/i18n";
 import { sty } from "@/common/styles";
 import { Icon } from "@/components";
@@ -14,6 +15,9 @@ export const SosSlider = () => {
   const styles = useStyles();
   const [slideAnim] = useState(new Animated.Value(0));
   const [calledForHelp, setCalledForHelp] = useState(false);
+
+  const sendSos = useMutation("post", "/api/v1/alerts/sos");
+  const invalidateAlerts = useQueryInvalidation("/api/v1/alerts");
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -31,7 +35,7 @@ export const SosSlider = () => {
     onPanResponderRelease: (_, gestureState) => {
       if (gestureState.dx + circleRadius * 2 >= sliderWidth) {
         setCalledForHelp(true);
-        // TODO: call API to send SOS
+        void sendSos({}).then(invalidateAlerts);
       } else {
         Animated.spring(slideAnim, {
           toValue: 0,

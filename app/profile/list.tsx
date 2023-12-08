@@ -91,7 +91,7 @@ const ProfilesList = () => {
     const { data: seniorProfile } = await createSeniorProfile({});
 
     if (!seniorProfile) {
-      return; // TODO: handle error
+      return;
     }
 
     identity.selectProfile(

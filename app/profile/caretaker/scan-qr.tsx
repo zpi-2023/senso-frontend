@@ -66,7 +66,7 @@ export default function Page() {
 
             const { seniorId, seniorAlias, type } = data;
             identity.selectProfile({
-              type: type as "senior" | "caretaker", // TODO remove when backend type is ready
+              type: type as "senior" | "caretaker",
               seniorAlias,
               seniorId,
             });

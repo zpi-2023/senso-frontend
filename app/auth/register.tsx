@@ -14,6 +14,7 @@ import { useMutation } from "@/common/api";
 import { AppRoutes, minDisplayNameLength } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { useIdentity, RedirectIfLoggedIn } from "@/common/identity";
+import { useDeviceRegistration } from "@/common/notifications";
 import { sty } from "@/common/styles";
 import { useTheme } from "@/common/theme";
 import { Header } from "@/components";
@@ -32,6 +33,7 @@ const Page = () => {
   const { t } = useI18n();
   const createAccount = useMutation("post", "/api/v1/account");
   const obtainToken = useMutation("post", "/api/v1/account/token");
+  const registerDevice = useDeviceRegistration();
 
   const [status, setStatus] = useState<"idle" | "pending" | "error">("idle");
 
@@ -50,9 +52,10 @@ const Page = () => {
     const tokenRes = await obtainToken({ body });
     if (accountRes.error || tokenRes.error) {
       setStatus("error");
-    } else {
-      identity.logIn(tokenRes.data);
+      return;
     }
+    identity.logIn(tokenRes.data);
+    registerDevice(tokenRes.data.token);
   };
 
   return (

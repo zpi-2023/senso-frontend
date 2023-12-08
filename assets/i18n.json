@@ -361,6 +361,22 @@
     "en": "Available gadgets",
     "pl": "Dostępne gadżety"
   },
+  "alerts.history.pageTitle": {
+    "en": "Alert history",
+    "pl": "Historia zgłoszeń"
+  },
+  "alerts.types.sos": {
+    "en": "SOS",
+    "pl": "SOS"
+  },
+  "alerts.types.medicationToTake": {
+    "en": "Reminded about medication intake",
+    "pl": "Przypomniano o przyjęciu leku"
+  },
+  "alerts.types.medicationNotTaken": {
+    "en": "Medication was not taken",
+    "pl": "Lek nie został przyjęty"
+  },
   "alerts.sosSlider.description": {
     "en": "Slide to activate SOS",
     "pl": "Przesuń, aby aktywować SOS"
