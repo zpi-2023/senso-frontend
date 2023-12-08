@@ -97,7 +97,7 @@ export const actions = {
   playWordleGame: {
     displayName: (t) => t("actions.playWordleGame"),
     icon: "file-word-box",
-    handler: ({ router }) => router.push(AppRoutes.GraydleGame),
+    handler: ({ router }) => router.push(AppRoutes.WordleGame),
     hidden: ({ identity }) => isCaretaker(identity.profile),
   },
   playSudokuGame: {
