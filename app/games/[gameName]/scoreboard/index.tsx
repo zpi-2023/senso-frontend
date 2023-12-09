@@ -16,7 +16,7 @@ const Scoreboard = () => {
   const identity = useIdentity();
   const { gameName } = useLocalSearchParams();
   const { data: leaderboardData } = useQuery(
-    gameName && typeof gameName === "string"
+    typeof gameName === "string"
       ? {
           url: "/api/v1/games/{gameName}/leaderboard",
           params: { path: { gameName }, query: { limit: 10 } },
@@ -24,7 +24,7 @@ const Scoreboard = () => {
       : null,
   );
   const { data: yourScoreData } = useQuery(
-    gameName && typeof gameName === "string"
+    typeof gameName === "string"
       ? {
           url: "/api/v1/games/{gameName}/score",
           params: { path: { gameName } },
