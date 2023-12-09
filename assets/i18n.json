@@ -266,8 +266,8 @@
     "pl": "Memory"
   },
   "actions.playWordleGame": {
-    "en": "Graydle",
-    "pl": "Graydle"
+    "en": "Wordle",
+    "pl": "Wordle"
   },
   "actions.playSudokuGame": {
     "en": "Sudoku",
@@ -489,7 +489,7 @@
     "pl_1": "{count} minuta temu",
     "pl_2,3,4": "{count} minuty temu"
   },
-  "games.menu.graydleDescription": {
+  "games.menu.wordleDescription": {
     "en": "Guess the word!",
     "pl": "Zgadnij słowo!"
   },
@@ -508,6 +508,30 @@
   "games.menu.scoreboardButton": {
     "en": "Scoreboard",
     "pl": "Tablica wyników"
+  },
+  "games.scoreboard.pageTitle": {
+    "en": "{game} scoreboard",
+    "pl": "Tablica wyników {game}"
+  },
+  "games.scoreboard.noScores": {
+    "en": "No scores yet",
+    "pl": "Brak wyników"
+  },
+  "games.scoreboard.yourScore": {
+    "en": "Your best score:",
+    "pl": "Twój najlepszy wynik:"
+  },
+  "games.scoreboard.loading": {
+    "en": "Loading...",
+    "pl": "Ładowanie..."
+  },
+  "games.scoreboard.nameColumn": {
+    "en": "Name",
+    "pl": "Nazwa"
+  },
+  "games.scoreboard.scoreColumn": {
+    "en": "Score",
+    "pl": "Wynik"
   },
   "games.memory.pageTitle": {
     "en": "Memory",
@@ -540,8 +564,8 @@
     "pl_1": "Ukończyłeś grę w {count} ruchu i czasie {time}."
   },
   "games.wordle.pageTitle": {
-    "en": "Graydle",
-    "pl": "Graydle"
+    "en": "Wordle",
+    "pl": "Wordle"
   },
   "games.wordle.timer": {
     "en": "Time: {time}",

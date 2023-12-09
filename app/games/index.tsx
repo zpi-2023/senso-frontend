@@ -68,10 +68,10 @@ const Page = () => {
   const games: IGameItem[] = useMemo(
     () => [
       {
-        name: "Graydle",
+        name: "Wordle",
         icon: "file-word-box",
-        route: AppRoutes.GraydleGame,
-        description: t("games.menu.graydleDescription"),
+        route: AppRoutes.WordleGame,
+        description: t("games.menu.wordleDescription"),
       },
       {
         name: "Memory",
@@ -111,8 +111,9 @@ const useStyles = sty.themedHook(({ colors }) => ({
     borderRadius: 16,
     borderColor: colors.primary,
     borderWidth: 3,
+    backgroundColor: colors.surface,
     shadowColor: "black",
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 5,
     shadowOffset: {
       width: 0,
