@@ -29,12 +29,14 @@ const isValid = (
   return true;
 };
 
-// Function to solve the Sudoku puzzle using backtracking
 const solveSudoku = (board: number[][]): boolean => {
+  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
       if (board[row]![col] === 0) {
-        for (let num = 1; num <= 9; num++) {
+        // Shuffle the numbers for randomness
+        const shuffledNumbers = numbers.slice().sort(() => Math.random() - 0.5);
+        for (const num of shuffledNumbers) {
           if (isValid(board, row, col, num)) {
             board[row]![col] = num;
 
