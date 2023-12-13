@@ -83,13 +83,15 @@ const useStyles = sty.themedHook(({ colors }) => ({
   sliderBackground: {
     width: sliderWidth,
     height: 70,
-    backgroundColor: colors.onBackground,
+    backgroundColor: colors.background,
     borderRadius: circleRadius,
+    borderColor: colors.alert,
+    borderWidth: 4,
     overflow: "hidden",
   },
   circle: {
     position: "absolute",
-    top: 0,
+    top: -4, // shift up to cover border
     width: circleRadius * 2,
     height: circleRadius * 2,
     backgroundColor: colors.alert,
@@ -98,6 +100,6 @@ const useStyles = sty.themedHook(({ colors }) => ({
     alignItems: "center",
   },
   sosText: {
-    color: "black",
+    color: colors.text,
   },
 }));
