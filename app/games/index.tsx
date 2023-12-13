@@ -39,7 +39,7 @@ const GameItem: FC<IGameItem> = ({ name, icon, route, description }) => {
   };
 
   return (
-    <Card onPress={handlePressPlay}>
+    <Card style={styles.cardWrapper} onPress={handlePressPlay}>
       <Card.Title
         title={name}
         titleStyle={styles.gameTitle}
@@ -107,6 +107,9 @@ const styles = sty.create({
   },
   gameTitle: {
     fontWeight: "bold",
+  },
+  cardWrapper: {
+    marginHorizontal: 16,
   },
 });
 
