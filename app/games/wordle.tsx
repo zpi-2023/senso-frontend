@@ -158,7 +158,7 @@ const Page = () => {
         <Header left={actions.goBack} title={t("games.wordle.pageTitle")} />
         <View style={styles.optionsWrapper}>
           <Text style={styles.statsLabel}>
-            {t("games.wordle.timer", { time: seconds })}
+            {t("games.wordle.timer", { time: toMinutesAndSeconds(seconds) })}
           </Text>
           <Text style={styles.statsLabel}>
             {t("games.wordle.guesses", {
