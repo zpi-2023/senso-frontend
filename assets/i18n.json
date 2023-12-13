@@ -732,6 +732,10 @@
     "en": "Amount in package must be non-negative",
     "pl": "Ilość w opakowaniu nie może być ujemna"
   },
+  "medication.form.medicationAmountInPackageInteger": {
+    "en": "Amount in package must be an integer",
+    "pl": "Ilość w opakowaniu musi być liczbą całkowitą"
+  },
   "medication.form.amountPerIntakeRequired": {
     "en": "Amount per intake is required",
     "pl": "Dawka jest wymagana"
