@@ -1,7 +1,13 @@
 import { Link } from "expo-router";
 import { Formik } from "formik";
 import { useState } from "react";
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { Button, HelperText, Text, TextInput } from "react-native-paper";
 
 import { useMutation } from "@/common/api";
@@ -38,95 +44,100 @@ const Page = () => {
   };
 
   return (
-    <Formik
-      initialValues={{ email: "", password: "" }}
-      onSubmit={onSubmit}
-      validate={(values) => {
-        const errors: { email?: string; password?: string } = {};
-        if (!values.email) {
-          errors.email = t("auth.required");
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-          errors.email = t("auth.badEmail");
-        }
-        if (!values.password) {
-          errors.password = t("auth.required");
-        }
-        return errors;
-      }}
-      validateOnBlur={true}
-      validateOnChange={false}
-    >
-      {({
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        values,
-        errors,
-        touched,
-      }) => (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <View style={sty.center}>
-            <Header title={t("auth.login.pageTitle")} />
-            <Text variant="titleLarge" style={styles.title}>
-              {t("auth.login.description")}
-            </Text>
-            <TextInput
-              mode="outlined"
-              label={t("auth.email")}
-              onChangeText={handleChange("email")}
-              onBlur={handleBlur("email")}
-              value={values.email}
-              style={styles.input}
-              error={!!errors.email}
-              autoCapitalize="none"
-            />
-            {touched.email && errors.email && (
-              <HelperText type="error" style={styles.errorMessage}>
-                {errors.email}
-              </HelperText>
-            )}
-            <TextInput
-              mode="outlined"
-              label={t("auth.password")}
-              onChangeText={handleChange("password")}
-              onBlur={handleBlur("password")}
-              value={values.password}
-              style={styles.input}
-              error={!!errors.password}
-              secureTextEntry
-              autoCapitalize="none"
-            />
-            {touched.password && errors.password && (
-              <HelperText type="error" style={styles.errorMessage}>
-                {errors.password}
-              </HelperText>
-            )}
-            {status === "error" ? (
-              <HelperText type="error" style={styles.errorMessage}>
-                {t("auth.login.badCredentials")}
-              </HelperText>
-            ) : null}
-            <Button
-              disabled={status === "pending"}
-              mode="contained"
-              onPress={() => handleSubmit()}
-              style={styles.submit}
-              loading={status === "pending"}
-            >
-              {t("auth.login.continueButton")}
-            </Button>
-            <Text style={styles.submit}>
-              {t("auth.login.registerPrompt")}{" "}
-              <Link href={AppRoutes.Register} replace>
-                <Text style={{ color: theme.colors.primary }}>
-                  {t("auth.login.registerButton")}
-                </Text>
-              </Link>
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
-      )}
-    </Formik>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={sty.full}
+      >
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          onSubmit={onSubmit}
+          validate={(values) => {
+            const errors: { email?: string; password?: string } = {};
+            if (!values.email) {
+              errors.email = t("auth.required");
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+              errors.email = t("auth.badEmail");
+            }
+            if (!values.password) {
+              errors.password = t("auth.required");
+            }
+            return errors;
+          }}
+          validateOnBlur={true}
+          validateOnChange={false}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <View style={sty.center}>
+              <Header title={t("auth.login.pageTitle")} />
+              <Text variant="titleLarge" style={styles.title}>
+                {t("auth.login.description")}
+              </Text>
+              <TextInput
+                mode="outlined"
+                label={t("auth.email")}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                value={values.email}
+                style={styles.input}
+                error={!!errors.email}
+                autoCapitalize="none"
+              />
+              {touched.email && errors.email && (
+                <HelperText type="error" style={styles.errorMessage}>
+                  {errors.email}
+                </HelperText>
+              )}
+              <TextInput
+                mode="outlined"
+                label={t("auth.password")}
+                onChangeText={handleChange("password")}
+                onBlur={handleBlur("password")}
+                value={values.password}
+                style={styles.input}
+                error={!!errors.password}
+                secureTextEntry
+                autoCapitalize="none"
+              />
+              {touched.password && errors.password && (
+                <HelperText type="error" style={styles.errorMessage}>
+                  {errors.password}
+                </HelperText>
+              )}
+              {status === "error" ? (
+                <HelperText type="error" style={styles.errorMessage}>
+                  {t("auth.login.badCredentials")}
+                </HelperText>
+              ) : null}
+              <Button
+                disabled={status === "pending"}
+                mode="contained"
+                onPress={() => handleSubmit()}
+                style={styles.submit}
+                loading={status === "pending"}
+              >
+                {t("auth.login.continueButton")}
+              </Button>
+              <Text style={styles.submit}>
+                {t("auth.login.registerPrompt")}{" "}
+                <Link href={AppRoutes.Register} replace>
+                  <Text style={{ color: theme.colors.primary }}>
+                    {t("auth.login.registerButton")}
+                  </Text>
+                </Link>
+              </Text>
+            </View>
+          )}
+        </Formik>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 

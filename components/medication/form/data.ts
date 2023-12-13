@@ -37,6 +37,13 @@ export const validate = (
 
   const medicationAmountInPackage = parseNum(values.medicationAmountInPackage);
   if (
+    values.medicationAmountInPackage.includes(".") ||
+    values.medicationAmountInPackage.includes(",")
+  ) {
+    errors.medicationAmountInPackage = t(
+      "medication.form.medicationAmountInPackageInteger",
+    );
+  } else if (
     values.medicationAmountInPackage.trim().length > 0 &&
     (!medicationAmountInPackage || medicationAmountInPackage < 0)
   ) {

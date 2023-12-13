@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { useState, type FC, useMemo } from "react";
 import { FlatList, View } from "react-native";
-import { Menu, Text } from "react-native-paper";
+import { Card, IconButton, Menu } from "react-native-paper";
 
 import { actions } from "@/common/actions";
 import { AppRoutes } from "@/common/constants";
@@ -19,10 +19,9 @@ interface IGameItem {
 const GameItem: FC<IGameItem> = ({ name, icon, route, description }) => {
   const router = useRouter();
   const { t } = useI18n();
-  const styles = useStyles();
   const [visible, setVisible] = useState<boolean>(false);
 
-  const handlePressItem = () => {
+  const handlePressPlay = () => {
     closeMenu();
     router.push(route);
   };
@@ -40,26 +39,27 @@ const GameItem: FC<IGameItem> = ({ name, icon, route, description }) => {
   };
 
   return (
-    <View style={styles.gameItemContainer} onTouchStart={openMenu}>
-      <View style={styles.gameItemLabelWrapper}>
-        <Text style={styles.gameItemTitle}>{name}</Text>
-        <Text style={styles.gameItemDescription}>{description}</Text>
-      </View>
-      <Menu
-        visible={visible}
-        onDismiss={closeMenu}
-        anchor={<Icon icon={icon} size={64} />}
-      >
-        <Menu.Item
-          onPress={handlePressItem}
-          title={t("games.menu.playButton")}
-        />
-        <Menu.Item
-          onPress={handlePressScoreboard}
-          title={t("games.menu.scoreboardButton")}
-        />
-      </Menu>
-    </View>
+    <Card style={styles.cardWrapper} onPress={handlePressPlay}>
+      <Card.Title
+        title={name}
+        titleStyle={styles.gameTitle}
+        subtitle={description}
+        left={(props) => <Icon {...props} icon={icon} />}
+        right={(props) => (
+          <Menu
+            {...props}
+            visible={visible}
+            onDismiss={closeMenu}
+            anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
+          >
+            <Menu.Item
+              onPress={handlePressScoreboard}
+              title={t("games.menu.scoreboardButton")}
+            />
+          </Menu>
+        )}
+      />
+    </Card>
   );
 };
 
@@ -89,52 +89,28 @@ const Page = () => {
     [t],
   );
   return (
-    <View>
+    <View style={sty.full}>
       <Header title="Games" left={actions.goBack} />
       <FlatList
         data={games}
         renderItem={({ item }) => <GameItem {...item} />}
         keyExtractor={(item) => item.name}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
     </View>
   );
 };
 
-const useStyles = sty.themedHook(({ colors }) => ({
-  gameItemContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 16,
-    margin: 8,
-    borderRadius: 16,
-    borderColor: colors.primary,
-    borderWidth: 3,
-    backgroundColor: colors.surface,
-    shadowColor: "black",
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
+const styles = sty.create({
+  separator: {
+    height: 16,
   },
-  gameItemLabelWrapper: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  gameItemTitle: {
-    fontSize: 32,
+  gameTitle: {
     fontWeight: "bold",
-    color: colors.text,
   },
-  gameItemDescription: {
-    fontSize: 24,
-    color: colors.text,
+  cardWrapper: {
+    marginHorizontal: 16,
   },
-}));
+});
 
 export default Page;

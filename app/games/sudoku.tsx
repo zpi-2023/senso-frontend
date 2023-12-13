@@ -9,6 +9,7 @@ import { AppRoutes } from "@/common/constants";
 import { useI18n } from "@/common/i18n";
 import { calculateScore } from "@/common/score";
 import { sty } from "@/common/styles";
+import { toMinutesAndSeconds } from "@/common/time";
 import { Header } from "@/components";
 import {
   checkBoard,
@@ -116,7 +117,7 @@ const SudokuGame = () => {
       <Header title={t("games.sudoku.pageTitle")} left={actions.goBack} />
       <View style={styles.statsLabel}>
         <Text style={styles.statsText}>
-          {t("games.sudoku.timer", { time: seconds })}
+          {t("games.sudoku.timer", { time: toMinutesAndSeconds(seconds) })}
         </Text>
         <Text style={styles.statsText}>
           {t("games.sudoku.checkCounter", { checks })}
@@ -209,9 +210,9 @@ const useStyles = sty.themedHook(({ colors }) => ({
   },
   statsLabel: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignItems: "center",
-    marginHorizontal: 20,
+    flexWrap: "wrap",
   },
 }));
 
