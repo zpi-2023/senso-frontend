@@ -143,10 +143,10 @@ const ProfilesList = () => {
           </>
         )}
       </List.Section>
-      {profiles.length === 0 && (
-        <List.Subheader style={styles.listSubheader}>
+      {true && (
+        <Text style={styles.listSubheader}>
           {t("profiles.list.noProfiles")}
-        </List.Subheader>
+        </Text>
       )}
       <View style={styles.newProfileButtonWrapper}>
         <Link href={AppRoutes.AddCaretakerProfile}>
@@ -292,7 +292,7 @@ const useStyles = sty.themedHook(({ colors }) => ({
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 20,
-    lineHeight: 28,
+    lineHeight: 20,
   },
   newProfileButtonWrapper: {
     alignItems: "center",
