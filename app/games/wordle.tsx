@@ -5,10 +5,10 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  FlatList,
 } from "react-native";
 import { Text } from "react-native-paper";
 
@@ -59,7 +59,7 @@ const Page = () => {
 
   const textInputRefs = useRef<TextInput[]>([]);
   const lastGuessRef = useRef<View>(null);
-  const scrollViewRef = useRef<ScrollView>(null);
+  const flatListRef = useRef<FlatList>(null);
   const [seconds, setSeconds] = useState<number>(0);
   const [gameStarted, setGameStarted] = useState<boolean>(true);
   const [previousGuesses, setPreviousGuesses] = useState<string[]>([]);
@@ -116,6 +116,12 @@ const Page = () => {
     }
   };
 
+  const scrollToLastGuess = () => {
+    if (flatListRef.current) {
+      flatListRef.current?.scrollToEnd({ animated: true });
+    }
+  };
+
   const clearInputs = () => {
     textInputRefs.current.forEach((input) => input.clear());
     textInputRefs.current[0]?.focus();
@@ -130,12 +136,7 @@ const Page = () => {
       clearInputs();
     }
 
-    lastGuessRef.current?.measure((x, y, width, height, pageX, pageY) => {
-      scrollViewRef.current?.scrollTo({
-        y: pageY,
-        animated: true,
-      });
-    });
+    scrollToLastGuess();
   }, [previousGuesses]);
 
   useEffect(() => {
@@ -166,12 +167,18 @@ const Page = () => {
           </Text>
         </View>
 
-        <ScrollView
-          ref={scrollViewRef}
+        <FlatList
+          ref={flatListRef}
           contentContainerStyle={styles.scrollViewContainer}
           style={styles.scrollView}
-        >
-          {previousGuesses.map((guess, previousGuessIndex) => (
+          data={previousGuesses}
+          renderItem={({
+            item: guess,
+            index: previousGuessIndex,
+          }: {
+            item: string;
+            index: number;
+          }) => (
             <View key={`${guess}-${previousGuessIndex}`} style={styles.row}>
               {guess
                 .split("")
@@ -185,9 +192,11 @@ const Page = () => {
                   ),
                 )}
             </View>
-          ))}
+          )}
+          onContentSizeChange={scrollToLastGuess}
+        >
           <View ref={lastGuessRef} />
-        </ScrollView>
+        </FlatList>
         <View style={styles.row}>
           {currentGuess.map((letter, index) => (
             <TextInput
