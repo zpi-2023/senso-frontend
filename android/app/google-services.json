@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1067264569805",
+    "project_id": "senso-ad41a",
+    "storage_bucket": "senso-ad41a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067264569805:android:19b24f6bae466b33899484",
+        "android_client_info": {
+          "package_name": "com.anonymous.sensofrontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCFwGPVWD3BtO9MXir-sSf3kEkwgExObc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

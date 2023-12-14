@@ -19,8 +19,9 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.sensofrontend",
-      "googleServicesFile": "./assets/google-services.json",
-      "permissions": ["android.permission.CAMERA"]
+      "googleServicesFile": "./google-services.json",
+      "permissions": ["android.permission.CAMERA"],
+      "useNextNotificationsApi": true
     },
     "ios": {
       "supportsTablet": true,
