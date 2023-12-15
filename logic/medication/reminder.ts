@@ -36,7 +36,7 @@ export class Reminder {
       data.amountPerIntake,
       data.amountOwned ?? null,
       data.amountUnit ?? null,
-      data.cron ? new Cron(data.cron) : null,
+      data.cron ? Cron.fromUtcString(data.cron) : null,
       data.description ?? null,
     );
   }
