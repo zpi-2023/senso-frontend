@@ -50,14 +50,14 @@ const Page = () => {
       <ReminderForm
         kind="edit"
         initialValues={{
-          medicationName: data.medicationName,
+          medicationName: reminder.medicationName,
           medicationAmountInPackage:
-            data.medicationAmountInPackage?.toString() ?? "",
-          amountPerIntake: data.amountPerIntake.toString(),
-          amountOwned: data.amountOwned?.toString() ?? "",
-          amountUnit: data.amountUnit ?? "",
-          cron: data.cron ?? "",
-          description: data.description ?? "",
+            reminder.medicationAmountInPackage?.toString() ?? "",
+          amountPerIntake: reminder.amountPerIntake.toString(),
+          amountOwned: reminder.amountOwned?.toString() ?? "",
+          amountUnit: reminder.amountUnit ?? "",
+          localCron: reminder.cron?.localString ?? "",
+          description: reminder.description ?? "",
         }}
         submitText={t("medication.edit.submit")}
         onEditSubmit={async (values) => {

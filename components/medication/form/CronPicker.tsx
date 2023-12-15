@@ -6,6 +6,7 @@ import { TextInput } from "react-native-paper";
 import type { FormProp } from "./types";
 
 import { useI18n } from "@/common/i18n";
+import { parseNum } from "@/common/parsing";
 
 type CronPickerProps = {
   form: FormProp;
@@ -23,17 +24,17 @@ export const CronPicker = ({
       <TextInput
         mode="outlined"
         label={t("medication.details.cron")}
-        value={cronToDisplay(values.cron)}
+        value={cronToDisplay(values.localCron)}
         showSoftInputOnFocus={false}
         onFocus={() => setShown(true)}
         right={
-          values.cron.trim().length > 0 ? (
+          values.localCron.trim().length > 0 ? (
             <TextInput.Icon
               icon="close"
               onPressOut={() => {
                 setShown(false);
                 Keyboard.dismiss();
-                void setFieldValue("cron", "");
+                void setFieldValue("localCron", "");
               }}
             />
           ) : null
@@ -42,7 +43,7 @@ export const CronPicker = ({
       {shown ? (
         <DateTimePicker
           mode="time"
-          value={cronToDate(values.cron)}
+          value={cronToDate(values.localCron)}
           timeZoneOffsetInMinutes={0}
           onChange={(e) => {
             setShown(false);
@@ -53,7 +54,7 @@ export const CronPicker = ({
               );
               const hour = Math.floor(totalMinutes / 60);
               const minute = totalMinutes % 60;
-              void setFieldValue("cron", `${minute} ${hour} * * *`);
+              void setFieldValue("localCron", `${minute} ${hour} * * *`);
             }
           }}
         />
@@ -80,8 +81,8 @@ const cronToDate = (cron: string): Date => {
     return new Date(0);
   }
 
-  const [minute, hour] = cron.split(" ").map((v) => parseInt(v, 10));
-  if (!minute || Number.isNaN(minute) || !hour || Number.isNaN(hour)) {
+  const [minute, hour] = cron.split(" ").map((v) => parseNum(v));
+  if (!minute || !hour) {
     return new Date(0);
   }
 
