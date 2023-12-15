@@ -37,7 +37,7 @@ const Page = () => {
           amountPerIntake: "",
           amountOwned: "",
           amountUnit: "",
-          cron: "",
+          localCron: "",
           description: "",
         }}
         submitText={t("medication.create.submit")}

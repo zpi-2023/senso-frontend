@@ -55,8 +55,8 @@ export class Reminder {
     public readonly medicationAmountInPackage: number | null,
     public readonly isActive: boolean,
     public readonly amountPerIntake: number,
-    private readonly amountOwned: number | null,
-    private readonly amountUnit: string | null,
+    public readonly amountOwned: number | null,
+    public readonly amountUnit: string | null,
     public readonly cron: Cron | null,
     public readonly description: string | null,
   ) {}

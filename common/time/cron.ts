@@ -8,35 +8,53 @@ import type { Translator } from "@/common/i18n";
 import { parseNum } from "@/common/parsing";
 
 export class Cron {
-  public static fromUtcString(utcCron: string): Cron | null {
-    const utcParts = utcCron.split(" ");
-    const utcMin = parseNum(utcParts[0] ?? "");
-    const utcHour = parseNum(utcParts[1] ?? "");
-
-    if (utcMin === null || utcHour === null) {
-      return null;
-    }
-
-    const utcTotalMins = utcHour * 60 + utcMin;
-    const localTotalMins = mod(utcTotalMins - getTzMinuteDiff(), dayInMins);
-    const localHour = Math.floor(localTotalMins / 60);
-    const localMin = localTotalMins % 60;
-
-    return Cron.fromLocalString(`${localMin} ${localHour} * * *`);
-  }
-
   public static fromLocalString(localCron: string): Cron | null {
     try {
-      return new Cron(parseExpression(localCron), localCron);
+      return new Cron(localCron, parseExpression(localCron));
     } catch {
       return null;
     }
   }
 
+  public static fromUtcString(utcCron: string): Cron | null {
+    const localCron = Cron.offsetCronString(utcCron, -getTzMinuteDiff());
+    if (localCron) {
+      return Cron.fromLocalString(localCron);
+    }
+    return null;
+  }
+
+  private static offsetCronString(
+    beforeCron: string,
+    offsetMinutes: number,
+  ): string | null {
+    const beforeParts = beforeCron.split(" ");
+    const beforeMin = parseNum(beforeParts[0] ?? "");
+    const beforeHour = parseNum(beforeParts[1] ?? "");
+    if (beforeMin === null || beforeHour === null) {
+      return null;
+    }
+    const beforeTotalMins = beforeHour * 60 + beforeMin;
+
+    const afterTotalMins = mod(beforeTotalMins + offsetMinutes, dayInMins);
+    const afterHour = Math.floor(afterTotalMins / 60);
+    const afterMin = afterTotalMins % 60;
+
+    return `${afterMin} ${afterHour} * * *`;
+  }
+
   private constructor(
+    private readonly localSource: string,
     private readonly expression: CronExpression,
-    private readonly source: string,
   ) {}
+
+  public get localString(): string {
+    return this.localSource;
+  }
+
+  public get utcString(): string {
+    return Cron.offsetCronString(this.localSource, +getTzMinuteDiff())!;
+  }
 
   public nextDate(): Date {
     const next = this.expression.next();

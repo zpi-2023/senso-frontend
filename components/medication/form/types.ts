@@ -11,7 +11,7 @@ export type ReminderFormValues = {
   amountPerIntake: string;
   amountOwned: string;
   amountUnit: string;
-  cron: string;
+  localCron: string;
   description: string;
 };
 
