@@ -65,10 +65,13 @@ export const useDeviceRegistration = () => {
       requestIdleCallback(async () => {
         const deviceToken = await getExpoNotificationToken();
         if (deviceToken) {
+          console.log(`Obtained device token ${deviceToken}, sending...`);
           await registerDevice({
             body: { deviceToken, deviceType: Platform.OS },
             headers: { Authorization: `Bearer ${identityToken}` },
           });
+        } else {
+          console.error("Failed to obtain device token.");
         }
       }),
     [registerDevice],
