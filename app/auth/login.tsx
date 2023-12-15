@@ -3,8 +3,7 @@ import { Formik } from "formik";
 import { useState } from "react";
 import {
   Keyboard,
-  KeyboardAvoidingView,
-  Platform,
+  ScrollView,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -45,10 +44,7 @@ const Page = () => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={sty.full}
-      >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Formik
           initialValues={{ email: "", password: "" }}
           onSubmit={onSubmit}
@@ -136,7 +132,7 @@ const Page = () => {
             </View>
           )}
         </Formik>
-      </KeyboardAvoidingView>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 };
