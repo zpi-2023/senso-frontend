@@ -143,7 +143,7 @@ const ProfilesList = () => {
           </>
         )}
       </List.Section>
-      {true && (
+      {profiles.length === 0 && (
         <Text style={styles.listSubheader}>
           {t("profiles.list.noProfiles")}
         </Text>
