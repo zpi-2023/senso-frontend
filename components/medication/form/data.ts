@@ -4,6 +4,7 @@ import type { ReminderFormValues } from "./types";
 
 import type { Translator } from "@/common/i18n";
 import { parseNum } from "@/common/parsing";
+import { Cron } from "@/common/time";
 import type { ReminderCreateData, ReminderEditData } from "@/logic/medication";
 
 export const deserializeCreate = (
@@ -13,8 +14,6 @@ export const deserializeCreate = (
   medicationName: values.medicationName,
   medicationAmountInPackage: parseNum(values.medicationAmountInPackage),
   amountUnit: values.amountUnit.trim().length > 0 ? values.amountUnit : null,
-  cron: values.cron.trim().length > 0 ? values.cron : null,
-  description: values.description.trim().length > 0 ? values.description : null,
 });
 
 export const deserializeEdit = (
@@ -22,7 +21,10 @@ export const deserializeEdit = (
 ): ReminderEditData => ({
   amountPerIntake: parseNum(values.amountPerIntake) ?? 0,
   amountOwned: parseNum(values.amountOwned),
-  cron: values.cron.trim().length > 0 ? values.cron : null,
+  cron:
+    values.localCron.trim().length > 0
+      ? Cron.fromLocalString(values.localCron)?.utcString
+      : null,
   description: values.description.trim().length > 0 ? values.description : null,
 });
 
